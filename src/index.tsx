@@ -8,9 +8,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {CMSMenuContainer as CMSMenu} from '~/containers/CMSMenu'
-
-import {toggleMenu} from '~/store/cmsActions'
+// import {CMSMenuContainer as CMSMenu} from '~/containers/CMSMenu'
+// import {toggleMenu} from '~/store/cmsActions'
 import {AppDispatch, RootState} from '~/store/store'
 
 import {switchBridge} from './api'
@@ -28,7 +27,7 @@ const CMSComponent: React.FC<CMSProps> = props => {
 
   return (
     <>
-      <CMSMenu />
+      {/* <CMSMenu /> */}
       {props.children}
       <img
         className="btn btn-dark btn-lg btn-floating cms-edit"
@@ -45,8 +44,8 @@ const mapStateToProps = ({cms}: RootState) => ({
   editable: cms.editingMode
 })
 
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  toggleMenu: (state: boolean) => dispatch(toggleMenu(state))
+const mapDispatchToProps = (_dispatch: AppDispatch) => ({
+  toggleMenu: (_state: boolean) => {}
 })
 
 export const CMSWrapper = connect(
