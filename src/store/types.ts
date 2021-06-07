@@ -6,7 +6,9 @@
  * in the LICENSE file at https://snek.at/license
  */
 
-type CMSPagesDataState = {
+export type {RootState} from './store'
+
+export type DataLayer = {
   pages: {
     [slug: string]: {
       typeName: string
@@ -25,8 +27,34 @@ type CMSPagesDataState = {
   }
 }
 
-export type CMSState = {
-  editingMode: boolean
-  original: CMSPagesDataState
-  edited: CMSPagesDataState
+export type PageIndex = {
+  checksum: string
+  tree: {
+    id: number
+    fields: {
+      type: string
+      slug: string
+      title: string
+    }
+    nodes: PageIndex['tree'][]
+  }
+}
+
+export interface CMSOptions {
+  editing: boolean
+  showMenu: boolean
+  shouldOverrideWDL: boolean
+}
+export interface CMSState {
+  index?: PageIndex
+  options: CMSOptions
+  dataLayer: {
+    origCksm?: string
+    working: DataLayer & {updateFieldsCount: number}
+    editing: DataLayer
+  }
+}
+
+export interface AuthState {
+  authenticated: boolean
 }

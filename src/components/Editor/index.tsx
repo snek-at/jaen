@@ -28,30 +28,34 @@ import React, {Fragment, useEffect, useRef, useState} from 'react'
 
 import type {AtLeastOne} from '~/common/utils'
 
+export type ButtonOptions = AtLeastOne<{
+  bold: boolean
+  italic: boolean
+  underline: boolean
+  code: boolean
+  headlineOne: boolean
+  headlineTwo: boolean
+  headlineThree: boolean
+  unorderedList: boolean
+  orderedList: boolean
+  blockquote: boolean
+  codeBlock: boolean
+}>
+
 interface SidebarEditorProps {
   text?: string
   onChange: (content: string) => void
-  buttonOptions?: AtLeastOne<{
-    bold: boolean
-    italic: boolean
-    underline: boolean
-    code: boolean
-    headlineOne: boolean
-    headlineTwo: boolean
-    headlineThree: boolean
-    unorderedList: boolean
-    orderedList: boolean
-    blockquote: boolean
-    codeBlock: boolean
-  }>
+  buttonOptions?: ButtonOptions
   editable?: boolean
+  recreateTrigger?: any
 }
 
 const SidebarEditor: React.FC<SidebarEditorProps> = ({
-  text = 'Loading...',
+  text = 'No content available',
   onChange,
   buttonOptions,
-  editable = true
+  editable = true,
+  recreateTrigger = undefined
 }) => {
   //   const [plugins, SideToolbar] = useMemo(() => {
   //     const sideToolbarPlugin = createSideToolbarPlugin({
@@ -59,6 +63,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   //     })
   //     return [[sideToolbarPlugin], sideToolbarPlugin.SideToolbar]
   //   }, [])
+  console.log('re-render', text)
   const [{plugins, SideToolbar}] = useState(() => {
     const toolbarPlugin = createSideToolbarPlugin({position: 'right'})
     const imagePlugin = createImagePlugin()
@@ -82,13 +87,13 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
 
   useEffect(() => {
     // fixing issue with SSR https://github.com/facebook/draft-js/issues/2332#issuecomment-761573306
-
+    console.log('use effect', text)
     if (buttonOptions) {
       setEditorState(EditorState.createWithContent(stateFromHTML(text)))
     } else {
       setEditorState(createEditorStateWithText(text))
     }
-  }, [text])
+  }, [text, recreateTrigger])
 
   const onValueChange = (value: EditorState): void => {
     if (buttonOptions) {

@@ -5,14 +5,15 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import React from 'react'
-import {connect, useSelector} from 'react-redux'
+import React, {useEffect} from 'react'
+import {connect, useStore} from 'react-redux'
 
 import SidebarEditor from '~/components/Editor'
 
-import {updatePageContent} from '~/store/cmsActions'
+import {registerField, updatePageContent} from '~/store/cmsActions'
 import {RootState, AppDispatch} from '~/store/store'
 
+import {ButtonOptions} from '../Editor/index'
 import {CMSEditableProps, FieldOptions} from '../types'
 
 type SubelementProps = React.DetailedHTMLProps<
@@ -23,11 +24,13 @@ type SubelementProps = React.DetailedHTMLProps<
 type StateProps = CMSEditableProps
 
 type DispatchProps = {
+  registerField: (fieldOptions: FieldOptions) => void
   updateContent: (content: string) => void
 }
 
-type OwnProps = {
+export type OwnProps = {
   fieldOptions: FieldOptions
+  buttonOptions?: ButtonOptions
 }
 
 export interface EditableTextFieldProps
@@ -36,24 +39,32 @@ export interface EditableTextFieldProps
     DispatchProps,
     OwnProps {}
 
-const EditableTextField: React.FC<EditableTextFieldProps> = ({
+export const EditableTextField: React.FC<EditableTextFieldProps> = ({
+  registerField,
   updateContent,
   ...props
 }) => {
-  const onUpdateContent = (content: string) => updateContent(content)
-  const {fieldOptions, editable, ...subProps} = props
+  const {buttonOptions, fieldOptions, editable, workingLayer, ...subProps} =
+    props
   const {page, name, block} = fieldOptions
+  const store = useStore<RootState>()
+
+  useEffect(() => registerField(fieldOptions), [])
 
   // equalityFn: () => true; workaround to prevent re-renders on store change
-  const field = useSelector(
-    (state: RootState) => state.cms.edited?.pages[page.slug]?.fields[name],
-    () => true
-  )
+  let field =
+    store.getState().cms.dataLayer.editing.pages[page.slug]?.fields[name]
+
+  if (!field) {
+    field = workingLayer.pages[page.slug]?.fields[name]
+  }
 
   let content
 
   if (field) {
+    console.log(field, fieldOptions)
     if (block && field.blocks) {
+      console.log(field.blocks)
       content = field.blocks[block.position]?.content
     } else {
       content = field.content
@@ -63,9 +74,11 @@ const EditableTextField: React.FC<EditableTextFieldProps> = ({
   return (
     <div {...subProps}>
       <SidebarEditor
-        onChange={onUpdateContent}
+        onChange={updateContent}
         text={content}
+        buttonOptions={buttonOptions}
         editable={editable}
+        recreateTrigger={workingLayer.updateFieldsCount}
       />
     </div>
   )
@@ -75,20 +88,28 @@ const mapStateToProps = (
   state: RootState,
   _ownProps: OwnProps
 ): StateProps => ({
-  editable: state.cms.editingMode
+  workingLayer: state.cms.dataLayer.working,
+  editable: state.cms.options.editing
 })
 
 const mapDispatchToProps = (
   dispatch: AppDispatch,
   ownProps: OwnProps
 ): DispatchProps => ({
+  registerField: (fieldOptions: FieldOptions) =>
+    dispatch(registerField(fieldOptions)),
   updateContent: (content: string) =>
     dispatch(updatePageContent({content, fieldOptions: ownProps.fieldOptions}))
 })
 
-const TextField = connect<StateProps, DispatchProps, OwnProps, RootState>(
+const EditableTextFieldContainer = connect<
+  StateProps,
+  DispatchProps,
+  OwnProps,
+  RootState
+>(
   mapStateToProps,
   mapDispatchToProps
 )(EditableTextField)
 
-export default TextField
+export default EditableTextFieldContainer

@@ -1,6 +1,7 @@
-import {SkeletonPageProps} from './pages/index'
+import {CMSState} from '../store/types'
+import type {SkeletonPageProps} from './pages/index'
 
-export type FieldOptions = {
+export interface FieldOptions {
   page: SkeletonPageProps
   name: string
   block?: {typeName: string; position: number}
@@ -8,4 +9,5 @@ export type FieldOptions = {
 
 export interface CMSEditableProps {
   editable: boolean
+  workingLayer: CMSState['dataLayer']['working']
 }

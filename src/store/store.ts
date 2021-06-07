@@ -18,6 +18,7 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import {authReducer} from './authReducer'
 import {cmsReducer} from './cmsReducer'
 
 const persistConfig = {
@@ -29,7 +30,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
-    // bifrostPage: bifrostPageReducer
+    auth: authReducer,
     cms: cmsReducer
   })
 )
