@@ -25,7 +25,6 @@ import {login, logout} from '~/store/authActions'
 import {
   toggleEditing,
   toggleMenu,
-  loadIndex,
   discardEditing,
   loadPages,
   publish,
@@ -34,6 +33,7 @@ import {
 import {AppDispatch} from '~/store/store'
 import {RootState, AuthState, CMSState} from '~/store/types'
 
+import Tree from '../PagesEditor/index'
 import './cmsmenu.scss'
 
 type StateProps = AuthState & CMSState
@@ -41,7 +41,6 @@ type StateProps = AuthState & CMSState
 type DispatchProps = {
   toggleEditing: (state: boolean) => void
   toggleMenu: (state: boolean) => void
-  loadIndex: (checksum: string) => void
   discardEditing: () => void
   loadPages: () => void
   publish: () => void
@@ -61,7 +60,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   dataLayer,
   toggleEditing,
   toggleMenu,
-  loadIndex,
   discardEditing,
   loadPages,
   publish,
@@ -79,15 +77,15 @@ export const Menu: React.FC<CMSMenuProps> = ({
 
   useEffect(() => login(), [])
 
-  useEffect(() => {
-    if (authenticated) loadIndex(index?.checksum || '')
+  // useEffect(() => {
+  //   if (authenticated) loadIndex(index?.checksum || '')
 
-    const interval = setInterval(() => {
-      if (authenticated) loadIndex(index?.checksum || '')
-    }, 1000 * 60 * 2)
+  //   const interval = setInterval(() => {
+  //     if (authenticated) loadIndex(index?.checksum || '')
+  //   }, 1000 * 60 * 2)
 
-    return () => clearInterval(interval)
-  }, [index?.checksum, authenticated])
+  //   return () => clearInterval(interval)
+  // }, [index?.checksum, authenticated])
 
   return (
     <>
@@ -111,6 +109,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
                     <>
                       <h1>index view</h1>
                       <ReactJson src={index as object} theme="monokai" /> <br />
+                      <Tree />
                       <button onClick={() => setView('EDITING')}>
                         goto Editing
                       </button>
@@ -184,7 +183,6 @@ const mapStateToProps = ({auth, cms}: RootState): StateProps => ({
 const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
   toggleEditing: (state: boolean) => dispatch(toggleEditing(state)),
   toggleMenu: (state: boolean) => dispatch(toggleMenu(state)),
-  loadIndex: (checksum: string) => dispatch(loadIndex({checksum})),
   discardEditing: () => dispatch(discardEditing()),
   loadPages: () => dispatch(loadPages()),
   publish: () => dispatch(publish()),

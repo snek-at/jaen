@@ -11,17 +11,19 @@ import {connect} from 'react-redux'
 
 import Menu from '~/components/Menu'
 
-import {overrideWDL, toggleMenu} from '~/store/cmsActions'
+import {overrideWDL, setIndex, toggleMenu} from '~/store/cmsActions'
 import {AppDispatch, RootState} from '~/store/store'
-import {DataLayer} from '~/store/types'
+import {DataLayer, PageIndex} from '~/store/types'
 
 import {switchBridge} from './api'
+import './components/pages/index'
 
 interface CMSProps {
   toggleMenu: (state: boolean) => void
   bifrostUrls: {httpUrl: string; wssUrl?: string}
   layerOrigCksm?: string
   shouldOverrideWDL: boolean
+  setIndex: (index: PageIndex) => void
   overrideWDL: ({data, cksm}: {data: DataLayer; cksm: string}) => void
   children: React.ReactNode
 }
@@ -30,18 +32,22 @@ const CMSComponent: React.FC<CMSProps> = ({
   bifrostUrls,
   layerOrigCksm,
   shouldOverrideWDL,
+  setIndex,
   overrideWDL,
   ...props
 }) => {
   useEffect(() => {
-    fetch('original.jaen.json').then(res =>
-      res.json().then((data: DataLayer) => {
-        const cksm = md5(JSON.stringify(data)).toString()
+    fetch(globalThis.location.origin + '/jaen-data.json').then(res =>
+      res
+        .json()
+        .then((data: {dataLayer: {origin: DataLayer}; index: PageIndex}) => {
+          const cksm = md5(JSON.stringify(data)).toString()
 
-        if (cksm !== layerOrigCksm || shouldOverrideWDL) {
-          overrideWDL({data, cksm})
-        }
-      })
+          if (cksm !== layerOrigCksm || shouldOverrideWDL) {
+            overrideWDL({data: data.dataLayer.origin, cksm})
+            setIndex(data.index)
+          }
+        })
     )
   })
 
@@ -68,6 +74,7 @@ const mapStateToProps = ({cms}: RootState) => ({
 })
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  setIndex: (index: PageIndex) => dispatch(setIndex(index)),
   overrideWDL: ({data, cksm}: {data: DataLayer; cksm: string}) =>
     dispatch(overrideWDL({data, cksm})),
   toggleMenu: (state: boolean) => dispatch(toggleMenu(state))

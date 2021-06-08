@@ -20,7 +20,7 @@ import {
   overrideWDL,
   setOverrideWDLState,
   updatePageContent,
-  loadIndex
+  setIndex
 } from './cmsActions'
 import {CMSState} from './types'
 
@@ -43,9 +43,9 @@ export const cmsReducer = createReducer(initialState, {
 
     if (block) {
       blocks = {
-        ...pages[page.slug].fields[name].blocks,
+        ...pages[page.slug]?.fields[name].blocks,
         [block.position]: {
-          ...pages[page.slug].fields[name].blocks?.[block.position],
+          ...pages[page.slug]?.fields[name].blocks?.[block.position],
           typeName: block.typeName
         }
       }
@@ -56,9 +56,9 @@ export const cmsReducer = createReducer(initialState, {
       [page.slug]: {
         ...pages[page.slug],
         fields: {
-          ...pages[page.slug].fields,
+          ...pages[page.slug]?.fields,
           [name]: {
-            ...pages[page.slug].fields[name],
+            ...pages[page.slug]?.fields[name],
             blocks
           }
         }
@@ -87,7 +87,6 @@ export const cmsReducer = createReducer(initialState, {
     }
     state.options.shouldOverrideWDL = false
   },
-
   [discardEditing.type]: (state, _action) => {
     state.dataLayer.editing = {pages: {}}
     state.dataLayer = {
@@ -168,7 +167,7 @@ export const cmsReducer = createReducer(initialState, {
       }
     }
   },
-  [loadIndex.fulfilled.type]: (state, action) => {
+  [setIndex.type]: (state, action) => {
     const {checksum, tree} = action.payload
     state.index = {checksum, tree}
   },

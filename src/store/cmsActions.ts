@@ -10,7 +10,7 @@ import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
 import {DropAPI, DropAPIReferences} from '../api'
 import {FieldOptions} from '../components/types'
 // import {RootState} from './store'
-import {DataLayer} from './types'
+import {DataLayer, PageIndex} from './types'
 
 export const registerField = createAction<FieldOptions>('cms/registerField')
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
@@ -29,33 +29,7 @@ export const updatePageContent = createAction<{
   fieldOptions: FieldOptions
 }>('cms/updatePageContent')
 
-export const loadIndex = createAsyncThunk(
-  'cms/loadIndex',
-  async (
-    args: {
-      checksum: string
-    },
-    thunkAPI
-  ) => {
-    const {checksum} = args
-
-    try {
-      const {data, errors} = await DropAPI.queries.doPagesIndexTreeQuery({
-        checksum
-      })
-
-      if (!data || errors) {
-        throw new Error('DropAPI fetch failed')
-      }
-
-      return data.pagesIndexTree
-    } catch (err) {
-      // Use `err.response.data` as `action.payload` for a `rejected` action,
-      // by explicitly returning it using the `rejectWithValue()` utility
-      return thunkAPI.rejectWithValue(err.response.data)
-    }
-  }
-)
+export const setIndex = createAction<PageIndex>('cms/setIndex')
 
 export const loadPages = createAsyncThunk<
   {},
