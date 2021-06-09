@@ -5,18 +5,20 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {
-  MDBBtn,
-  MDBModal,
-  MDBModalDialog,
-  MDBModalContent,
-  MDBModalHeader,
-  MDBModalTitle,
-  MDBModalBody,
-  MDBModalFooter
-} from 'mdb-react-ui-kit'
+import {Button} from 'antd'
+import Modal from 'antd/lib/modal/Modal'
+// import {
+//   MDBBtn,
+//   MDBModal,
+//   MDBModalDialog,
+//   MDBModalContent,
+//   MDBModalHeader,
+//   MDBModalTitle,
+//   MDBModalBody,
+//   MDBModalFooter
+// } from 'mdb-react-ui-kit'
 import React, {useState, useEffect} from 'react'
-import ReactJson from 'react-json-view'
+// import ReactJson from 'react-json-view'
 import {connect} from 'react-redux'
 
 import LoginForm from '~/components/forms/Login'
@@ -33,7 +35,8 @@ import {
 import {AppDispatch} from '~/store/store'
 import {RootState, AuthState, CMSState} from '~/store/types'
 
-import Tree from '../PagesEditor/index'
+import Explorer from '../Explorer/index'
+import {LoginFormValues} from '../forms/Login'
 import './cmsmenu.scss'
 
 type StateProps = AuthState & CMSState
@@ -67,15 +70,31 @@ export const Menu: React.FC<CMSMenuProps> = ({
   login,
   logout
 }) => {
-  const [view, setView] = useState<'INDEX' | 'EDITING'>('EDITING')
+  const [view, setView] = useState<'EXPLORER' | 'EDITING'>('EXPLORER')
 
   const {showMenu, editing} = options
 
   const toggleShow = () => toggleMenu(!showMenu)
-  const onLogin = (username: string, password: string) =>
+  const onLogin = (values: LoginFormValues) => {
+    const {username, password} = values
     login({username, password})
+  }
 
   useEffect(() => login(), [])
+
+  console.log(
+    view,
+    setView,
+    editing,
+    index,
+    dataLayer,
+    toggleEditing,
+    discardEditing,
+    loadPages,
+    publish,
+    overrideWDLState,
+    logout
+  )
 
   // useEffect(() => {
   //   if (authenticated) loadIndex(index?.checksum || '')
@@ -89,86 +108,33 @@ export const Menu: React.FC<CMSMenuProps> = ({
 
   return (
     <>
-      <MDBModal
-        show={showMenu}
-        size="lg"
-        getOpenState={(e: any) => {
-          if (e !== showMenu) toggleMenu(e)
-        }}
-        tabIndex="-1">
-        <MDBModalDialog centered size="xl">
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Jaen</MDBModalTitle>
-              <MDBBtn className="btn-close" color="none" onClick={toggleShow} />
-            </MDBModalHeader>
-            {authenticated ? (
-              <>
-                <MDBModalBody>
-                  {view == 'INDEX' && (
-                    <>
-                      <h1>index view</h1>
-                      <ReactJson src={index as object} theme="monokai" /> <br />
-                      <Tree />
-                      <button onClick={() => setView('EDITING')}>
-                        goto Editing
-                      </button>
-                    </>
-                  )}
-                  {view == 'EDITING' && (
-                    <>
-                      <h1>editing view</h1>
-                      <ReactJson
-                        src={dataLayer.editing as object}
-                        theme="monokai"
-                      />{' '}
-                      <br />
-                      <button onClick={() => setView('INDEX')}>
-                        goto Index
-                      </button>
-                    </>
-                  )}
-                </MDBModalBody>
-                <MDBModalFooter>
-                  <MDBBtn color="info" onClick={() => overrideWDLState()}>
-                    override WDL
-                  </MDBBtn>
-                  <MDBBtn color="info" onClick={() => loadPages()}>
-                    LDFB
-                  </MDBBtn>
-                  {!editing ? (
-                    <>
-                      {' '}
-                      <MDBBtn color="danger" onClick={() => logout()}>
-                        logout
-                      </MDBBtn>
-                      <MDBBtn color="info" onClick={() => toggleEditing(true)}>
-                        edit
-                      </MDBBtn>
-                    </>
-                  ) : (
-                    <>
-                      <MDBBtn color="info" onClick={() => discardEditing()}>
-                        discard
-                      </MDBBtn>
-                      <MDBBtn
-                        color="warning"
-                        onClick={() => toggleEditing(false)}>
-                        stop
-                      </MDBBtn>
-                      <MDBBtn color="success" onClick={() => publish()}>
-                        publish
-                      </MDBBtn>
-                    </>
-                  )}
-                </MDBModalFooter>
-              </>
-            ) : (
-              <LoginForm onSubmit={onLogin}></LoginForm>
+      <Modal
+        title="Modal 1000px width"
+        centered
+        visible={showMenu}
+        onOk={toggleShow}
+        onCancel={toggleShow}
+        width={1000}
+        footer={[
+          <Button key="back" onClick={toggleShow}>
+            Return
+          </Button>
+        ]}>
+        {!authenticated ? (
+          <LoginForm onFinish={onLogin} />
+        ) : (
+          <>
+            {view === 'EXPLORER' && index && (
+              <Explorer
+                onPageCreate={() => null}
+                onPageSave={() => null}
+                onPageDelete={() => null}
+                index={index}
+              />
             )}
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+          </>
+        )}
+      </Modal>
     </>
   )
 }

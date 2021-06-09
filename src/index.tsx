@@ -5,6 +5,8 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
+// import 'antd/dist/antd.css'
+import 'antd/dist/antd.css'
 import md5 from 'crypto-js/md5'
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
@@ -17,6 +19,9 @@ import {DataLayer, PageIndex} from '~/store/types'
 
 import {switchBridge} from './api'
 import './components/pages/index'
+
+//
+import 'antd/dist/antd.css'
 
 interface CMSProps {
   toggleMenu: (state: boolean) => void
@@ -52,7 +57,7 @@ const CMSComponent: React.FC<CMSProps> = ({
   })
 
   switchBridge(bifrostUrls)
-  console.log('render CMSComponent', shouldOverrideWDL)
+
   return (
     <>
       <Menu />

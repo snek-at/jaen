@@ -1,53 +1,60 @@
-import {MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput} from 'mdb-react-ui-kit'
-import React, {useState} from 'react'
+import {Form, Input, Button, Checkbox} from 'antd'
+import React from 'react'
 
-interface LoginFormProps {
-  onSubmit: (username: string, password: string) => void
+const layout = {
+  labelCol: {span: 8},
+  wrapperCol: {span: 16}
+}
+const tailLayout = {
+  wrapperCol: {offset: 8, span: 16}
 }
 
-const LoginForm: React.FC<LoginFormProps> = props => {
-  const [username, setUsername] = useState('snekman')
-  const [password, setPassword] = useState('')
+export type LoginFormValues = {
+  username: string
+  password: string
+  remember: boolean
+}
 
-  const {onSubmit} = props
+interface LoginFormProps {
+  onFinish: (values: LoginFormValues) => void
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({onFinish}) => {
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo)
+  }
 
   return (
-    <MDBContainer>
-      <MDBRow>
-        <MDBCol md="6">
-          <form>
-            <p className="h5 text-center mb-4">Log in</p>
-            <div className="grey-text">
-              <MDBInput
-                label="Type your username"
-                icon="envelope"
-                type="username"
-                error="wrong"
-                success="right"
-                value={username}
-                onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                  setUsername(e.currentTarget.value)
-                }
-              />
-              <MDBInput
-                label="Type your password"
-                icon="lock"
-                type="password"
-                value={password}
-                onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                  setPassword(e.currentTarget.value)
-                }
-              />
-            </div>
-            <div className="text-center">
-              <MDBBtn onClick={() => onSubmit(username, password)}>
-                Login
-              </MDBBtn>
-            </div>
-          </form>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{remember: true}}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}>
+      <Form.Item
+        label="Username"
+        name="username"
+        rules={[{required: true, message: 'Please input your username!'}]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{required: true, message: 'Please input your password!'}]}>
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item>
+
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          Sign in
+        </Button>
+      </Form.Item>
+    </Form>
   )
 }
 

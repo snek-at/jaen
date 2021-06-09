@@ -54,7 +54,6 @@ const PageRouter: React.FC<PageRouterProps> = ({
     const routes: JSX.Element[] = []
 
     const travelIndexTree = (node: typeof tree, path = '/') => {
-      console.log(node, path)
       routes.push(
         generateRoute(node.fields.type, node.fields.slug, path, routes.length)
       )

@@ -62,9 +62,7 @@ export const EditableTextField: React.FC<EditableTextFieldProps> = ({
   let content
 
   if (field) {
-    console.log(field, fieldOptions)
     if (block && field.blocks) {
-      console.log(field.blocks)
       content = field.blocks[block.position]?.content
     } else {
       content = field.content

@@ -105,8 +105,6 @@ export const publish = createAsyncThunk<
         }
       }
 
-      console.log(`doUpdate${page.typeName}Mutation`)
-
       await DropAPIReferences[`doUpdate${page.typeName}Mutation`]({
         slug,
         input: inputFields

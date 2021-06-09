@@ -63,7 +63,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   //     })
   //     return [[sideToolbarPlugin], sideToolbarPlugin.SideToolbar]
   //   }, [])
-  console.log('re-render', text)
+
   const [{plugins, SideToolbar}] = useState(() => {
     const toolbarPlugin = createSideToolbarPlugin({position: 'right'})
     const imagePlugin = createImagePlugin()
