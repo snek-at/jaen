@@ -223,7 +223,10 @@ export const cmsReducer = createReducer(initialState, {
       const parentSlug = parentKey === '' ? state.index.rootPageSlug : parentKey
 
       if (!isDraft) {
+        delete state.dataLayer.working.pages[slug]
+        delete state.dataLayer.editing.pages[slug]
         delete state.index.pages[slug]
+
         state.index.pages[parentSlug].childSlugs = state.index.pages[
           parentSlug
         ].childSlugs.filter(e => e !== slug)
