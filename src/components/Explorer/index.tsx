@@ -1,4 +1,4 @@
-import {FormOutlined} from '@ant-design/icons'
+import {FormOutlined, SelectOutlined} from '@ant-design/icons'
 import {
   Button,
   Col,
@@ -12,6 +12,7 @@ import {
   Space
 } from 'antd'
 import React, {useState, useEffect} from 'react'
+import {useHistory} from 'react-router'
 
 import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '../Menu/utils'
 
@@ -43,6 +44,7 @@ const Editor: React.FC<EditorProps> = ({
   indexTree,
   childPageTypeNamesKeyRefs
 }) => {
+  const history = useHistory()
   const [tree, setTree] = useState<ExplorerTDN[]>(indexTree)
 
   useEffect(() => {
@@ -225,6 +227,15 @@ const Editor: React.FC<EditorProps> = ({
                   value={selectedNode.title}
                 />
               </Space>
+              <Divider orientation={'left'} plain>
+                Actions
+              </Divider>
+              <Button
+                type="link"
+                shape="circle"
+                icon={<SelectOutlined />}
+                onClick={() => history.push(selectedNode.key)}
+              />
             </>
           )}
         </Col>
