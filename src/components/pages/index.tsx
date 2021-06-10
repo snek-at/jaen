@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import {useSelector} from 'react-redux'
 
 import {CMSPageContext} from '../../context'
+import {RootState} from '../../store/store'
 import {PageType} from '../types'
 
 interface IConnectedPageType {
@@ -18,7 +20,19 @@ export const PageProvider: React.FC<PageProviderProps> = ({
 }) => {
   const [page, _setPage] = useState<PageType>({slug, typeName})
 
+  const index = useSelector(({cms}: RootState) => cms.index)
+
+  const getChildPagesFromIndex = () => {
+    const slug = page.slug
+    return (
+      index?.pages[slug].childSlugs.map(childSlug => index.pages[childSlug]) ||
+      []
+    )
+  }
+
   return (
-    <CMSPageContext.Provider value={{page}}>{children}</CMSPageContext.Provider>
+    <CMSPageContext.Provider value={{page, getChildPagesFromIndex}}>
+      {children}
+    </CMSPageContext.Provider>
   )
 }

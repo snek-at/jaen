@@ -13,6 +13,7 @@ export type CMSContextType = {
 
 export type CMSPageContextType = {
   page: PageType
+  getChildPagesFromIndex: () => PageIndex['pages'][string][]
 }
 
 export const CMSContext = createContext<CMSContextType | undefined>(undefined)
