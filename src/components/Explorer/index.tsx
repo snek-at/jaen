@@ -216,7 +216,7 @@ const Editor: React.FC<EditorProps> = ({
                     })
                   }
                   value={selectedNode.slug}
-                  disabled={selectedNode.key === '/'}
+                  disabled={selectedNode.isDraft === false}
                 />
                 <Input
                   prefix={<Text strong>Title</Text>}

@@ -161,11 +161,16 @@ export const Menu: React.FC<CMSMenuProps> = ({
               childPageTypeNamesKeyRefs && (
                 <Explorer
                   onNodeSave={node => {
-                    console.log(node)
-                    transferPageToIndex(node)
+                    const {isDraft, slug} = node
+                    if (isDraft && slug) {
+                      if (index?.pages[slug]) {
+                        return false
+                      }
+                      transferPageToIndex(node)
+                    }
                     return true
                   }}
-                  onNodeDelete={slug => deletePageFromIndex(slug)}
+                  onNodeDelete={deletePageFromIndex}
                   indexTree={explorerIndexTree}
                   indexKeyRefs={indexKeyRefs}
                   childPageTypeNamesKeyRefs={childPageTypeNamesKeyRefs}
