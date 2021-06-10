@@ -1,27 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-export type SkeletonPageProps = {typeName: string; slug: string}
+import {CMSPageContext} from '../../context'
+import {PageType} from '../types'
 
-interface ISkeletonPage {
+interface IConnectedPageType {
   PageType: string
-  ChildPages: SkeletonPageType[]
+  ChildPages: ConnectedPageType[]
 }
 
-export type SkeletonPageType = React.ComponentType<SkeletonPageProps> &
-  ISkeletonPage
+export type ConnectedPageType = React.FC<{slug: string}> & IConnectedPageType
+export type PageProviderProps = PageType
 
-export class SkeletonPage extends React.Component<SkeletonPageProps> {
-  // static PageType: string // if the class doesn't have that static field code won't compile
+export const PageProvider: React.FC<PageProviderProps> = ({
+  children,
+  slug,
+  typeName
+}) => {
+  const [page, _setPage] = useState<PageType>({slug, typeName})
 
-  skeletonProps: SkeletonPageProps
-
-  constructor(props: SkeletonPageProps) {
-    super(props)
-    const {typeName, slug} = props
-    this.skeletonProps = {typeName, slug}
-  }
+  return (
+    <CMSPageContext.Provider value={{page}}>{children}</CMSPageContext.Provider>
+  )
 }
-
-// const HomePage: SkeletonPageType = class HomePage extends SkeletonPage {
-//   static PageType = 'HomePage'
-// }

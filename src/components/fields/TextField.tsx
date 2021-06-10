@@ -13,8 +13,9 @@ import SidebarEditor from '~/components/Editor'
 import {registerField, updatePageContent} from '~/store/cmsActions'
 import {RootState, AppDispatch} from '~/store/store'
 
+import {useCMSPageContext} from '../../context'
 import {ButtonOptions} from '../Editor/index'
-import {CMSEditableProps, FieldOptions} from '../types'
+import {CMSEditableProps, FieldOptions, PageType} from '../types'
 
 type SubelementProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -24,8 +25,8 @@ type SubelementProps = React.DetailedHTMLProps<
 type StateProps = CMSEditableProps
 
 type DispatchProps = {
-  registerField: (fieldOptions: FieldOptions) => void
-  updateContent: (content: string) => void
+  registerField: (fieldOptions: FieldOptions, page: PageType) => void
+  updateContent: (content: string, page: PageType) => void
 }
 
 export type OwnProps = {
@@ -46,10 +47,14 @@ export const EditableTextField: React.FC<EditableTextFieldProps> = ({
 }) => {
   const {buttonOptions, fieldOptions, editable, workingLayer, ...subProps} =
     props
-  const {page, name, block} = fieldOptions
+
+  const pageContext = useCMSPageContext()
   const store = useStore<RootState>()
 
-  useEffect(() => registerField(fieldOptions), [])
+  const {name, block} = fieldOptions
+  const page = pageContext.page
+
+  useEffect(() => registerField(fieldOptions, page), [])
 
   // equalityFn: () => true; workaround to prevent re-renders on store change
   let field =
@@ -72,7 +77,7 @@ export const EditableTextField: React.FC<EditableTextFieldProps> = ({
   return (
     <div {...subProps}>
       <SidebarEditor
-        onChange={updateContent}
+        onChange={content => updateContent(content, page)}
         text={content}
         buttonOptions={buttonOptions}
         editable={editable}
@@ -94,10 +99,12 @@ const mapDispatchToProps = (
   dispatch: AppDispatch,
   ownProps: OwnProps
 ): DispatchProps => ({
-  registerField: (fieldOptions: FieldOptions) =>
-    dispatch(registerField(fieldOptions)),
-  updateContent: (content: string) =>
-    dispatch(updatePageContent({content, fieldOptions: ownProps.fieldOptions}))
+  registerField: (fieldOptions: FieldOptions, page: PageType) =>
+    dispatch(registerField({fieldOptions, page})),
+  updateContent: (content: string, page: PageType) =>
+    dispatch(
+      updatePageContent({content, fieldOptions: ownProps.fieldOptions, page})
+    )
 })
 
 const EditableTextFieldContainer = connect<

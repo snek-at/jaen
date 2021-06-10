@@ -10,6 +10,7 @@ import merge from 'lodash/merge'
 
 import {FieldOptions} from '~/components/types'
 
+import {PageType} from '../components/types'
 // import {PageNode} from '../components/Explorer/index'
 import {
   registerField,
@@ -38,7 +39,8 @@ const initialState: CMSState = {
 
 export const cmsReducer = createReducer(initialState, {
   [registerField.type]: (state, action) => {
-    const {name, page, block}: FieldOptions = action.payload
+    const {fieldOptions, page} = action.payload
+    const {name, block}: FieldOptions = fieldOptions
 
     let pages = state.dataLayer.working.pages
 
@@ -101,10 +103,14 @@ export const cmsReducer = createReducer(initialState, {
     }
   },
   [updatePageContent.type]: (state, action) => {
-    const {content, fieldOptions}: {content: any; fieldOptions: FieldOptions} =
+    const {
+      content,
+      fieldOptions,
+      page
+    }: {content: any; fieldOptions: FieldOptions; page: PageType} =
       action.payload
 
-    const {page, name, block} = fieldOptions
+    const {name, block} = fieldOptions
 
     const workingPageFields =
       state.dataLayer.working.pages[page.slug]?.fields || {}

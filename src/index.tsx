@@ -20,7 +20,8 @@ import {DataLayer, PageIndex} from '~/store/types'
 
 import {switchBridge} from './api'
 import './cms.scss'
-import {SkeletonPageType, SkeletonPage} from './components/pages/index'
+import {TextField} from './components/fields'
+import {PageProvider, ConnectedPageType} from './components/pages/index'
 import {CMSContext} from './context'
 import PageRouter from './router'
 
@@ -34,7 +35,9 @@ export const CMSProvider: React.FC<CMSProviderProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>()
 
-  const [registeredPages, setRegisteredPages] = useState<SkeletonPageType[]>([])
+  const [registeredPages, setRegisteredPages] = useState<ConnectedPageType[]>(
+    []
+  )
 
   const getRegisteredPage = (typeName: string) => {
     return registeredPages.find(page => page.PageType === typeName)
@@ -80,27 +83,18 @@ export const CMSProvider: React.FC<CMSProviderProps> = ({
   )
 }
 
-const BlogPage: SkeletonPageType = class BlogPage extends SkeletonPage {
-  static PageType = 'BlogPage'
-  static get ChildPages() {
-    return []
-  }
-
-  render() {
-    return <h1>HomePage</h1>
-  }
+const HomePage: ConnectedPageType = ({slug}) => {
+  return (
+    <>
+      <PageProvider typeName={HomePage.PageType} slug={slug}>
+        <TextField fieldOptions={{name: 'testfield'}} />
+      </PageProvider>
+    </>
+  )
 }
 
-const HomePage: SkeletonPageType = class HomePage extends SkeletonPage {
-  static PageType = 'HomePage'
-  static get ChildPages(): any {
-    return [HomePage, BlogPage]
-  }
-
-  render() {
-    return <h1>HomePage</h1>
-  }
-}
+HomePage.PageType = 'HomePage'
+HomePage.ChildPages = [HomePage]
 
 ReactDOM.render(
   <Provider store={store}>

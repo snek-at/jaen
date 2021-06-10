@@ -9,11 +9,12 @@ import {
 
 import {RootState} from '~/store/store'
 
-import {SkeletonPageType, SkeletonPageProps} from './components/pages/index'
+import {ConnectedPageType} from './components/pages/index'
+import {PageType} from './components/types'
 import {CMSContext} from './context'
 
 type PageRouterProps = {
-  pages: SkeletonPageType[]
+  pages: ConnectedPageType[]
 } & BrowserRouterProps
 
 const PageRouter: React.FC<PageRouterProps> = ({
@@ -30,7 +31,7 @@ const PageRouter: React.FC<PageRouterProps> = ({
   const findPageComponent = (typeName: string) =>
     pages.find(page => page.PageType === typeName)
 
-  const Page: React.FC<SkeletonPageProps> = props => {
+  const Page: React.FC<PageType & {typeName: string}> = props => {
     const {typeName} = props
     const PageComponent = findPageComponent(typeName)
 

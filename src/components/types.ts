@@ -1,8 +1,8 @@
 import {CMSState} from '../store/types'
-import type {SkeletonPageProps} from './pages/index'
+
+export type PageType = {slug: string; typeName: string}
 
 export interface FieldOptions {
-  page: SkeletonPageProps
   name: string
   block?: {typeName: string; position: number}
 }

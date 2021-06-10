@@ -9,11 +9,14 @@ import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
 
 import {DropAPI, DropAPIReferences} from '../api'
 import {PageNode} from '../components/Explorer/index'
-import {FieldOptions} from '../components/types'
+import {FieldOptions, PageType} from '../components/types'
 // import {RootState} from './store'
 import {DataLayer, PageIndex} from './types'
 
-export const registerField = createAction<FieldOptions>('cms/registerField')
+export const registerField =
+  createAction<{fieldOptions: FieldOptions; page: PageType}>(
+    'cms/registerField'
+  )
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
 
 export const setOverrideWDLState = createAction<boolean>(
@@ -28,6 +31,7 @@ export const discardEditing = createAction('cms/discardEditing')
 export const updatePageContent = createAction<{
   content: string
   fieldOptions: FieldOptions
+  page: PageType
 }>('cms/updatePageContent')
 
 export const setIndex = createAction<PageIndex>('cms/setIndex')
