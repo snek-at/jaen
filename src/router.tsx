@@ -78,8 +78,9 @@ const PageRouter: React.FC<PageRouterProps> = ({
   const routes = generateRoutes()
 
   return (
-    <Router>
+    <Router basename={`/${process.env.PUBLIC_URL}`}>
       {props.children}
+      <Route render={() => <p>404 page not found</p>} />
       {routes}
     </Router>
   )
