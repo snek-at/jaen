@@ -65,18 +65,18 @@ const PageRouter: React.FC<PageRouterProps> = ({
       routes.push(generateRoute(typeName, slug, path, routes.length))
 
       childSlugs.forEach(childSlug => {
-        travelIndexTree(pages[childSlug], (path += `${childSlug}/`))
+        travelIndexTree(pages[childSlug], path + `${childSlug}/`)
       })
     }
 
     const rootPage = pages[index.rootPageSlug]
     console.log(index)
     travelIndexTree(rootPage)
-
     return routes
   }
 
   const routes = generateRoutes()
+
   return (
     <Router>
       {props.children}
