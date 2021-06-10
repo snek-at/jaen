@@ -47,7 +47,6 @@ const Editor: React.FC<EditorProps> = ({
 
   useEffect(() => {
     setTree(indexTree)
-    console.log('update tree', indexTree)
   }, [indexTree])
 
   const [selectedNode, setSelectedNode] = useState<PageNode>()
@@ -82,14 +81,11 @@ const Editor: React.FC<EditorProps> = ({
   }
 
   const onSelect = (selectedKeys: React.Key[], _info: any) => {
-    console.log(childPageTypeNamesKeyRefs)
     // currently only supports single select
     const keyLength = selectedKeys.length
     if (keyLength === 1) {
       const key = selectedKeys[0].toString()
       const page = indexKeyRefs[key]
-
-      console.log(indexKeyRefs, page)
 
       if (page) {
         const {slug, title, typeName} = page

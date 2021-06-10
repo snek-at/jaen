@@ -87,7 +87,6 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
 
   useEffect(() => {
     // fixing issue with SSR https://github.com/facebook/draft-js/issues/2332#issuecomment-761573306
-    console.log('use effect', text)
     if (buttonOptions) {
       setEditorState(EditorState.createWithContent(stateFromHTML(text)))
     } else {

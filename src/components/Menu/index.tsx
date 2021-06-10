@@ -104,8 +104,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
 
   const cmsContext = useContext(CMSContext)
 
-  console.log('CONTEXT', cmsContext)
-
   useEffect(() => {
     if (index) {
       if (cmsContext) {
@@ -120,8 +118,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   }, [index, cmsContext])
 
   // const context = useContext(CMSContext)
-
-  // console.log(context?.registeredPages, context?.getRegisteredPage('HomePage'))
 
   return (
     <>

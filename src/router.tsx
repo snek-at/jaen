@@ -71,8 +71,9 @@ const PageRouter: React.FC<PageRouterProps> = ({
     }
 
     const rootPage = pages[index.rootPageSlug]
-    console.log(index)
+
     travelIndexTree(rootPage)
+
     return routes
   }
 

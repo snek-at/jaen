@@ -14,8 +14,6 @@ export const transformIndexTree = (
   index: PageIndex,
   cmsContext: CMSContextType
 ) => {
-  console.log(cmsContext?.registeredPages)
-
   const getChildPageTypeNames = (typeName: string) =>
     cmsContext
       ?.getRegisteredPage(typeName)
