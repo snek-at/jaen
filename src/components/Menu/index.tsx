@@ -5,7 +5,7 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {Button} from 'antd'
+import {Button, Divider, Row, Space} from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 // import {
 //   MDBBtn,
@@ -18,7 +18,7 @@ import Modal from 'antd/lib/modal/Modal'
 //   MDBModalFooter
 // } from 'mdb-react-ui-kit'
 import React, {useState, useEffect, useContext} from 'react'
-// import ReactJson from 'react-json-view'
+import ReactJson from 'react-json-view'
 import {connect} from 'react-redux'
 import {CMSContext} from '~/context'
 
@@ -83,7 +83,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
   transferPageToIndex,
   deletePageFromIndex
 }) => {
-  const [view, setView] = useState<'EXPLORER' | 'EDITING'>('EXPLORER')
+  const [view, setView] = useState<'EXPLORER' | 'EXPERT'>('EXPLORER')
 
   const {showMenu, editing} = options
 
@@ -95,19 +95,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
 
   useEffect(() => login(), [])
 
-  console.log(
-    view,
-    setView,
-    editing,
-    index,
-    dataLayer,
-    toggleEditing,
-    discardEditing,
-    loadPages,
-    publish,
-    overrideWDLState,
-    logout
-  )
+  console.log(loadPages, publish, overrideWDLState, logout)
 
   const [explorerIndexTree, setExplorerIndexTree] = useState<ExplorerTDN[]>()
   const [indexKeyRefs, setIndexKeyRefs] = useState<IndexKeyRefs>()
@@ -131,8 +119,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
     }
   }, [index, cmsContext])
 
-  console.log(childPageTypeNamesKeyRefs)
-
   // const context = useContext(CMSContext)
 
   // console.log(context?.registeredPages, context?.getRegisteredPage('HomePage'))
@@ -140,16 +126,32 @@ export const Menu: React.FC<CMSMenuProps> = ({
   return (
     <>
       <Modal
-        title="Modal 1000px width"
+        title="jaen"
         centered
         visible={showMenu}
         onOk={toggleShow}
         onCancel={toggleShow}
         width={1000}
         footer={[
-          <Button key="back" onClick={toggleShow}>
-            Return
-          </Button>
+          <>
+            {authenticated && (
+              <Button key="logout" onClick={() => logout()}>
+                Sign out
+              </Button>
+            )}
+          </>,
+          <>
+            {view === 'EXPLORER' && (
+              <Button key="expert" onClick={() => setView('EXPERT')}>
+                Expert
+              </Button>
+            )}
+            {view === 'EXPERT' && (
+              <Button key="explorer" onClick={() => setView('EXPLORER')}>
+                Explorer
+              </Button>
+            )}
+          </>
         ]}>
         {!authenticated ? (
           <LoginForm onFinish={onLogin} />
@@ -176,6 +178,34 @@ export const Menu: React.FC<CMSMenuProps> = ({
                   childPageTypeNamesKeyRefs={childPageTypeNamesKeyRefs}
                 />
               )}
+            {view === 'EXPERT' && (
+              <>
+                <ReactJson
+                  src={{index: index, dataLayer: dataLayer}}
+                  theme={'monokai'}
+                />
+              </>
+            )}
+            <Divider />
+            <Row gutter={[16, 16]}>
+              <>
+                <Space>
+                  {editing ? (
+                    <>
+                      <Button danger onClick={() => toggleEditing(false)}>
+                        Stop Editing
+                      </Button>
+                      <Button onClick={() => discardEditing()}>Discard</Button>
+                    </>
+                  ) : (
+                    <Button onClick={() => toggleEditing(true)}>
+                      Start Editing
+                    </Button>
+                  )}
+                  <Button>Publish</Button>
+                </Space>
+              </>
+            </Row>
           </>
         )}
       </Modal>

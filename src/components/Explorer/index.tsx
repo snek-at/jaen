@@ -247,14 +247,16 @@ const Editor: React.FC<EditorProps> = ({
         {selectedNode && (
           <>
             <Col span={4} push={20}>
-              {selectedNode.key !== '/' && (
-                <Button danger type="primary" onClick={onDelete}>
-                  Delete
+              <Space>
+                {selectedNode.key !== '/' && (
+                  <Button danger type="primary" onClick={onDelete}>
+                    Delete
+                  </Button>
+                )}
+                <Button type="primary" onClick={onSave}>
+                  Save
                 </Button>
-              )}
-              <Button type="primary" onClick={onSave}>
-                Save
-              </Button>
+              </Space>
             </Col>
             <Col span={2} pull={4}>
               {selectedNode.isDraft === false &&
