@@ -3,7 +3,8 @@ import {useSelector} from 'react-redux'
 import {
   BrowserRouter as Router,
   BrowserRouterProps,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom'
 
 import {RootState} from '~/store/store'
@@ -36,7 +37,7 @@ const PageRouter: React.FC<PageRouterProps> = ({
     if (PageComponent) {
       return <PageComponent {...props} />
     } else {
-      return <p>404 page not found</p>
+      return <p>404 Not found</p>
     }
   }
 
@@ -79,9 +80,11 @@ const PageRouter: React.FC<PageRouterProps> = ({
 
   return (
     <Router basename={`/${process.env.PUBLIC_URL}`}>
-      {props.children}
-      <Route render={() => <p>404 page not found</p>} />
-      {routes}
+      <Switch>
+        {props.children}
+        {routes}
+        <Route component={() => <div>404 Not found </div>} />
+      </Switch>
     </Router>
   )
 }
