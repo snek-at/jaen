@@ -6,15 +6,15 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
+import {components, PageParamsType} from '~/types'
 
 import {DropAPI, DropAPIReferences} from '../api'
 import {PageNode} from '../components/Explorer/index'
-import {FieldOptions, PageType} from '../components/types'
 // import {RootState} from './store'
 import {DataLayer, PageIndex} from './types'
 
 export const registerField =
-  createAction<{fieldOptions: FieldOptions; page: PageType}>(
+  createAction<{fieldOptions: components.FieldOptions; page: PageParamsType}>(
     'cms/registerField'
   )
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
@@ -30,8 +30,8 @@ export const discardEditing = createAction('cms/discardEditing')
 
 export const updatePageContent = createAction<{
   content: string
-  fieldOptions: FieldOptions
-  page: PageType
+  fieldOptions: components.FieldOptions
+  page: PageParamsType
 }>('cms/updatePageContent')
 
 export const setIndex = createAction<PageIndex>('cms/setIndex')

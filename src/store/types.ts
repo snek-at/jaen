@@ -6,7 +6,7 @@
  * in the LICENSE file at https://snek.at/license
  */
 
-export type {RootState} from './store'
+export type {RootState, AppDispatch} from './store'
 
 export type DataLayer = {
   pages: {

@@ -5,24 +5,16 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {Button, Divider, Row, Space} from 'antd'
-import Modal from 'antd/lib/modal/Modal'
-// import {
-//   MDBBtn,
-//   MDBModal,
-//   MDBModalDialog,
-//   MDBModalContent,
-//   MDBModalHeader,
-//   MDBModalTitle,
-//   MDBModalBody,
-//   MDBModalFooter
-// } from 'mdb-react-ui-kit'
+import {Button, Divider, Row, Space, Modal} from 'antd'
 import React, {useState, useEffect, useContext} from 'react'
 import ReactJson from 'react-json-view'
 import {connect} from 'react-redux'
-import {CMSContext} from '~/context'
+import {CMSContext} from '~/contexts/context'
+import {store} from '~/types'
 
+import Explorer, {ExplorerTDN, PageNode} from '~/components/Explorer/index'
 import LoginForm from '~/components/forms/Login'
+import {LoginFormValues} from '~/components/forms/Login'
 
 import {login, logout} from '~/store/authActions'
 import {
@@ -32,15 +24,10 @@ import {
   loadPages,
   publish,
   setOverrideWDLState,
-  deletePageFromIndex
+  deletePageFromIndex,
+  transferPageToIndex
 } from '~/store/cmsActions'
-import {AppDispatch} from '~/store/store'
-import {RootState, AuthState, CMSState} from '~/store/types'
 
-import {transferPageToIndex} from '../../store/cmsActions'
-import Explorer from '../Explorer/index'
-import {ExplorerTDN, PageNode} from '../Explorer/index'
-import {LoginFormValues} from '../forms/Login'
 import './cmsmenu.scss'
 import {
   transformIndexTree,
@@ -48,7 +35,7 @@ import {
   ChildPageTypeNamesKeyRefs
 } from './utils'
 
-type StateProps = AuthState & CMSState
+type StateProps = store.AuthState & store.CMSState
 
 type DispatchProps = {
   toggleEditing: (state: boolean) => void
@@ -117,26 +104,24 @@ export const Menu: React.FC<CMSMenuProps> = ({
     }
   }, [index, cmsContext])
 
-  // const context = useContext(CMSContext)
-
   return (
     <>
       <Modal
         title="jaen"
         centered
-        visible={showMenu}
+        visible={true}
         onOk={toggleShow}
         onCancel={toggleShow}
         width={1000}
         footer={[
-          <>
+          <React.Fragment key={'logout-group'}>
             {authenticated && (
               <Button key="logout" onClick={() => logout()}>
                 Sign out
               </Button>
             )}
-          </>,
-          <>
+          </React.Fragment>,
+          <React.Fragment key={'view-group'}>
             {view === 'EXPLORER' && (
               <Button key="expert" onClick={() => setView('EXPERT')}>
                 Expert
@@ -147,7 +132,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
                 Explorer
               </Button>
             )}
-          </>
+          </React.Fragment>
         ]}>
         {!authenticated ? (
           <LoginForm onFinish={onLogin} />
@@ -209,14 +194,14 @@ export const Menu: React.FC<CMSMenuProps> = ({
   )
 }
 
-const mapStateToProps = ({auth, cms}: RootState): StateProps => ({
+const mapStateToProps = ({auth, cms}: store.RootState): StateProps => ({
   options: cms.options,
   index: cms.index,
   dataLayer: cms.dataLayer,
   authenticated: auth.authenticated
 })
 
-const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
+const mapDispatchToProps = (dispatch: store.AppDispatch): DispatchProps => ({
   toggleEditing: (state: boolean) => dispatch(toggleEditing(state)),
   toggleMenu: (state: boolean) => dispatch(toggleMenu(state)),
   discardEditing: () => dispatch(discardEditing()),
@@ -230,7 +215,12 @@ const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
   deletePageFromIndex: (page: PageNode) => dispatch(deletePageFromIndex(page))
 })
 
-const MenuContainer = connect<StateProps, DispatchProps, OwnProps, RootState>(
+const MenuContainer = connect<
+  StateProps,
+  DispatchProps,
+  OwnProps,
+  store.RootState
+>(
   mapStateToProps,
   mapDispatchToProps
 )(Menu)

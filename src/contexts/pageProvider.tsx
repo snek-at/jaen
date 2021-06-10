@@ -1,26 +1,25 @@
 import React, {useState} from 'react'
 import {useSelector} from 'react-redux'
-
-import {CMSPageContext} from '../../context'
-import {RootState} from '../../store/store'
-import {PageType} from '../types'
+import {CMSPageContext} from '~/contexts/context'
+import {store, PageParamsType} from '~/types'
 
 interface IConnectedPageType {
-  PageType: string
+  PageParamsType: string
   ChildPages: ConnectedPageType[]
 }
 
 export type ConnectedPageType = React.FC<{slug: string}> & IConnectedPageType
-export type PageProviderProps = PageType
 
-export const PageProvider: React.FC<PageProviderProps> = ({
+type PageProviderProps = PageParamsType
+
+const PageProvider: React.FC<PageProviderProps> = ({
   children,
   slug,
   typeName
 }) => {
-  const [page, _setPage] = useState<PageType>({slug, typeName})
+  const [page, _setPage] = useState<PageParamsType>({slug, typeName})
 
-  const index = useSelector(({cms}: RootState) => cms.index)
+  const index = useSelector(({cms}: store.RootState) => cms.index)
 
   const getChildPagesFromIndex = () => {
     const slug = page.slug
@@ -36,3 +35,5 @@ export const PageProvider: React.FC<PageProviderProps> = ({
     </CMSPageContext.Provider>
   )
 }
+
+export default PageProvider

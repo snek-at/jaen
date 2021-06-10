@@ -1,19 +1,16 @@
 import React, {createContext, useContext} from 'react'
-
-import {ConnectedPageType} from './components/pages'
-import {PageType} from './components/types'
-import {PageIndex} from './store/types'
+import {store, ConnectedPageType, PageParamsType} from '~/types'
 
 export type CMSContextType = {
   registeredPages: ConnectedPageType[]
   setRegisteredPages: React.Dispatch<React.SetStateAction<ConnectedPageType[]>>
   getRegisteredPage: (typeName: string) => ConnectedPageType | undefined
-  index: PageIndex
+  index: store.PageIndex
 }
 
 export type CMSPageContextType = {
-  page: PageType
-  getChildPagesFromIndex: () => PageIndex['pages'][string][]
+  page: PageParamsType
+  getChildPagesFromIndex: () => store.PageIndex['pages'][string][]
 }
 
 export const CMSContext = createContext<CMSContextType | undefined>(undefined)

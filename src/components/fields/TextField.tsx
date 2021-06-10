@@ -7,30 +7,31 @@
  */
 import React, {useEffect} from 'react'
 import {connect, useStore} from 'react-redux'
+import {context} from '~/contexts'
+import {components, PageParamsType} from '~/types'
+import {store} from '~/types'
 
-import SidebarEditor from '~/components/Editor'
+import SidebarEditor, {ButtonOptions} from '~/components/Editor'
 
 import {registerField, updatePageContent} from '~/store/cmsActions'
-import {RootState, AppDispatch} from '~/store/store'
-
-import {useCMSPageContext} from '../../context'
-import {ButtonOptions} from '../Editor/index'
-import {CMSEditableProps, FieldOptions, PageType} from '../types'
 
 type SubelementProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 >
 
-type StateProps = CMSEditableProps
+type StateProps = components.CMSEditableProps
 
 type DispatchProps = {
-  registerField: (fieldOptions: FieldOptions, page: PageType) => void
-  updateContent: (content: string, page: PageType) => void
+  registerField: (
+    fieldOptions: components.FieldOptions,
+    page: PageParamsType
+  ) => void
+  updateContent: (content: string, page: PageParamsType) => void
 }
 
 export type OwnProps = {
-  fieldOptions: FieldOptions
+  fieldOptions: components.FieldOptions
   buttonOptions?: ButtonOptions
 }
 
@@ -48,8 +49,8 @@ export const EditableTextField: React.FC<EditableTextFieldProps> = ({
   const {buttonOptions, fieldOptions, editable, workingLayer, ...subProps} =
     props
 
-  const pageContext = useCMSPageContext()
-  const store = useStore<RootState>()
+  const pageContext = context.useCMSPageContext()
+  const store = useStore<store.RootState>()
 
   const {name, block} = fieldOptions
   const page = pageContext.page
@@ -88,7 +89,7 @@ export const EditableTextField: React.FC<EditableTextFieldProps> = ({
 }
 
 const mapStateToProps = (
-  state: RootState,
+  state: store.RootState,
   _ownProps: OwnProps
 ): StateProps => ({
   workingLayer: state.cms.dataLayer.working,
@@ -96,12 +97,14 @@ const mapStateToProps = (
 })
 
 const mapDispatchToProps = (
-  dispatch: AppDispatch,
+  dispatch: store.AppDispatch,
   ownProps: OwnProps
 ): DispatchProps => ({
-  registerField: (fieldOptions: FieldOptions, page: PageType) =>
-    dispatch(registerField({fieldOptions, page})),
-  updateContent: (content: string, page: PageType) =>
+  registerField: (
+    fieldOptions: components.FieldOptions,
+    page: PageParamsType
+  ) => dispatch(registerField({fieldOptions, page})),
+  updateContent: (content: string, page: PageParamsType) =>
     dispatch(
       updatePageContent({content, fieldOptions: ownProps.fieldOptions, page})
     )
@@ -111,7 +114,7 @@ const EditableTextFieldContainer = connect<
   StateProps,
   DispatchProps,
   OwnProps,
-  RootState
+  store.RootState
 >(
   mapStateToProps,
   mapDispatchToProps

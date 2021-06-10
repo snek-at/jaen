@@ -14,7 +14,7 @@ import {
 import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router'
 
-import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '../Menu/utils'
+import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '~/components/Menu/utils'
 
 const {Text} = Typography
 const {Option} = Select

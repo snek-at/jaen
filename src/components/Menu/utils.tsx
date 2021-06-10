@@ -1,7 +1,7 @@
 import {GlobalOutlined, CarryOutOutlined} from '@ant-design/icons'
 
 // import * as React from 'react'
-import {CMSContextType} from '../../context'
+import {CMSContextType} from '../../contexts/context'
 import {PageIndex} from '../../store/types'
 import {ExplorerTDN} from '../Explorer/index'
 
@@ -17,7 +17,7 @@ export const transformIndexTree = (
   const getChildPageTypeNames = (typeName: string) =>
     cmsContext
       ?.getRegisteredPage(typeName)
-      ?.ChildPages.map(page => page.PageType)
+      ?.ChildPages.map(page => page.PageParamsType)
 
   const pages = index.pages
   const rootPage = pages[index.rootPageSlug]

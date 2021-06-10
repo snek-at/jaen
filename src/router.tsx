@@ -5,10 +5,9 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
+import {ConnectedPageType, PageParamsType} from '~/types'
 
-import {ConnectedPageType} from './components/pages/index'
-import {PageType} from './components/types'
-import {useCMSContext} from './context'
+import {useCMSContext} from './contexts/context'
 import {PageIndex} from './store/types'
 
 export const generateRoutes = (
@@ -16,9 +15,9 @@ export const generateRoutes = (
   index: PageIndex
 ) => {
   const findPageComponent = (typeName: string) =>
-    registeredPages.find(page => page.PageType === typeName)
+    registeredPages.find(page => page.PageParamsType === typeName)
 
-  const Page: React.FC<PageType & {typeName: string}> = props => {
+  const Page: React.FC<PageParamsType & {typeName: string}> = props => {
     const {typeName} = props
     const PageComponent = findPageComponent(typeName)
 
@@ -57,9 +56,11 @@ export const generateRoutes = (
     })
   }
 
-  const rootPage = pages[index.rootPageSlug]
+  if (pages) {
+    const rootPage = pages[index.rootPageSlug]
 
-  travelIndexTree(rootPage)
+    travelIndexTree(rootPage)
+  }
 
   return routes
 }

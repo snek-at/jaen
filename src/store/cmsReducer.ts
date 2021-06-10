@@ -7,10 +7,8 @@
  */
 import {createReducer} from '@reduxjs/toolkit'
 import merge from 'lodash/merge'
+import {components, PageParamsType} from '~/types'
 
-import {FieldOptions} from '~/components/types'
-
-import {PageType} from '../components/types'
 // import {PageNode} from '../components/Explorer/index'
 import {
   registerField,
@@ -40,7 +38,7 @@ const initialState: CMSState = {
 export const cmsReducer = createReducer(initialState, {
   [registerField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
-    const {name, block}: FieldOptions = fieldOptions
+    const {name, block}: components.FieldOptions = fieldOptions
 
     let pages = state.dataLayer.working.pages
 
@@ -107,8 +105,11 @@ export const cmsReducer = createReducer(initialState, {
       content,
       fieldOptions,
       page
-    }: {content: any; fieldOptions: FieldOptions; page: PageType} =
-      action.payload
+    }: {
+      content: any
+      fieldOptions: components.FieldOptions
+      page: PageParamsType
+    } = action.payload
 
     const {name, block} = fieldOptions
 
