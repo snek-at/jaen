@@ -1,5 +1,4 @@
-import React, {useContext, useEffect} from 'react'
-import {useSelector} from 'react-redux'
+import React from 'react'
 import {
   BrowserRouter as Router,
   BrowserRouterProps,
@@ -7,29 +6,17 @@ import {
   Switch
 } from 'react-router-dom'
 
-import {RootState} from '~/store/store'
-
 import {ConnectedPageType} from './components/pages/index'
 import {PageType} from './components/types'
-import {CMSContext} from './context'
+import {useCMSContext} from './context'
+import {PageIndex} from './store/types'
 
-type PageRouterProps = {
-  pages: ConnectedPageType[]
-} & BrowserRouterProps
-
-const PageRouter: React.FC<PageRouterProps> = ({
-  pages,
-  ...props
-}): JSX.Element => {
-  const context = useContext(CMSContext)
-  const index = useSelector((state: RootState) => state.cms.index)
-
-  useEffect(() => context?.setRegisteredPages(pages))
-
-  if (!index) return <></>
-
+export const generateRoutes = (
+  registeredPages: ConnectedPageType[],
+  index: PageIndex
+) => {
   const findPageComponent = (typeName: string) =>
-    pages.find(page => page.PageType === typeName)
+    registeredPages.find(page => page.PageType === typeName)
 
   const Page: React.FC<PageType & {typeName: string}> = props => {
     const {typeName} = props
@@ -42,51 +29,53 @@ const PageRouter: React.FC<PageRouterProps> = ({
     }
   }
 
-  const generateRoutes = () => {
-    const generateRoute = (
-      typeName: string,
-      slug: string,
-      path = '/',
-      key = 0
-    ) => (
-      <Route
-        exact
-        path={path}
-        render={props => <Page typeName={typeName} slug={slug} {...props} />}
-        key={key}
-      />
-    )
+  const generateRoute = (
+    typeName: string,
+    slug: string,
+    path = '/',
+    key = 0
+  ) => (
+    <Route
+      exact
+      path={path}
+      render={props => <Page typeName={typeName} slug={slug} {...props} />}
+      key={key}
+    />
+  )
 
-    const routes: JSX.Element[] = []
+  const routes: JSX.Element[] = []
 
-    const pages = index.pages
+  const pages = index.pages
 
-    const travelIndexTree = (page: typeof index.pages[string], path = '/') => {
-      const {typeName, slug, childSlugs} = page
+  const travelIndexTree = (page: typeof index.pages[string], path = '/') => {
+    const {typeName, slug, childSlugs} = page
 
-      routes.push(generateRoute(typeName, slug, path, routes.length))
+    routes.push(generateRoute(typeName, slug, path, routes.length))
 
-      childSlugs.forEach(childSlug => {
-        travelIndexTree(pages[childSlug], path + `${childSlug}/`)
-      })
-    }
-
-    const rootPage = pages[index.rootPageSlug]
-
-    travelIndexTree(rootPage)
-
-    return routes
+    childSlugs.forEach(childSlug => {
+      travelIndexTree(pages[childSlug], path + `${childSlug}/`)
+    })
   }
 
-  const routes = generateRoutes()
+  const rootPage = pages[index.rootPageSlug]
+
+  travelIndexTree(rootPage)
+
+  return routes
+}
+
+type PageRouterProps = {} & BrowserRouterProps
+
+const PageRouter: React.FC<PageRouterProps> = ({children}): JSX.Element => {
+  const {index, registeredPages} = useCMSContext()
 
   return (
     <Router basename={`/${process.env.PUBLIC_URL}`}>
       <Switch>
-        {props.children}
-        {routes}
+        {generateRoutes(registeredPages, index)}
         <Route component={() => <div>404 Not found </div>} />
       </Switch>
+      {children}
     </Router>
   )
 }

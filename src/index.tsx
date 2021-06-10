@@ -27,22 +27,26 @@ import PageRouter from './router'
 
 interface CMSProviderProps {
   bifrostUrls: {httpUrl: string; wssUrl?: string}
+  pages: ConnectedPageType[]
 }
 
 export const CMSProvider: React.FC<CMSProviderProps> = ({
   bifrostUrls,
+  pages,
   children
 }) => {
   const dispatch = useDispatch<AppDispatch>()
 
-  const [registeredPages, setRegisteredPages] = useState<ConnectedPageType[]>(
-    []
-  )
+  const [registeredPages, setRegisteredPages] =
+    useState<ConnectedPageType[]>(pages)
 
   const getRegisteredPage = (typeName: string) => {
     return registeredPages.find(page => page.PageType === typeName)
   }
 
+  const index = useSelector(
+    (state: RootState) => state.cms.index || ({} as PageIndex)
+  )
   const layerOrigCksm = useSelector(
     ({cms}: RootState) => cms.dataLayer.origCksm
   )
@@ -69,9 +73,12 @@ export const CMSProvider: React.FC<CMSProviderProps> = ({
 
   return (
     <CMSContext.Provider
-      value={{registeredPages, setRegisteredPages, getRegisteredPage}}>
-      <Menu />
-      {children}
+      value={{index, registeredPages, setRegisteredPages, getRegisteredPage}}>
+      <PageRouter>
+        <Menu />
+        {children}
+      </PageRouter>
+
       <img
         className="btn btn-dark btn-lg btn-floating cms-edit"
         src="https:avatars.githubusercontent.com/u/55870326?s=200&v=4"
@@ -100,9 +107,12 @@ ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
       <PersistGate loading={null} persistor={persistor}>
-        <CMSProvider bifrostUrls={{httpUrl: 'http://localhost:8000/graphql'}}>
-          <PageRouter pages={[HomePage]} />
-        </CMSProvider>
+        <CMSProvider
+          bifrostUrls={{
+            httpUrl: 'http://localhost:8000/graphql'
+          }}
+          pages={[HomePage]}
+        />
       </PersistGate>
     </React.StrictMode>
   </Provider>,
