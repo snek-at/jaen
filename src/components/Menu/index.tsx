@@ -82,7 +82,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
 
   useEffect(() => login(), [])
 
-  console.log(loadPages, publish, overrideWDLState, logout)
+  console.log(loadPages, publish, overrideWDLState)
 
   const [explorerIndexTree, setExplorerIndexTree] = useState<ExplorerTDN[]>()
   const [indexKeyRefs, setIndexKeyRefs] = useState<IndexKeyRefs>()
@@ -109,7 +109,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
       <Modal
         title="jaen"
         centered
-        visible={true}
+        visible={showMenu}
         onOk={toggleShow}
         onCancel={toggleShow}
         width={1000}
@@ -149,8 +149,8 @@ export const Menu: React.FC<CMSMenuProps> = ({
                       if (index?.pages[slug]) {
                         return false
                       }
-                      transferPageToIndex(node)
                     }
+                    transferPageToIndex(node)
                     return true
                   }}
                   onNodeDelete={deletePageFromIndex}

@@ -14,6 +14,8 @@ import {
 import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router'
 
+import {deepSearch} from '~/common/utils'
+
 import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '~/components/Menu/utils'
 
 const {Text} = Typography
@@ -63,25 +65,6 @@ const Editor: React.FC<EditorProps> = ({
     return parentKey
   }
 
-  const findNode = (
-    tree: ExplorerTDN[],
-    key: string
-  ): ExplorerTDN | undefined => {
-    for (const node of tree) {
-      if (node.key === key) {
-        return node
-      }
-    }
-
-    for (const node of tree) {
-      const children = node.children
-
-      if (children) {
-        return findNode(children, key)
-      }
-    }
-  }
-
   const onSelect = (selectedKeys: React.Key[], _info: any) => {
     // currently only supports single select
     const keyLength = selectedKeys.length
@@ -118,7 +101,11 @@ const Editor: React.FC<EditorProps> = ({
         const parentKey = getParentKey(key)
 
         // /home/subpage/ => /home/
-        const parentNode = findNode(newTree, parentKey)
+        const parentNode = deepSearch(
+          newTree,
+          'key',
+          (_k: any, v: any) => v === parentKey
+        ) as ExplorerTDN
 
         const indexToRemove = parentNode?.children?.findIndex(
           e => e.key === key
@@ -136,7 +123,11 @@ const Editor: React.FC<EditorProps> = ({
   const onNodeCreate = () => {
     if (selectedNode) {
       const newTree = [...tree]
-      const parentNode = findNode(newTree, selectedNode.key)
+      const parentNode = deepSearch(
+        newTree,
+        'key',
+        (_k: any, v: any) => v === selectedNode.key
+      ) as ExplorerTDN
 
       if (parentNode?.children) {
         const title = `draft-${parentNode.children.length}`

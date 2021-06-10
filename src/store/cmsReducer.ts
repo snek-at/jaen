@@ -183,13 +183,10 @@ export const cmsReducer = createReducer(initialState, {
   [transferPageToIndex.type]: (state, action) => {
     const {key, slug, title, typeName, isDraft} = action.payload
 
-    // /draft-1/ => /
-    let slugs = key.split('/')
-    slugs.splice(slugs.length - 2, 1)
-    const parentKey = slugs.join('')
-
     if (state.index) {
-      const parentSlug = parentKey === '' ? state.index.rootPageSlug : parentKey
+      const pathParts = (key as string).split('/').filter(item => item !== '')
+      const parentSlug =
+        pathParts[pathParts.length - 2] || state.index.rootPageSlug
 
       let childSlugs: string[] = []
       if (!isDraft) {

@@ -5,8 +5,6 @@ import {CMSContextType} from '../../contexts/context'
 import {PageIndex} from '../../store/types'
 import {ExplorerTDN} from '../Explorer/index'
 
-// Stupid workaround
-
 export type IndexKeyRefs = {[key: string]: PageIndex['pages'][string]}
 export type ChildPageTypeNamesKeyRefs = {[key: string]: string[] | undefined}
 
