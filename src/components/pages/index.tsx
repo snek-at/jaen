@@ -4,6 +4,7 @@ export type SkeletonPageProps = {typeName: string; slug: string}
 
 interface ISkeletonPage {
   PageType: string
+  ChildPages: SkeletonPageType[]
 }
 
 export type SkeletonPageType = React.ComponentType<SkeletonPageProps> &

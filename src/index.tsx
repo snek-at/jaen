@@ -5,42 +5,48 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-// import 'antd/dist/antd.css'
 import 'antd/dist/antd.css'
 import md5 from 'crypto-js/md5'
-import React, {useEffect} from 'react'
-import {connect} from 'react-redux'
+import React, {useEffect, useState} from 'react'
+import ReactDOM from 'react-dom'
+import {Provider, useDispatch, useSelector} from 'react-redux'
+import {PersistGate} from 'redux-persist/integration/react'
 
 import Menu from '~/components/Menu'
 
 import {overrideWDL, setIndex, toggleMenu} from '~/store/cmsActions'
-import {AppDispatch, RootState} from '~/store/store'
+import {AppDispatch, persistor, RootState, store} from '~/store/store'
 import {DataLayer, PageIndex} from '~/store/types'
 
 import {switchBridge} from './api'
-import './components/pages/index'
+import './cms.scss'
+import {SkeletonPageType, SkeletonPage} from './components/pages/index'
+import {CMSContext} from './context'
+import PageRouter from './router'
 
-//
-import 'antd/dist/antd.css'
-
-interface CMSProps {
-  toggleMenu: (state: boolean) => void
+interface CMSProviderProps {
   bifrostUrls: {httpUrl: string; wssUrl?: string}
-  layerOrigCksm?: string
-  shouldOverrideWDL: boolean
-  setIndex: (index: PageIndex) => void
-  overrideWDL: ({data, cksm}: {data: DataLayer; cksm: string}) => void
-  children: React.ReactNode
 }
 
-const CMSComponent: React.FC<CMSProps> = ({
+export const CMSProvider: React.FC<CMSProviderProps> = ({
   bifrostUrls,
-  layerOrigCksm,
-  shouldOverrideWDL,
-  setIndex,
-  overrideWDL,
-  ...props
+  children
 }) => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const [registeredPages, setRegisteredPages] = useState<SkeletonPageType[]>([])
+
+  const getRegisteredPage = (typeName: string) => {
+    return registeredPages.find(page => page.PageType === typeName)
+  }
+
+  const layerOrigCksm = useSelector(
+    ({cms}: RootState) => cms.dataLayer.origCksm
+  )
+  const shouldOverrideWDL = useSelector(
+    ({cms}: RootState) => cms.options.shouldOverrideWDL
+  )
+
   useEffect(() => {
     fetch(globalThis.location.origin + '/jaen-data.json').then(res =>
       res
@@ -49,8 +55,8 @@ const CMSComponent: React.FC<CMSProps> = ({
           const cksm = md5(JSON.stringify(data)).toString()
 
           if (cksm !== layerOrigCksm || shouldOverrideWDL) {
-            overrideWDL({data: data.dataLayer.origin, cksm})
-            setIndex(data.index)
+            dispatch(overrideWDL({data: data.dataLayer.origin, cksm}))
+            dispatch(setIndex(data.index))
           }
         })
     )
@@ -59,33 +65,53 @@ const CMSComponent: React.FC<CMSProps> = ({
   switchBridge(bifrostUrls)
 
   return (
-    <>
+    <CMSContext.Provider
+      value={{registeredPages, setRegisteredPages, getRegisteredPage}}>
       <Menu />
-      {props.children}
+      {children}
       <img
         className="btn btn-dark btn-lg btn-floating cms-edit"
-        src="https://avatars.githubusercontent.com/u/55870326?s=200&v=4"
+        src="https:avatars.githubusercontent.com/u/55870326?s=200&v=4"
         data-mdb-toggle="popover"
         title="Edit with snek"
-        onClick={() => props.toggleMenu(true)}
+        onClick={() => dispatch(toggleMenu(true))}
       />
-    </>
+    </CMSContext.Provider>
   )
 }
 
-const mapStateToProps = ({cms}: RootState) => ({
-  layerOrigCksm: cms.dataLayer.origCksm,
-  shouldOverrideWDL: cms.options.shouldOverrideWDL
-})
+const BlogPage: SkeletonPageType = class BlogPage extends SkeletonPage {
+  static PageType = 'BlogPage'
+  static get ChildPages() {
+    return []
+  }
 
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  setIndex: (index: PageIndex) => dispatch(setIndex(index)),
-  overrideWDL: ({data, cksm}: {data: DataLayer; cksm: string}) =>
-    dispatch(overrideWDL({data, cksm})),
-  toggleMenu: (state: boolean) => dispatch(toggleMenu(state))
-})
+  render() {
+    return <h1>HomePage</h1>
+  }
+}
 
-export const CMSWrapper = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CMSComponent)
+const HomePage: SkeletonPageType = class HomePage extends SkeletonPage {
+  static PageType = 'HomePage'
+  static get ChildPages(): any {
+    return [HomePage, BlogPage]
+  }
+
+  render() {
+    return <h1>HomePage</h1>
+  }
+}
+
+ReactDOM.render(
+  <Provider store={store}>
+    <React.StrictMode>
+      <PersistGate loading={null} persistor={persistor}>
+        <CMSProvider bifrostUrls={{httpUrl: 'http://localhost:8000/graphql'}}>
+          <PageRouter pages={[HomePage]} />
+        </CMSProvider>
+      </PersistGate>
+    </React.StrictMode>
+  </Provider>,
+
+  document.getElementById('root')
+)

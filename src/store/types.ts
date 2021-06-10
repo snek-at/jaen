@@ -29,14 +29,14 @@ export type DataLayer = {
 
 export type PageIndex = {
   checksum: string
-  tree: {
-    id: number
-    fields: {
-      type: string
+  rootPageSlug: string
+  pages: {
+    [slug: string]: {
       slug: string
       title: string
+      typeName: string
+      childSlugs: string[]
     }
-    nodes: PageIndex['tree'][]
   }
 }
 

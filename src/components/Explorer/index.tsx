@@ -13,56 +13,94 @@ import {
 } from 'antd'
 import React, {useState, useEffect} from 'react'
 
-import {PageIndex} from '../../store/types'
+import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '../Menu/utils'
 
 const {Text} = Typography
 const {Option} = Select
 
-type IndexKeyRefs = {[key: string]: PageIndex['tree']}
+export type ExplorerTDN = TreeDataNode
+
+export type PageNode = {
+  key: string
+  typeName?: string
+  slug?: string
+  title?: string
+  isDraft: boolean
+}
 
 interface EditorProps {
-  onNodeSave: () => void
-  onNodeDelete: () => void
-  indexTree: TreeDataNode[]
+  onNodeSave: (node: PageNode) => boolean
+  onNodeDelete: (page: PageNode) => void
+  indexTree: ExplorerTDN[]
   indexKeyRefs: IndexKeyRefs
+  childPageTypeNamesKeyRefs: ChildPageTypeNamesKeyRefs
 }
 
 const Editor: React.FC<EditorProps> = ({
   onNodeSave,
   onNodeDelete,
   indexKeyRefs,
-  indexTree
+  indexTree,
+  childPageTypeNamesKeyRefs
 }) => {
-  const [tree, setTree] = useState<TreeDataNode[]>(indexTree)
+  const [tree, setTree] = useState<ExplorerTDN[]>(indexTree)
 
   useEffect(() => {
     setTree(indexTree)
+    console.log('update tree', indexTree)
   }, [indexTree])
 
-  const [selectedNode, setSelectedNode] =
-    useState<{
-      key: string
-      typeName?: string
-      slug?: string
-      title?: string
-      isDraft: boolean
-    }>()
+  const [selectedNode, setSelectedNode] = useState<PageNode>()
 
-  const onSelect = (selectedKeys: React.Key[], info: any) => {
-    console.log('selected', selectedKeys, info)
+  const getParentKey = (key: string) => {
+    let slugs = key.split('/')
 
+    slugs.splice(slugs.length - 2, 1)
+
+    const parentKey = slugs.join('/')
+
+    return parentKey
+  }
+
+  const findNode = (
+    tree: ExplorerTDN[],
+    key: string
+  ): ExplorerTDN | undefined => {
+    for (const node of tree) {
+      if (node.key === key) {
+        return node
+      }
+    }
+
+    for (const node of tree) {
+      const children = node.children
+
+      if (children) {
+        return findNode(children, key)
+      }
+    }
+  }
+
+  const onSelect = (selectedKeys: React.Key[], _info: any) => {
+    console.log(childPageTypeNamesKeyRefs)
     // currently only supports single select
     const keyLength = selectedKeys.length
     if (keyLength === 1) {
       const key = selectedKeys[0].toString()
       const page = indexKeyRefs[key]
 
-      if (page) {
-        const {slug, title, type} = page.fields
+      console.log(indexKeyRefs, page)
 
-        setSelectedNode({key, slug, title, typeName: type, isDraft: false})
+      if (page) {
+        const {slug, title, typeName} = page
+
+        setSelectedNode({key, slug, title, typeName, isDraft: false})
       } else {
-        setSelectedNode({key, isDraft: true})
+        setSelectedNode({
+          key,
+          isDraft: true,
+          typeName: childPageTypeNamesKeyRefs?.[getParentKey(key)]?.[0]
+        })
       }
     } else if (keyLength > 1) {
     } else {
@@ -70,36 +108,71 @@ const Editor: React.FC<EditorProps> = ({
     }
   }
 
-  const onNodeCreate = () => {
-    console.log('create node on ', selectedNode)
+  const onDelete = () => {
+    if (selectedNode) {
+      if (selectedNode.isDraft === false) {
+        // call parent onNodeDelete
+        onNodeDelete(selectedNode)
+      } else {
+        // delete from tree
+        const newTree = [...tree]
+        const key = selectedNode.key
+        const parentKey = getParentKey(key)
 
-    const findNode = (tree: TreeDataNode[], key: string) => {
-      for (const node of tree) {
-        if (node.key === key) {
-          return node
-        }
+        // /home/subpage/ => /home/
+        const parentNode = findNode(newTree, parentKey)
 
-        const children = node.children
+        const indexToRemove = parentNode?.children?.findIndex(
+          e => e.key === key
+        )
 
-        if (children) {
-          findNode(children, key)
+        if (indexToRemove !== undefined && indexToRemove > -1) {
+          parentNode?.children?.splice(indexToRemove, 1)
+          setTree(newTree)
         }
       }
+      setSelectedNode(undefined)
     }
+  }
 
+  const onNodeCreate = () => {
     if (selectedNode) {
-      const newTree = {...tree}
+      const newTree = [...tree]
       const parentNode = findNode(newTree, selectedNode.key)
 
       if (parentNode?.children) {
         const title = `draft-${parentNode.children.length}`
         const key = `${parentNode.key + title}/`
-        parentNode?.children?.push({key, title, icon: <FormOutlined />})
+        parentNode?.children?.push({
+          key,
+          title,
+          icon: <FormOutlined />,
+          switcherIcon: <FormOutlined />
+        })
       }
 
       setTree(newTree)
     }
   }
+
+  const onSave = () => {
+    if (selectedNode) {
+      const {slug, title} = selectedNode
+
+      if (slug?.trim() && title?.trim()) {
+        if (onNodeSave(selectedNode)) {
+        } else {
+          console.error('cannot save')
+        }
+      } else {
+        console.error('cannot save')
+      }
+      setSelectedNode(undefined)
+    }
+  }
+
+  const childKeys =
+    childPageTypeNamesKeyRefs[getParentKey(selectedNode?.key || '')]
 
   return (
     <>
@@ -110,13 +183,25 @@ const Editor: React.FC<EditorProps> = ({
               <Divider orientation="left" plain>
                 Page type
               </Divider>
-              <Select
-                value={selectedNode.typeName}
-                // defaultValue={selectedNode.pageType}
-                onChange={(value: any) => console.log(value)}>
-                <Option value="HomePage">HomePage</Option>
-                <Option value="TestPage">TestPage</Option>
-              </Select>
+              {selectedNode.isDraft ? (
+                <Select
+                  defaultValue={selectedNode.typeName}
+                  onChange={(value: any) =>
+                    setSelectedNode({
+                      ...selectedNode,
+                      typeName: value
+                    })
+                  }>
+                  {childKeys?.map((e, key) => (
+                    <Option key={key} value={e}>
+                      {e}
+                    </Option>
+                  ))}
+                </Select>
+              ) : (
+                <>{selectedNode.typeName}</>
+              )}
+
               <Divider orientation="left" plain>
                 Properties
               </Divider>
@@ -131,6 +216,7 @@ const Editor: React.FC<EditorProps> = ({
                     })
                   }
                   value={selectedNode.slug}
+                  disabled={selectedNode.key === '/'}
                 />
                 <Input
                   prefix={<Text strong>Title</Text>}
@@ -149,25 +235,35 @@ const Editor: React.FC<EditorProps> = ({
         <Col span={6} pull={18}>
           <Tree
             showLine
+            height={400}
             showIcon={false}
-            defaultExpandedKeys={['/']}
+            defaultExpandAll
             onSelect={onSelect}
             treeData={tree}
           />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
-        <Col span={4} push={20}>
-          <Button danger type="primary" onClick={onNodeDelete}>
-            Delete
-          </Button>
-          <Button type="primary" onClick={onNodeSave}>
-            Save
-          </Button>
-        </Col>
-        <Col span={2} pull={4}>
-          {!selectedNode?.isDraft && <Button onClick={onNodeCreate}>+</Button>}
-        </Col>
+        {selectedNode && (
+          <>
+            <Col span={4} push={20}>
+              {selectedNode.key !== '/' && (
+                <Button danger type="primary" onClick={onDelete}>
+                  Delete
+                </Button>
+              )}
+              <Button type="primary" onClick={onSave}>
+                Save
+              </Button>
+            </Col>
+            <Col span={2} pull={4}>
+              {selectedNode.isDraft === false &&
+                childPageTypeNamesKeyRefs[selectedNode.key] && (
+                  <Button onClick={onNodeCreate}>+</Button>
+                )}
+            </Col>
+          </>
+        )}
       </Row>
     </>
   )

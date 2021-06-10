@@ -17,9 +17,10 @@ import Modal from 'antd/lib/modal/Modal'
 //   MDBModalBody,
 //   MDBModalFooter
 // } from 'mdb-react-ui-kit'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 // import ReactJson from 'react-json-view'
 import {connect} from 'react-redux'
+import {CMSContext} from '~/context'
 
 import LoginForm from '~/components/forms/Login'
 
@@ -30,14 +31,22 @@ import {
   discardEditing,
   loadPages,
   publish,
-  setOverrideWDLState
+  setOverrideWDLState,
+  deletePageFromIndex
 } from '~/store/cmsActions'
 import {AppDispatch} from '~/store/store'
 import {RootState, AuthState, CMSState} from '~/store/types'
 
+import {transferPageToIndex} from '../../store/cmsActions'
 import Explorer from '../Explorer/index'
+import {ExplorerTDN, PageNode} from '../Explorer/index'
 import {LoginFormValues} from '../forms/Login'
 import './cmsmenu.scss'
+import {
+  transformIndexTree,
+  IndexKeyRefs,
+  ChildPageTypeNamesKeyRefs
+} from './utils'
 
 type StateProps = AuthState & CMSState
 
@@ -50,6 +59,8 @@ type DispatchProps = {
   overrideWDLState: () => void
   login: (creds?: {username: string; password: string}) => void
   logout: () => void
+  transferPageToIndex: (page: PageNode) => void
+  deletePageFromIndex: (page: PageNode) => void
 }
 
 type OwnProps = {}
@@ -68,7 +79,9 @@ export const Menu: React.FC<CMSMenuProps> = ({
   publish,
   overrideWDLState,
   login,
-  logout
+  logout,
+  transferPageToIndex,
+  deletePageFromIndex
 }) => {
   const [view, setView] = useState<'EXPLORER' | 'EDITING'>('EXPLORER')
 
@@ -96,15 +109,33 @@ export const Menu: React.FC<CMSMenuProps> = ({
     logout
   )
 
-  // useEffect(() => {
-  //   if (authenticated) loadIndex(index?.checksum || '')
+  const [explorerIndexTree, setExplorerIndexTree] = useState<ExplorerTDN[]>()
+  const [indexKeyRefs, setIndexKeyRefs] = useState<IndexKeyRefs>()
+  const [childPageTypeNamesKeyRefs, setChildPageTypeNamesKeyRefs] =
+    useState<ChildPageTypeNamesKeyRefs>()
 
-  //   const interval = setInterval(() => {
-  //     if (authenticated) loadIndex(index?.checksum || '')
-  //   }, 1000 * 60 * 2)
+  const cmsContext = useContext(CMSContext)
 
-  //   return () => clearInterval(interval)
-  // }, [index?.checksum, authenticated])
+  console.log('CONTEXT', cmsContext)
+
+  useEffect(() => {
+    if (index) {
+      if (cmsContext) {
+        const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} =
+          transformIndexTree(index, cmsContext)
+
+        setExplorerIndexTree(treeData)
+        setIndexKeyRefs(indexKeyRefs)
+        setChildPageTypeNamesKeyRefs(childPageTypeNamesKeyRefs)
+      }
+    }
+  }, [index, cmsContext])
+
+  console.log(childPageTypeNamesKeyRefs)
+
+  // const context = useContext(CMSContext)
+
+  // console.log(context?.registeredPages, context?.getRegisteredPage('HomePage'))
 
   return (
     <>
@@ -124,14 +155,22 @@ export const Menu: React.FC<CMSMenuProps> = ({
           <LoginForm onFinish={onLogin} />
         ) : (
           <>
-            {view === 'EXPLORER' && index && (
-              <Explorer
-                onPageCreate={() => null}
-                onPageSave={() => null}
-                onPageDelete={() => null}
-                index={index}
-              />
-            )}
+            {view === 'EXPLORER' &&
+              explorerIndexTree &&
+              indexKeyRefs &&
+              childPageTypeNamesKeyRefs && (
+                <Explorer
+                  onNodeSave={node => {
+                    console.log(node)
+                    transferPageToIndex(node)
+                    return true
+                  }}
+                  onNodeDelete={slug => deletePageFromIndex(slug)}
+                  indexTree={explorerIndexTree}
+                  indexKeyRefs={indexKeyRefs}
+                  childPageTypeNamesKeyRefs={childPageTypeNamesKeyRefs}
+                />
+              )}
           </>
         )}
       </Modal>
@@ -155,7 +194,9 @@ const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
   overrideWDLState: () => dispatch(setOverrideWDLState(true)),
   login: (creds?: {username: string; password: string}) =>
     dispatch(login({creds})),
-  logout: () => dispatch(logout())
+  logout: () => dispatch(logout()),
+  transferPageToIndex: (page: PageNode) => dispatch(transferPageToIndex(page)),
+  deletePageFromIndex: (page: PageNode) => dispatch(deletePageFromIndex(page))
 })
 
 const MenuContainer = connect<StateProps, DispatchProps, OwnProps, RootState>(

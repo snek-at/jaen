@@ -24,7 +24,8 @@ import {cmsReducer} from './cmsReducer'
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage
+  storage,
+  blacklist: ['auth']
 }
 
 const persistedReducer = persistReducer(

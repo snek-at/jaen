@@ -8,6 +8,7 @@
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
 
 import {DropAPI, DropAPIReferences} from '../api'
+import {PageNode} from '../components/Explorer/index'
 import {FieldOptions} from '../components/types'
 // import {RootState} from './store'
 import {DataLayer, PageIndex} from './types'
@@ -30,6 +31,13 @@ export const updatePageContent = createAction<{
 }>('cms/updatePageContent')
 
 export const setIndex = createAction<PageIndex>('cms/setIndex')
+
+export const transferPageToIndex = createAction<PageNode>(
+  'cms/transferPageToIndex'
+)
+export const deletePageFromIndex = createAction<PageNode>(
+  'cms/deletePageFromIndex'
+)
 
 export const loadPages = createAsyncThunk<
   {},

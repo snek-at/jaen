@@ -10,6 +10,7 @@ import merge from 'lodash/merge'
 
 import {FieldOptions} from '~/components/types'
 
+// import {PageNode} from '../components/Explorer/index'
 import {
   registerField,
   toggleMenu,
@@ -20,7 +21,9 @@ import {
   overrideWDL,
   setOverrideWDLState,
   updatePageContent,
-  setIndex
+  setIndex,
+  transferPageToIndex,
+  deletePageFromIndex
 } from './cmsActions'
 import {CMSState} from './types'
 
@@ -168,8 +171,64 @@ export const cmsReducer = createReducer(initialState, {
     }
   },
   [setIndex.type]: (state, action) => {
-    const {checksum, tree} = action.payload
-    state.index = {checksum, tree}
+    state.index = action.payload
+  },
+  [transferPageToIndex.type]: (state, action) => {
+    const {key, slug, title, typeName, isDraft} = action.payload
+
+    // /draft-1/ => /
+    let slugs = key.split('/')
+    slugs.splice(slugs.length - 2, 1)
+    const parentKey = slugs.join('')
+
+    if (state.index) {
+      const parentSlug = parentKey === '' ? state.index.rootPageSlug : parentKey
+
+      let childSlugs: string[] = []
+      if (!isDraft) {
+        const slugs = key.split('/')
+        const oldSlug = slugs[slugs.length - 2]
+
+        childSlugs = state.index.pages[oldSlug].childSlugs
+
+        delete state.index.pages[oldSlug]
+        state.index.pages[parentSlug].childSlugs = state.index.pages[
+          parentSlug
+        ].childSlugs.filter(e => e !== oldSlug)
+      }
+
+      state.index.pages = {
+        ...state.index.pages,
+        [slug]: {
+          slug,
+          title,
+          typeName,
+          childSlugs: isDraft ? [] : childSlugs
+        },
+        [parentSlug]: {
+          ...state.index.pages[parentSlug],
+          childSlugs: [...state.index.pages[parentSlug].childSlugs, slug]
+        }
+      }
+    }
+  },
+  [deletePageFromIndex.type]: (state, action) => {
+    const {key, slug, isDraft} = action.payload
+
+    let slugs = key.split('/')
+    slugs.splice(slugs.length - 2, 1)
+    const parentKey = slugs.join('')
+
+    if (state.index) {
+      const parentSlug = parentKey === '' ? state.index.rootPageSlug : parentKey
+
+      if (!isDraft) {
+        delete state.index.pages[slug]
+        state.index.pages[parentSlug].childSlugs = state.index.pages[
+          parentSlug
+        ].childSlugs.filter(e => e !== slug)
+      }
+    }
   },
   [loadPages.fulfilled.type]: (state, action) => {
     const pages = action.payload

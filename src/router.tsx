@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import {
   BrowserRouter as Router,
@@ -9,6 +9,7 @@ import {
 import {RootState} from '~/store/store'
 
 import {SkeletonPageType, SkeletonPageProps} from './components/pages/index'
+import {CMSContext} from './context'
 
 type PageRouterProps = {
   pages: SkeletonPageType[]
@@ -18,9 +19,12 @@ const PageRouter: React.FC<PageRouterProps> = ({
   pages,
   ...props
 }): JSX.Element => {
-  const tree = useSelector((state: RootState) => state.cms.index?.tree)
+  const context = useContext(CMSContext)
+  const index = useSelector((state: RootState) => state.cms.index)
 
-  if (!tree) return <></>
+  useEffect(() => context?.setRegisteredPages(pages))
+
+  if (!index) return <></>
 
   const findPageComponent = (typeName: string) =>
     pages.find(page => page.PageType === typeName)
@@ -53,23 +57,26 @@ const PageRouter: React.FC<PageRouterProps> = ({
 
     const routes: JSX.Element[] = []
 
-    const travelIndexTree = (node: typeof tree, path = '/') => {
-      routes.push(
-        generateRoute(node.fields.type, node.fields.slug, path, routes.length)
-      )
+    const pages = index.pages
 
-      node.nodes.forEach(childNode => {
-        travelIndexTree(childNode, (path += `${childNode.fields.slug}/`))
+    const travelIndexTree = (page: typeof index.pages[string], path = '/') => {
+      const {typeName, slug, childSlugs} = page
+
+      routes.push(generateRoute(typeName, slug, path, routes.length))
+
+      childSlugs.forEach(childSlug => {
+        travelIndexTree(pages[childSlug], (path += `${childSlug}/`))
       })
     }
 
-    travelIndexTree(tree)
+    const rootPage = pages[index.rootPageSlug]
+    console.log(index)
+    travelIndexTree(rootPage)
 
     return routes
   }
 
   const routes = generateRoutes()
-
   return (
     <Router>
       {props.children}
