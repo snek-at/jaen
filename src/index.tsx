@@ -19,9 +19,10 @@ const HomePage: ConnectedPageType = ({slug}) => {
         <TextField fieldOptions={{name: 'testfield'}} />
         <IndexField
           outerElement={() => <div />}
-          renderItem={(item, key) => (
+          renderItem={(item, key, navigate) => (
             <p key={key}>
-              Slug: {item.slug} Title: {item.title}
+              Slug: {item.slug} Title: {item.title}{' '}
+              <p onClick={() => navigate()}>Goto</p>
             </p>
           )}
         />

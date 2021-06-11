@@ -1,7 +1,9 @@
 import {Select} from 'antd'
+import pickBy from 'lodash/pickBy'
 import React, {useEffect, useRef, useState} from 'react'
 import {useSelector} from 'react-redux'
-import {useCMSPageContext} from '~/contexts/context'
+import {useHistory} from 'react-router'
+import {useCMSPageContext, useCMSContext} from '~/contexts/context'
 import {store} from '~/types'
 
 const {Option} = Select
@@ -10,11 +12,17 @@ type DataElement = store.PageIndex['pages'][string]
 
 type IndexFieldProps = {
   outerElement(dataSource?: DataElement[]): React.ReactElement
-  renderItem: (value: DataElement, key: number) => React.ReactElement
+  renderItem: (
+    value: DataElement,
+    key: number,
+    navigate: () => void
+  ) => React.ReactElement
 }
 
 const IndexField: React.FC<IndexFieldProps> = props => {
-  const context = useCMSPageContext()
+  const history = useHistory()
+  const cmsContext = useCMSContext()
+  const pageContext = useCMSPageContext()
 
   const editing = useSelector(
     (state: store.RootState) => state.cms.options.editing
@@ -32,16 +40,23 @@ const IndexField: React.FC<IndexFieldProps> = props => {
   })
 
   const {outerElement, renderItem} = props
-  const dataSource = context.getChildPagesFromIndex()
+  const dataSource = pageContext.getChildPagesFromIndex()
   const filteredDataSource = dataSource.filter(
-    x => !context.getHiddenSlugs().includes(x.slug)
+    x => !pageContext.getHiddenSlugs().includes(x.slug)
   )
   const selectDefaultValues = filteredDataSource.map(e => e.slug)
+
+  const getKeyFromSlug = (slug: string) => {
+    const refs = cmsContext.keyRefs?.indexKey
+    return Object.keys(pickBy(refs, page => page.slug === slug))[0] || ''
+  }
 
   const wrapper = React.cloneElement(outerElement(dataSource), {
     ref,
     children: filteredDataSource.map((e, key) =>
-      React.cloneElement(renderItem(e, key))
+      React.cloneElement(
+        renderItem(e, key, () => history.push(getKeyFromSlug(e.slug)))
+      )
     )
   })
 
@@ -50,7 +65,7 @@ const IndexField: React.FC<IndexFieldProps> = props => {
       .map(e => e.slug)
       .filter(x => !slugs.includes(x))
 
-    context.setHiddenChildSlugs(newHiddenChildSlugs)
+    pageContext.setHiddenChildSlugs(newHiddenChildSlugs)
   }
 
   return (
