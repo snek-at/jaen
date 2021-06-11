@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A react cms solution",
   "scripts": {
-    "type-check": "tsc --noEmit",
+    "type-check": "ttsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "build": "npm run build:types && npm run build:js",
-    "build:types": "tsc --emitDeclarationOnly",
+    "build:types": "ttsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline --ignore \"src/**/*.test.ts\" --copy-files"
   },
   "main": "lib/index.js",
@@ -47,7 +47,9 @@
     "eslint-plugin-react": "^7.24.0",
     "prettier": "^2.2.1",
     "redux-devtools-extension": "^2.13.9",
-    "typescript": "^4.2.4"
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.2.4",
+    "typescript-transform-paths": "^2.2.4"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",

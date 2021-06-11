@@ -31,7 +31,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
-    "noEmit": false
+    "noEmit": false,
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      },
+    ]
   },
   "exclude": [
     "lib",
