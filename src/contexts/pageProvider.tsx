@@ -38,11 +38,11 @@ const PageProvider: React.FC<PageProviderProps> = ({
 
   const editingHiddenSlugs = useSelector(
     ({cms}: store.RootState) =>
-      cms.dataLayer.editing.pages[page.slug].hiddenChildSlugs
+      cms.dataLayer.editing.pages[page.slug]?.hiddenChildSlugs
   )
   const workingHiddenSlugs = useSelector(
     ({cms}: store.RootState) =>
-      cms.dataLayer.working.pages[page.slug].hiddenChildSlugs
+      cms.dataLayer.working.pages[page.slug]?.hiddenChildSlugs || []
   )
 
   const getHiddenSlugs = () => {
