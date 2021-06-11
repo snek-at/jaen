@@ -1,4 +1,6 @@
-import {CMSState} from '../store/types'
+import {store} from '~/types'
+
+export type {ExplorerTDN} from './Explorer'
 
 export interface FieldOptions {
   name: string
@@ -7,5 +9,5 @@ export interface FieldOptions {
 
 export interface CMSEditableProps {
   editable: boolean
-  workingLayer: CMSState['dataLayer']['working']
+  workingLayer: store.CMSState['dataLayer']['working']
 }

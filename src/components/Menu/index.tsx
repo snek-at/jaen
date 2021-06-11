@@ -6,13 +6,13 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {Button, Divider, Row, Space, Modal} from 'antd'
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 import ReactJson from 'react-json-view'
 import {connect} from 'react-redux'
-import {CMSContext} from '~/contexts/context'
+import {useCMSContext} from '~/contexts/context'
 import {store} from '~/types'
 
-import Explorer, {ExplorerTDN, PageNode} from '~/components/Explorer/index'
+import Explorer, {PageNode} from '~/components/Explorer/index'
 import LoginForm from '~/components/forms/Login'
 import {LoginFormValues} from '~/components/forms/Login'
 
@@ -29,11 +29,6 @@ import {
 } from '~/store/cmsActions'
 
 import './cmsmenu.scss'
-import {
-  transformIndexTree,
-  IndexKeyRefs,
-  ChildPageTypeNamesKeyRefs
-} from './utils'
 
 type StateProps = store.AuthState & store.CMSState
 
@@ -83,25 +78,9 @@ export const Menu: React.FC<CMSMenuProps> = ({
 
   useEffect(() => login(), [])
 
-  const [explorerIndexTree, setExplorerIndexTree] = useState<ExplorerTDN[]>()
-  const [indexKeyRefs, setIndexKeyRefs] = useState<IndexKeyRefs>()
-  const [childPageTypeNamesKeyRefs, setChildPageTypeNamesKeyRefs] =
-    useState<ChildPageTypeNamesKeyRefs>()
+  const cmsContext = useCMSContext()
 
-  const cmsContext = useContext(CMSContext)
-
-  useEffect(() => {
-    if (index) {
-      if (cmsContext) {
-        const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} =
-          transformIndexTree(index, cmsContext)
-
-        setExplorerIndexTree(treeData)
-        setIndexKeyRefs(indexKeyRefs)
-        setChildPageTypeNamesKeyRefs(childPageTypeNamesKeyRefs)
-      }
-    }
-  }, [index, cmsContext])
+  const {treeData, keyRefs} = cmsContext
 
   return (
     <>
@@ -137,27 +116,24 @@ export const Menu: React.FC<CMSMenuProps> = ({
           <LoginForm onFinish={onLogin} />
         ) : (
           <>
-            {view === 'EXPLORER' &&
-              explorerIndexTree &&
-              indexKeyRefs &&
-              childPageTypeNamesKeyRefs && (
-                <Explorer
-                  onNodeSave={node => {
-                    const {isDraft, slug} = node
-                    if (isDraft && slug) {
-                      if (index?.pages[slug]) {
-                        return false
-                      }
+            {view === 'EXPLORER' && treeData && keyRefs && (
+              <Explorer
+                onNodeSave={node => {
+                  const {isDraft, slug} = node
+                  if (isDraft && slug) {
+                    if (index?.pages[slug]) {
+                      return false
                     }
-                    transferPageToIndex(node)
-                    return true
-                  }}
-                  onNodeDelete={deletePageFromIndex}
-                  indexTree={explorerIndexTree}
-                  indexKeyRefs={indexKeyRefs}
-                  childPageTypeNamesKeyRefs={childPageTypeNamesKeyRefs}
-                />
-              )}
+                  }
+                  transferPageToIndex(node)
+                  return true
+                }}
+                onNodeDelete={deletePageFromIndex}
+                indexTree={treeData}
+                indexKeyRefs={keyRefs.indexKey}
+                childPageTypeNamesKeyRefs={keyRefs.childPageTypeNamesKey}
+              />
+            )}
             {view === 'EXPERT' && (
               <>
                 <ReactJson

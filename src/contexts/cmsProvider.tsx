@@ -10,7 +10,7 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {switchBridge} from '~/api'
 import PageRouter from '~/router'
-import {store, ConnectedPageType} from '~/types'
+import {store, components, ConnectedPageType} from '~/types'
 
 import Menu from '~/components/Menu'
 
@@ -18,6 +18,11 @@ import {overrideWDL, setIndex, toggleMenu} from '~/store/cmsActions'
 import {AppDispatch} from '~/store/store'
 
 import {CMSContext} from './context'
+import {
+  IndexKeyRefs,
+  ChildPageTypeNamesKeyRefs,
+  transformIndexTree
+} from './utils'
 
 interface CMSProviderProps {
   bifrostUrls: {httpUrl: string; wssUrl?: string}
@@ -38,6 +43,9 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
     return registeredPages.find(page => page.PageParamsType === typeName)
   }
 
+  const getChildPageTypeNames = (typeName: string) =>
+    getRegisteredPage(typeName)?.ChildPages.map(page => page.PageParamsType)
+
   const index = useSelector(
     (state: store.RootState) => state.cms.index || ({} as store.PageIndex)
   )
@@ -47,6 +55,24 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   const shouldOverrideWDL = useSelector(
     ({cms}: store.RootState) => cms.options.shouldOverrideWDL
   )
+
+  const [treeData, setTreeData] = useState<components.ExplorerTDN[]>()
+
+  const [keyRefs, setKeyRefs] = useState<{
+    indexKey: IndexKeyRefs
+    childPageTypeNamesKey: ChildPageTypeNamesKeyRefs
+  }>()
+
+  useEffect(() => {
+    const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} =
+      transformIndexTree(index, getChildPageTypeNames)
+
+    setTreeData(treeData)
+    setKeyRefs({
+      indexKey: indexKeyRefs,
+      childPageTypeNamesKey: childPageTypeNamesKeyRefs
+    })
+  }, [index])
 
   useEffect(() => {
     fetch(globalThis.location.origin + '/jaen-data.json').then(res =>
@@ -72,7 +98,14 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
 
   return (
     <CMSContext.Provider
-      value={{index, registeredPages, setRegisteredPages, getRegisteredPage}}>
+      value={{
+        index,
+        registeredPages,
+        treeData,
+        keyRefs,
+        setRegisteredPages,
+        getRegisteredPage
+      }}>
       <PageRouter>
         <Menu />
         {children}

@@ -1,22 +1,16 @@
 import {GlobalOutlined, CarryOutOutlined} from '@ant-design/icons'
+import {store} from '~/types'
+import {components} from '~/types'
 
 // import * as React from 'react'
-import {CMSContextType} from '../../contexts/context'
-import {PageIndex} from '../../store/types'
-import {ExplorerTDN} from '../Explorer/index'
 
-export type IndexKeyRefs = {[key: string]: PageIndex['pages'][string]}
+export type IndexKeyRefs = {[key: string]: store.PageIndex['pages'][string]}
 export type ChildPageTypeNamesKeyRefs = {[key: string]: string[] | undefined}
 
 export const transformIndexTree = (
-  index: PageIndex,
-  cmsContext: CMSContextType
+  index: store.PageIndex,
+  getChildPageTypeNames: (typeName: string) => string[] | undefined
 ) => {
-  const getChildPageTypeNames = (typeName: string) =>
-    cmsContext
-      ?.getRegisteredPage(typeName)
-      ?.ChildPages.map(page => page.PageParamsType)
-
   const pages = index.pages
   const rootPage = pages[index.rootPageSlug]
 
@@ -28,8 +22,8 @@ export const transformIndexTree = (
   }
 
   const transformNode = (
-    page: PageIndex['pages'][string],
-    buildTree: ExplorerTDN = {
+    page: store.PageIndex['pages'][string],
+    buildTree: components.ExplorerTDN = {
       key: '/',
       title: (
         <>
