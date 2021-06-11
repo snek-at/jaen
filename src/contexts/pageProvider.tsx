@@ -40,9 +40,9 @@ const PageProvider: React.FC<PageProviderProps> = ({
     ({cms}: store.RootState) => {
       return {
         editingHiddenSlugs:
-          cms.dataLayer.editing.pages[page.slug].hiddenChildSlugs,
+          cms.dataLayer.editing.pages[page.slug]?.hiddenChildSlugs,
         workingHiddenSlugs:
-          cms.dataLayer.working.pages[page.slug].hiddenChildSlugs
+          cms.dataLayer.working.pages[page.slug]?.hiddenChildSlugs || []
       }
     }
   )
