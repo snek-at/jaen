@@ -93,6 +93,7 @@ export const cmsReducer = createReducer(initialState, {
     state.options.shouldOverrideWDL = false
   },
   [discardEditing.type]: (state, _action) => {
+    state.options.editing = false
     state.dataLayer.editing = {pages: {}}
     state.dataLayer = {
       ...state.dataLayer,
@@ -242,7 +243,15 @@ export const cmsReducer = createReducer(initialState, {
   [setHiddenChildSlugs.type]: (state, action) => {
     const {page, hiddenChildSlugs} = action.payload
 
-    state.dataLayer.editing.pages[page.slug].hiddenChildSlugs = hiddenChildSlugs
+    const slug = page.slug
+
+    state.dataLayer.editing.pages = {
+      ...state.dataLayer.editing.pages,
+      [slug]: {
+        ...state.dataLayer.editing.pages[slug],
+        hiddenChildSlugs
+      }
+    }
   },
   [loadPages.fulfilled.type]: (state, action) => {
     const pages = action.payload
