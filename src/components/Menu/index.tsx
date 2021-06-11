@@ -82,7 +82,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
 
   useEffect(() => login(), [])
 
-  console.log(loadPages, publish, overrideWDLState)
 
   const [explorerIndexTree, setExplorerIndexTree] = useState<ExplorerTDN[]>()
   const [indexKeyRefs, setIndexKeyRefs] = useState<IndexKeyRefs>()

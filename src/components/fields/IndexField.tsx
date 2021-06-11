@@ -15,7 +15,6 @@ type IndexFieldProps = {
 
 const IndexField: React.FC<IndexFieldProps> = props => {
   const context = useCMSPageContext()
-  console.log(context)
 
   const editing = useSelector(
     (state: store.RootState) => state.cms.options.editing
@@ -50,13 +49,6 @@ const IndexField: React.FC<IndexFieldProps> = props => {
     let newHiddenChildSlugs = dataSource
       .map(e => e.slug)
       .filter(x => !slugs.includes(x))
-
-    console.log(
-      'newHiddenChildSlugs',
-      newHiddenChildSlugs,
-      slugs,
-      selectDefaultValues
-    )
 
     context.setHiddenChildSlugs(newHiddenChildSlugs)
   }

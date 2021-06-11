@@ -47,8 +47,6 @@ const PageProvider: React.FC<PageProviderProps> = ({
     }
   )
 
-  console.log(editingHiddenSlugs, workingHiddenSlugs)
-
   const getHiddenSlugs = () => {
     return editingHiddenSlugs ? editingHiddenSlugs : workingHiddenSlugs
   }
