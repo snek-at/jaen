@@ -70,6 +70,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
   transferPageToIndex,
   deletePageFromIndex
 }) => {
+  console.log(loadPages, publish, overrideWDLState)
   const [view, setView] = useState<'EXPLORER' | 'EXPERT'>('EXPLORER')
 
   const {showMenu, editing} = options
@@ -81,7 +82,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   }
 
   useEffect(() => login(), [])
-
 
   const [explorerIndexTree, setExplorerIndexTree] = useState<ExplorerTDN[]>()
   const [indexKeyRefs, setIndexKeyRefs] = useState<IndexKeyRefs>()

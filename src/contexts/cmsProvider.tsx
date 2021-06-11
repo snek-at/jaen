@@ -79,9 +79,9 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       </PageRouter>
 
       <img
-        className="btn btn-dark btn-lg btn-floating cms-edit"
+        className="cms-edit"
+        style={{maxWidth: 50}}
         src="https:avatars.githubusercontent.com/u/55870326?s=200&v=4"
-        data-mdb-toggle="popover"
         title="Edit with snek"
         onClick={() => dispatch(toggleMenu(true))}
       />
