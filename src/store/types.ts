@@ -23,6 +23,7 @@ export type DataLayer = {
           }
         }
       }
+      hiddenChildSlugs: string[]
     }
   }
 }

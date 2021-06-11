@@ -17,7 +17,8 @@
               }
             }
           },
-          "typeName": "HomePage"
+          "typeName": "HomePage",
+          "hiddenChildSlugs": ["blog-1"]
         }
       }
     }
@@ -28,7 +29,7 @@
     "pages": {
       "home": {
         "slug": "home",
-        "title": "My HomePage Updated4",
+        "title": "My HomePage",
         "typeName": "HomePage",
         "childSlugs": ["blog-1"]
       },

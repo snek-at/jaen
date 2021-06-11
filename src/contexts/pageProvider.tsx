@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {CMSPageContext} from '~/contexts/context'
 import {store, PageParamsType} from '~/types'
+
+import {setHiddenChildSlugs as setHiddenChildSlugsAction} from '~/store/cmsActions'
 
 interface IConnectedPageType {
   PageParamsType: string
@@ -17,7 +19,12 @@ const PageProvider: React.FC<PageProviderProps> = ({
   slug,
   typeName
 }) => {
+  const dispatch = useDispatch<store.AppDispatch>()
+
   const [page, _setPage] = useState<PageParamsType>({slug, typeName})
+
+  const setHiddenChildSlugs = (hiddenChildSlugs: string[]) =>
+    dispatch(setHiddenChildSlugsAction({page, hiddenChildSlugs}))
 
   const index = useSelector(({cms}: store.RootState) => cms.index)
 
@@ -29,8 +36,31 @@ const PageProvider: React.FC<PageProviderProps> = ({
     )
   }
 
+  const {editingHiddenSlugs, workingHiddenSlugs} = useSelector(
+    ({cms}: store.RootState) => {
+      return {
+        editingHiddenSlugs:
+          cms.dataLayer.editing.pages[page.slug].hiddenChildSlugs,
+        workingHiddenSlugs:
+          cms.dataLayer.working.pages[page.slug].hiddenChildSlugs
+      }
+    }
+  )
+
+  console.log(editingHiddenSlugs, workingHiddenSlugs)
+
+  const getHiddenSlugs = () => {
+    return editingHiddenSlugs ? editingHiddenSlugs : workingHiddenSlugs
+  }
+
   return (
-    <CMSPageContext.Provider value={{page, getChildPagesFromIndex}}>
+    <CMSPageContext.Provider
+      value={{
+        page,
+        getChildPagesFromIndex,
+        getHiddenSlugs,
+        setHiddenChildSlugs
+      }}>
       {children}
     </CMSPageContext.Provider>
   )

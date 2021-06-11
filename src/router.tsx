@@ -71,7 +71,7 @@ const PageRouter: React.FC<PageRouterProps> = ({children}): JSX.Element => {
   const {index, registeredPages} = useCMSContext()
 
   return (
-    <Router basename={`/${process.env.PUBLIC_URL}`}>
+    <Router>
       <Switch>
         {generateRoutes(registeredPages, index)}
         <Route component={() => <div>404 Not found </div>} />

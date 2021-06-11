@@ -9,6 +9,8 @@ import {createReducer} from '@reduxjs/toolkit'
 import merge from 'lodash/merge'
 import {components, PageParamsType} from '~/types'
 
+import {setHiddenChildSlugs} from '~/store/cmsActions'
+
 // import {PageNode} from '../components/Explorer/index'
 import {
   registerField,
@@ -236,6 +238,11 @@ export const cmsReducer = createReducer(initialState, {
         ].childSlugs.filter(e => e !== slug)
       }
     }
+  },
+  [setHiddenChildSlugs.type]: (state, action) => {
+    const {page, hiddenChildSlugs} = action.payload
+
+    state.dataLayer.editing.pages[page.slug].hiddenChildSlugs = hiddenChildSlugs
   },
   [loadPages.fulfilled.type]: (state, action) => {
     const pages = action.payload

@@ -43,6 +43,11 @@ export const deletePageFromIndex = createAction<PageNode>(
   'cms/deletePageFromIndex'
 )
 
+export const setHiddenChildSlugs = createAction<{
+  page: PageParamsType
+  hiddenChildSlugs: string[]
+}>('cms/setHiddenChildSlugs')
+
 export const loadPages = createAsyncThunk<
   {},
   undefined,

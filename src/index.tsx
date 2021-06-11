@@ -3,7 +3,13 @@ import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 
-import {ConnectedPageType, CMSProvider, PageProvider, TextField} from './root'
+import {
+  ConnectedPageType,
+  CMSProvider,
+  PageProvider,
+  TextField,
+  IndexField
+} from './root'
 import {persistor, store} from './store/store'
 
 const HomePage: ConnectedPageType = ({slug}) => {
@@ -11,6 +17,14 @@ const HomePage: ConnectedPageType = ({slug}) => {
     <>
       <PageProvider typeName={HomePage.PageParamsType} slug={slug}>
         <TextField fieldOptions={{name: 'testfield'}} />
+        <IndexField
+          outerElement={() => <div />}
+          renderItem={(item, key) => (
+            <p key={key}>
+              Slug: {item.slug} Title: {item.title}
+            </p>
+          )}
+        />
       </PageProvider>
     </>
   )

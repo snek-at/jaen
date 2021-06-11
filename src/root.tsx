@@ -4,5 +4,5 @@ import './cms.scss'
 
 export type {ConnectedPageType} from '~/types'
 
-export {TextField, RichTextField} from './components/fields'
+export {TextField, RichTextField, IndexField} from './components/fields'
 export {CMSProvider, PageProvider} from './contexts'
