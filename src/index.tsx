@@ -15,14 +15,14 @@ import {persistor, store} from './store/store'
 const HomePage: ConnectedPageType = ({slug}) => {
   return (
     <>
-      <PageProvider typeName={HomePage.PageParamsType} slug={slug}>
+      <PageProvider typeName={HomePage.PageType} slug={slug}>
         <TextField fieldOptions={{name: 'testfield'}} />
         <IndexField
           outerElement={() => <div />}
           renderItem={(item, key, navigate) => (
             <p key={key}>
               Slug: {item.slug} Title: {item.title}{' '}
-              <p onClick={() => navigate()}>Goto</p>
+              <a onClick={() => navigate()}>Goto</a>
             </p>
           )}
         />
@@ -31,7 +31,7 @@ const HomePage: ConnectedPageType = ({slug}) => {
   )
 }
 
-HomePage.PageParamsType = 'HomePage'
+HomePage.PageType = 'HomePage'
 HomePage.ChildPages = [HomePage]
 
 ReactDOM.render(

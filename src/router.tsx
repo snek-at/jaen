@@ -15,7 +15,7 @@ export const generateRoutes = (
   index: PageIndex
 ) => {
   const findPageComponent = (typeName: string) =>
-    registeredPages.find(page => page.PageParamsType === typeName)
+    registeredPages.find(page => page.PageType === typeName)
 
   const Page: React.FC<PageParamsType & {typeName: string}> = props => {
     const {typeName} = props

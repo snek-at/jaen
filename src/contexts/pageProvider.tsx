@@ -6,7 +6,7 @@ import {store, PageParamsType} from '~/types'
 import {setHiddenChildSlugs as setHiddenChildSlugsAction} from '~/store/cmsActions'
 
 interface IConnectedPageType {
-  PageParamsType: string
+  PageType: string
   ChildPages: ConnectedPageType[]
 }
 
@@ -36,15 +36,13 @@ const PageProvider: React.FC<PageProviderProps> = ({
     )
   }
 
-  const {editingHiddenSlugs, workingHiddenSlugs} = useSelector(
-    ({cms}: store.RootState) => {
-      return {
-        editingHiddenSlugs:
-          cms.dataLayer.editing.pages[page.slug]?.hiddenChildSlugs,
-        workingHiddenSlugs:
-          cms.dataLayer.working.pages[page.slug]?.hiddenChildSlugs || []
-      }
-    }
+  const editingHiddenSlugs = useSelector(
+    ({cms}: store.RootState) =>
+      cms.dataLayer.editing.pages[page.slug].hiddenChildSlugs
+  )
+  const workingHiddenSlugs = useSelector(
+    ({cms}: store.RootState) =>
+      cms.dataLayer.working.pages[page.slug].hiddenChildSlugs
   )
 
   const getHiddenSlugs = () => {

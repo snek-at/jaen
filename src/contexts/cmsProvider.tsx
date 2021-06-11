@@ -40,11 +40,11 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
     useState<ConnectedPageType[]>(pages)
 
   const getRegisteredPage = (typeName: string) => {
-    return registeredPages.find(page => page.PageParamsType === typeName)
+    return registeredPages.find(page => page.PageType === typeName)
   }
 
   const getChildPageTypeNames = (typeName: string) =>
-    getRegisteredPage(typeName)?.ChildPages.map(page => page.PageParamsType)
+    getRegisteredPage(typeName)?.ChildPages.map(page => page.PageType)
 
   const index = useSelector(
     (state: store.RootState) => state.cms.index || ({} as store.PageIndex)
@@ -64,14 +64,16 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   }>()
 
   useEffect(() => {
-    const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} =
-      transformIndexTree(index, getChildPageTypeNames)
+    if (index.pages && index.rootPageSlug) {
+      const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} =
+        transformIndexTree(index, getChildPageTypeNames)
 
-    setTreeData(treeData)
-    setKeyRefs({
-      indexKey: indexKeyRefs,
-      childPageTypeNamesKey: childPageTypeNamesKeyRefs
-    })
+      setTreeData(treeData)
+      setKeyRefs({
+        indexKey: indexKeyRefs,
+        childPageTypeNamesKey: childPageTypeNamesKeyRefs
+      })
+    }
   }, [index])
 
   useEffect(() => {
