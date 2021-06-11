@@ -5,7 +5,8 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {Button, Divider, Row, Space, Modal} from 'antd'
+import {Button, Divider, Row, Space, Modal, Image, Typography} from 'antd'
+import Avatar from 'antd/lib/avatar/avatar'
 import React, {useState, useEffect} from 'react'
 import ReactJson from 'react-json-view'
 import {connect} from 'react-redux'
@@ -29,6 +30,8 @@ import {
 } from '~/store/cmsActions'
 
 import './cmsmenu.scss'
+
+const {Text} = Typography
 
 type StateProps = store.AuthState & store.CMSState
 
@@ -85,7 +88,19 @@ export const Menu: React.FC<CMSMenuProps> = ({
   return (
     <>
       <Modal
-        title="jaen"
+        title={
+          <>
+            <Space>
+              <Avatar
+                size={40}
+                src={
+                  <Image src="https:avatars.githubusercontent.com/u/55870326?s=200&v=4" />
+                }
+              />
+              <Text>jaen - Content Management System</Text>
+            </Space>
+          </>
+        }
         centered
         visible={showMenu}
         onOk={toggleShow}
