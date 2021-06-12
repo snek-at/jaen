@@ -110,7 +110,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
               <Avatar
                 size={40}
                 src={
-                  <Image src="https:avatars.githubusercontent.com/u/55870326?s=200&v=4" />
+                  <Image src="https://avatars.githubusercontent.com/u/55870326?s=200&v=4" />
                 }
               />
               <Text>jaen - Content Management System</Text>
