@@ -122,7 +122,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       <img
         className="cms-edit"
         style={{maxWidth: 50}}
-        src="https:avatars.githubusercontent.com/u/55870326?s=200&v=4"
+        src="https://avatars.githubusercontent.com/u/55870326?s=200&v=4"
         title="Edit with snek"
         onClick={() => dispatch(toggleMenu(true))}
       />
