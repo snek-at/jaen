@@ -85,23 +85,36 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   }, [index])
 
   useEffect(() => {
-    fetch(globalThis.location.origin + '/jaen-data.json').then(res =>
-      res
-        .json()
-        .then(
-          (data: {
-            dataLayer: {working: store.DataLayer}
-            index: store.PageIndex
-          }) => {
-            const cksm = md5(JSON.stringify(data)).toString()
+    const fetchFile = async (url: string) => {
+      const data: {
+        dataLayer: {working: store.DataLayer}
+        index: store.PageIndex
+      } = await fetch(url, {cache: 'no-store'}).then(res =>
+        res.json().then(() => data)
+      )
 
-            if (cksm !== layerOrigCksm || shouldOverrideWDL) {
-              dispatch(overrideWDL({data: data.dataLayer.working, cksm}))
-              dispatch(setIndex(data.index))
-            }
-          }
+      const cksm = md5(JSON.stringify(data)).toString()
+
+      if (cksm !== layerOrigCksm || shouldOverrideWDL) {
+        dispatch(overrideWDL({data: data.dataLayer.working, cksm}))
+        dispatch(setIndex(data.index))
+      }
+    }
+
+    fetchFile(globalThis.location.origin + '/jaen-data.json')
+
+    if (settings.gitRemote) {
+      const interval = setInterval(() => {
+        fetchFile(
+          `https://github.com/${settings.gitRemote}/blob/gh-pages/jaen-data.json`
         )
-    )
+      }, 1000 * 60 * 5)
+      return () => clearInterval(interval)
+    } else {
+      console.warn(
+        'Cannot fetch `https://github.com/${settings.gitRemote}/blob/gh-pages/jaen-data.json`, because gitRemote is undefined'
+      )
+    }
   })
 
   return (
