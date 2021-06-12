@@ -32,7 +32,7 @@ const initialState: CMSState = {
     gitRemote: undefined
   },
   options: {
-    editing: true,
+    editing: false,
     showMenu: false,
     shouldOverrideWDL: false
   },
