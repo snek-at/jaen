@@ -66,7 +66,10 @@ export const publish = createAsyncThunk<DataLayer, void, {}>(
 
       const workingLayer = deepmerge<any>(dataLayer.working, dataLayer.editing)
 
-      const publishData = JSON.stringify({dataLayer: {workingLayer}, index})
+      const publishData = JSON.stringify({
+        dataLayer: {working: workingLayer},
+        index
+      })
 
       const {data, errors} =
         await BridgeDrop.buildIn.mutations.doJaenPublishFormPageMutation({
