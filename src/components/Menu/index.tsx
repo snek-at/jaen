@@ -5,7 +5,16 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {Button, Divider, Row, Space, Modal, Image, Typography} from 'antd'
+import {
+  Button,
+  Divider,
+  Row,
+  Space,
+  Modal,
+  Image,
+  Typography,
+  notification
+} from 'antd'
 import Avatar from 'antd/lib/avatar/avatar'
 import React, {useState, useEffect} from 'react'
 import ReactJson from 'react-json-view'
@@ -22,7 +31,6 @@ import {
   toggleEditing,
   toggleMenu,
   discardEditing,
-  loadPages,
   publish,
   setOverrideWDLState,
   deletePageFromIndex,
@@ -39,7 +47,6 @@ type DispatchProps = {
   toggleEditing: (state: boolean) => void
   toggleMenu: (state: boolean) => void
   discardEditing: () => void
-  loadPages: () => void
   publish: () => void
   overrideWDLState: () => void
   login: (creds?: {username: string; password: string}) => void
@@ -60,7 +67,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   toggleEditing,
   toggleMenu,
   discardEditing,
-  loadPages,
   publish,
   overrideWDLState,
   login,
@@ -68,7 +74,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
   transferPageToIndex,
   deletePageFromIndex
 }) => {
-  console.log(loadPages, publish, overrideWDLState)
+  console.log(publish, overrideWDLState)
   const [view, setView] = useState<'EXPLORER' | 'EXPERT'>('EXPLORER')
 
   const {showMenu, editing} = options
@@ -77,6 +83,16 @@ export const Menu: React.FC<CMSMenuProps> = ({
   const onLogin = (values: LoginFormValues) => {
     const {username, password} = values
     login({username, password})
+  }
+
+  const onPublish = () => {
+    publish()
+
+    notification.success({
+      message: 'The site will be published soon',
+      description:
+        'The site has been shipped to production. In about 30 seconds the new version is available.'
+    })
   }
 
   useEffect(() => login(), [])
@@ -173,7 +189,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
                       Start Editing
                     </Button>
                   )}
-                  <Button>Publish</Button>
+                  <Button onClick={onPublish}>Publish</Button>
                 </Space>
               </>
             </Row>
@@ -185,6 +201,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
 }
 
 const mapStateToProps = ({auth, cms}: store.RootState): StateProps => ({
+  settings: cms.settings,
   options: cms.options,
   index: cms.index,
   dataLayer: cms.dataLayer,
@@ -195,7 +212,6 @@ const mapDispatchToProps = (dispatch: store.AppDispatch): DispatchProps => ({
   toggleEditing: (state: boolean) => dispatch(toggleEditing(state)),
   toggleMenu: (state: boolean) => dispatch(toggleMenu(state)),
   discardEditing: () => dispatch(discardEditing()),
-  loadPages: () => dispatch(loadPages()),
   publish: () => dispatch(publish()),
   overrideWDLState: () => dispatch(setOverrideWDLState(true)),
   login: (creds?: {username: string; password: string}) =>

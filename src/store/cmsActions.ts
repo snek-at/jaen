@@ -6,12 +6,14 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
+import deepmerge from 'deepmerge'
+import BridgeDrop from 'drop'
 import {components, PageParamsType} from '~/types'
 
-import {DropAPI, DropAPIReferences} from '../api'
 import {PageNode} from '../components/Explorer/index'
-// import {RootState} from './store'
-import {DataLayer, PageIndex} from './types'
+import {DataLayer, PageIndex, CMSSettings} from './types'
+
+export const setSettings = createAction<CMSSettings>('cms/setSettings')
 
 export const registerField =
   createAction<{fieldOptions: components.FieldOptions; page: PageParamsType}>(
@@ -48,89 +50,40 @@ export const setHiddenChildSlugs = createAction<{
   hiddenChildSlugs: string[]
 }>('cms/setHiddenChildSlugs')
 
-export const loadPages = createAsyncThunk<
-  {},
-  undefined,
-  {state: {cms: {dataLayer: {working: DataLayer}}}}
->('cms/loadPages', async (_, thunkAPI) => {
-  const {working} = thunkAPI.getState().cms.dataLayer
-  const pages = JSON.parse(JSON.stringify(working.pages)) as DataLayer['pages']
+export const publish = createAsyncThunk<DataLayer, void, {}>(
+  'cms/publish',
+  async (_, thunkAPI) => {
+    try {
+      let {settings, dataLayer, index} = (thunkAPI.getState() as any).cms
 
-  try {
-    for (const [slug, page] of Object.entries(pages)) {
-      const {data, errors} = await DropAPI.queries.doPageQuery({slug})
+      const {gitRemote} = settings
 
-      if (!data?.page || errors) {
-        throw new Error(`DropAPI fetch failed for page with slug <${slug}>`)
+      if (!gitRemote) {
+        throw new Error(
+          `DropAPI publish failed. Settings does not include gitRemote`
+        )
       }
 
-      for (const [name, field] of Object.entries(page.fields)) {
-        if ((data.page as any)[name]) {
-          if (field.blocks) {
-            for (const [position, block] of Object.entries(field.blocks)) {
-              block.content = (data.page as any)[name][position]?.value
-            }
-          } else {
-            field.content = (data.page as any)[name]
-          }
-        }
+      const workingLayer = deepmerge<any>(dataLayer.working, dataLayer.editing)
+
+      const publishData = JSON.stringify({dataLayer: {workingLayer}, index})
+
+      const {data, errors} =
+        await BridgeDrop.buildIn.mutations.doJaenPublishFormPageMutation({
+          url: '/jaen-publish',
+          values: {git_remote: gitRemote, jaen_data: publishData}
+        })
+
+      if (!data?.jaenPublishFormPage || errors) {
+        throw new Error(`DropAPI publish failed`)
       }
+
+      return workingLayer
+    } catch (err) {
+      console.error(err)
+      // Use `err.response.data` as `action.payload` for a `rejected` action,
+      // by explicitly returning it using the `rejectWithValue()` utility
+      return thunkAPI.rejectWithValue(err.response.data)
     }
-
-    return pages
-  } catch (err) {
-    console.error(err)
-    // Use `err.response.data` as `action.payload` for a `rejected` action,
-    // by explicitly returning it using the `rejectWithValue()` utility
-    return thunkAPI.rejectWithValue(err.response.data)
   }
-})
-
-export const publish = createAsyncThunk<
-  {},
-  undefined,
-  {state: {cms: {dataLayer: {working: DataLayer; editing: DataLayer}}}}
->('cms/publish', async (_, thunkAPI) => {
-  const {working, editing} = thunkAPI.getState().cms.dataLayer
-  const pages = editing.pages
-
-  try {
-    for (const [slug, page] of Object.entries(pages)) {
-      const inputFields: {
-        [fieldName: string]: string //{type: string; value: string}[]
-      } = {}
-
-      for (const [name, field] of Object.entries(page.fields)) {
-        if (field.blocks) {
-          const inputBlocks: {
-            [position: number]: {type: string; value: string}
-          } = {}
-          const workingBlocks = working.pages[slug]?.fields[name]?.blocks
-
-          for (const [position, block] of Object.entries({
-            ...workingBlocks,
-            ...field.blocks
-          })) {
-            inputBlocks[parseInt(position)] = {
-              type: block.typeName,
-              value: block.content
-            }
-          }
-          inputFields[name] = JSON.stringify(Object.values(inputBlocks))
-        } else {
-          inputFields[name] = field.content
-        }
-      }
-
-      await DropAPIReferences[`doUpdate${page.typeName}Mutation`]({
-        slug,
-        input: inputFields
-      })
-    }
-  } catch (err) {
-    console.error(err)
-    // Use `err.response.data` as `action.payload` for a `rejected` action,
-    // by explicitly returning it using the `rejectWithValue()` utility
-    return thunkAPI.rejectWithValue(err.response.data)
-  }
-})
+)

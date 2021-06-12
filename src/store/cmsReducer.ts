@@ -6,18 +6,17 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createReducer} from '@reduxjs/toolkit'
-import merge from 'lodash/merge'
 import {components, PageParamsType} from '~/types'
 
 import {setHiddenChildSlugs} from '~/store/cmsActions'
 
 // import {PageNode} from '../components/Explorer/index'
 import {
+  setSettings,
   registerField,
   toggleMenu,
   toggleEditing,
   discardEditing,
-  loadPages,
   publish,
   overrideWDL,
   setOverrideWDLState,
@@ -29,6 +28,9 @@ import {
 import {CMSState} from './types'
 
 const initialState: CMSState = {
+  settings: {
+    gitRemote: undefined
+  },
   options: {
     editing: true,
     showMenu: false,
@@ -38,6 +40,9 @@ const initialState: CMSState = {
 }
 
 export const cmsReducer = createReducer(initialState, {
+  [setSettings.type]: (state, action) => {
+    state.settings = action.payload
+  },
   [registerField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
     const {name, block}: components.FieldOptions = fieldOptions
@@ -168,11 +173,13 @@ export const cmsReducer = createReducer(initialState, {
       }
     }
   },
-  [publish.fulfilled.type]: (state, _action) => {
+  [publish.fulfilled.type]: (state, action) => {
+    const workingLayer = action.payload
+
     state.dataLayer = {
       ...state.dataLayer,
       working: {
-        ...merge(state.dataLayer.working, state.dataLayer.editing),
+        ...workingLayer,
         updateFieldsCount: state.dataLayer.working.updateFieldsCount + 1
       },
       editing: {
@@ -250,21 +257,6 @@ export const cmsReducer = createReducer(initialState, {
       [slug]: {
         ...state.dataLayer.editing.pages[slug],
         hiddenChildSlugs
-      }
-    }
-  },
-  [loadPages.fulfilled.type]: (state, action) => {
-    const pages = action.payload
-
-    state.dataLayer = {
-      ...state.dataLayer,
-      editing: {
-        pages: {}
-      },
-      working: {
-        ...state.dataLayer.working,
-        pages,
-        updateFieldsCount: state.dataLayer.working.updateFieldsCount + 1
       }
     }
   }

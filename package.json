@@ -61,6 +61,7 @@
     "@schettnet/bridge": "^1.0.2",
     "antd": "^4.16.2",
     "crypto-js": "^4.0.0",
+    "deepmerge": "^4.2.2",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",

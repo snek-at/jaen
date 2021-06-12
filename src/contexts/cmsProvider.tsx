@@ -8,13 +8,17 @@
 import md5 from 'crypto-js/md5'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {switchBridge} from '~/api'
 import PageRouter from '~/router'
 import {store, components, ConnectedPageType} from '~/types'
 
 import Menu from '~/components/Menu'
 
-import {overrideWDL, setIndex, toggleMenu} from '~/store/cmsActions'
+import {
+  setSettings,
+  overrideWDL,
+  setIndex,
+  toggleMenu
+} from '~/store/cmsActions'
 import {AppDispatch} from '~/store/store'
 
 import {CMSContext} from './context'
@@ -25,12 +29,12 @@ import {
 } from './utils'
 
 interface CMSProviderProps {
-  bifrostUrls: {httpUrl: string; wssUrl?: string}
+  settings: store.CMSSettings
   pages: ConnectedPageType[]
 }
 
 const CMSProvider: React.FC<CMSProviderProps> = ({
-  bifrostUrls,
+  settings,
   pages,
   children
 }) => {
@@ -64,6 +68,10 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   }>()
 
   useEffect(() => {
+    dispatch(setSettings(settings))
+  }, [settings])
+
+  useEffect(() => {
     if (index.pages && index.rootPageSlug) {
       const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} =
         transformIndexTree(index, getChildPageTypeNames)
@@ -82,21 +90,19 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
         .json()
         .then(
           (data: {
-            dataLayer: {origin: store.DataLayer}
+            dataLayer: {working: store.DataLayer}
             index: store.PageIndex
           }) => {
             const cksm = md5(JSON.stringify(data)).toString()
 
             if (cksm !== layerOrigCksm || shouldOverrideWDL) {
-              dispatch(overrideWDL({data: data.dataLayer.origin, cksm}))
+              dispatch(overrideWDL({data: data.dataLayer.working, cksm}))
               dispatch(setIndex(data.index))
             }
           }
         )
     )
   })
-
-  switchBridge(bifrostUrls)
 
   return (
     <CMSContext.Provider

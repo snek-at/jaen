@@ -8,6 +8,8 @@
 
 export type {RootState, AppDispatch} from './store'
 
+export type CMSSettings = {gitRemote?: string}
+
 export type DataLayer = {
   pages: {
     [slug: string]: {
@@ -47,6 +49,7 @@ export interface CMSOptions {
   shouldOverrideWDL: boolean
 }
 export interface CMSState {
+  settings: CMSSettings
   index?: PageIndex
   options: CMSOptions
   dataLayer: {
