@@ -53,9 +53,9 @@ export const cmsReducer = createReducer(initialState, {
 
     if (block) {
       blocks = {
-        ...pages[page.slug]?.fields[name].blocks,
+        ...pages[page.slug]?.fields[name]?.blocks,
         [block.position]: {
-          ...pages[page.slug]?.fields[name].blocks?.[block.position],
+          ...pages[page.slug]?.fields[name]?.blocks?.[block.position],
           typeName: block.typeName
         }
       }
