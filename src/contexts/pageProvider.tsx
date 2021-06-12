@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {CMSPageContext} from '~/contexts/context'
 import {store, PageParamsType} from '~/types'
@@ -50,6 +50,10 @@ const PageProvider: React.FC<PageProviderProps> = ({
       ? editingHiddenSlugs || []
       : workingHiddenSlugs || []
   }
+
+  useEffect(() => {
+    document.title = index?.pages[page.slug].title || document.title
+  }, [page])
 
   return (
     <CMSPageContext.Provider
