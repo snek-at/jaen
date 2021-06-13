@@ -86,21 +86,38 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   })
 
   useEffect(() => {
+    let es: EditorState
+
     // fixing issue with SSR https://github.com/facebook/draft-js/issues/2332#issuecomment-761573306
     if (buttonOptions) {
-      setEditorState(EditorState.createWithContent(stateFromHTML(text)))
+      es = EditorState.createWithContent(stateFromHTML(text))
     } else {
-      setEditorState(createEditorStateWithText(text))
+      es = createEditorStateWithText(text)
     }
+
+    setEditorState(EditorState.moveFocusToEnd(es))
   }, [text, recreateTrigger])
 
   const onValueChange = (value: EditorState): void => {
+    const toHTMLContent = (es: EditorState) =>
+      stateToHTML(es.getCurrentContent())
+    const toTextContent = (es: EditorState) =>
+      es.getCurrentContent().getPlainText('\u0001')
+
+    let previousContent: string = ''
+    let content: string = ''
+
     if (buttonOptions) {
-      onChange(stateToHTML(value.getCurrentContent()))
+      previousContent = toHTMLContent(editorState)
+      content = toHTMLContent(value)
     } else {
-      onChange(value.getCurrentContent().getPlainText('\u0001'))
+      previousContent = toTextContent(editorState)
+      content = toTextContent(value)
     }
-    setEditorState(value)
+    if (previousContent !== content) {
+      onChange(content)
+      setEditorState(value)
+    }
   }
 
   return (
