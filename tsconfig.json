@@ -25,7 +25,7 @@
     ],
     "lib": [
       "dom",
-      "es2017"
+      "esnext"
     ],
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
