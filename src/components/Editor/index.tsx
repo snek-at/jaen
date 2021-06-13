@@ -114,10 +114,11 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
       previousContent = toTextContent(editorState)
       content = toTextContent(value)
     }
+
     if (previousContent !== content) {
       onChange(content)
-      setEditorState(value)
     }
+    setEditorState(value)
   }
 
   return (
