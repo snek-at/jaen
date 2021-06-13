@@ -20,13 +20,16 @@ import {
 } from '@draft-js-plugins/buttons'
 import Editor, {createEditorStateWithText} from '@draft-js-plugins/editor'
 import createImagePlugin from '@draft-js-plugins/image'
-import createSideToolbarPlugin from '@draft-js-plugins/side-toolbar'
+import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar'
 import {EditorState} from 'draft-js'
 import {stateToHTML} from 'draft-js-export-html'
 import {stateFromHTML} from 'draft-js-import-html'
 import React, {Fragment, useEffect, useRef, useState} from 'react'
+import {useMemo} from 'react'
 
 import type {AtLeastOne} from '~/common/utils'
+
+import './editor.css'
 
 export type ButtonOptions = AtLeastOne<{
   bold: boolean
@@ -64,16 +67,23 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   //     return [[sideToolbarPlugin], sideToolbarPlugin.SideToolbar]
   //   }, [])
 
-  const [{plugins, SideToolbar}] = useState(() => {
-    const toolbarPlugin = createSideToolbarPlugin({position: 'right'})
+  const [plugins, InlineToolbar] = useMemo(() => {
+    const toolbarPlugin = createInlineToolbarPlugin()
     const imagePlugin = createImagePlugin()
-    const {SideToolbar} = toolbarPlugin
-    const plugins = [toolbarPlugin, imagePlugin]
-    return {
-      plugins,
-      SideToolbar
-    }
-  })
+    return [[toolbarPlugin, imagePlugin], toolbarPlugin.InlineToolbar]
+  }, [])
+
+  // const [{plugins, SideToolbar}] = useState(() => {
+
+  //   const toolbarPlugin = createInlineToolbarPlugin({position: 'right'})
+  //   const imagePlugin = createImagePlugin()
+  //   const {SideToolbar} = toolbarPlugin
+  //   const plugins = [toolbarPlugin, imagePlugin]
+  //   return {
+  //     plugins,
+  //     SideToolbar
+  //   }
+  // })
 
   const editorRef = useRef<Editor | null>(null)
 
@@ -95,8 +105,8 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
       es = createEditorStateWithText(text)
     }
 
-    setEditorState(EditorState.moveFocusToEnd(es))
-  }, [text, recreateTrigger])
+    setEditorState(es)
+  }, [recreateTrigger])
 
   const onValueChange = (value: EditorState): void => {
     const toHTMLContent = (es: EditorState) =>
@@ -118,6 +128,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
     if (previousContent !== content) {
       onChange(content)
     }
+
     setEditorState(value)
   }
 
@@ -127,7 +138,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
       onClick={() => editorRef.current && editorRef.current.focus()}>
       <Editor
         readOnly={!editable}
-        editorKey="SidebarEditor"
+        editorKey="InlineEditor"
         editorState={editorState}
         onChange={onValueChange}
         plugins={plugins}
@@ -137,7 +148,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
         ref={(editor: any) => (editorRef.current = editor)}
       />
       {buttonOptions && editable && (
-        <SideToolbar>
+        <InlineToolbar>
           {
             // may be use React.Fragment instead of div to improve perfomance after React 16
             externalProps => (
@@ -172,7 +183,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
               </Fragment>
             )
           }
-        </SideToolbar>
+        </InlineToolbar>
       )}
     </div>
   )
