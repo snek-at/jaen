@@ -74,7 +74,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   transferPageToIndex,
   deletePageFromIndex
 }) => {
-  console.log(publish, overrideWDLState)
   const [view, setView] = useState<'EXPLORER' | 'EXPERT'>('EXPLORER')
 
   const {showMenu, editing} = options
