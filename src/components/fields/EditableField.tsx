@@ -5,7 +5,7 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import React, {useEffect} from 'react'
+import React from 'react'
 import {connect, useStore} from 'react-redux'
 import {context} from '~/contexts'
 import {components, PageParamsType} from '~/types'
@@ -13,7 +13,7 @@ import {store} from '~/types'
 
 import SidebarEditor, {ButtonOptions} from '~/components/Editor'
 
-import {registerField, updatePageContent} from '~/store/cmsActions'
+import {updatePageContent} from '~/store/cmsActions'
 
 type SubelementProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -23,10 +23,6 @@ type SubelementProps = React.DetailedHTMLProps<
 type StateProps = components.CMSEditableProps
 
 type DispatchProps = {
-  registerField: (
-    fieldOptions: components.EditableFieldOptions,
-    page: PageParamsType
-  ) => void
   updateContent: (content: string, page: PageParamsType) => void
 }
 
@@ -42,7 +38,6 @@ export interface EditableFieldProps
     OwnProps {}
 
 export const EditableField: React.FC<EditableFieldProps> = ({
-  registerField,
   updateContent,
   ...props
 }) => {
@@ -54,10 +49,7 @@ export const EditableField: React.FC<EditableFieldProps> = ({
 
   const {fieldName, block} = fieldOptions
   const page = pageContext.page
-
-  useEffect(() => registerField(fieldOptions, page), [])
-
-  // equalityFn: () => true; workaround to prevent re-renders on store change
+  
   let field =
     store.getState().cms.dataLayer.editing.pages[page.slug]?.fields[fieldName]
 
@@ -100,10 +92,6 @@ const mapDispatchToProps = (
   dispatch: store.AppDispatch,
   ownProps: OwnProps
 ): DispatchProps => ({
-  registerField: (
-    fieldOptions: components.EditableFieldOptions,
-    page: PageParamsType
-  ) => dispatch(registerField({fieldOptions, page})),
   updateContent: (content: string, page: PageParamsType) =>
     dispatch(
       updatePageContent({content, fieldOptions: ownProps.fieldOptions, page})
