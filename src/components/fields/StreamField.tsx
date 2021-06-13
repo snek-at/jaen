@@ -1,33 +1,56 @@
-import {useSelector, useStore} from 'react-redux'
+import {AppstoreAddOutlined} from '@ant-design/icons'
+import {Menu, Row, Button, Col, Dropdown, Divider} from 'antd'
+import React, {useEffect, useState, useRef} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useCMSPageContext} from '~/contexts/context'
 import {store} from '~/types'
 
 import {GenericBC} from '~/components/blocks'
 
-import {useCMSPageContext} from '../../contexts/context'
+import {registerField} from '~/store/cmsActions'
 
 type StreamFieldProps = {
   name: string
   blocks: GenericBC[]
+  reverseOrder?: boolean
 }
 
-const StreamField: React.FC<StreamFieldProps> = ({name, blocks}) => {
+const StreamField: React.FC<StreamFieldProps> = ({
+  name,
+  blocks,
+  reverseOrder
+}) => {
   const context = useCMSPageContext()
-  const store = useStore<store.RootState>()
+  const dispatch = useDispatch<store.AppDispatch>()
 
-  // const storeBlocks = storePageData.fields[name].blocks //
+  const [height, setHeight] = useState(0)
+  const [width, setWidth] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (ref && ref.current) {
+      setHeight(ref.current.clientHeight)
+      setWidth(ref.current.clientWidth)
+    }
+  })
+
   let storeWorkingBlocks = useSelector(
     ({cms}: store.RootState) =>
       cms.dataLayer.working.pages[context.page.slug]?.fields[name]?.blocks
   )
 
-  let storeBlocks =
-    store.getState().cms.dataLayer.editing.pages[context.page.slug]?.fields[
-      name
-    ]?.blocks
+  let storeBlocks = useSelector(
+    ({cms}: store.RootState) =>
+      cms.dataLayer.editing.pages[context.page.slug]?.fields[name]?.blocks
+  )
 
   if (!storeBlocks) {
     storeBlocks = storeWorkingBlocks
   }
+
+  const blocksKeys = Object.keys(storeBlocks || {}).sort(
+    (a, b) => parseInt(a) - parseInt(b)
+  )
 
   const getBlockComponentByTypeName = (typeName: string) =>
     blocks.find(b => b.BlockType === typeName)
@@ -37,33 +60,95 @@ const StreamField: React.FC<StreamFieldProps> = ({name, blocks}) => {
 
     if (blockTypeName) {
       const Block = getBlockComponentByTypeName(blockTypeName)
-      if (Block) {
-        return (
-          <Block
-            key={position}
-            fieldOptions={{
-              fieldName: name,
-              block: {position, typeName: Block.BlockType}
-            }}
-          />
-        )
-      }
+
+      return (
+        <>
+          {Block ? (
+            <Block
+              streamFieldHeight={height}
+              streamFieldWidth={width}
+              key={position}
+              fieldOptions={{
+                fieldName: name,
+                block: {position, typeName: Block.BlockType}
+              }}
+            />
+          ) : null}
+        </>
+      )
     }
   }
 
-  // Object.entries does automatically sort the keys by position 0->n
-
-  if (storeBlocks) {
-    return (
-      <>
-        {Object.keys(storeBlocks).map(position =>
-          renderBlock(parseInt(position))
-        )}
-      </>
+  const addNewBlock = (typeName: string) =>
+    dispatch(
+      registerField({
+        page: context.page,
+        fieldOptions: {
+          fieldName: name,
+          block: {
+            position: reverseOrder ? blocksKeys.length : -blocksKeys.length,
+            typeName: typeName
+          }
+        }
+      })
     )
-  }
 
-  return null
+  const blocksTypes = blocks.map(block => block.BlockType)
+
+  const menu = (
+    <Menu
+      onClick={(value: any) => {
+        addNewBlock(blocksTypes[value.key])
+      }}>
+      {blocksTypes.map((typeName, key) => (
+        <>
+          <Menu.Item key={key}>{typeName}</Menu.Item>
+        </>
+      ))}
+    </Menu>
+  )
+
+  const button = (
+    <Row justify="center">
+      {blocksTypes.length > 0 ? (
+        <Dropdown.Button
+          type="primary"
+          icon={<AppstoreAddOutlined />}
+          overlay={menu}
+        />
+      ) : (
+        <Button
+          type="primary"
+          icon={<AppstoreAddOutlined />}
+          onClick={() => addNewBlock(blocksTypes[0])}
+        />
+      )}
+    </Row>
+  )
+
+  return (
+    <div ref={ref}>
+      {!reverseOrder && (
+        <>
+          {button}
+          <Divider orientation="left" />
+        </>
+      )}
+      {storeBlocks && (
+        <Row>
+          <Col>
+            {blocksKeys.map(position => renderBlock(parseInt(position)))}
+          </Col>
+        </Row>
+      )}
+      {reverseOrder && (
+        <>
+          <Divider orientation="left" />
+          {button}
+        </>
+      )}
+    </div>
+  )
 }
 
 export default StreamField

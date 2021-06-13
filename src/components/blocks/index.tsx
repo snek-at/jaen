@@ -12,6 +12,8 @@ export interface BlockFieldOptions {
  */
 export interface BC<T>
   extends React.FC<{
+    streamFieldHeight: number
+    streamFieldWidth: number
     fieldOptions: BlockFieldOptions
   }> {
   BlockType: string
@@ -39,7 +41,6 @@ export function prepareBlocks<T>(
     const Field = Block.BlockFields[
       blockFieldName
     ] as React.ComponentType<EditableFieldProps>
-    console.log(blockFieldName)
 
     if (fieldOptions.block) {
       const ConfiguredField = (

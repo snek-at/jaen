@@ -11,15 +11,15 @@ import BridgeDrop from 'drop'
 import {components, PageParamsType} from '~/types'
 
 import {PageNode} from '../components/Explorer/index'
+import {BlockFieldOptions} from '../components/blocks/index'
 import {DataLayer, PageIndex, CMSSettings} from './types'
 
 export const setSettings = createAction<CMSSettings>('cms/setSettings')
 
-export const registerField =
-  createAction<{
-    fieldOptions: components.EditableFieldOptions
-    page: PageParamsType
-  }>('cms/registerField')
+export const registerField = createAction<{
+  fieldOptions: BlockFieldOptions
+  page: PageParamsType
+}>('cms/registerField')
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
 
 export const setOverrideWDLState = createAction<boolean>(
