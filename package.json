@@ -56,7 +56,7 @@
     "@draft-js-plugins/buttons": "^4.1.0",
     "@draft-js-plugins/editor": "^4.1.0",
     "@draft-js-plugins/image": "^4.1.1",
-    "@draft-js-plugins/side-toolbar": "^4.1.0",
+    "@draft-js-plugins/inline-toolbar": "^4.1.2",
     "@reduxjs/toolkit": "^1.5.1",
     "@schettnet/bridge": "^1.0.2",
     "antd": "^4.16.2",
