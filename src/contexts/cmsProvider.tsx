@@ -89,9 +89,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       const data: {
         dataLayer: {working: store.DataLayer}
         index: store.PageIndex
-      } = await fetch(url, {cache: 'no-store'}).then(res =>
-        res.json().then(() => data)
-      )
+      } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
 
       const cksm = md5(JSON.stringify(data)).toString()
 
