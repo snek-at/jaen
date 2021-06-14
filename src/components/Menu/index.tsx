@@ -10,7 +10,7 @@ import {
   Divider,
   Row,
   Space,
-  Modal,
+  Drawer,
   Image,
   Typography,
   notification
@@ -99,7 +99,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
 
   return (
     <>
-      <Modal
+      <Drawer
         title={
           <>
             <Space>
@@ -113,10 +113,8 @@ export const Menu: React.FC<CMSMenuProps> = ({
             </Space>
           </>
         }
-        centered
         visible={showMenu}
-        onOk={toggleShow}
-        onCancel={toggleShow}
+        onClose={toggleShow}
         width={1000}
         footer={[
           <React.Fragment key={'logout-group'}>
@@ -143,6 +141,27 @@ export const Menu: React.FC<CMSMenuProps> = ({
           <LoginForm onFinish={onLogin} />
         ) : (
           <>
+            <Row justify={'start'} gutter={[16, 16]}>
+              <>
+                <Space>
+                  {editing ? (
+                    <>
+                      <Button danger onClick={() => toggleEditing(false)}>
+                        Stop Editing
+                      </Button>
+                      <Button onClick={() => discardEditing()}>Discard</Button>
+                    </>
+                  ) : (
+                    <Button onClick={() => toggleEditing(true)}>
+                      Start Editing
+                    </Button>
+                  )}
+                  <Button onClick={onPublish}>Publish</Button>
+                </Space>
+              </>
+            </Row>
+            <Divider />
+
             {view === 'EXPLORER' && treeData && keyRefs && (
               <Explorer
                 onNodeSave={node => {
@@ -170,28 +189,9 @@ export const Menu: React.FC<CMSMenuProps> = ({
               </>
             )}
             <Divider />
-            <Row gutter={[16, 16]}>
-              <>
-                <Space>
-                  {editing ? (
-                    <>
-                      <Button danger onClick={() => toggleEditing(false)}>
-                        Stop Editing
-                      </Button>
-                      <Button onClick={() => discardEditing()}>Discard</Button>
-                    </>
-                  ) : (
-                    <Button onClick={() => toggleEditing(true)}>
-                      Start Editing
-                    </Button>
-                  )}
-                  <Button onClick={onPublish}>Publish</Button>
-                </Space>
-              </>
-            </Row>
           </>
         )}
-      </Modal>
+      </Drawer>
     </>
   )
 }
