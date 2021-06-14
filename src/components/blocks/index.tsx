@@ -31,7 +31,11 @@ export function prepareBlocks<T>(
   type keys = keyof typeof Block.BlockFields
   const blockFieldNames = Object.keys(Block.BlockFields) as keys[]
 
-  return blockFieldNames.map(blockFieldName => {
+  type MappingType = {[name in keyof T]: JSX.Element}
+
+  const mapping: MappingType = {} as MappingType
+
+  blockFieldNames.forEach(blockFieldName => {
     const Field = Block.BlockFields[
       blockFieldName
     ] as React.ComponentType<EditableFieldProps>
@@ -50,12 +54,9 @@ export function prepareBlocks<T>(
         />
       )
 
-      return {ConfiguredField, blockFieldName}
+      mapping[blockFieldName] = ConfiguredField
     }
-    throw new Error(
-      `Cannot prepareBlocks for ${
-        Block.BlockType
-      } with following fieldOptions: ${JSON.stringify(fieldOptions)}`
-    )
   })
+
+  return mapping
 }
