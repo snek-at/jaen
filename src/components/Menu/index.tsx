@@ -32,7 +32,6 @@ import {
   toggleMenu,
   discardEditing,
   publish,
-  setOverrideWDLState,
   deletePageFromIndex,
   transferPageToIndex
 } from '~/store/cmsActions'
@@ -48,7 +47,6 @@ type DispatchProps = {
   toggleMenu: (state: boolean) => void
   discardEditing: () => void
   publish: () => void
-  overrideWDLState: () => void
   login: (creds?: {username: string; password: string}) => void
   logout: () => void
   transferPageToIndex: (page: PageNode) => void
@@ -68,7 +66,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   toggleMenu,
   discardEditing,
   publish,
-  overrideWDLState,
   login,
   logout,
   transferPageToIndex,
@@ -212,7 +209,6 @@ const mapDispatchToProps = (dispatch: store.AppDispatch): DispatchProps => ({
   toggleMenu: (state: boolean) => dispatch(toggleMenu(state)),
   discardEditing: () => dispatch(discardEditing()),
   publish: () => dispatch(publish()),
-  overrideWDLState: () => dispatch(setOverrideWDLState(true)),
   login: (creds?: {username: string; password: string}) =>
     dispatch(login({creds})),
   logout: () => dispatch(logout()),

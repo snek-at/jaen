@@ -19,7 +19,6 @@ import {
   discardEditing,
   publish,
   overrideWDL,
-  setOverrideWDLState,
   updatePageContent,
   setIndex,
   transferPageToIndex,
@@ -127,9 +126,6 @@ export const cmsReducer = createReducer(initialState, {
   },
   [toggleMenu.type]: (state, action) => {
     state.options.showMenu = action.payload
-  },
-  [setOverrideWDLState.type]: (state, action) => {
-    state.options.shouldOverrideWDL = action.payload
   },
   [overrideWDL.type]: (state, action) => {
     const {data, cksm} = action.payload

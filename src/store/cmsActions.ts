@@ -22,9 +22,6 @@ export const registerField = createAction<{
 }>('cms/registerField')
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
 
-export const setOverrideWDLState = createAction<boolean>(
-  'cms/setOverrideWDLState'
-)
 export const overrideWDL =
   createAction<{data: DataLayer; cksm: string}>('cms/overrideWDL')
 
