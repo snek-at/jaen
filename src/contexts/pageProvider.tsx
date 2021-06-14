@@ -52,7 +52,7 @@ const PageProvider: React.FC<PageProviderProps> = ({
   }
 
   useEffect(() => {
-    document.title = index?.pages[page.slug].title || document.title
+    document.title = index?.pages[page.slug]?.title || document.title
   }, [page])
 
   return (
