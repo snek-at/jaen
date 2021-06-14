@@ -1,3 +1,5 @@
 export {default as RichTextField} from './RichTextField'
-export {default as TextField} from './TextField'
+export {default as SimpleRichTextField} from './SimpleRichTextField'
+export {default as SimpleTextField} from './SimpleTextField'
+export {default as TextField} from './EditableField'
 export {default as IndexField} from './IndexField'

@@ -24,24 +24,24 @@ type StateProps = components.CMSEditableProps
 
 type DispatchProps = {
   registerField: (
-    fieldOptions: components.FieldOptions,
+    fieldOptions: components.EditableFieldOptions,
     page: PageParamsType
   ) => void
   updateContent: (content: string, page: PageParamsType) => void
 }
 
 export type OwnProps = {
-  fieldOptions: components.FieldOptions
+  fieldOptions: components.EditableFieldOptions
   buttonOptions?: ButtonOptions
 }
 
-export interface EditableTextFieldProps
+export interface EditableFieldProps
   extends SubelementProps,
     StateProps,
     DispatchProps,
     OwnProps {}
 
-export const EditableTextField: React.FC<EditableTextFieldProps> = ({
+export const EditableField: React.FC<EditableFieldProps> = ({
   registerField,
   updateContent,
   ...props
@@ -52,24 +52,24 @@ export const EditableTextField: React.FC<EditableTextFieldProps> = ({
   const pageContext = context.useCMSPageContext()
   const store = useStore<store.RootState>()
 
-  const {name, block} = fieldOptions
+  const {fieldName, block} = fieldOptions
   const page = pageContext.page
 
   useEffect(() => registerField(fieldOptions, page), [])
 
   // equalityFn: () => true; workaround to prevent re-renders on store change
   let field =
-    store.getState().cms.dataLayer.editing.pages[page.slug]?.fields[name]
+    store.getState().cms.dataLayer.editing.pages[page.slug]?.fields[fieldName]
 
   if (!field) {
-    field = workingLayer.pages[page.slug]?.fields[name]
+    field = workingLayer.pages[page.slug]?.fields[fieldName]
   }
 
-  let content
+  let content: string | undefined
 
   if (field) {
     if (block && field.blocks) {
-      content = field.blocks[block.position]?.content
+      content = field.blocks[block.position]?.fields?.[block.blockFieldName]
     } else {
       content = field.content
     }
@@ -101,7 +101,7 @@ const mapDispatchToProps = (
   ownProps: OwnProps
 ): DispatchProps => ({
   registerField: (
-    fieldOptions: components.FieldOptions,
+    fieldOptions: components.EditableFieldOptions,
     page: PageParamsType
   ) => dispatch(registerField({fieldOptions, page})),
   updateContent: (content: string, page: PageParamsType) =>
@@ -110,7 +110,7 @@ const mapDispatchToProps = (
     )
 })
 
-const EditableTextFieldContainer = connect<
+const EditableFieldPropsContainer = connect<
   StateProps,
   DispatchProps,
   OwnProps,
@@ -118,6 +118,6 @@ const EditableTextFieldContainer = connect<
 >(
   mapStateToProps,
   mapDispatchToProps
-)(EditableTextField)
+)(EditableField)
 
-export default EditableTextFieldContainer
+export default EditableFieldPropsContainer

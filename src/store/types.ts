@@ -16,11 +16,13 @@ export type DataLayer = {
       typeName: string
       fields: {
         [name: string]: {
-          content?: any
+          content?: string
           blocks?: {
             [position: string]: {
-              content: any
               typeName: string
+              fields: {
+                [name: string]: string | undefined
+              }
             }
           }
         }

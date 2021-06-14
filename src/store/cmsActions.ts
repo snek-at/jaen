@@ -16,9 +16,10 @@ import {DataLayer, PageIndex, CMSSettings} from './types'
 export const setSettings = createAction<CMSSettings>('cms/setSettings')
 
 export const registerField =
-  createAction<{fieldOptions: components.FieldOptions; page: PageParamsType}>(
-    'cms/registerField'
-  )
+  createAction<{
+    fieldOptions: components.EditableFieldOptions
+    page: PageParamsType
+  }>('cms/registerField')
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
 
 export const setOverrideWDLState = createAction<boolean>(
@@ -32,7 +33,7 @@ export const discardEditing = createAction('cms/discardEditing')
 
 export const updatePageContent = createAction<{
   content: string
-  fieldOptions: components.FieldOptions
+  fieldOptions: components.EditableFieldOptions
   page: PageParamsType
 }>('cms/updatePageContent')
 

@@ -45,7 +45,7 @@ export const cmsReducer = createReducer(initialState, {
   },
   [registerField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
-    const {name, block}: components.FieldOptions = fieldOptions
+    const {fieldName, block}: components.EditableFieldOptions = fieldOptions
 
     let pages = state.dataLayer.working.pages
 
@@ -53,10 +53,15 @@ export const cmsReducer = createReducer(initialState, {
 
     if (block) {
       blocks = {
-        ...pages[page.slug]?.fields[name]?.blocks,
+        ...pages[page.slug]?.fields[fieldName]?.blocks,
         [block.position]: {
-          ...pages[page.slug]?.fields[name]?.blocks?.[block.position],
-          typeName: block.typeName
+          ...pages[page.slug]?.fields[fieldName]?.blocks?.[block.position],
+          typeName: block.typeName,
+          fields: {
+            ...pages[page.slug]?.fields[fieldName]?.blocks?.[block.position]
+              ?.fields,
+            [block.blockFieldName]: undefined
+          }
         }
       }
     }
@@ -67,8 +72,8 @@ export const cmsReducer = createReducer(initialState, {
         ...pages[page.slug],
         fields: {
           ...pages[page.slug]?.fields,
-          [name]: {
-            ...pages[page.slug]?.fields[name],
+          [fieldName]: {
+            ...pages[page.slug]?.fields[fieldName],
             blocks
           }
         }
@@ -115,11 +120,11 @@ export const cmsReducer = createReducer(initialState, {
       page
     }: {
       content: any
-      fieldOptions: components.FieldOptions
+      fieldOptions: components.EditableFieldOptions
       page: PageParamsType
     } = action.payload
 
-    const {name, block} = fieldOptions
+    const {fieldName, block} = fieldOptions
 
     const workingPageFields =
       state.dataLayer.working.pages[page.slug]?.fields || {}
@@ -127,37 +132,16 @@ export const cmsReducer = createReducer(initialState, {
       state.dataLayer.editing.pages[page.slug]?.fields || {}
 
     if (block) {
-      const blocks = workingPageFields[name]?.blocks
+      const blockContent =
+        workingPageFields[fieldName]?.blocks?.[block.position]?.fields[
+          block.blockFieldName
+        ]
 
-      if (blocks) {
-        if (blocks[block.position]?.content === content) {
-          const editingBlocks = editingPageFields[name]?.blocks
-          if (editingBlocks) {
-            delete editingBlocks[block.position]
-          }
-          return
+      if (blockContent === content) {
+        const editingBlocks = editingPageFields[fieldName]?.blocks
+        if (editingBlocks) {
+          delete editingBlocks[block.position].fields[block.blockFieldName]
         }
-      }
-
-      state.dataLayer.editing.pages[page.slug] = {
-        ...state.dataLayer.editing.pages[page.slug],
-        fields: {
-          ...editingPageFields,
-          [name]: {
-            blocks: {
-              ...editingPageFields[name]?.blocks,
-              [block.position]: {
-                content: content,
-                typeName: block.typeName
-              }
-            }
-          }
-        },
-        typeName: page.typeName
-      }
-    } else {
-      if (workingPageFields[name]?.content === content) {
-        delete editingPageFields[name]
         return
       }
 
@@ -165,7 +149,34 @@ export const cmsReducer = createReducer(initialState, {
         ...state.dataLayer.editing.pages[page.slug],
         fields: {
           ...editingPageFields,
-          [name]: {
+          [fieldName]: {
+            blocks: {
+              ...editingPageFields[fieldName]?.blocks,
+              [block.position]: {
+                ...editingPageFields[fieldName]?.blocks?.[block.position],
+                typeName: block.typeName,
+                fields: {
+                  ...editingPageFields[fieldName]?.blocks?.[block.position]
+                    .fields,
+                  [block.blockFieldName]: content
+                }
+              }
+            }
+          }
+        },
+        typeName: page.typeName
+      }
+    } else {
+      if (workingPageFields[fieldName]?.content === content) {
+        delete editingPageFields[fieldName]
+        return
+      }
+
+      state.dataLayer.editing.pages[page.slug] = {
+        ...state.dataLayer.editing.pages[page.slug],
+        fields: {
+          ...editingPageFields,
+          [fieldName]: {
             content: content
           }
         },

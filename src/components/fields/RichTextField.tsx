@@ -7,12 +7,10 @@
  */
 import React from 'react'
 
-import TextField, {OwnProps as TextFieldProps} from './TextField'
+import EditableField, {OwnProps as RichTextFieldProps} from './EditableField'
 
-export {EditableTextField as EditableRichTextField} from './TextField'
-
-const RichTextField: React.ComponentType<TextFieldProps> = props => (
-  <TextField
+const RichTextField: React.ComponentType<RichTextFieldProps> = props => (
+  <EditableField
     buttonOptions={{
       bold: true,
       italic: true,
