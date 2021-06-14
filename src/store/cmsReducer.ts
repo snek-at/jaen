@@ -267,7 +267,7 @@ export const cmsReducer = createReducer(initialState, {
         const slugs = key.split('/')
         const oldSlug = slugs[slugs.length - 2]
 
-        childSlugs = state.index.pages[oldSlug].childSlugs
+        childSlugs = state.index.pages[oldSlug]?.childSlugs
 
         delete state.index.pages[oldSlug]
         state.index.pages[parentSlug].childSlugs = state.index.pages[
