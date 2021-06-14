@@ -48,7 +48,6 @@ export type PageIndex = {
 export interface CMSOptions {
   editing: boolean
   showMenu: boolean
-  shouldOverrideWDL: boolean
 }
 export interface CMSState {
   settings: CMSSettings

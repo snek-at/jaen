@@ -100,6 +100,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
   return (
     <>
       <Drawer
+        className="menu-drawer"
         title={
           <>
             <Space>
@@ -115,7 +116,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
         }
         visible={showMenu}
         onClose={toggleShow}
-        width={1000}
+        width={window.innerWidth > 900 ? 800 : window.innerWidth - 100}
         footer={[
           <React.Fragment key={'logout-group'}>
             {authenticated && (

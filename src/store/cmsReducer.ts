@@ -34,7 +34,6 @@ const initialState: CMSState = {
   options: {
     editing: false,
     showMenu: false,
-    shouldOverrideWDL: false
   },
   dataLayer: {working: {updateFieldsCount: 0, pages: {}}, editing: {pages: {}}}
 }
@@ -153,7 +152,6 @@ export const cmsReducer = createReducer(initialState, {
         ...data
       }
     }
-    state.options.shouldOverrideWDL = false
   },
   [discardEditing.type]: (state, _action) => {
     state.options.editing = false

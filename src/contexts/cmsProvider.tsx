@@ -7,7 +7,7 @@
  */
 import md5 from 'crypto-js/md5'
 import React, {useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch, useSelector, useStore} from 'react-redux'
 import PageRouter from '~/router'
 import {store, components, ConnectedPageType} from '~/types'
 
@@ -19,7 +19,7 @@ import {
   setIndex,
   toggleMenu
 } from '~/store/cmsActions'
-import {AppDispatch} from '~/store/store'
+import {AppDispatch, RootState} from '~/store/store'
 
 import {CMSContext} from './context'
 import {
@@ -39,6 +39,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   children
 }) => {
   const dispatch = useDispatch<AppDispatch>()
+  const store = useStore<RootState>()
 
   const [registeredPages, setRegisteredPages] =
     useState<ConnectedPageType[]>(pages)
@@ -52,12 +53,6 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
 
   const index = useSelector(
     (state: store.RootState) => state.cms.index || ({} as store.PageIndex)
-  )
-  const layerOrigCksm = useSelector(
-    ({cms}: store.RootState) => cms.dataLayer.origCksm
-  )
-  const shouldOverrideWDL = useSelector(
-    ({cms}: store.RootState) => cms.options.shouldOverrideWDL
   )
 
   const [treeData, setTreeData] = useState<components.ExplorerTDN[]>()
@@ -91,9 +86,11 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
         index: store.PageIndex
       } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
 
+      const layerOrigCksm = store.getState().cms.dataLayer.origCksm
+
       const cksm = md5(JSON.stringify(data)).toString()
 
-      if (cksm !== layerOrigCksm || shouldOverrideWDL) {
+      if (cksm !== layerOrigCksm) {
         dispatch(overrideWDL({data: data.dataLayer.working, cksm}))
         dispatch(setIndex(data.index))
       }
