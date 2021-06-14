@@ -1,5 +1,6 @@
 import {AppstoreAddOutlined} from '@ant-design/icons'
 import {Menu, Row, Button, Col, Dropdown, Divider} from 'antd'
+import deepmerge from 'deepmerge'
 import React, {useEffect, useState, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useCMSPageContext} from '~/contexts/context'
@@ -7,7 +8,7 @@ import {store} from '~/types'
 
 import {GenericBC} from '~/components/blocks'
 
-import {registerField} from '~/store/cmsActions'
+import {registerField, unregisterField} from '~/store/cmsActions'
 
 type StreamFieldProps = {
   name: string
@@ -46,9 +47,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
       cms.dataLayer.editing.pages[context.page.slug]?.fields[name]?.blocks
   )
 
-  if (!storeBlocks) {
-    storeBlocks = storeWorkingBlocks
-  }
+  storeBlocks = deepmerge(storeWorkingBlocks || {}, storeBlocks || {})
 
   const blocksKeys = Object.keys(storeBlocks || {}).sort(
     (a, b) => parseInt(a) - parseInt(b)
@@ -97,7 +96,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
 
   const blocksTypes = blocks.map(block => block.BlockType)
 
-  const menu = (
+  const AddBlockMenu = (
     <Menu
       onClick={(value: any) => {
         addNewBlock(blocksTypes[value.key])
@@ -110,13 +109,38 @@ const StreamField: React.FC<StreamFieldProps> = ({
     </Menu>
   )
 
+  const BlockEditMenu = (position: string, key: number) => (
+    <Menu>
+      <Menu.Item
+        danger
+        key={key}
+        onClick={() => {
+          console.log('unregister')
+          dispatch(
+            unregisterField({
+              page: context.page,
+              fieldOptions: {
+                fieldName: name,
+                block: {
+                  position: parseInt(position),
+                  typeName: ''
+                }
+              }
+            })
+          )
+        }}>
+        Delete
+      </Menu.Item>
+    </Menu>
+  )
+
   const button = (
     <Row justify="center">
       {blocksTypes.length > 0 ? (
         <Dropdown.Button
           type="primary"
           icon={<AppstoreAddOutlined />}
-          overlay={menu}
+          overlay={AddBlockMenu}
         />
       ) : (
         <Button
@@ -127,7 +151,6 @@ const StreamField: React.FC<StreamFieldProps> = ({
       )}
     </Row>
   )
-
   return (
     <div ref={ref}>
       {editing && !reverseOrder && (
@@ -139,7 +162,17 @@ const StreamField: React.FC<StreamFieldProps> = ({
       {storeBlocks && (
         <Row>
           <Col>
-            {blocksKeys.map(position => renderBlock(parseInt(position)))}
+            {blocksKeys.map((position, key) => (
+              <>
+                <Dropdown
+                  key={key}
+                  disabled={!editing}
+                  overlay={BlockEditMenu(position, key)}
+                  trigger={['contextMenu']}>
+                  <div>{renderBlock(parseInt(position))}</div>
+                </Dropdown>
+              </>
+            ))}
           </Col>
         </Row>
       )}

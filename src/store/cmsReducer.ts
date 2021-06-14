@@ -14,6 +14,7 @@ import {setHiddenChildSlugs} from '~/store/cmsActions'
 import {
   setSettings,
   registerField,
+  unregisterField,
   toggleMenu,
   toggleEditing,
   discardEditing,
@@ -121,6 +122,20 @@ export const cmsReducer = createReducer(initialState, {
     //   }
     // }
   },
+  [unregisterField.type]: (state, action) => {
+    const {fieldOptions, page} = action.payload
+
+    const block = fieldOptions.block
+
+    if(block){
+      delete state.dataLayer.editing.pages[page.slug]?.fields[fieldOptions.fieldName]?.blocks?.[block.position]
+      delete state.dataLayer.working.pages[page.slug]?.fields[fieldOptions.fieldName]?.blocks?.[block.position]
+     
+    }else{
+      delete state.dataLayer.editing.pages[page.slug]?.fields[fieldOptions.fieldName]
+      delete state.dataLayer.working.pages[page.slug]?.fields[fieldOptions.fieldName]
+    }
+  },
   [toggleEditing.type]: (state, action) => {
     state.options.editing = action.payload
   },
@@ -171,7 +186,7 @@ export const cmsReducer = createReducer(initialState, {
 
     if (block) {
       const blockContent =
-        workingPageFields[fieldName]?.blocks?.[block.position]?.fields[
+        workingPageFields[fieldName]?.blocks?.[block.position]?.fields?.[
           block.blockFieldName
         ]
 

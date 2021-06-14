@@ -20,6 +20,11 @@ export const registerField = createAction<{
   fieldOptions: BlockFieldOptions
   page: PageParamsType
 }>('cms/registerField')
+export const unregisterField = createAction<{
+  fieldOptions: BlockFieldOptions
+  page: PageParamsType
+}>('cms/unregisterField')
+
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
 
 export const overrideWDL =
