@@ -33,7 +33,7 @@ const initialState: CMSState = {
   },
   options: {
     editing: false,
-    showMenu: false,
+    showMenu: false
   },
   dataLayer: {working: {updateFieldsCount: 0, pages: {}}, editing: {pages: {}}}
 }
@@ -126,13 +126,20 @@ export const cmsReducer = createReducer(initialState, {
 
     const block = fieldOptions.block
 
-    if(block){
-      delete state.dataLayer.editing.pages[page.slug]?.fields[fieldOptions.fieldName]?.blocks?.[block.position]
-      delete state.dataLayer.working.pages[page.slug]?.fields[fieldOptions.fieldName]?.blocks?.[block.position]
-     
-    }else{
-      delete state.dataLayer.editing.pages[page.slug]?.fields[fieldOptions.fieldName]
-      delete state.dataLayer.working.pages[page.slug]?.fields[fieldOptions.fieldName]
+    if (block) {
+      delete state.dataLayer.editing.pages[page.slug]?.fields[
+        fieldOptions.fieldName
+      ]?.blocks?.[block.position]
+      delete state.dataLayer.working.pages[page.slug]?.fields[
+        fieldOptions.fieldName
+      ]?.blocks?.[block.position]
+    } else {
+      delete state.dataLayer.editing.pages[page.slug]?.fields[
+        fieldOptions.fieldName
+      ]
+      delete state.dataLayer.working.pages[page.slug]?.fields[
+        fieldOptions.fieldName
+      ]
     }
   },
   [toggleEditing.type]: (state, action) => {
@@ -260,18 +267,9 @@ export const cmsReducer = createReducer(initialState, {
       const parentSlug =
         pathParts[pathParts.length - 2] || state.index.rootPageSlug
 
-      let childSlugs: string[] = []
-      if (!isDraft) {
-        const slugs = key.split('/')
-        const oldSlug = slugs[slugs.length - 2]
-
-        childSlugs = state.index.pages[oldSlug]?.childSlugs
-
-        delete state.index.pages[oldSlug]
-        state.index.pages[parentSlug].childSlugs = state.index.pages[
-          parentSlug
-        ].childSlugs.filter(e => e !== oldSlug)
-      }
+      state.index.pages[parentSlug].childSlugs = state.index.pages[
+        parentSlug
+      ].childSlugs.filter(e => e !== slug)
 
       state.index.pages = {
         ...state.index.pages,
@@ -279,11 +277,22 @@ export const cmsReducer = createReducer(initialState, {
           slug,
           title,
           typeName,
-          childSlugs: isDraft ? [] : childSlugs
-        },
-        [parentSlug]: {
-          ...state.index.pages[parentSlug],
-          childSlugs: [...state.index.pages[parentSlug].childSlugs, slug]
+          childSlugs: isDraft ? [] : state.index.pages[slug].childSlugs || []
+        }
+      }
+
+      const parentChildSlugs = [...state.index.pages[parentSlug].childSlugs]
+      const identSlugs = slug === parentSlug
+
+      if (!identSlugs) {
+        parentChildSlugs.push(slug)
+
+        state.index.pages = {
+          ...state.index.pages,
+          [parentSlug]: {
+            ...state.index.pages[parentSlug],
+            childSlugs: parentChildSlugs || []
+          }
         }
       }
     }

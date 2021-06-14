@@ -116,7 +116,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
         }
         visible={showMenu}
         onClose={toggleShow}
-        width={window.innerWidth > 900 ? 800 : window.innerWidth - 100}
         footer={[
           <React.Fragment key={'logout-group'}>
             {authenticated && (
@@ -172,6 +171,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
                       return false
                     }
                   }
+                  console.log(node)
                   transferPageToIndex(node)
                   return true
                 }}
