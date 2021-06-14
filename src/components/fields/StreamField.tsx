@@ -34,6 +34,8 @@ const StreamField: React.FC<StreamFieldProps> = ({
     }
   })
 
+  const editing = useSelector(({cms}: store.RootState) => cms.options.editing)
+
   let storeWorkingBlocks = useSelector(
     ({cms}: store.RootState) =>
       cms.dataLayer.working.pages[context.page.slug]?.fields[name]?.blocks
@@ -128,7 +130,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
 
   return (
     <div ref={ref}>
-      {!reverseOrder && (
+      {editing && !reverseOrder && (
         <>
           {button}
           <Divider orientation="left" />
@@ -141,7 +143,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
           </Col>
         </Row>
       )}
-      {reverseOrder && (
+      {editing && reverseOrder && (
         <>
           <Divider orientation="left" />
           {button}
