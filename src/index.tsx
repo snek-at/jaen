@@ -2,6 +2,7 @@ import 'antd/dist/antd.css'
 
 export type {BC, ConnectedPageType} from '~/types'
 
+export {prepareBlocks} from './components/blocks'
 export {
   EditableField,
   RichTextField,
