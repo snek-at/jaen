@@ -1,6 +1,7 @@
 @import 'draft-js/dist/Draft';
 @import '@draft-js-plugins/inline-toolbar/lib/plugin.css';
 @import '@draft-js-plugins/image/lib/plugin.css';
+@import '@draft-js-plugins/linkify/lib/plugin.css';
 
 .cms-edit {
   position: fixed;

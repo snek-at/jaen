@@ -21,6 +21,7 @@ import {
 import Editor, {createEditorStateWithText} from '@draft-js-plugins/editor'
 import createImagePlugin from '@draft-js-plugins/image'
 import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar'
+import createLinkifyPlugin from '@draft-js-plugins/linkify'
 import {EditorState} from 'draft-js'
 import {stateToHTML} from 'draft-js-export-html'
 import {stateFromHTML} from 'draft-js-import-html'
@@ -68,9 +69,15 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   //   }, [])
 
   const [plugins, InlineToolbar] = useMemo(() => {
-    const toolbarPlugin = createInlineToolbarPlugin()
     const imagePlugin = createImagePlugin()
-    return [[toolbarPlugin, imagePlugin], toolbarPlugin.InlineToolbar]
+    const linkifyPlugin = createLinkifyPlugin()
+
+    const toolbarPlugin = createInlineToolbarPlugin()
+
+    return [
+      [toolbarPlugin, imagePlugin, linkifyPlugin],
+      toolbarPlugin.InlineToolbar
+    ]
   }, [])
 
   // const [{plugins, SideToolbar}] = useState(() => {
