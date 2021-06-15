@@ -19,7 +19,9 @@ export type CMSContextType = {
 
 export type CMSPageContextType = {
   page: PageParamsType
-  getChildPagesFromIndex: () => store.PageIndex['pages'][string][]
+  getChildPagesFromIndex: (
+    fixedSlug?: string
+  ) => store.PageIndex['pages'][string][]
   getHiddenSlugs: () => string[]
   setHiddenChildSlugs: (slugs: string[]) => void
 }

@@ -17,6 +17,7 @@ type IndexFieldProps = {
     key: number,
     navigate: () => void
   ) => React.ReactElement
+  fixedSlug?: string
 }
 
 const IndexField: React.FC<IndexFieldProps> = props => {
@@ -39,8 +40,8 @@ const IndexField: React.FC<IndexFieldProps> = props => {
     }
   })
 
-  const {outerElement, renderItem} = props
-  const dataSource = pageContext.getChildPagesFromIndex()
+  const {outerElement, renderItem, fixedSlug} = props
+  const dataSource = pageContext.getChildPagesFromIndex(fixedSlug)
   const filteredDataSource = dataSource.filter(
     x => !pageContext.getHiddenSlugs().includes(x.slug)
   )

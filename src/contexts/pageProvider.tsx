@@ -28,10 +28,10 @@ const PageProvider: React.FC<PageProviderProps> = ({
 
   const index = useSelector(({cms}: store.RootState) => cms.index)
 
-  const getChildPagesFromIndex = () => {
-    const slug = page.slug
+  const getChildPagesFromIndex = (fixedSlug?: string) => {
+    const slug = fixedSlug || page.slug
     return (
-      index?.pages[slug].childSlugs.map(childSlug => index.pages[childSlug]) ||
+      index?.pages[slug]?.childSlugs.map(childSlug => index.pages[childSlug]) ||
       []
     )
   }
