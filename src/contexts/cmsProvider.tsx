@@ -5,7 +5,7 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import Modal from 'antd/lib/modal/Modal'
+import {Modal, Space, Typography} from 'antd'
 import md5 from 'crypto-js/md5'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector, useStore} from 'react-redux'
@@ -13,7 +13,9 @@ import PageRouter from '~/router'
 import {store, components, ConnectedPageType} from '~/types'
 
 import Menu from '~/components/Menu'
+import Notify from '~/components/Notify'
 import LoginForm, {LoginFormValues} from '~/components/forms/Login'
+import {SnekIcon} from '~/components/icons'
 
 import {login} from '~/store/authActions'
 import {
@@ -30,7 +32,6 @@ import {
   ChildPageTypeNamesKeyRefs,
   transformIndexTree
 } from './utils'
-import Notify from '~/components/Notify'
 
 interface CMSProviderProps {
   settings: store.CMSSettings
@@ -142,7 +143,14 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
           <Menu />
         ) : (
           <Modal
-            title={'Logo placeholder'}
+            title={
+              <>
+                <Space>
+                  <SnekIcon />
+                  <Typography.Text>jaen - Login</Typography.Text>
+                </Space>
+              </>
+            }
             style={{top: 20}}
             visible
             footer={[]}

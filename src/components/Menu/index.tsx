@@ -11,11 +11,9 @@ import {
   Row,
   Space,
   Drawer,
-  Image,
   Typography,
   notification
 } from 'antd'
-import Avatar from 'antd/lib/avatar/avatar'
 import React, {useState} from 'react'
 import ReactJson from 'react-json-view'
 import {connect} from 'react-redux'
@@ -23,6 +21,7 @@ import {useCMSContext} from '~/contexts/context'
 import {store} from '~/types'
 
 import Explorer, {PageNode} from '~/components/Explorer/index'
+import {SnekIcon} from '~/components/icons'
 
 import {logout} from '~/store/authActions'
 import {
@@ -94,12 +93,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
         title={
           <>
             <Space>
-              <Avatar
-                size={40}
-                src={
-                  <Image src="https://avatars.githubusercontent.com/u/55870326?s=200&v=4" />
-                }
-              />
+              <SnekIcon />
               <Text>jaen - Content Management System</Text>
             </Space>
           </>
