@@ -1,3 +1,4 @@
+import {Spin, Row} from 'antd'
 import React from 'react'
 import {
   BrowserRouter as Router,
@@ -14,6 +15,8 @@ export const generateRoutes = (
   registeredPages: ConnectedPageType[],
   index: PageIndex
 ) => {
+  const pages = index.pages
+
   const findPageComponent = (typeName: string) =>
     registeredPages.find(page => page.PageType === typeName)
 
@@ -44,8 +47,6 @@ export const generateRoutes = (
 
   const routes: JSX.Element[] = []
 
-  const pages = index.pages
-
   const travelIndexTree = (page: typeof index.pages[string], path = '/') => {
     const {typeName, slug, childSlugs} = page
 
@@ -74,7 +75,17 @@ const PageRouter: React.FC<PageRouterProps> = ({children}): JSX.Element => {
     <Router>
       <Switch>
         {generateRoutes(registeredPages, index)}
-        <Route component={() => <div>404 Not found </div>} />
+        <Route
+          component={() =>
+            !index.pages ? (
+              <Row justify={'center'}>
+                <Spin size="large" />
+              </Row>
+            ) : (
+              <div>404 Not found </div>
+            )
+          }
+        />
       </Switch>
       {children}
     </Router>
