@@ -142,7 +142,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
           <LoginForm onFinish={onLogin} />
         ) : (
           <>
-            <Row justify={'start'} gutter={[16, 16]}>
+            <Row justify={'start'}>
               <>
                 <Space>
                   {editing ? (

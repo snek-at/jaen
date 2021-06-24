@@ -240,7 +240,7 @@ const Editor: React.FC<EditorProps> = ({
           />
         </Col>
       </Row>
-      <Row gutter={[16, 16]}>
+      <Row>
         {selectedNode && (
           <>
             <Col span={4} push={20}>
