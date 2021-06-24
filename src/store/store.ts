@@ -20,19 +20,21 @@ import storage from 'redux-persist/lib/storage'
 
 import {authReducer} from './authReducer'
 import {cmsReducer} from './cmsReducer'
+import {notifyReducer} from './notifyReducer'
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: ['auth']
+  blacklist: ['auth', 'notify']
 }
 
 const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     auth: authReducer,
-    cms: cmsReducer
+    cms: cmsReducer,
+    notify: notifyReducer
   })
 )
 

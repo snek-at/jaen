@@ -8,6 +8,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 
 import {BridgeSession} from '../api'
+import {setError} from './notifyActions'
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -31,6 +32,12 @@ export const login = createAsyncThunk(
       return session
     } catch (err) {
       console.log(err)
+      thunkAPI.dispatch(
+        setError({
+          message: 'Login failed',
+          description: 'You have entered an invalid username or password'
+        })
+      )
       // Use `err.response.data` as `action.payload` for a `rejected` action,
       // by explicitly returning it using the `rejectWithValue()` utility
       return thunkAPI.rejectWithValue(err.response.data)

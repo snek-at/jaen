@@ -63,3 +63,10 @@ export interface CMSState {
 export interface AuthState {
   authenticated: boolean
 }
+
+export interface NotifyState {
+  error: {
+    message: string
+    description: string
+  } | null
+}

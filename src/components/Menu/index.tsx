@@ -16,17 +16,15 @@ import {
   notification
 } from 'antd'
 import Avatar from 'antd/lib/avatar/avatar'
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import ReactJson from 'react-json-view'
 import {connect} from 'react-redux'
 import {useCMSContext} from '~/contexts/context'
 import {store} from '~/types'
 
 import Explorer, {PageNode} from '~/components/Explorer/index'
-import LoginForm from '~/components/forms/Login'
-import {LoginFormValues} from '~/components/forms/Login'
 
-import {login, logout} from '~/store/authActions'
+import {logout} from '~/store/authActions'
 import {
   toggleEditing,
   toggleMenu,
@@ -47,7 +45,6 @@ type DispatchProps = {
   toggleMenu: (state: boolean) => void
   discardEditing: () => void
   publish: () => void
-  login: (creds?: {username: string; password: string}) => void
   logout: () => void
   transferPageToIndex: (page: PageNode) => void
   deletePageFromIndex: (page: PageNode) => void
@@ -66,7 +63,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   toggleMenu,
   discardEditing,
   publish,
-  login,
   logout,
   transferPageToIndex,
   deletePageFromIndex
@@ -76,10 +72,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   const {showMenu, editing} = options
 
   const toggleShow = () => toggleMenu(!showMenu)
-  const onLogin = (values: LoginFormValues) => {
-    const {username, password} = values
-    login({username, password})
-  }
 
   const onPublish = () => {
     publish()
@@ -90,8 +82,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
         'The site has been shipped to production. In about 30 seconds the new version is available.'
     })
   }
-
-  useEffect(() => login(), [])
 
   const cmsContext = useCMSContext()
 
@@ -138,60 +128,56 @@ export const Menu: React.FC<CMSMenuProps> = ({
             )}
           </React.Fragment>
         ]}>
-        {!authenticated ? (
-          <LoginForm onFinish={onLogin} />
-        ) : (
-          <>
-            <Row justify={'start'}>
-              <>
-                <Space>
-                  {editing ? (
-                    <>
-                      <Button danger onClick={() => toggleEditing(false)}>
-                        Stop Editing
-                      </Button>
-                      <Button onClick={() => discardEditing()}>Discard</Button>
-                    </>
-                  ) : (
-                    <Button onClick={() => toggleEditing(true)}>
-                      Start Editing
+        <>
+          <Row justify={'start'}>
+            <>
+              <Space>
+                {editing ? (
+                  <>
+                    <Button danger onClick={() => toggleEditing(false)}>
+                      Stop Editing
                     </Button>
-                  )}
-                  <Button onClick={onPublish}>Publish</Button>
-                </Space>
-              </>
-            </Row>
-            <Divider />
+                    <Button onClick={() => discardEditing()}>Discard</Button>
+                  </>
+                ) : (
+                  <Button onClick={() => toggleEditing(true)}>
+                    Start Editing
+                  </Button>
+                )}
+                <Button onClick={onPublish}>Publish</Button>
+              </Space>
+            </>
+          </Row>
+          <Divider />
 
-            {view === 'EXPLORER' && treeData && keyRefs && (
-              <Explorer
-                onNodeSave={node => {
-                  const {isDraft, slug} = node
-                  if (isDraft && slug) {
-                    if (index?.pages[slug]) {
-                      return false
-                    }
+          {view === 'EXPLORER' && treeData && keyRefs && (
+            <Explorer
+              onNodeSave={node => {
+                const {isDraft, slug} = node
+                if (isDraft && slug) {
+                  if (index?.pages[slug]) {
+                    return false
                   }
-                  transferPageToIndex(node)
-                  return true
-                }}
-                onNodeDelete={deletePageFromIndex}
-                indexTree={treeData}
-                indexKeyRefs={keyRefs.indexKey}
-                childPageTypeNamesKeyRefs={keyRefs.childPageTypeNamesKey}
+                }
+                transferPageToIndex(node)
+                return true
+              }}
+              onNodeDelete={deletePageFromIndex}
+              indexTree={treeData}
+              indexKeyRefs={keyRefs.indexKey}
+              childPageTypeNamesKeyRefs={keyRefs.childPageTypeNamesKey}
+            />
+          )}
+          {view === 'EXPERT' && (
+            <>
+              <ReactJson
+                src={{index: index, dataLayer: dataLayer}}
+                theme={'monokai'}
               />
-            )}
-            {view === 'EXPERT' && (
-              <>
-                <ReactJson
-                  src={{index: index, dataLayer: dataLayer}}
-                  theme={'monokai'}
-                />
-              </>
-            )}
-            <Divider />
-          </>
-        )}
+            </>
+          )}
+          <Divider />
+        </>
       </Drawer>
     </>
   )
@@ -210,8 +196,6 @@ const mapDispatchToProps = (dispatch: store.AppDispatch): DispatchProps => ({
   toggleMenu: (state: boolean) => dispatch(toggleMenu(state)),
   discardEditing: () => dispatch(discardEditing()),
   publish: () => dispatch(publish()),
-  login: (creds?: {username: string; password: string}) =>
-    dispatch(login({creds})),
   logout: () => dispatch(logout()),
   transferPageToIndex: (page: PageNode) => dispatch(transferPageToIndex(page)),
   deletePageFromIndex: (page: PageNode) => dispatch(deletePageFromIndex(page))
