@@ -89,7 +89,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
   return (
     <>
       <Drawer
-        className="menu-drawer"
         title={
           <>
             <Space>
