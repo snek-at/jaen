@@ -118,23 +118,23 @@ export const Menu: React.FC<CMSMenuProps> = ({
         onClose={toggleShow}
         width={window.innerWidth > 900 ? 800 : window.innerWidth - 100}
         footer={[
-          <React.Fragment key={'logout-group'}>
+          <React.Fragment key={'control-group'}>
             {authenticated && (
-              <Button key="logout" onClick={() => logout()}>
-                Sign out
-              </Button>
-            )}
-          </React.Fragment>,
-          <React.Fragment key={'view-group'}>
-            {view === 'EXPLORER' && (
-              <Button key="expert" onClick={() => setView('EXPERT')}>
-                Expert
-              </Button>
-            )}
-            {view === 'EXPERT' && (
-              <Button key="explorer" onClick={() => setView('EXPLORER')}>
-                Explorer
-              </Button>
+              <>
+                {view === 'EXPLORER' && (
+                  <Button key="expert" onClick={() => setView('EXPERT')}>
+                    Expert
+                  </Button>
+                )}
+                {view === 'EXPERT' && (
+                  <Button key="explorer" onClick={() => setView('EXPLORER')}>
+                    Explorer
+                  </Button>
+                )}
+                <Button key="logout" onClick={() => logout()}>
+                  Sign out
+                </Button>
+              </>
             )}
           </React.Fragment>
         ]}>
