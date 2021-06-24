@@ -7,21 +7,24 @@
  */
 import md5 from 'crypto-js/md5'
 import React, {useEffect, useState} from 'react'
-import {useDispatch, useSelector, useStore} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import {Provider as ReduxProvider} from 'react-redux'
+import {PersistGate} from 'redux-persist/lib/integration/react'
 import PageRouter from '~/router'
-import {store, components, ConnectedPageType} from '~/types'
+import {store as storeTypes, components, ConnectedPageType} from '~/types'
 
 import Menu from '~/components/Menu'
 import Notify from '~/components/Notify'
 import LoginModal from '~/components/modals/Login'
 
+import {login} from '~/store/authActions'
 import {
   setSettings,
   overrideWDL,
   setIndex,
   toggleMenu
 } from '~/store/cmsActions'
-import {AppDispatch, RootState} from '~/store/store'
+import {persistor, store} from '~/store/store'
 
 import {CMSContext} from './context'
 import {
@@ -29,10 +32,9 @@ import {
   ChildPageTypeNamesKeyRefs,
   transformIndexTree
 } from './utils'
-import { login } from '~/store/authActions'
 
 interface CMSProviderProps {
-  settings: store.CMSSettings
+  settings: storeTypes.CMSSettings
   pages: ConnectedPageType[]
 }
 
@@ -41,8 +43,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   pages,
   children
 }) => {
-  const dispatch = useDispatch<AppDispatch>()
-  const store = useStore<RootState>()
+  const dispatch = useDispatch<storeTypes.AppDispatch>()
 
   const [registeredPages, setRegisteredPages] =
     useState<ConnectedPageType[]>(pages)
@@ -55,11 +56,12 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
     getRegisteredPage(typeName)?.ChildPages.map(page => page.PageType)
 
   const authenticated = useSelector(
-    (state: store.RootState) => state.auth.authenticated
+    (state: storeTypes.RootState) => state.auth.authenticated
   )
 
   const index = useSelector(
-    (state: store.RootState) => state.cms.index || ({} as store.PageIndex)
+    (state: storeTypes.RootState) =>
+      state.cms.index || ({} as storeTypes.PageIndex)
   )
 
   const [treeData, setTreeData] = useState<components.ExplorerTDN[]>()
@@ -89,12 +91,11 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   useEffect(() => {
     const fetchFile = async (url: string) => {
       const data: {
-        dataLayer: {working: store.DataLayer}
-        index: store.PageIndex
+        dataLayer: {working: storeTypes.DataLayer}
+        index: storeTypes.PageIndex
       } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
 
       const layerOrigCksm = store.getState().cms.dataLayer.origCksm
-
       const cksm = md5(JSON.stringify(data)).toString()
 
       if (cksm !== layerOrigCksm) {
@@ -150,4 +151,16 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   )
 }
 
-export default CMSProvider
+const CMSProviderWithRedux: React.FC<CMSProviderProps> = props => {
+  return (
+    <ReduxProvider store={store}>
+      <React.StrictMode>
+        <PersistGate loading={null} persistor={persistor}>
+          <CMSProvider {...props} />
+        </PersistGate>
+      </React.StrictMode>
+    </ReduxProvider>
+  )
+}
+
+export default CMSProviderWithRedux
