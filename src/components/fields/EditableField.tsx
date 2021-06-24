@@ -49,19 +49,23 @@ export const EditableField: React.FC<EditableFieldProps> = ({
 
   const {fieldName, block} = fieldOptions
   const page = pageContext.page
-  
+
   let field =
     store.getState().cms.dataLayer.editing.pages[page.slug]?.fields[fieldName]
 
-  if (!field) {
-    field = workingLayer.pages[page.slug]?.fields[fieldName]
-  }
+  const workingField = workingLayer.pages[page.slug]?.fields[fieldName]
 
   let content: string | undefined
 
+  if (!field) {
+    field = workingField
+  }
+
   if (field) {
     if (block && field.blocks) {
-      content = field.blocks[block.position]?.fields?.[block.blockFieldName]
+      content =
+        field.blocks[block.position]?.fields?.[block.blockFieldName] ||
+        workingField.blocks?.[block.position]?.fields?.[block.blockFieldName]
     } else {
       content = field.content
     }
