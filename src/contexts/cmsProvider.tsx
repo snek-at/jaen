@@ -5,7 +5,6 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {Modal, Space, Typography} from 'antd'
 import md5 from 'crypto-js/md5'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector, useStore} from 'react-redux'
@@ -14,10 +13,8 @@ import {store, components, ConnectedPageType} from '~/types'
 
 import Menu from '~/components/Menu'
 import Notify from '~/components/Notify'
-import LoginForm, {LoginFormValues} from '~/components/forms/Login'
-import {SnekIcon} from '~/components/icons'
+import LoginModal from '~/components/modals/Login'
 
-import {login} from '~/store/authActions'
 import {
   setSettings,
   overrideWDL,
@@ -121,12 +118,6 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
     }
   }, [])
 
-  const onLogin = (values: LoginFormValues) => {
-    dispatch(login({creds: values}))
-
-    //login({username, password})
-  }
-
   return (
     <CMSContext.Provider
       value={{
@@ -139,27 +130,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       }}>
       <PageRouter>
         <Notify />
-        {authenticated ? (
-          <Menu />
-        ) : (
-          <Modal
-            title={
-              <>
-                <Space>
-                  <SnekIcon />
-                  <Typography.Text>jaen - Login</Typography.Text>
-                </Space>
-              </>
-            }
-            style={{top: 20}}
-            visible
-            footer={[]}
-            //onOk={() => this.setModal1Visible(false)}
-            //</PageRouter>onCancel={() => this.setModal1Visible(false)}
-          >
-            <LoginForm onFinish={onLogin} />
-          </Modal>
-        )}
+        {authenticated ? <Menu /> : <LoginModal />}
         {children}
       </PageRouter>
 
