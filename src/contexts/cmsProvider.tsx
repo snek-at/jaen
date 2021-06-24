@@ -29,6 +29,7 @@ import {
   ChildPageTypeNamesKeyRefs,
   transformIndexTree
 } from './utils'
+import { login } from '~/store/authActions'
 
 interface CMSProviderProps {
   settings: store.CMSSettings
@@ -116,6 +117,10 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
         'Cannot fetch `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json, because gitRemote is undefined'
       )
     }
+  }, [])
+
+  useEffect(() => {
+    dispatch(login({}))
   }, [])
 
   return (
