@@ -50,60 +50,6 @@ const cmsReducer = createReducer(initialState, {
         }
       }
     }
-
-    // const {fieldName, block}: components.EditableFieldOptions = fieldOptions
-    // let wPages = state.dataLayer.working.pages
-    // let pages = state.dataLayer.editing.pages
-    // let blocks = undefined
-    // // Check if a block is to be registered and the block is not already present in the working layer
-    // const shouldRegisterBlock =
-    //   block &&
-    //   !wPages[page.slug]?.fields[fieldName]?.blocks?.[block.position]?.fields[
-    //     block.blockFieldName
-    //   ]
-    // if (block) {
-    //   console.log(
-    //     wPages[page.slug]?.fields[fieldName]?.blocks?.[block.position]?.fields[
-    //       block.blockFieldName
-    //     ]
-    //   )
-    //   console.log('ad', block && undefined)
-    // }
-    // console.log('shouldRegisterBlock', fieldName, shouldRegisterBlock)
-    // if (block && shouldRegisterBlock) {
-    //   blocks = {
-    //     ...pages[page.slug]?.fields[fieldName]?.blocks,
-    //     [block.position]: {
-    //       ...pages[page.slug]?.fields[fieldName]?.blocks?.[block.position],
-    //       typeName: block.typeName,
-    //       fields: {
-    //         ...pages[page.slug]?.fields[fieldName]?.blocks?.[block.position]
-    //           ?.fields,
-    //         [block.blockFieldName]:
-    //           pages[page.slug]?.fields[fieldName]?.blocks?.[block.position]
-    //             ?.fields[block.blockFieldName]
-    //       }
-    //     }
-    //   }
-    // }
-    // const shouldRegisterField =
-    //   !wPages[page.slug]?.fields[fieldName] || shouldRegisterBlock
-    // console.log('shouldRegisterField', fieldName, shouldRegisterField)
-    // if (shouldRegisterField) {
-    //   state.dataLayer.editing.pages = {
-    //     ...pages,
-    //     [page.slug]: {
-    //       ...pages[page.slug],
-    //       fields: {
-    //         ...pages[page.slug]?.fields,
-    //         [fieldName]: {
-    //           ...pages[page.slug]?.fields[fieldName],
-    //           blocks
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   },
   [cmsActions.unregisterField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
