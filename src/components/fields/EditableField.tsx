@@ -65,7 +65,7 @@ export const EditableField: React.FC<EditableFieldProps> = ({
     if (block && field.blocks) {
       content =
         field.blocks[block.position]?.fields?.[block.blockFieldName] ||
-        workingField.blocks?.[block.position]?.fields?.[block.blockFieldName]
+        workingField?.blocks?.[block.position]?.fields?.[block.blockFieldName]
     } else {
       content = field.content
     }
