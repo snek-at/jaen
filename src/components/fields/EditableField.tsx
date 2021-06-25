@@ -13,7 +13,7 @@ import {store} from '~/types'
 
 import SidebarEditor, {ButtonOptions} from '~/components/Editor'
 
-import {updatePageContent} from '~/store/cmsActions'
+import {updatePageContent} from '~/store/actions/cms'
 
 type SubelementProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,

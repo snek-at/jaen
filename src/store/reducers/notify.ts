@@ -1,25 +1,27 @@
 /**
  * @license
- * Copyright Nico Schett. All Rights Reserved.
+ * Copyright snek. All Rights Reserved.
  *
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
 import {createReducer} from '@reduxjs/toolkit'
 
-import {setError, hideError} from './notifyActions'
-import {NotifyState} from './types'
+import {notifyActions} from '../actions'
+import {NotifyState} from '../types'
 
 const initialState: NotifyState = {
   error: null
 }
 
-export const notifyReducer = createReducer(initialState, {
-  [setError.type]: (state, action) => {
+const notifyReducer = createReducer(initialState, {
+  [notifyActions.setError.type]: (state, action) => {
     const {message, description} = action.payload
     state.error = {message, description}
   },
-  [hideError.type]: (state, _action) => {
+  [notifyActions.hideError.type]: (state, _action) => {
     state.error = null
   }
 })
+
+export default notifyReducer

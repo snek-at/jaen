@@ -1,14 +1,14 @@
 /**
  * @license
- * Copyright Nico Schett. All Rights Reserved.
+ * Copyright snek. All Rights Reserved.
  *
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
 import {createAsyncThunk} from '@reduxjs/toolkit'
+import {BridgeSession} from '~/api'
 
-import {BridgeSession} from '../api'
-import {setError} from './notifyActions'
+import {setError} from './notify'
 
 export const login = createAsyncThunk(
   'auth/login',

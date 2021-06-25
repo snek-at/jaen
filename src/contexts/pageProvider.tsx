@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {CMSPageContext} from '~/contexts/context'
 import {store, PageParamsType} from '~/types'
 
-import {setHiddenChildSlugs as setHiddenChildSlugsAction} from '~/store/cmsActions'
+import {setHiddenChildSlugs as setHiddenChildSlugsAction} from '~/store/actions/cms'
 
 interface IConnectedPageType {
   PageType: string

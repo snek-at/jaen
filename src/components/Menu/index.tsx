@@ -23,7 +23,7 @@ import {store} from '~/types'
 import Explorer, {PageNode} from '~/components/Explorer/index'
 import {SnekIcon} from '~/components/icons'
 
-import {logout} from '~/store/authActions'
+import {logout} from '~/store/actions/auth'
 import {
   toggleEditing,
   toggleMenu,
@@ -31,7 +31,7 @@ import {
   publish,
   deletePageFromIndex,
   transferPageToIndex
-} from '~/store/cmsActions'
+} from '~/store/actions/cms'
 
 import './cmsmenu.scss'
 

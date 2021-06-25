@@ -8,7 +8,7 @@ import {store} from '~/types'
 
 import {GenericBC} from '~/components/blocks'
 
-import {registerField, unregisterField} from '~/store/cmsActions'
+import {registerField, unregisterField} from '~/store/actions/cms'
 
 type StreamFieldProps = {
   name: string

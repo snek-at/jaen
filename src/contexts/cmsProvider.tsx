@@ -11,20 +11,20 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Provider as ReduxProvider} from 'react-redux'
 import {PersistGate} from 'redux-persist/lib/integration/react'
 import PageRouter from '~/router'
+import {persistor, store} from '~/store'
 import {store as storeTypes, components, ConnectedPageType} from '~/types'
 
 import Menu from '~/components/Menu'
 import Notify from '~/components/Notify'
 import LoginModal from '~/components/modals/Login'
 
-import {login} from '~/store/authActions'
+import {login} from '~/store/actions/auth'
 import {
   setSettings,
   overrideWDL,
   setIndex,
   toggleMenu
-} from '~/store/cmsActions'
-import {persistor, store} from '~/store/store'
+} from '~/store/actions/cms'
 
 import {CMSContext} from './context'
 import {

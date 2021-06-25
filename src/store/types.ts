@@ -1,12 +1,12 @@
 /**
  * @license
- * Copyright Nico Schett. All Rights Reserved.
+ * Copyright snek. All Rights Reserved.
  *
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
 
-export type {RootState, AppDispatch} from './store'
+export type {RootState, AppDispatch} from './index'
 
 export type CMSSettings = {gitRemote?: string}
 
@@ -68,5 +68,5 @@ export interface NotifyState {
   error: {
     message: string
     description: string
-  } | null
+  } | null
 }

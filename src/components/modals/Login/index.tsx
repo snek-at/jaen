@@ -5,8 +5,8 @@ import {store} from '~/types'
 
 import {SnekIcon} from '~/components/icons'
 
-import {login} from '~/store/authActions'
-import {toggleMenu} from '~/store/cmsActions'
+import {login} from '~/store/actions/auth'
+import {toggleMenu} from '~/store/actions/cms'
 
 import './login.scss'
 

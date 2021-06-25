@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright Nico Schett. All Rights Reserved.
+ * Copyright snek. All Rights Reserved.
  *
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
@@ -8,24 +8,8 @@
 import {createReducer} from '@reduxjs/toolkit'
 import {components, PageParamsType} from '~/types'
 
-import {setHiddenChildSlugs} from '~/store/cmsActions'
-
-// import {PageNode} from '../components/Explorer/index'
-import {
-  setSettings,
-  registerField,
-  unregisterField,
-  toggleMenu,
-  toggleEditing,
-  discardEditing,
-  publish,
-  overrideWDL,
-  updatePageContent,
-  setIndex,
-  transferPageToIndex,
-  deletePageFromIndex
-} from './cmsActions'
-import {CMSState} from './types'
+import {cmsActions} from '../actions'
+import {CMSState} from '../types'
 
 const initialState: CMSState = {
   settings: {
@@ -38,11 +22,11 @@ const initialState: CMSState = {
   dataLayer: {working: {updateFieldsCount: 0, pages: {}}, editing: {pages: {}}}
 }
 
-export const cmsReducer = createReducer(initialState, {
-  [setSettings.type]: (state, action) => {
+const cmsReducer = createReducer(initialState, {
+  [cmsActions.setSettings.type]: (state, action) => {
     state.settings = action.payload
   },
-  [registerField.type]: (state, action) => {
+  [cmsActions.registerField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
 
     console.log(state, fieldOptions, page)
@@ -121,7 +105,7 @@ export const cmsReducer = createReducer(initialState, {
     //   }
     // }
   },
-  [unregisterField.type]: (state, action) => {
+  [cmsActions.unregisterField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
 
     const block = fieldOptions.block
@@ -142,13 +126,13 @@ export const cmsReducer = createReducer(initialState, {
       ]
     }
   },
-  [toggleEditing.type]: (state, action) => {
+  [cmsActions.toggleEditing.type]: (state, action) => {
     state.options.editing = action.payload
   },
-  [toggleMenu.type]: (state, action) => {
+  [cmsActions.toggleMenu.type]: (state, action) => {
     state.options.showMenu = action.payload
   },
-  [overrideWDL.type]: (state, action) => {
+  [cmsActions.overrideWDL.type]: (state, action) => {
     const {data, cksm} = action.payload
     state.dataLayer.origCksm = cksm
     state.dataLayer = {
@@ -160,7 +144,7 @@ export const cmsReducer = createReducer(initialState, {
       }
     }
   },
-  [discardEditing.type]: (state, _action) => {
+  [cmsActions.discardEditing.type]: (state, _action) => {
     state.options.editing = false
     state.dataLayer.editing = {pages: {}}
     state.dataLayer = {
@@ -171,7 +155,7 @@ export const cmsReducer = createReducer(initialState, {
       }
     }
   },
-  [updatePageContent.type]: (state, action) => {
+  [cmsActions.updatePageContent.type]: (state, action) => {
     const {
       content,
       fieldOptions,
@@ -242,7 +226,7 @@ export const cmsReducer = createReducer(initialState, {
       }
     }
   },
-  [publish.fulfilled.type]: (state, action) => {
+  [cmsActions.publish.fulfilled.type]: (state, action) => {
     const workingLayer = action.payload
 
     state.dataLayer = {
@@ -256,10 +240,10 @@ export const cmsReducer = createReducer(initialState, {
       }
     }
   },
-  [setIndex.type]: (state, action) => {
+  [cmsActions.setIndex.type]: (state, action) => {
     state.index = action.payload
   },
-  [transferPageToIndex.type]: (state, action) => {
+  [cmsActions.transferPageToIndex.type]: (state, action) => {
     const {key, slug, title, typeName, isDraft} = action.payload
 
     if (state.index) {
@@ -297,7 +281,7 @@ export const cmsReducer = createReducer(initialState, {
       }
     }
   },
-  [deletePageFromIndex.type]: (state, action) => {
+  [cmsActions.deletePageFromIndex.type]: (state, action) => {
     const {key, slug, isDraft} = action.payload
 
     let slugs = key.split('/')
@@ -318,7 +302,7 @@ export const cmsReducer = createReducer(initialState, {
       }
     }
   },
-  [setHiddenChildSlugs.type]: (state, action) => {
+  [cmsActions.setHiddenChildSlugs.type]: (state, action) => {
     const {page, hiddenChildSlugs} = action.payload
 
     const slug = page.slug
@@ -332,3 +316,5 @@ export const cmsReducer = createReducer(initialState, {
     }
   }
 })
+
+export default cmsReducer
