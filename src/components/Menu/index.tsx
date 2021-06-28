@@ -151,7 +151,8 @@ export const Menu: React.FC<CMSMenuProps> = ({
               onNodeSave={node => {
                 const {isDraft, slug} = node
                 if (isDraft && slug) {
-                  if (index?.pages[slug]) {
+                  const page = index?.pages[slug]
+                  if (page && !page.deleted) {
                     return false
                   }
                 }

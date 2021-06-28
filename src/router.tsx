@@ -48,9 +48,9 @@ export const generateRoutes = (
   const routes: JSX.Element[] = []
 
   const travelIndexTree = (page: typeof index.pages[string], path = '/') => {
-    const {typeName, slug, childSlugs} = page
+    const {typeName, slug, childSlugs, deleted} = page
 
-    routes.push(generateRoute(typeName, slug, path, routes.length))
+    !deleted && routes.push(generateRoute(typeName, slug, path, routes.length))
 
     childSlugs.forEach(childSlug => {
       travelIndexTree(pages[childSlug], path + `${childSlug}/`)

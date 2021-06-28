@@ -28,20 +28,21 @@ export const transformIndexTree = (
       const childPage = pages[childSlug]
 
       if (childPage) {
-        const {title, typeName} = childPage
+        const {title, typeName, deleted} = childPage
         const key = `${buildTree.key + childSlug}/`
 
         indexKeyRefs[key] = childPage
         childPageTypeNamesKeyRefs[key] = getChildPageTypeNames(typeName)
 
-        buildTree.children?.push(
-          transformNode(childPage, {
-            key,
-            title,
-            icon: <CarryOutOutlined />,
-            children: []
-          })
-        )
+        !deleted &&
+          buildTree.children?.push(
+            transformNode(childPage, {
+              key,
+              title,
+              icon: <CarryOutOutlined />,
+              children: []
+            })
+          )
       }
     })
 

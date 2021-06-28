@@ -10,22 +10,25 @@ export type {RootState, AppDispatch} from './index'
 
 export type CMSSettings = {gitRemote?: string}
 
+type PageSpecs = {
+  typeName: string
+  deleted?: boolean
+}
+
 export type PageIndex = {
   rootPageSlug?: string
   pages: {
     [slug: string]: {
       slug: string
       title: string
-      typeName: string
       childSlugs: string[]
-    }
+    } & PageSpecs
   }
 }
 
 export type DataLayer = {
   pages: {
     [slug: string]: {
-      typeName: string
       fields: {
         [name: string]: {
           content?: string
@@ -40,7 +43,7 @@ export type DataLayer = {
         }
       }
       hiddenChildSlugs: string[]
-    }
+    } & PageSpecs
   }
   index: PageIndex
 }

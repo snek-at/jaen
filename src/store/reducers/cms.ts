@@ -242,7 +242,7 @@ const cmsReducer = createReducer(initialState, {
   },
   [cmsActions.deletePageFromIndex.type]: (state, action) => {
     const {page, index}: {page: any; index: PageIndex} = action.payload
-    const {key, slug, isDraft} = page
+    const {key, slug} = page
 
     let slugs = key.split('/')
     slugs.splice(slugs.length - 2, 1)
@@ -250,21 +250,27 @@ const cmsReducer = createReducer(initialState, {
 
     const parentSlug = parentKey === '' ? index.rootPageSlug : parentKey
 
-    if (!isDraft) {
-      if (state.dataLayer.editing.index.pages[parentSlug]) {
-        state.dataLayer.editing.index.pages[parentSlug].childSlugs =
-          index.pages[parentSlug].childSlugs.filter(e => e !== slug)
+    if (state.dataLayer.editing.index.pages[slug]) {
+      state.dataLayer.editing.index.pages[slug].deleted = true
+    } else if (state.dataLayer.working.index.pages[slug]) {
+      state.dataLayer.editing.index.pages[slug] = {
+        ...state.dataLayer.working.index.pages[slug],
+        deleted: true
       }
+    }
 
-      if (state.dataLayer.working.index.pages[parentSlug]) {
-        state.dataLayer.working.index.pages[parentSlug].childSlugs =
-          index.pages[parentSlug].childSlugs.filter(e => e !== slug)
+    const filteredChilds = index.pages[parentSlug].childSlugs.filter(
+      e => e !== slug
+    )
+
+    if (state.dataLayer.editing.index.pages[parentSlug]) {
+      state.dataLayer.editing.index.pages[parentSlug].childSlugs =
+        filteredChilds
+    } else if (state.dataLayer.working.index.pages[parentSlug]) {
+      state.dataLayer.editing.index.pages[parentSlug] = {
+        ...state.dataLayer.working.index.pages[parentSlug],
+        childSlugs: filteredChilds
       }
-
-      delete state.dataLayer.working.pages[slug]
-      delete state.dataLayer.editing.pages[slug]
-      delete state.dataLayer.working.index?.pages[slug]
-      delete state.dataLayer.editing.index?.pages[slug]
     }
   },
   [cmsActions.setHiddenChildSlugs.type]: (state, action) => {
