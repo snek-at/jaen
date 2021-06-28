@@ -32,12 +32,15 @@ import {
   deletePageFromIndex,
   transferPageToIndex
 } from '~/store/actions/cms'
+import {indexSelector} from '~/store/selectors/cms'
+import {PageIndex} from '~/store/types'
 
 import './cmsmenu.scss'
 
 const {Text} = Typography
 
-type StateProps = store.AuthState & store.CMSState
+type StateProps = store.AuthState &
+  store.CMSState & {index: PageIndex | undefined}
 
 type DispatchProps = {
   toggleEditing: (state: boolean) => void
@@ -45,8 +48,8 @@ type DispatchProps = {
   discardEditing: () => void
   publish: () => void
   logout: () => void
-  transferPageToIndex: (page: PageNode) => void
-  deletePageFromIndex: (page: PageNode) => void
+  transferPageToIndex: (page: PageNode, index: PageIndex) => void
+  deletePageFromIndex: (page: PageNode, index: PageIndex) => void
 }
 
 type OwnProps = {}
@@ -152,10 +155,10 @@ export const Menu: React.FC<CMSMenuProps> = ({
                     return false
                   }
                 }
-                transferPageToIndex(node)
+                index && transferPageToIndex(node, index)
                 return true
               }}
-              onNodeDelete={deletePageFromIndex}
+              onNodeDelete={node => index && deletePageFromIndex(node, index)}
               indexTree={treeData}
               indexKeyRefs={keyRefs.indexKey}
               childPageTypeNamesKeyRefs={keyRefs.childPageTypeNamesKey}
@@ -176,12 +179,12 @@ export const Menu: React.FC<CMSMenuProps> = ({
   )
 }
 
-const mapStateToProps = ({auth, cms}: store.RootState): StateProps => ({
-  settings: cms.settings,
-  options: cms.options,
-  index: cms.index,
-  dataLayer: cms.dataLayer,
-  authenticated: auth.authenticated
+const mapStateToProps = (state: store.RootState): StateProps => ({
+  settings: state.cms.settings,
+  options: state.cms.options,
+  index: indexSelector(state),
+  dataLayer: state.cms.dataLayer,
+  authenticated: state.auth.authenticated
 })
 
 const mapDispatchToProps = (dispatch: store.AppDispatch): DispatchProps => ({
@@ -190,8 +193,10 @@ const mapDispatchToProps = (dispatch: store.AppDispatch): DispatchProps => ({
   discardEditing: () => dispatch(discardEditing()),
   publish: () => dispatch(publish()),
   logout: () => dispatch(logout()),
-  transferPageToIndex: (page: PageNode) => dispatch(transferPageToIndex(page)),
-  deletePageFromIndex: (page: PageNode) => dispatch(deletePageFromIndex(page))
+  transferPageToIndex: (page: PageNode, index: PageIndex) =>
+    dispatch(transferPageToIndex({page, index})),
+  deletePageFromIndex: (page: PageNode, index: PageIndex) =>
+    dispatch(deletePageFromIndex({page, index}))
 })
 
 const MenuContainer = connect<

@@ -10,6 +10,18 @@ export type {RootState, AppDispatch} from './index'
 
 export type CMSSettings = {gitRemote?: string}
 
+export type PageIndex = {
+  rootPageSlug?: string
+  pages: {
+    [slug: string]: {
+      slug: string
+      title: string
+      typeName: string
+      childSlugs: string[]
+    }
+  }
+}
+
 export type DataLayer = {
   pages: {
     [slug: string]: {
@@ -30,19 +42,7 @@ export type DataLayer = {
       hiddenChildSlugs: string[]
     }
   }
-}
-
-export type PageIndex = {
-  checksum: string
-  rootPageSlug: string
-  pages: {
-    [slug: string]: {
-      slug: string
-      title: string
-      typeName: string
-      childSlugs: string[]
-    }
-  }
+  index: PageIndex
 }
 
 export interface CMSOptions {
@@ -51,7 +51,6 @@ export interface CMSOptions {
 }
 export interface CMSState {
   settings: CMSSettings
-  index?: PageIndex
   options: CMSOptions
   dataLayer: {
     origCksm?: string

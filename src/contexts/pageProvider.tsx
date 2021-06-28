@@ -4,6 +4,7 @@ import {CMSPageContext} from '~/contexts/context'
 import {store, PageParamsType} from '~/types'
 
 import {setHiddenChildSlugs as setHiddenChildSlugsAction} from '~/store/actions/cms'
+import {indexSelector} from '~/store/selectors/cms'
 
 interface IConnectedPageType {
   PageType: string
@@ -23,7 +24,7 @@ const PageProvider: React.FC<PageProviderProps> = React.memo(
     const setHiddenChildSlugs = (hiddenChildSlugs: string[]) =>
       dispatch(setHiddenChildSlugsAction({page, hiddenChildSlugs}))
 
-    const index = useSelector(({cms}: store.RootState) => cms.index)
+    const index = useSelector(indexSelector)
 
     const getChildPagesFromIndex = (fixedSlug?: string) => {
       const slug = fixedSlug || page.slug

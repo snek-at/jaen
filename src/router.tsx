@@ -58,9 +58,9 @@ export const generateRoutes = (
   }
 
   if (pages) {
-    const rootPage = pages[index.rootPageSlug]
+    const rootPage = index.rootPageSlug && pages[index.rootPageSlug]
 
-    travelIndexTree(rootPage)
+    rootPage && travelIndexTree(rootPage)
   }
 
   return routes
@@ -74,10 +74,10 @@ const PageRouter: React.FC<PageRouterProps> = ({children}): JSX.Element => {
   return (
     <Router>
       <Switch>
-        {generateRoutes(registeredPages, index)}
+        {index && generateRoutes(registeredPages, index)}
         <Route
           component={() =>
-            !index.pages ? (
+            !index || !index.pages ? (
               <Row justify={'center'}>
                 <Spin size="large" />
               </Row>

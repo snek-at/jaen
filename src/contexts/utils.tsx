@@ -11,16 +11,6 @@ export const transformIndexTree = (
   index: store.PageIndex,
   getChildPageTypeNames: (typeName: string) => string[] | undefined
 ) => {
-  const pages = index.pages
-  const rootPage = pages[index.rootPageSlug]
-
-  const indexKeyRefs: IndexKeyRefs = {
-    '/': rootPage
-  }
-  const childPageTypeNamesKeyRefs: ChildPageTypeNamesKeyRefs = {
-    '/': getChildPageTypeNames(rootPage.typeName)
-  }
-
   const transformNode = (
     page: store.PageIndex['pages'][string],
     buildTree: components.ExplorerTDN = {
@@ -58,7 +48,22 @@ export const transformIndexTree = (
     return buildTree
   }
 
-  const treeData = transformNode(rootPage)
+  const pages = index.pages
+  const rootPage = index.rootPageSlug && pages[index.rootPageSlug]
 
-  return {treeData: [treeData], indexKeyRefs, childPageTypeNamesKeyRefs}
+  let treeData
+  let indexKeyRefs: IndexKeyRefs = {}
+  let childPageTypeNamesKeyRefs: ChildPageTypeNamesKeyRefs = {}
+
+  if (rootPage) {
+    indexKeyRefs['/'] = rootPage
+    childPageTypeNamesKeyRefs['/'] = getChildPageTypeNames(rootPage.typeName)
+
+    treeData = transformNode(rootPage)
+  }
+  return {
+    treeData: treeData ? [treeData] : [],
+    indexKeyRefs,
+    childPageTypeNamesKeyRefs
+  }
 }

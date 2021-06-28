@@ -25,6 +25,7 @@ import {
   setIndex,
   toggleMenu
 } from '~/store/actions/cms'
+import {indexSelector} from '~/store/selectors/cms'
 
 import {CMSContext} from './context'
 import {
@@ -59,10 +60,9 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
     (state: storeTypes.RootState) => state.auth.authenticated
   )
 
-  const index = useSelector(
-    (state: storeTypes.RootState) =>
-      state.cms.index || ({} as storeTypes.PageIndex)
-  )
+  const index = useSelector(indexSelector)
+
+  console.log('Merged index', index)
 
   const [treeData, setTreeData] = useState<components.ExplorerTDN[]>()
 
@@ -76,7 +76,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   }, [settings])
 
   useEffect(() => {
-    if (index.pages && index.rootPageSlug) {
+    if (index && index.pages && index.rootPageSlug) {
       const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} =
         transformIndexTree(index, getChildPageTypeNames)
 
@@ -90,18 +90,21 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
 
   useEffect(() => {
     const fetchFile = async (url: string) => {
-      const data: {
-        dataLayer: {working: storeTypes.DataLayer}
-        index: storeTypes.PageIndex
-      } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
+      try {
+        const data: {
+          dataLayer: {working: storeTypes.DataLayer}
+          index: storeTypes.PageIndex
+        } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
 
-      const layerOrigCksm = store.getState().cms.dataLayer.origCksm
-      const cksm = md5(JSON.stringify(data)).toString()
+        const layerOrigCksm = store.getState().cms.dataLayer.origCksm
+        const cksm = md5(JSON.stringify(data)).toString()
 
-      if (cksm !== layerOrigCksm) {
-        dispatch(overrideWDL({data: data.dataLayer.working, cksm}))
-        dispatch(setIndex(data.index))
-      }
+        if (cksm !== layerOrigCksm) {
+          dispatch(overrideWDL({data: data.dataLayer.working, cksm}))
+          console.log('setindex', setIndex)
+          //dispatch(setIndex(data.index))
+        }
+      } catch {}
     }
 
     fetchFile(globalThis.location.origin + '/jaen-data.json')

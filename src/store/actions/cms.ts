@@ -42,12 +42,14 @@ export const updatePageContent = createAction<{
 
 export const setIndex = createAction<PageIndex>('cms/setIndex')
 
-export const transferPageToIndex = createAction<PageNode>(
-  'cms/transferPageToIndex'
-)
-export const deletePageFromIndex = createAction<PageNode>(
-  'cms/deletePageFromIndex'
-)
+export const transferPageToIndex = createAction<{
+  page: PageNode
+  index: PageIndex
+}>('cms/transferPageToIndex')
+export const deletePageFromIndex = createAction<{
+  page: PageNode
+  index: PageIndex
+}>('cms/deletePageFromIndex')
 
 export const setHiddenChildSlugs = createAction<{
   page: PageParamsType

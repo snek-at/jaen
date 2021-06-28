@@ -7,7 +7,7 @@ export type CMSContextType = {
   registeredPages: ConnectedPageType[]
   setRegisteredPages: React.Dispatch<React.SetStateAction<ConnectedPageType[]>>
   getRegisteredPage: (typeName: string) => ConnectedPageType | undefined
-  index: store.PageIndex
+  index: store.PageIndex | undefined
   treeData: components.ExplorerTDN[] | undefined
   keyRefs:
     | {
