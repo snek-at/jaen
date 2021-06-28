@@ -219,10 +219,11 @@ const cmsReducer = createReducer(initialState, {
 
     if (parentSlug) {
       const parentChildSlugs = [...index.pages[parentSlug].childSlugs]
+      console.log('parent child slugs', parentChildSlugs, slug, parentSlug)
       const identSlugs = slug === parentSlug
 
       if (!identSlugs) {
-        parentChildSlugs.push(slug)
+        !parentChildSlugs.includes(slug) && parentChildSlugs.push(slug)
 
         console.log(
           index.pages[parentSlug],
@@ -250,14 +251,18 @@ const cmsReducer = createReducer(initialState, {
 
     const parentSlug = parentKey === '' ? index.rootPageSlug : parentKey
 
-    if (state.dataLayer.editing.index.pages[slug]) {
-      state.dataLayer.editing.index.pages[slug].deleted = true
-    } else if (state.dataLayer.working.index.pages[slug]) {
-      state.dataLayer.editing.index.pages[slug] = {
-        ...state.dataLayer.working.index.pages[slug],
-        deleted: true
+    const deletePage = (slug: string) => {
+      if (state.dataLayer.editing.index.pages[slug]) {
+        state.dataLayer.editing.index.pages[slug].deleted = true
+      } else if (state.dataLayer.working.index.pages[slug]) {
+        state.dataLayer.editing.index.pages[slug] = {
+          ...state.dataLayer.working.index.pages[slug],
+          deleted: true
+        }
       }
     }
+
+    deletePage(slug)
 
     const filteredChilds = index.pages[parentSlug].childSlugs.filter(
       e => e !== slug
@@ -272,6 +277,16 @@ const cmsReducer = createReducer(initialState, {
         childSlugs: filteredChilds
       }
     }
+
+    const deleteChildPages = (slugs: string[]) => {
+      slugs.forEach(slug => {
+        deletePage(slug)
+        deleteChildPages(index.pages[slug].childSlugs)
+      })
+    }
+
+    // Set all child pages to deleted=true
+    deleteChildPages(index.pages[slug].childSlugs)
   },
   [cmsActions.setHiddenChildSlugs.type]: (state, action) => {
     const {page, hiddenChildSlugs} = action.payload

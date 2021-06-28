@@ -28,10 +28,11 @@ const PageProvider: React.FC<PageProviderProps> = React.memo(
 
     const getChildPagesFromIndex = (fixedSlug?: string) => {
       const slug = fixedSlug || page.slug
+
       return (
-        index?.pages[slug]?.childSlugs.map(
-          childSlug => index.pages[childSlug]
-        ) || []
+        index?.pages[slug]?.childSlugs
+          .map(childSlug => index.pages[childSlug])
+          .filter(page => !page.deleted) || []
       )
     }
 

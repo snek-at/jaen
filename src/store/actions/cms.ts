@@ -6,13 +6,14 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
-import deepmerge from 'deepmerge'
 import BridgeDrop from 'drop'
 import {components, PageParamsType} from '~/types'
 
 import {PageNode} from '~/components/Explorer/index'
 import {BlockFieldOptions} from '~/components/blocks/index'
 
+import {RootState} from '..'
+import {combinedDLSelector} from '../selectors/cms'
 import {DataLayer, PageIndex, CMSSettings} from '../types'
 
 export const setSettings = createAction<CMSSettings>('cms/setSettings')
@@ -56,11 +57,15 @@ export const setHiddenChildSlugs = createAction<{
   hiddenChildSlugs: string[]
 }>('cms/setHiddenChildSlugs')
 
-export const publish = createAsyncThunk<DataLayer, void, {}>(
+export const publish: any = createAsyncThunk<DataLayer, void, {}>(
   'cms/publish',
   async (_, thunkAPI) => {
     try {
-      let {settings, dataLayer, index} = (thunkAPI.getState() as any).cms
+      const state = thunkAPI.getState() as RootState
+
+      const {settings} = state.cms
+
+      const layer = combinedDLSelector(state)
 
       const {gitRemote} = settings
 
@@ -70,11 +75,8 @@ export const publish = createAsyncThunk<DataLayer, void, {}>(
         )
       }
 
-      const workingLayer = deepmerge<any>(dataLayer.working, dataLayer.editing)
-
       const publishData = JSON.stringify({
-        dataLayer: {working: workingLayer},
-        index
+        dataLayer: {working: layer}
       })
 
       const {data, errors} =
@@ -87,7 +89,7 @@ export const publish = createAsyncThunk<DataLayer, void, {}>(
         throw new Error(`DropAPI publish failed`)
       }
 
-      return workingLayer
+      return layer
     } catch (err) {
       console.error(err)
       // Use `err.response.data` as `action.payload` for a `rejected` action,

@@ -1,18 +1,36 @@
-import {createDraftSafeSelector} from '@reduxjs/toolkit'
+import {createSelector} from '@reduxjs/toolkit'
 import deepmerge from 'deepmerge'
+import union from 'lodash/union'
 
 import {Selector} from '.'
-import {PageIndex} from '../types'
+import {CMSState, PageIndex} from '../types'
 
-const workingDLIndexSelector: Selector<PageIndex | undefined> = state =>
+const workingDLIndex: Selector<PageIndex | undefined> = state =>
   state.cms.dataLayer.working.index
 
-const editingDLIndexSelector: Selector<PageIndex | undefined> = state =>
+const editingDLIndex: Selector<PageIndex | undefined> = state =>
   state.cms.dataLayer.editing.index
 
-export const indexSelector = createDraftSafeSelector(
-  workingDLIndexSelector,
-  editingDLIndexSelector,
-  (workingLayer, editingLayer) =>
-    deepmerge(workingLayer || {}, editingLayer || {})
+export const indexSelector = createSelector(
+  workingDLIndex,
+  editingDLIndex,
+  (wIndex, eIndex) => deepmerge(wIndex || {}, eIndex || {})
 )
+
+const dataLayer: Selector<CMSState['dataLayer'] | undefined> = state =>
+  state.cms.dataLayer
+
+export const combinedDLSelector = createSelector(dataLayer, layer =>
+  deepmerge(layer?.working || {}, layer?.editing || {}, {
+    arrayMerge: (destinationArray, sourceArray, _options) =>
+      union(destinationArray, sourceArray)
+  })
+)
+
+export const pagesSelector = createSelector(combinedDLSelector, layer => {
+  const pages = Object.fromEntries(
+    Object.entries(layer.pages).filter(([_slug, page]: any) => !page.deleted)
+  )
+
+  return pages
+})
