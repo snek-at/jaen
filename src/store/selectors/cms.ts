@@ -92,7 +92,7 @@ export const pageFieldContentSelector = (
     state =>
       block
         ? state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]
-            ?.blocks?.[block.position]?.fields[block.blockFieldName]
+            ?.blocks?.[block.position]?.fields?.[block.blockFieldName]
         : state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]
             ?.content,
     content => {
