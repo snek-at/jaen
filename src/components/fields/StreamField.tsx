@@ -62,7 +62,6 @@ const StreamField: React.FC<StreamFieldProps> = ({
             <Block
               streamFieldHeight={height}
               streamFieldWidth={width}
-              key={position}
               fieldOptions={{
                 fieldName: name,
                 block: {position, typeName: Block.BlockType}
@@ -96,18 +95,15 @@ const StreamField: React.FC<StreamFieldProps> = ({
         addNewBlock(blocksTypes[value.key])
       }}>
       {blocksTypes.map((typeName, key) => (
-        <>
-          <Menu.Item key={key}>{typeName}</Menu.Item>
-        </>
+        <Menu.Item key={key}>{typeName}</Menu.Item>
       ))}
     </Menu>
   )
 
-  const BlockEditMenu = (position: string, key: number) => (
+  const BlockEditMenu = (position: string) => (
     <Menu>
       <Menu.Item
         danger
-        key={key}
         onClick={() => {
           dispatch(
             unregisterField({
@@ -162,15 +158,13 @@ const StreamField: React.FC<StreamFieldProps> = ({
         <Row>
           <Col>
             {blocksKeys.map((position, key) => (
-              <>
-                <Dropdown
-                  key={key}
-                  disabled={!editing}
-                  overlay={BlockEditMenu(position, key)}
-                  trigger={['contextMenu']}>
-                  <div>{renderBlock(parseInt(position))}</div>
-                </Dropdown>
-              </>
+              <Dropdown
+                key={key}
+                disabled={!editing}
+                overlay={BlockEditMenu(position)}
+                trigger={['contextMenu']}>
+                <div>{renderBlock(parseInt(position))}</div>
+              </Dropdown>
             ))}
           </Col>
         </Row>
