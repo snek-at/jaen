@@ -21,6 +21,7 @@ import {overrideWDL, setSettings} from '~/store/actions/cms'
 import {pagesSelector, rootPageSlugSelector} from '~/store/selectors/cms'
 
 import {CMSContext} from './context'
+import { isDev } from '~/common/utils'
 
 interface CMSProviderProps {
   settings: storeTypes.CMSSettings
@@ -81,7 +82,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       }
     }
 
-    fetchFile(globalThis.location.origin + '/jaen-data.json')
+    !isDev() && fetchFile(globalThis.location.origin + '/jaen-data.json')
 
     if (settings.gitRemote) {
       const interval = setInterval(() => {

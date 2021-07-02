@@ -1,7 +1,13 @@
 import _ from 'lodash'
+import process from "process";
 
 export type AtLeastOne<T, U = {[K in keyof T]: Pick<T, K>}> = Partial<T> &
   U[keyof U]
+
+
+const development: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+
+export const isDev = () => development
 
 export const deepSearch = (object: any, key: any, predicate: any) => {
   const search = (object: any, key: any, predicate: any): any => {
