@@ -88,7 +88,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
         fetchFile(
           `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json`
         )
-      }, 1000 * 60 * 5)
+      }, 1000 * 60 * 1)
       return () => clearInterval(interval)
     } else {
       console.warn(
