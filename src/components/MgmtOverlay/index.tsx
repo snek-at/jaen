@@ -5,7 +5,8 @@ import {
   DeleteOutlined,
   EditFilled,
   LoginOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  InfoCircleOutlined
 } from '@ant-design/icons'
 import {useEffect} from 'react'
 import {useState} from 'react'
@@ -59,6 +60,7 @@ const MgmtOverlay: React.FC = () => {
                 icon: <LogoutOutlined />,
                 onClick: () => {
                   dispatch(logout())
+                  dispatch(toggleEditing(false))
                 }
               }
             : {
@@ -69,8 +71,8 @@ const MgmtOverlay: React.FC = () => {
                 }
               },
           {
-            text: 'Documentation',
-            icon: <i className="fas fa-file-alt"></i>,
+            text: 'Information',
+            icon: <InfoCircleOutlined />,
             onClick: () => alert('test1')
           }
         ]}
