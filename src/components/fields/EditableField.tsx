@@ -51,15 +51,21 @@ export const EditableField: React.FC<EditableFieldProps> = ({
   const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
 
   return (
-    <div {...subProps}>
-      <SidebarEditor
-        onChange={content => updateContent(content, {slug, typeName})}
-        text={content}
-        buttonOptions={buttonOptions}
-        editable={editable}
-        recreateTrigger={workingLayer.updateFieldsCount}
-      />
-    </div>
+    <>
+      {editable ? (
+        <div {...subProps}>
+          <SidebarEditor
+            onChange={content => updateContent(content, {slug, typeName})}
+            text={content}
+            buttonOptions={buttonOptions}
+            editable={editable}
+            recreateTrigger={workingLayer.updateFieldsCount}
+          />
+        </div>
+      ) : (
+        <div {...subProps} dangerouslySetInnerHTML={{__html: content || ''}} />
+      )}
+    </>
   )
 }
 
