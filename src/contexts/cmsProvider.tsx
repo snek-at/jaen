@@ -63,7 +63,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   useEffect(() => {
     const fetchFile = async (url: string) => {
       const data: {
-        dataLayer: {working: storeTypes.DataLayer}
+        dataLayer: {working: storeTypes.WorkingDataLayer}
       } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
 
       const checksum = store.getState().cms.dataLayerChecksum

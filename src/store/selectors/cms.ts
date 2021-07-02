@@ -8,9 +8,12 @@ import {store} from '..'
 import {
   RootState,
   CMSState,
-  DataLayerPages,
   PageDetails,
-  PageFieldBlocks
+  PageFieldBlocks,
+  EditingPageDetails,
+  EditingDataLayerPages,
+  PagesDetails,
+  WorkingDataLayerPages
 } from '../types'
 
 export const rootPageSlugSelector = createSelector<
@@ -25,12 +28,7 @@ export const rootPageSlugSelector = createSelector<
 )
 
 export const pageDetailsSelector = (slug: string) =>
-  createSelector<
-    RootState,
-    PageDetails | undefined,
-    PageDetails | undefined,
-    PageDetails
-  >(
+  createSelector<RootState, PageDetails, EditingPageDetails, PageDetails>(
     state => state.cms.dataLayer.working.pages[slug]?.details,
     state => state.cms.dataLayer.editing.pages[slug]?.details,
     (wDetails, eDetails) =>
@@ -41,9 +39,9 @@ export const pageDetailsSelector = (slug: string) =>
 
 export const pagesSelector = createSelector<
   RootState,
-  DataLayerPages,
-  DataLayerPages,
-  DataLayerPages
+  WorkingDataLayerPages,
+  EditingDataLayerPages,
+  WorkingDataLayerPages
 >(
   state => state.cms.dataLayer.working.pages,
   state => state.cms.dataLayer.editing.pages,
@@ -54,7 +52,7 @@ export const pagesSelector = createSelector<
 
     const cleaned = Object.fromEntries(
       Object.entries(merged).filter(([_slug, page]) => !page.details.deleted)
-    )
+    ) as WorkingDataLayerPages
 
     return cleaned
   }
@@ -77,7 +75,7 @@ export const pageTreeSelector = (registeredPages: ConnectedPageType[]) =>
           slug,
           page.details
         ])
-      )
+      ) as PagesDetails
 
       return buildPageTree(pagesDetails, rootPageSlug, registeredPages)
     }

@@ -37,21 +37,39 @@ export type PageFieldBlock = {
 
 export type PageFieldBlocks = PageField['blocks']
 
-export type DataLayerPages = {
-  [slug: string]: {
-    fields: {
-      [name: string]: PageField
+type DataLayer = {
+  rootPageSlug: string
+}
+
+export interface WorkingDataLayer extends DataLayer {
+  pages: {
+    [slug: string]: {
+      fields: {
+        [name: string]: PageField
+      }
+      details: PageDetails
     }
-    details: PageDetails
   }
 }
 
-export type DataLayerPage = DataLayerPages[string]
+export type WorkingDataLayerPages = WorkingDataLayer['pages']
+export type WorkingDataLayerPage = WorkingDataLayerPages[string]
+export type WorkingPageDetails = EditingDataLayerPage['details']
 
-export type DataLayer = {
-  pages: DataLayerPages
-  rootPageSlug: string
+export interface EditingDataLayer extends DataLayer {
+  pages: {
+    [slug: string]: {
+      fields: {
+        [name: string]: PageField
+      }
+      details: Partial<PageDetails>
+    }
+  }
 }
+
+export type EditingDataLayerPages = EditingDataLayer['pages']
+export type EditingDataLayerPage = EditingDataLayerPages[string]
+export type EditingPageDetails = EditingDataLayerPage['details']
 
 export interface CMSOptions {
   editing: boolean
@@ -60,8 +78,8 @@ export interface CMSState {
   settings: CMSSettings
   options: CMSOptions
   dataLayer: {
-    working: DataLayer & {updateFieldsCount: number}
-    editing: DataLayer
+    working: WorkingDataLayer & {updateFieldsCount: number}
+    editing: EditingDataLayer
   }
   dataLayerChecksum?: string
 }

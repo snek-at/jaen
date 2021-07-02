@@ -11,7 +11,7 @@ import {PageParamsType, components} from '~/types'
 
 import {RootState} from '..'
 import {pagesSelector, rootPageSlugSelector} from '../selectors/cms'
-import {DataLayer, CMSSettings, PagesDetails} from '../types'
+import {CMSSettings, PagesDetails, WorkingDataLayer} from '../types'
 
 export const setSettings = createAction<CMSSettings>('cms/setSettings')
 
@@ -38,7 +38,9 @@ export const unregisterPage = createAction<{
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
 
 export const overrideWDL =
-  createAction<{workingDataLayer: DataLayer; checksum: string}>('cms/overrideWDL')
+  createAction<{workingDataLayer: WorkingDataLayer; checksum: string}>(
+    'cms/overrideWDL'
+  )
 
 export const toggleEditing = createAction<boolean>('cms/toggleEditing')
 export const discardEditing = createAction('cms/discardEditing')
@@ -54,7 +56,7 @@ export const setHiddenChildSlugs = createAction<{
   hiddenChildSlugs: string[]
 }>('cms/setHiddenChildSlugs')
 
-export const publish: any = createAsyncThunk<DataLayer, void, {}>(
+export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
   'cms/publish',
   async (_, thunkAPI) => {
     try {

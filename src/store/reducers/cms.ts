@@ -40,7 +40,7 @@ const cmsReducer = createReducer(initialState, {
     console.log(state, fieldOptions, page)
 
     const fields =
-      state.dataLayer.editing.pages[page.slug]?.fields[fieldOptions.fieldName]
+      state.dataLayer.editing.pages[page.slug]?.fields?.[fieldOptions.fieldName]
 
     state.dataLayer.editing.pages[page.slug] = {
       ...state.dataLayer.editing.pages[page.slug],
@@ -65,17 +65,17 @@ const cmsReducer = createReducer(initialState, {
     const block = fieldOptions.block
 
     if (block) {
-      delete state.dataLayer.editing.pages[page.slug]?.fields[
+      delete state.dataLayer.editing.pages[page.slug]?.fields?.[
         fieldOptions.fieldName
       ]?.blocks?.[block.position]
-      delete state.dataLayer.working.pages[page.slug]?.fields[
+      delete state.dataLayer.working.pages[page.slug]?.fields?.[
         fieldOptions.fieldName
       ]?.blocks?.[block.position]
     } else {
-      delete state.dataLayer.editing.pages[page.slug]?.fields[
+      delete state.dataLayer.editing.pages[page.slug]?.fields?.[
         fieldOptions.fieldName
       ]
-      delete state.dataLayer.working.pages[page.slug]?.fields[
+      delete state.dataLayer.working.pages[page.slug]?.fields?.[
         fieldOptions.fieldName
       ]
     }
@@ -111,7 +111,9 @@ const cmsReducer = createReducer(initialState, {
       parentSlug !== slug
     ) {
       if (state.dataLayer.editing.pages[parentSlug]) {
-        state.dataLayer.editing.pages[parentSlug].details.childSlugs.push(slug)
+        state.dataLayer.editing.pages[parentSlug]?.details?.childSlugs?.push(
+          slug
+        )
       } else {
         state.dataLayer.editing.pages[parentSlug] = {
           ...state.dataLayer.editing.pages[parentSlug],
@@ -187,14 +189,26 @@ const cmsReducer = createReducer(initialState, {
     // merge editing pages child slugs with new workingLayer pages child slugs
     for (const [slug, page] of Object.entries(state.dataLayer.working.pages)) {
       if (state.dataLayer.editing.pages[slug]) {
-        state.dataLayer.editing.pages[slug].details.childSlugs = union(
-          state.dataLayer.editing.pages[slug].details.childSlugs,
-          page.details.childSlugs
+        const childSlugs = union(
+          state.dataLayer.editing.pages[slug]?.details?.childSlugs,
+          page.details?.childSlugs
         )
-        state.dataLayer.editing.pages[slug].details.hiddenChildSlugs = union(
-          state.dataLayer.editing.pages[slug].details.hiddenChildSlugs,
-          page.details.hiddenChildSlugs
+
+        const hiddenChildSlugs = union(
+          state.dataLayer.editing.pages[slug]?.details?.hiddenChildSlugs,
+          page.details?.hiddenChildSlugs
         )
+
+        if (!state.dataLayer.editing.pages[slug]?.details) {
+          state.dataLayer.editing.pages[slug].details = {
+            childSlugs,
+            hiddenChildSlugs
+          }
+        }
+
+        state.dataLayer.editing.pages[slug].details.childSlugs = childSlugs
+        state.dataLayer.editing.pages[slug].details.hiddenChildSlugs =
+          hiddenChildSlugs
       }
     }
   },
