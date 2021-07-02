@@ -140,18 +140,13 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   }
 
   return (
-    <div
-      // className={editorStyles.editor}
-      onClick={() => editorRef.current && editorRef.current.focus()}>
+    <div onClick={() => editorRef.current && editorRef.current.focus()}>
       <Editor
         readOnly={!editable}
         editorKey="InlineEditor"
         editorState={editorState}
         onChange={onValueChange}
         plugins={plugins}
-        // ref={element => {
-        //   editor.current = element
-        // }}
         ref={(editor: any) => (editorRef.current = editor)}
       />
       {buttonOptions && editable && (

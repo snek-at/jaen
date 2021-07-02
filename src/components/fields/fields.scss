@@ -1,0 +1,11 @@
+@import '~/common/css/variables';
+
+.field:hover {
+  outline: 2.5px solid $snekGreen;
+  border-radius: 7px;
+  outline-offset: 1px;
+}
+
+.streamfield-add-button {
+  background-color: $snekGreen;
+}

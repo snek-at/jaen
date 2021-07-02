@@ -5,10 +5,13 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useCMSPageContext} from '~/contexts/context'
 import {store} from '~/types'
 
+import cssVariables from '~/common/css/variables.module.scss'
+
 import {registerField, unregisterField} from '~/store/actions/cms'
 import {pageFieldBlocksSelector} from '~/store/selectors/cms'
 
 import {GenericBC} from '../blocks'
+import './fields.scss'
 
 type StreamFieldProps = {
   name: string
@@ -125,17 +128,24 @@ const StreamField: React.FC<StreamFieldProps> = ({
     </Menu>
   )
 
+  console.log(blocksTypes.length)
+  const buttonStyle = {color: 'white', backgroundColor: cssVariables.snekGreen}
   const button = (
     <Row justify="center">
-      {blocksTypes.length > 0 ? (
+      {blocksTypes.length > 1 ? (
         <Dropdown.Button
-          type="primary"
           icon={<AppstoreAddOutlined />}
           overlay={AddBlockMenu}
+          buttonsRender={([_leftButton, rightButton]) => [
+            undefined,
+            React.cloneElement(rightButton as any, {
+              style: buttonStyle
+            })
+          ]}
         />
       ) : (
         <Button
-          type="primary"
+          style={buttonStyle}
           icon={<AppstoreAddOutlined />}
           onClick={() => addNewBlock(blocksTypes[0])}
         />

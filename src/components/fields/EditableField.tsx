@@ -16,6 +16,8 @@ import SidebarEditor, {ButtonOptions} from '~/components/Editor'
 import {updatePageContent} from '~/store/actions/cms'
 import {pageFieldContentSelector} from '~/store/selectors/cms'
 
+import './fields.scss'
+
 type SubelementProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
@@ -51,21 +53,17 @@ export const EditableField: React.FC<EditableFieldProps> = ({
   const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
 
   return (
-    <>
-      {editable ? (
-        <div {...subProps}>
-          <SidebarEditor
-            onChange={content => updateContent(content, {slug, typeName})}
-            text={content}
-            buttonOptions={buttonOptions}
-            editable={editable}
-            recreateTrigger={workingLayer.updateFieldsCount}
-          />
-        </div>
-      ) : (
-        <div {...subProps} dangerouslySetInnerHTML={{__html: content || ''}} />
-      )}
-    </>
+    <div>
+      <div className={editable ? 'field' : ''} {...subProps}>
+        <SidebarEditor
+          onChange={content => updateContent(content, {slug, typeName})}
+          text={content}
+          buttonOptions={buttonOptions}
+          editable={editable}
+          recreateTrigger={workingLayer.updateFieldsCount}
+        />
+      </div>
+    </div>
   )
 }
 
