@@ -1,35 +1,111 @@
+import {
+  EditOutlined,
+  CloudUploadOutlined,
+  MenuOutlined,
+  DeleteOutlined,
+  EditFilled,
+  LoginOutlined,
+  LogoutOutlined
+} from '@ant-design/icons'
 import {useEffect} from 'react'
+import {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {store as storeTypes} from '~/types'
 
-import Menu from '~/components/Menu'
 import LoginModal from '~/components/modals/Login'
 
-import {login} from '~/store/actions/auth'
-import {toggleMenu} from '~/store/actions/cms'
+import {login, logout} from '~/store/actions/auth'
+import {discardEditing, toggleEditing} from '~/store/actions/cms'
+
+//import {toggleMenu} from '~/store/actions/cms'
+import SideMenu from './SideMenu'
+import SnekFabButton from './SnekFabButton'
+import './mgmtOverlay.scss'
+import PublishModal from './modals/Publish'
+import SiteMenu from './modals/SiteMenu'
 
 const MgmtOverlay: React.FC = () => {
   const dispatch = useDispatch<storeTypes.AppDispatch>()
 
+  const [showLoginModal, setShowLoginModal] = useState(false)
+
   const {loading, authenticated} = useSelector(
     (state: storeTypes.RootState) => state.auth
+  )
+
+  const editing = useSelector(
+    (state: storeTypes.RootState) => state.cms.options.editing
   )
 
   useEffect(() => {
     dispatch(login({}))
   }, [])
 
+  useEffect(() => {
+    if (authenticated) {
+      console.log('set to false')
+      setShowLoginModal(false)
+    }
+  }, [authenticated, loading])
+
+  console.log('upadte', showLoginModal)
   return (
     <>
-      {!authenticated && !loading && <LoginModal />}
-      {authenticated && <Menu />}
-      <img
-        className="cms-edit"
-        style={{maxWidth: 50}}
-        src="https://avatars.githubusercontent.com/u/55870326?s=200&v=4"
-        title="Edit with snek"
-        onClick={() => dispatch(toggleMenu(true))}
+      <SnekFabButton
+        fabOptions={[
+          authenticated
+            ? {
+                text: 'Logout',
+                icon: <LogoutOutlined />,
+                onClick: () => {
+                  dispatch(logout())
+                }
+              }
+            : {
+                text: 'Login',
+                icon: <LoginOutlined />,
+                onClick: () => {
+                  console.log('set to true', setShowLoginModal(true))
+                }
+              },
+          {
+            text: 'Documentation',
+            icon: <i className="fas fa-file-alt"></i>,
+            onClick: () => alert('test1')
+          }
+        ]}
       />
+
+      {showLoginModal && <LoginModal />}
+
+      {authenticated && (
+        <SideMenu
+          items={[
+            {
+              text: 'Site Menu',
+              icon: <MenuOutlined />,
+              onClick: () => null,
+              renderElementOnClick: <SiteMenu />
+            },
+            {
+              text: editing ? 'Preview' : 'Edit',
+              icon: editing ? <EditFilled /> : <EditOutlined />,
+              onClick: () => dispatch(toggleEditing(!editing))
+            },
+            {
+              text: 'Publish',
+              icon: <CloudUploadOutlined />,
+              onClick: () => null,
+              renderElementOnClick: <PublishModal />
+            },
+            {
+              text: 'Discard changes',
+              icon: <DeleteOutlined />,
+              onClick: () => dispatch(discardEditing())
+            }
+          ]}
+        />
+      )}
     </>
   )
 }

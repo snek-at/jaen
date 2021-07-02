@@ -19,8 +19,7 @@ const initialState: CMSState = {
     gitRemote: undefined
   },
   options: {
-    editing: false,
-    showMenu: false
+    editing: false
   },
   dataLayer: {
     working: {updateFieldsCount: 0, pages: {}, rootPageSlug: 'home'},
@@ -171,9 +170,6 @@ const cmsReducer = createReducer(initialState, {
   },
   [cmsActions.toggleEditing.type]: (state, action) => {
     state.options.editing = action.payload
-  },
-  [cmsActions.toggleMenu.type]: (state, action) => {
-    state.options.showMenu = action.payload
   },
   [cmsActions.overrideWDL.type]: (state, action) => {
     const {workingDataLayer, checksum} = action.payload

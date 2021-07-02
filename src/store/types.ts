@@ -55,7 +55,6 @@ export type DataLayer = {
 
 export interface CMSOptions {
   editing: boolean
-  showMenu: boolean
 }
 export interface CMSState {
   settings: CMSSettings
