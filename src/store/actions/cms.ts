@@ -77,8 +77,6 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
 
       const layer = {rootPageSlug, pages: pages}
 
-      console.log('layer', layer)
-
       const publishData = JSON.stringify({
         dataLayer: {working: layer}
       })

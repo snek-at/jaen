@@ -109,7 +109,6 @@ const StreamField: React.FC<StreamFieldProps> = ({
         danger
         key={key}
         onClick={() => {
-          console.log('unregister')
           dispatch(
             unregisterField({
               page: page,
@@ -128,7 +127,6 @@ const StreamField: React.FC<StreamFieldProps> = ({
     </Menu>
   )
 
-  console.log(blocksTypes.length)
   const buttonStyle = {color: 'white', backgroundColor: cssVariables.snekGreen}
   const button = (
     <Row justify="center">

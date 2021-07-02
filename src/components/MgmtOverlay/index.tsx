@@ -44,12 +44,10 @@ const MgmtOverlay: React.FC = () => {
 
   useEffect(() => {
     if (authenticated) {
-      console.log('set to false')
       setShowLoginModal(false)
     }
   }, [authenticated, loading])
 
-  console.log('upadte', showLoginModal)
   return (
     <>
       <SnekFabButton
@@ -66,9 +64,7 @@ const MgmtOverlay: React.FC = () => {
             : {
                 text: 'Login',
                 icon: <LoginOutlined />,
-                onClick: () => {
-                  console.log('set to true', setShowLoginModal(true))
-                }
+                onClick: () => setShowLoginModal(true)
               },
           {
             text: 'Information',

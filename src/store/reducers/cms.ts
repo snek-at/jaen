@@ -37,8 +37,6 @@ const cmsReducer = createReducer(initialState, {
   [cmsActions.registerField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
 
-    console.log(state, fieldOptions, page)
-
     const fields =
       state.dataLayer.editing.pages[page.slug]?.fields?.[fieldOptions.fieldName]
 

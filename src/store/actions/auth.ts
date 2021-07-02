@@ -23,15 +23,12 @@ export const login = createAsyncThunk(
     try {
       const session = await BridgeSession.begin(creds || undefined)
 
-      console.log(session)
-
       if (!session) {
         throw new Error('Starting session failed')
       }
 
       return session
     } catch (err) {
-      console.log(err)
       thunkAPI.dispatch(
         setError({
           message: 'Login failed',
