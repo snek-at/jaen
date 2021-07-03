@@ -1,0 +1,28 @@
+{
+  "presets": [
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic",
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-bigint",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-optional-chaining",
+    "babel-plugin-transform-scss",
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathSuffix": "./src",
+        "rootPathPrefix": "~/"
+      }
+    ],
+    "inline-react-svg"
+  ]
+}
