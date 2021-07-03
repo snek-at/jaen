@@ -180,7 +180,7 @@ const cmsReducer = createReducer(initialState, {
           }
         }
 
-        setDeleted(pagesDetails[slug].childSlugs, slug)
+        setDeleted(pagesDetails[_slug].childSlugs, _slug)
       }
     }
 
