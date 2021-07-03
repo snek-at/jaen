@@ -5,7 +5,11 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
+import '@draft-js-plugins/image/lib/plugin.css'
+import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
+import '@draft-js-plugins/linkify/lib/plugin.css'
 import 'antd/dist/antd.css'
+import 'draft-js/dist/Draft'
 
 export type {BC, ConnectedPageType} from '~/types'
 
