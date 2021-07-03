@@ -12,6 +12,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "import/named": "off",
     "react/prop-types": 0,
     "react/react-in-jsx-scope": "off",
     "no-console": ["error", {"allow": ["warn", "error"]}],
