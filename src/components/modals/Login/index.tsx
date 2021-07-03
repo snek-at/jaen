@@ -7,7 +7,7 @@
  */
 import {LockOutlined, UserOutlined} from '@ant-design/icons'
 import {Modal, Space, Typography, Form, Input, Button, Checkbox} from 'antd'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {store} from '~/types'
 
@@ -23,14 +23,19 @@ export type LoginModalValues = {
   remember: boolean
 }
 
-type LoginModalProps = {}
+type LoginModalProps = {visible: boolean; onClose: () => void}
 
-const LoginModal: React.FC<LoginModalProps> = () => {
+const LoginModal: React.FC<LoginModalProps> = ({visible, onClose}) => {
+  console.log('try', visible)
   const dispatch = useDispatch<store.AppDispatch>()
 
   const onLogin = (values: LoginModalValues) => dispatch(login({creds: values}))
 
-  const [visible, setVisible] = useState(true)
+  const [showModal, setShowModal] = useState(visible)
+
+  useEffect(() => {
+    setShowModal(visible)
+  }, [visible])
 
   return (
     <Modal
@@ -43,10 +48,12 @@ const LoginModal: React.FC<LoginModalProps> = () => {
         </>
       }
       style={{top: 20}}
-      visible={visible}
-      destroyOnClose={true}
+      visible={showModal}
       footer={[]}
-      onCancel={() => setVisible(false)}>
+      onCancel={() => {
+        setShowModal(false)
+        onClose()
+      }}>
       <Form name="basic" initialValues={{remember: true}} onFinish={onLogin}>
         <Form.Item
           name="username"

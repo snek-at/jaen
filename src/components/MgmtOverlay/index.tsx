@@ -74,7 +74,10 @@ const MgmtOverlay: React.FC = () => {
         ]}
       />
 
-      {showLoginModal && <LoginModal />}
+      <LoginModal
+        visible={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
 
       {authenticated && (
         <SideMenu
