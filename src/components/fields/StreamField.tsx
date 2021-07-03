@@ -11,8 +11,9 @@ import {AppstoreAddOutlined} from '@ant-design/icons'
 import {Menu, Row, Button, Col, Dropdown, Divider} from 'antd'
 import React, {useEffect, useState, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {useCMSPageContext} from '~/contexts/context'
 import {store} from '~/types'
+
+import {useCMSPageContext} from '~/contexts/context'
 
 import {registerField, unregisterField} from '~/store/actions/cms'
 import {pageFieldBlocksSelector} from '~/store/selectors/cms'
@@ -44,7 +45,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
       setHeight(ref.current.clientHeight)
       setWidth(ref.current.clientWidth)
     }
-  })
+  }, [ref.current?.clientHeight, ref.current?.clientWidth])
 
   const editing = useSelector(({cms}: store.RootState) => cms.options.editing)
 
@@ -54,11 +55,12 @@ const StreamField: React.FC<StreamFieldProps> = ({
     (a, b) => parseInt(a) - parseInt(b)
   )
 
-  const getBlockComponentByTypeName = (typeName: string) =>
-    blocks.find(b => b.BlockType === typeName)
+  const getBlockComponentByTypeName = (
+    _typeName: string
+  ): GenericBC | undefined => blocks.find(b => b.BlockType === _typeName)
 
-  const renderBlock = (position: number) => {
-    const blockTypeName = storeBlocks?.[position].typeName
+  const renderBlock = (_position: number): JSX.Element | undefined => {
+    const blockTypeName = storeBlocks?.[_position].typeName
 
     if (blockTypeName) {
       const Block = getBlockComponentByTypeName(blockTypeName)
@@ -71,7 +73,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
               streamFieldWidth={width}
               fieldOptions={{
                 fieldName: name,
-                block: {position, typeName: Block.BlockType}
+                block: {position: _position, typeName: Block.BlockType}
               }}
             />
           ) : null}
@@ -80,7 +82,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
     }
   }
 
-  const addNewBlock = (typeName: string) =>
+  const addNewBlock = (_typeName: string): void => {
     dispatch(
       registerField({
         page,
@@ -88,37 +90,38 @@ const StreamField: React.FC<StreamFieldProps> = ({
           fieldName: name,
           block: {
             position: reverseOrder ? blocksKeys.length : -blocksKeys.length,
-            typeName: typeName
+            typeName: _typeName
           }
         }
       })
     )
+  }
 
   const blocksTypes = blocks.map(block => block.BlockType)
 
   const AddBlockMenu = (
     <Menu
-      onClick={(value: any) => {
-        addNewBlock(blocksTypes[value.key])
+      onClick={value => {
+        addNewBlock(blocksTypes[parseInt(value.key)])
       }}>
-      {blocksTypes.map((typeName, key) => (
-        <Menu.Item key={key}>{typeName}</Menu.Item>
+      {blocksTypes.map((_typeName, key) => (
+        <Menu.Item key={key}>{_typeName}</Menu.Item>
       ))}
     </Menu>
   )
 
-  const BlockEditMenu = (position: string) => (
+  const BlockEditMenu = (_position: string): JSX.Element => (
     <Menu>
       <Menu.Item
         danger
         onClick={() => {
           dispatch(
             unregisterField({
-              page: page,
+              page,
               fieldOptions: {
                 fieldName: name,
                 block: {
-                  position: parseInt(position),
+                  position: parseInt(_position),
                   typeName: ''
                 }
               }
@@ -139,7 +142,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
           overlay={AddBlockMenu}
           buttonsRender={([_leftButton, rightButton]) => [
             undefined,
-            React.cloneElement(rightButton as any, {
+            React.cloneElement(rightButton as never, {
               className: 'streamfield-add-button'
             })
           ]}

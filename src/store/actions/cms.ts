@@ -11,6 +11,8 @@ import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
 import BridgeDrop from 'drop'
 import {PageParamsType, components} from '~/types'
 
+import {BlockFieldOptions} from '~/components/blocks'
+
 import {RootState} from '..'
 import {pagesSelector, rootPageSlugSelector} from '../selectors/cms'
 import {CMSSettings, PagesDetails, WorkingDataLayer} from '../types'
@@ -18,11 +20,11 @@ import {CMSSettings, PagesDetails, WorkingDataLayer} from '../types'
 export const setSettings = createAction<CMSSettings>('cms/setSettings')
 
 export const registerField = createAction<{
-  fieldOptions: any
+  fieldOptions: BlockFieldOptions
   page: PageParamsType
 }>('cms/registerField')
 export const unregisterField = createAction<{
-  fieldOptions: any
+  fieldOptions: BlockFieldOptions
   page: PageParamsType
 }>('cms/unregisterField')
 
@@ -47,7 +49,7 @@ export const discardEditing = createAction('cms/discardEditing')
 
 export const updatePageContent = createAction<{
   content: string
-  fieldOptions: any
+  fieldOptions: BlockFieldOptions
   page: PageParamsType
 }>('cms/updatePageContent')
 
@@ -56,6 +58,7 @@ export const setHiddenChildSlugs = createAction<{
   hiddenChildSlugs: string[]
 }>('cms/setHiddenChildSlugs')
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
   'cms/publish',
   async (_, thunkAPI) => {
@@ -75,7 +78,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
       const rootPageSlug = rootPageSlugSelector(state)
       const pages = pagesSelector(state)
 
-      const layer = {rootPageSlug, pages: pages}
+      const layer = {rootPageSlug, pages}
 
       const publishData = JSON.stringify({
         dataLayer: {working: layer}
@@ -84,6 +87,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
       const {data, errors} =
         await BridgeDrop.buildIn.mutations.doJaenPublishFormPageMutation({
           url: '/jaen-publish',
+          // eslint-disable-next-line camelcase
           values: {git_remote: gitRemote, jaen_data: publishData}
         })
 

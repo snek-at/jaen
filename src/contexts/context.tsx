@@ -26,7 +26,7 @@ export const CMSPageContext = createContext<CMSPageContextType | undefined>(
   undefined
 )
 
-export const useCMSContext = () => {
+export const useCMSContext = (): CMSContextType => {
   const context = useContext(CMSContext)
   if (context === undefined) {
     throw new Error('useCMSContext must be within CMSProvider')
@@ -35,7 +35,7 @@ export const useCMSContext = () => {
   return context
 }
 
-export const useCMSPageContext = () => {
+export const useCMSPageContext = (): CMSPageContextType => {
   const context = useContext(CMSPageContext)
   if (context === undefined) {
     throw new Error('useCMSPageContext must be within PageProvider')

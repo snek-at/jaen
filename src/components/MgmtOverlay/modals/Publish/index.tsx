@@ -23,7 +23,7 @@ const PublishModal: React.FC = () => {
   const working = useSelector((state: RootState) => state.cms.dataLayer.working)
   const updatedWorking = useSelector(combinedDLSelector)
 
-  const onPublish = () => {
+  const onPublish = (): void => {
     dispatch(publish())
 
     notification.success({

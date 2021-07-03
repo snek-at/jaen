@@ -28,10 +28,11 @@ export type LoginModalValues = {
 type LoginModalProps = {visible: boolean; onClose: () => void}
 
 const LoginModal: React.FC<LoginModalProps> = ({visible, onClose}) => {
-  console.log('try', visible)
   const dispatch = useDispatch<store.AppDispatch>()
 
-  const onLogin = (values: LoginModalValues) => dispatch(login({creds: values}))
+  const onLogin = (values: LoginModalValues): void => {
+    dispatch(login({creds: values}))
+  }
 
   const [showModal, setShowModal] = useState(visible)
 
@@ -76,7 +77,7 @@ const LoginModal: React.FC<LoginModalProps> = ({visible, onClose}) => {
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
-          <a className="login-form-forgot" href="">
+          <a className="login-form-forgot" href="#not-implemented">
             Forgot password
           </a>
         </Form.Item>

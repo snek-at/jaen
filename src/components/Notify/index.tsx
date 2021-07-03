@@ -15,7 +15,7 @@ import {store} from '~/types'
 const openNotificationWith = (
   type: 'success' | 'info' | 'warning' | 'error',
   context: {message: string; description: string}
-) => {
+): void => {
   notification[type]({
     ...context
   })

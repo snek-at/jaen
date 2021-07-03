@@ -8,11 +8,12 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {useDispatch, useSelector} from 'react-redux'
-import {useCMSContext} from '~/contexts/context'
 import {AppDispatch} from '~/store'
 
 import Explorer from '~/components/Explorer'
 import CleanModal from '~/components/modals/Clean'
+
+import {useCMSContext} from '~/contexts/context'
 
 import {registerPage, unregisterPage} from '~/store/actions/cms'
 import {pageTreeSelector} from '~/store/selectors/cms'

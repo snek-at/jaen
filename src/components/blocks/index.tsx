@@ -35,21 +35,20 @@ export type GenericBC = BC<{
   [name: string]: React.ComponentType<EditableFieldProps>
 }>
 
+type MappingType<T> = {[name in keyof T]: JSX.Element}
+
 export function prepareBlocks<T>(
   Block: BC<T>,
   fieldOptions: BlockFieldOptions
-) {
+): MappingType<T> {
   type keys = keyof typeof Block.BlockFields
   const blockFieldNames = Object.keys(Block.BlockFields) as keys[]
 
-  type MappingType = {[name in keyof T]: JSX.Element}
+  const mapping: MappingType<T> = {} as MappingType<T>
 
-  const mapping: MappingType = {} as MappingType
-
-  blockFieldNames.forEach(blockFieldName => {
-    const Field = Block.BlockFields[
-      blockFieldName
-    ] as React.ComponentType<EditableFieldProps>
+  for (const blockFieldName of blockFieldNames) {
+    const Field: React.ComponentType<EditableFieldProps> =
+      Block.BlockFields[blockFieldName]
 
     if (fieldOptions.block) {
       const ConfiguredField = (
@@ -66,7 +65,7 @@ export function prepareBlocks<T>(
 
       mapping[blockFieldName] = ConfiguredField
     }
-  })
+  }
 
   return mapping
 }

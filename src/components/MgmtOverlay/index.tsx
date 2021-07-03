@@ -16,8 +16,7 @@ import {
   LoginOutlined,
   LogoutOutlined
 } from '@ant-design/icons'
-import {useEffect} from 'react'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {store as storeTypes} from '~/types'
 
@@ -47,7 +46,7 @@ const MgmtOverlay: React.FC = () => {
 
   useEffect(() => {
     dispatch(login({}))
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (authenticated) {

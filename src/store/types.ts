@@ -9,7 +9,6 @@
  */
 
 export type {RootState, AppDispatch} from './index'
-export type PageIndex = any
 
 export type CMSSettings = {gitRemote?: string}
 
@@ -80,7 +79,7 @@ export interface CMSState {
   settings: CMSSettings
   options: CMSOptions
   dataLayer: {
-    working: WorkingDataLayer & {updateFieldsCount: number}
+    working: WorkingDataLayer
     editing: EditingDataLayer
   }
   dataLayerChecksum?: string

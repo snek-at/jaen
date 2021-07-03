@@ -62,13 +62,14 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
 
   useEffect(() => {
     dispatch(setSettings(settings))
-  }, [settings])
+  }, [dispatch, settings])
 
   useEffect(() => {
-    const fetchFile = async (url: string) => {
+    const fetchFile = async (url: string): Promise<void> => {
+      const res = await fetch(url, {cache: 'no-store'})
       const data: {
         dataLayer: {working: storeTypes.WorkingDataLayer}
-      } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
+      } = await res.json()
 
       const checksum = store.getState().cms.dataLayerChecksum
       const calcChecksum = CryptoJS.SHA256(JSON.stringify(data)).toString(
@@ -85,7 +86,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       }
     }
 
-    const fetchRemote = () =>
+    const fetchRemote = async (): Promise<void> =>
       fetchFile(
         `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json`
       )
@@ -93,7 +94,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
     if (isDev()) {
       fetchRemote()
     } else {
-      fetchFile(globalThis.location.origin + '/jaen-data.json')
+      fetchFile(`${globalThis.location.origin}/jaen-data.json`)
     }
 
     if (settings.gitRemote) {
@@ -103,10 +104,11 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       return () => clearInterval(interval)
     } else {
       console.warn(
-        'Cannot fetch `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json, because gitRemote is undefined'
+        // eslint-disable-next-line no-template-curly-in-string
+        'Cannot fetch `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json` because gitRemote is undefined'
       )
     }
-  }, [])
+  }, [dispatch, settings.gitRemote])
 
   return (
     <CMSContext.Provider

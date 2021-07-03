@@ -22,8 +22,8 @@ export const generateRoutes = (
   registeredPages: ConnectedPageType[],
   rootPageSlug: string,
   pagesDetails: storeTypes.PagesDetails
-) => {
-  const findPageComponent = (typeName: string) =>
+): JSX.Element[] => {
+  const findPageComponent = (typeName: string): ConnectedPageType | undefined =>
     registeredPages.find(page => page.PageType === typeName)
 
   const Page: React.FC<{typeName: string}> = props => {
@@ -42,7 +42,7 @@ export const generateRoutes = (
     slug: string,
     path = '/',
     key = 0
-  ) => (
+  ): JSX.Element => (
     <Route
       exact
       path={path}
@@ -57,14 +57,17 @@ export const generateRoutes = (
 
   const routes: JSX.Element[] = []
 
-  const travelIndexTree = (page: typeof pagesDetails[string], path = '/') => {
+  const travelIndexTree = (
+    page: typeof pagesDetails[string],
+    path = '/'
+  ): void => {
     const {typeName, slug, childSlugs, deleted} = page
 
     !deleted && routes.push(generateRoute(typeName, slug, path, routes.length))
 
-    childSlugs.forEach(childSlug => {
-      travelIndexTree(pagesDetails[childSlug], path + `${childSlug}/`)
-    })
+    for (const childSlug of childSlugs) {
+      travelIndexTree(pagesDetails[childSlug], `${path}${childSlug}/`)
+    }
   }
 
   if (pagesDetails) {

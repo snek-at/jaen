@@ -54,6 +54,6 @@ export const persistor = persistStore(store)
 export {PersistGate} from 'redux-persist/integration/react'
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export interface RootState extends ReturnType<typeof store.getState> {}
+export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch

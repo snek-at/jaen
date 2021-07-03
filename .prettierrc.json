@@ -11,8 +11,9 @@
   "importOrder": [
     "^~/common/(.*)$",
     "^~/components/(.*)$",
-    "^~/containers/(.*)$",
+    "^~/contexts/(.*)$",
     "^~/store/(.*)$",
+    "^~/utils/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true

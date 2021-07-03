@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 /**
  * @license
  *
@@ -10,6 +12,7 @@
 import {createSelector} from '@reduxjs/toolkit'
 import deepmerge from 'deepmerge'
 import {ConnectedPageType} from '~/contexts'
+
 import {buildPageTree} from '~/utils/pageTree'
 
 import {Selector} from '.'

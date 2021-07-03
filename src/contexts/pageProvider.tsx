@@ -8,8 +8,9 @@
  * in the LICENSE file at https://snek.at/license
  */
 import React from 'react'
-import {CMSPageContext} from '~/contexts/context'
 import {PageParamsType} from '~/types'
+
+import {CMSPageContext} from '~/contexts/context'
 
 interface IConnectedPageType {
   PageType: string

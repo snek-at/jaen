@@ -10,8 +10,7 @@
 import React from 'react'
 import {connect, useSelector} from 'react-redux'
 import {context} from '~/contexts'
-import {components, PageParamsType} from '~/types'
-import {store} from '~/types'
+import {components, PageParamsType, store} from '~/types'
 
 import SidebarEditor, {ButtonOptions} from '~/components/Editor'
 
@@ -58,11 +57,10 @@ export const EditableField: React.FC<EditableFieldProps> = ({
     <div>
       <div className={editable ? 'field' : ''} {...subProps}>
         <SidebarEditor
-          onChange={content => updateContent(content, {slug, typeName})}
+          onChange={newContent => updateContent(newContent, {slug, typeName})}
           text={content}
           buttonOptions={buttonOptions}
           editable={editable}
-          recreateTrigger={workingLayer.updateFieldsCount}
         />
       </div>
     </div>

@@ -12,8 +12,9 @@ import pickBy from 'lodash/pickBy'
 import React, {useEffect, useRef, useState} from 'react'
 import {useDispatch, useSelector, useStore} from 'react-redux'
 import {useHistory} from 'react-router'
-import {useCMSPageContext, useCMSContext} from '~/contexts/context'
 import {store as storeTypes} from '~/types'
+
+import {useCMSPageContext, useCMSContext} from '~/contexts/context'
 
 import {setHiddenChildSlugs} from '~/store/actions/cms'
 import {pageDetailsSelector, pageTreeSelector} from '~/store/selectors/cms'
@@ -32,9 +33,7 @@ type IndexFieldProps = {
   fixedSlug?: string
 }
 
-const IndexField: React.FC<IndexFieldProps> = props => {
-  const {outerElement, renderItem, fixedSlug} = props
-
+const IndexField: React.FC<IndexFieldProps> = ({fixedSlug, ...props}) => {
   const rootState = useStore<storeTypes.RootState>().getState()
   const dispatch = useDispatch<storeTypes.AppDispatch>()
   const history = useHistory()
@@ -60,7 +59,7 @@ const IndexField: React.FC<IndexFieldProps> = props => {
       setHeight(ref.current.clientHeight)
       setWidth(ref.current.clientWidth)
     }
-  })
+  }, [ref.current?.clientHeight, ref.current?.clientWidth])
 
   const dataSource = pageDetails?.childSlugs.map(childSlug =>
     pageDetailsSelector(childSlug)(rootState)
@@ -72,23 +71,23 @@ const IndexField: React.FC<IndexFieldProps> = props => {
 
   const selectDefaultValues = filteredDataSource?.map(e => e && e.slug)
 
-  const getKeyFromSlug = (slug: string) => {
+  const getKeyFromSlug = (_slug: string): string => {
     return (
-      Object.keys(pickBy(indexKeyRefs, page => page.slug === slug))[0] || ''
+      Object.keys(pickBy(indexKeyRefs, _page => _page.slug === _slug))[0] || ''
     )
   }
 
-  const wrapper = React.cloneElement(outerElement(dataSource), {
+  const wrapper = React.cloneElement(props.outerElement(dataSource), {
     ref,
     children: filteredDataSource.map((e, key) =>
       React.cloneElement(
-        renderItem(e, key, () => history.push(getKeyFromSlug(e.slug)))
+        props.renderItem(e, key, () => history.push(getKeyFromSlug(e.slug)))
       )
     )
   })
 
-  const onSelectorChange = (slugs: string[]) => {
-    let newHiddenChildSlugs = dataSource
+  const onSelectorChange = (slugs: string[]): void => {
+    const newHiddenChildSlugs = dataSource
       .map(e => e.slug)
       .filter(x => !slugs.includes(x))
 

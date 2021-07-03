@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /**
  * @license
  *
@@ -25,7 +27,6 @@ const initialState: CMSState = {
   },
   dataLayer: {
     working: {
-      updateFieldsCount: 0,
       pages: {
         home: {
           details: {
@@ -156,31 +157,31 @@ const cmsReducer = createReducer(initialState, {
       }
     }
 
-    const setDeleted = (slugs: string[], parentSlug: string) => {
-      slugs.forEach(slug => {
-        state.dataLayer.editing.pages[slug] = {
-          ...state.dataLayer.editing.pages[slug],
+    const setDeleted = (slugs: string[], _parentSlug: string): void => {
+      for (const _slug of slugs) {
+        state.dataLayer.editing.pages[_slug] = {
+          ...state.dataLayer.editing.pages[_slug],
           details: {
-            ...state.dataLayer.editing.pages[slug]?.details,
+            ...state.dataLayer.editing.pages[_slug]?.details,
             deleted: true
           }
         }
 
-        state.dataLayer.editing.pages[parentSlug] = {
-          ...state.dataLayer.editing.pages[parentSlug],
+        state.dataLayer.editing.pages[_parentSlug] = {
+          ...state.dataLayer.editing.pages[_parentSlug],
           details: {
-            ...state.dataLayer.editing.pages[parentSlug]?.details,
-            childSlugs: pagesDetails[parentSlug].childSlugs.filter(
-              (e: string) => e !== slug
+            ...state.dataLayer.editing.pages[_parentSlug]?.details,
+            childSlugs: pagesDetails[_parentSlug].childSlugs.filter(
+              (e: string) => e !== _slug
             ),
-            hiddenChildSlugs: pagesDetails[parentSlug].hiddenChildSlugs.filter(
-              (e: string) => e !== slug
+            hiddenChildSlugs: pagesDetails[_parentSlug].hiddenChildSlugs.filter(
+              (e: string) => e !== _slug
             )
           }
         }
 
         setDeleted(pagesDetails[slug].childSlugs, slug)
-      })
+      }
     }
 
     setDeleted([slug], parentSlug)
@@ -195,7 +196,6 @@ const cmsReducer = createReducer(initialState, {
       ...state.dataLayer,
       working: {
         ...state.dataLayer.working,
-        updateFieldsCount: state.dataLayer.working.updateFieldsCount + 1,
         ...workingDataLayer
       }
     }
@@ -232,8 +232,7 @@ const cmsReducer = createReducer(initialState, {
     state.dataLayer = {
       ...state.dataLayer,
       working: {
-        ...state.dataLayer.working,
-        updateFieldsCount: state.dataLayer.working.updateFieldsCount + 1
+        ...state.dataLayer.working
       }
     }
   },
@@ -300,7 +299,7 @@ const cmsReducer = createReducer(initialState, {
         fields: {
           ...editingPageFields,
           [fieldName]: {
-            content: content
+            content
           }
         }
       }
@@ -312,8 +311,7 @@ const cmsReducer = createReducer(initialState, {
     state.dataLayer = {
       ...state.dataLayer,
       working: {
-        ...workingLayer,
-        updateFieldsCount: state.dataLayer.working.updateFieldsCount + 1
+        ...workingLayer
       },
       editing: {...state.dataLayer.editing, pages: {}}
     }

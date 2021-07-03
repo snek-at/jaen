@@ -22,9 +22,10 @@ import {
 } from 'antd'
 import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router'
-import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '~/utils/pageTree'
 
 import {deepSearch} from '~/common/utils'
+
+import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '~/utils/pageTree'
 
 const {Text} = Typography
 const {Option} = Select
@@ -63,8 +64,8 @@ const Editor: React.FC<EditorProps> = ({
 
   const [selectedNode, setSelectedNode] = useState<PageNode>()
 
-  const getParentKey = (key: string) => {
-    let slugs = key.split('/')
+  const getParentKey = (key: string): string => {
+    const slugs = key.split('/')
 
     slugs.splice(slugs.length - 2, 1)
 
@@ -73,7 +74,7 @@ const Editor: React.FC<EditorProps> = ({
     return parentKey
   }
 
-  const onSelect = (selectedKeys: React.Key[], _info: any) => {
+  const onSelect = (selectedKeys: React.Key[], _info: unknown): void => {
     // currently only supports single select
     const keyLength = selectedKeys.length
     if (keyLength === 1) {
@@ -92,12 +93,13 @@ const Editor: React.FC<EditorProps> = ({
         })
       }
     } else if (keyLength > 1) {
+      // For later multi select
     } else {
       setSelectedNode(undefined)
     }
   }
 
-  const onDelete = () => {
+  const onDelete = (): void => {
     if (selectedNode) {
       if (selectedNode.isDraft === false) {
         // call parent onNodeDelete
@@ -112,7 +114,7 @@ const Editor: React.FC<EditorProps> = ({
         const parentNode = deepSearch(
           newTree,
           'key',
-          (_k: any, v: any) => v === parentKey
+          (_k: string, v: unknown) => v === parentKey
         ) as ExplorerTDN
 
         const indexToRemove = parentNode?.children?.findIndex(
@@ -128,19 +130,19 @@ const Editor: React.FC<EditorProps> = ({
     }
   }
 
-  const onNodeCreate = () => {
+  const onNodeCreate = (): void => {
     if (selectedNode) {
       const newTree = [...tree]
 
       const parentNode = deepSearch(
         newTree,
         'key',
-        (_k: any, v: any) => v === selectedNode.key
+        (_k: string, v: unknown) => v === selectedNode.key
       ) as ExplorerTDN
 
       if (parentNode?.children) {
         const title = `draft-${parentNode.children.length}`
-        const key = `${parentNode.key + title}/`
+        const key = `${parentNode.key}${title}/`
         parentNode?.children?.push({
           key,
           title,
@@ -153,12 +155,13 @@ const Editor: React.FC<EditorProps> = ({
     }
   }
 
-  const onSave = () => {
+  const onSave = (): void => {
     if (selectedNode) {
       const {slug, title} = selectedNode
 
       if (slug?.trim() && title?.trim()) {
         if (onNodeSave(selectedNode)) {
+          // Successful save -> Handle later
         } else {
           console.error('cannot save')
         }
@@ -184,7 +187,7 @@ const Editor: React.FC<EditorProps> = ({
               {selectedNode.isDraft ? (
                 <Select
                   defaultValue={selectedNode.typeName}
-                  onChange={(value: any) =>
+                  onChange={(value: string) =>
                     setSelectedNode({
                       ...selectedNode,
                       typeName: value

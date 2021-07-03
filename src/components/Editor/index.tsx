@@ -27,8 +27,7 @@ import createLinkifyPlugin from '@draft-js-plugins/linkify'
 import {EditorState} from 'draft-js'
 import {stateToHTML} from 'draft-js-export-html'
 import {stateFromHTML} from 'draft-js-import-html'
-import React, {Fragment, useEffect, useRef, useState} from 'react'
-import {useMemo} from 'react'
+import React, {Fragment, useEffect, useRef, useState, useMemo} from 'react'
 
 import type {AtLeastOne} from '~/common/utils'
 
@@ -53,15 +52,13 @@ interface SidebarEditorProps {
   onChange: (content: string) => void
   buttonOptions?: ButtonOptions
   editable?: boolean
-  recreateTrigger?: any
 }
 
 const SidebarEditor: React.FC<SidebarEditorProps> = ({
   text = 'No content available',
   onChange,
   buttonOptions,
-  editable = true,
-  recreateTrigger = undefined
+  editable = true
 }) => {
   //   const [plugins, SideToolbar] = useMemo(() => {
   //     const sideToolbarPlugin = createSideToolbarPlugin({
@@ -115,16 +112,16 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
     }
 
     setEditorState(es)
-  }, [recreateTrigger])
+  }, [buttonOptions, text])
 
   const onValueChange = (value: EditorState): void => {
-    const toHTMLContent = (es: EditorState) =>
+    const toHTMLContent = (es: EditorState): string =>
       stateToHTML(es.getCurrentContent())
-    const toTextContent = (es: EditorState) =>
+    const toTextContent = (es: EditorState): string =>
       es.getCurrentContent().getPlainText('\u0001')
 
-    let previousContent: string = ''
-    let content: string = ''
+    let previousContent = ''
+    let content = ''
 
     if (buttonOptions) {
       previousContent = toHTMLContent(editorState)
@@ -149,7 +146,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
         editorState={editorState}
         onChange={onValueChange}
         plugins={plugins}
-        ref={(editor: any) => (editorRef.current = editor)}
+        ref={editor => (editorRef.current = editor)}
       />
       {buttonOptions && editable && (
         <InlineToolbar>
