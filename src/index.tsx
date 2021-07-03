@@ -13,6 +13,8 @@ import '@draft-js-plugins/linkify/lib/plugin.css'
 import 'antd/dist/antd.css'
 import 'draft-js/dist/Draft'
 
+import '~/common/css/base.scss'
+
 export type {BC, ConnectedPageType} from '~/types'
 
 export {prepareBlocks} from './components/blocks'
