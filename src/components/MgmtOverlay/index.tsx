@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright snek-at. All Rights Reserved.
+ *
+ * Use of this source code is governed by an EUPL-1.2 license that can be found
+ * in the LICENSE file at https://snek.at/license
+ */
 import {
   EditOutlined,
   CloudUploadOutlined,
@@ -5,8 +12,7 @@ import {
   DeleteOutlined,
   EditFilled,
   LoginOutlined,
-  LogoutOutlined,
-  InfoCircleOutlined
+  LogoutOutlined
 } from '@ant-design/icons'
 import {useEffect} from 'react'
 import {useState} from 'react'
@@ -65,12 +71,7 @@ const MgmtOverlay: React.FC = () => {
                 text: 'Login',
                 icon: <LoginOutlined />,
                 onClick: () => setShowLoginModal(true)
-              },
-          {
-            text: 'Information',
-            icon: <InfoCircleOutlined />,
-            onClick: () => alert('test1')
-          }
+              }
         ]}
       />
 

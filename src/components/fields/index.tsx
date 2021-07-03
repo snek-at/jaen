@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright snek-at. All Rights Reserved.
+ *
+ * Use of this source code is governed by an EUPL-1.2 license that can be found
+ * in the LICENSE file at https://snek.at/license
+ */
+
 export {default as RichTextField} from './RichTextField'
 export {default as SimpleRichTextField} from './SimpleRichTextField'
 export {default as SimpleTextField} from './SimpleTextField'

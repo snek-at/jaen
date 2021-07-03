@@ -1,11 +1,18 @@
+/**
+ * @license
+ * Copyright snek-at. All Rights Reserved.
+ *
+ * Use of this source code is governed by an EUPL-1.2 license that can be found
+ * in the LICENSE file at https://snek.at/license
+ */
 import _ from 'lodash'
-import process from "process";
+import process from 'process'
 
 export type AtLeastOne<T, U = {[K in keyof T]: Pick<T, K>}> = Partial<T> &
   U[keyof U]
 
-
-const development: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+const development: boolean =
+  !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 
 export const isDev = () => development
 
