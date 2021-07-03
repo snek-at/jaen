@@ -7,50 +7,47 @@
  */
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
 import BridgeDrop from 'drop'
-import {components, PageParamsType} from '~/types'
-
-import {PageNode} from '~/components/Explorer/index'
-import {BlockFieldOptions} from '~/components/blocks/index'
+import {PageParamsType, components} from '~/types'
 
 import {RootState} from '..'
-import {combinedDLSelector} from '../selectors/cms'
-import {DataLayer, PageIndex, CMSSettings} from '../types'
+import {pagesSelector, rootPageSlugSelector} from '../selectors/cms'
+import {DataLayer, CMSSettings, PagesDetails} from '../types'
 
 export const setSettings = createAction<CMSSettings>('cms/setSettings')
 
 export const registerField = createAction<{
-  fieldOptions: BlockFieldOptions
+  fieldOptions: any
   page: PageParamsType
 }>('cms/registerField')
 export const unregisterField = createAction<{
-  fieldOptions: BlockFieldOptions
+  fieldOptions: any
   page: PageParamsType
 }>('cms/unregisterField')
+
+export const registerPage = createAction<{
+  page: components.PageNode
+  rootPageSlug: string
+  pagesDetails: PagesDetails
+}>('cms/registerPage')
+export const unregisterPage = createAction<{
+  page: components.PageNode
+  rootPageSlug: string
+  pagesDetails: PagesDetails
+}>('cms/unregisterPage')
 
 export const toggleMenu = createAction<boolean>('cms/toggleMenu')
 
 export const overrideWDL =
-  createAction<{data: DataLayer; cksm: string}>('cms/overrideWDL')
+  createAction<{workingDataLayer: DataLayer; checksum: string}>('cms/overrideWDL')
 
 export const toggleEditing = createAction<boolean>('cms/toggleEditing')
 export const discardEditing = createAction('cms/discardEditing')
 
 export const updatePageContent = createAction<{
   content: string
-  fieldOptions: components.EditableFieldOptions
+  fieldOptions: any
   page: PageParamsType
 }>('cms/updatePageContent')
-
-export const setIndex = createAction<PageIndex>('cms/setIndex')
-
-export const transferPageToIndex = createAction<{
-  page: PageNode
-  index: PageIndex
-}>('cms/transferPageToIndex')
-export const deletePageFromIndex = createAction<{
-  page: PageNode
-  index: PageIndex
-}>('cms/deletePageFromIndex')
 
 export const setHiddenChildSlugs = createAction<{
   page: PageParamsType
@@ -65,8 +62,6 @@ export const publish: any = createAsyncThunk<DataLayer, void, {}>(
 
       const {settings} = state.cms
 
-      const layer = combinedDLSelector(state)
-
       const {gitRemote} = settings
 
       if (!gitRemote) {
@@ -74,6 +69,13 @@ export const publish: any = createAsyncThunk<DataLayer, void, {}>(
           `DropAPI publish failed. Settings does not include gitRemote`
         )
       }
+
+      const rootPageSlug = rootPageSlugSelector(state)
+      const pages = pagesSelector(state)
+
+      const layer = {rootPageSlug, pages: pages}
+
+      console.log('layer', layer)
 
       const publishData = JSON.stringify({
         dataLayer: {working: layer}

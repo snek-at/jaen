@@ -1,36 +1,121 @@
 import {createSelector} from '@reduxjs/toolkit'
 import deepmerge from 'deepmerge'
-import union from 'lodash/union'
+import {ConnectedPageType} from '~/contexts'
+import {buildPageTree} from '~/utils/pageTree'
 
 import {Selector} from '.'
-import {CMSState, PageIndex} from '../types'
+import {store} from '..'
+import {
+  RootState,
+  CMSState,
+  DataLayerPages,
+  PageDetails,
+  PageFieldBlocks
+} from '../types'
 
-const workingDLIndex: Selector<PageIndex | undefined> = state =>
-  state.cms.dataLayer.working.index
+export const rootPageSlugSelector = createSelector<
+  RootState,
+  string,
+  string,
+  string
+>(
+  state => state.cms.dataLayer.working.rootPageSlug,
+  state => state.cms.dataLayer.editing.rootPageSlug,
+  (wSlug, eSlug) => eSlug || wSlug
+)
 
-const editingDLIndex: Selector<PageIndex | undefined> = state =>
-  state.cms.dataLayer.editing.index
+export const pageDetailsSelector = (slug: string) =>
+  createSelector<
+    RootState,
+    PageDetails | undefined,
+    PageDetails | undefined,
+    PageDetails
+  >(
+    state => state.cms.dataLayer.working.pages[slug]?.details,
+    state => state.cms.dataLayer.editing.pages[slug]?.details,
+    (wDetails, eDetails) =>
+      deepmerge(wDetails || {}, eDetails || {}, {
+        arrayMerge: (_target, source, _options) => source
+      })
+  )
 
-export const indexSelector = createSelector(
-  workingDLIndex,
-  editingDLIndex,
-  (wIndex, eIndex) => deepmerge(wIndex || {}, eIndex || {})
+export const pagesSelector = createSelector<
+  RootState,
+  DataLayerPages,
+  DataLayerPages,
+  DataLayerPages
+>(
+  state => state.cms.dataLayer.working.pages,
+  state => state.cms.dataLayer.editing.pages,
+  (wPages, ePages) => {
+    const merged = deepmerge(wPages || {}, ePages || {}, {
+      arrayMerge: (_target, source, _options) => source
+    })
+
+    const cleaned = Object.fromEntries(
+      Object.entries(merged).filter(([_slug, page]) => !page.details.deleted)
+    )
+
+    return cleaned
+  }
 )
 
 const dataLayer: Selector<CMSState['dataLayer'] | undefined> = state =>
   state.cms.dataLayer
 
 export const combinedDLSelector = createSelector(dataLayer, layer =>
-  deepmerge(layer?.working || {}, layer?.editing || {}, {
-    arrayMerge: (destinationArray, sourceArray, _options) =>
-      union(destinationArray, sourceArray)
-  })
+  deepmerge(layer?.working || {}, layer?.editing || {})
 )
 
-export const pagesSelector = createSelector(combinedDLSelector, layer => {
-  const pages = Object.fromEntries(
-    Object.entries(layer.pages).filter(([_slug, page]: any) => !page.deleted)
+export const pageTreeSelector = (registeredPages: ConnectedPageType[]) =>
+  createSelector(
+    rootPageSlugSelector,
+    pagesSelector,
+    (rootPageSlug, dataLayerPages) => {
+      const pagesDetails = Object.fromEntries(
+        Object.entries(dataLayerPages).map(([slug, page]) => [
+          slug,
+          page.details
+        ])
+      )
+
+      return buildPageTree(pagesDetails, rootPageSlug, registeredPages)
+    }
   )
 
-  return pages
-})
+export const pageFieldContentSelector = (
+  slug: string,
+  fieldName: string,
+  block?: {typeName: string; position: number; blockFieldName: string}
+) =>
+  createSelector<RootState, string | undefined, string | undefined>(
+    state =>
+      block
+        ? state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]
+            ?.blocks?.[block.position]?.fields[block.blockFieldName]
+        : state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]
+            ?.content,
+    content => {
+      const editingField =
+        store.getState().cms.dataLayer.editing.pages[slug]?.fields?.[fieldName]
+
+      const eContent = block
+        ? editingField?.blocks?.[block.position]?.fields?.[block.blockFieldName]
+        : editingField?.content
+
+      return eContent || content
+    }
+  )
+
+export const pageFieldBlocksSelector = (slug: string, fieldName: string) =>
+  createSelector<RootState, PageFieldBlocks, PageFieldBlocks, PageFieldBlocks>(
+    state =>
+      state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]?.blocks,
+    state =>
+      state.cms.dataLayer.editing.pages?.[slug]?.fields?.[fieldName]?.blocks,
+    (wBlocks, eBlocks) => {
+      const blocks = deepmerge(wBlocks || {}, eBlocks || {})
+
+      return blocks
+    }
+  )

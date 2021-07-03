@@ -1,14 +1,17 @@
 import {Select} from 'antd'
 import pickBy from 'lodash/pickBy'
 import React, {useEffect, useRef, useState} from 'react'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector, useStore} from 'react-redux'
 import {useHistory} from 'react-router'
 import {useCMSPageContext, useCMSContext} from '~/contexts/context'
-import {store} from '~/types'
+import {store as storeTypes} from '~/types'
+
+import {setHiddenChildSlugs} from '~/store/actions/cms'
+import {pageDetailsSelector, pageTreeSelector} from '~/store/selectors/cms'
 
 const {Option} = Select
 
-type DataElement = store.PageIndex['pages'][string]
+type DataElement = storeTypes.PageDetails
 
 type IndexFieldProps = {
   outerElement(dataSource?: DataElement[]): React.ReactElement
@@ -21,12 +24,22 @@ type IndexFieldProps = {
 }
 
 const IndexField: React.FC<IndexFieldProps> = props => {
+  const {outerElement, renderItem, fixedSlug} = props
+
+  const rootState = useStore<storeTypes.RootState>().getState()
+  const dispatch = useDispatch<storeTypes.AppDispatch>()
   const history = useHistory()
-  const cmsContext = useCMSContext()
-  const pageContext = useCMSPageContext()
+  const {registeredPages} = useCMSContext()
+  const {slug, typeName} = useCMSPageContext()
+
+  const page = {slug, typeName}
+
+  const pageDetails = useSelector(pageDetailsSelector(fixedSlug || slug))
+
+  const {indexKeyRefs} = useSelector(pageTreeSelector(registeredPages))
 
   const editing = useSelector(
-    (state: store.RootState) => state.cms.options.editing
+    (state: storeTypes.RootState) => state.cms.options.editing
   )
 
   const [height, setHeight] = useState(0)
@@ -40,16 +53,20 @@ const IndexField: React.FC<IndexFieldProps> = props => {
     }
   })
 
-  const {outerElement, renderItem, fixedSlug} = props
-  const dataSource = pageContext.getChildPagesFromIndex(fixedSlug)
-  const filteredDataSource = dataSource.filter(
-    x => !pageContext.getHiddenSlugs().includes(x.slug)
+  const dataSource = pageDetails?.childSlugs.map(childSlug =>
+    pageDetailsSelector(childSlug)(rootState)
   )
-  const selectDefaultValues = filteredDataSource.map(e => e.slug)
+
+  const filteredDataSource = dataSource?.filter(
+    x => x && !pageDetails?.hiddenChildSlugs.includes(x.slug)
+  )
+
+  const selectDefaultValues = filteredDataSource?.map(e => e && e.slug)
 
   const getKeyFromSlug = (slug: string) => {
-    const refs = cmsContext.keyRefs?.indexKey
-    return Object.keys(pickBy(refs, page => page.slug === slug))[0] || ''
+    return (
+      Object.keys(pickBy(indexKeyRefs, page => page.slug === slug))[0] || ''
+    )
   }
 
   const wrapper = React.cloneElement(outerElement(dataSource), {
@@ -66,7 +83,7 @@ const IndexField: React.FC<IndexFieldProps> = props => {
       .map(e => e.slug)
       .filter(x => !slugs.includes(x))
 
-    pageContext.setHiddenChildSlugs(newHiddenChildSlugs)
+    dispatch(setHiddenChildSlugs({page, hiddenChildSlugs: newHiddenChildSlugs}))
   }
 
   return (

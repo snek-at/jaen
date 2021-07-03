@@ -1,14 +1,14 @@
 import {AppstoreAddOutlined} from '@ant-design/icons'
 import {Menu, Row, Button, Col, Dropdown, Divider} from 'antd'
-import deepmerge from 'deepmerge'
 import React, {useEffect, useState, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useCMSPageContext} from '~/contexts/context'
 import {store} from '~/types'
 
-import {GenericBC} from '~/components/blocks'
-
 import {registerField, unregisterField} from '~/store/actions/cms'
+import {pageFieldBlocksSelector} from '~/store/selectors/cms'
+
+import {GenericBC} from '../blocks'
 
 type StreamFieldProps = {
   name: string
@@ -21,7 +21,8 @@ const StreamField: React.FC<StreamFieldProps> = ({
   blocks,
   reverseOrder
 }) => {
-  const context = useCMSPageContext()
+  const {slug, typeName} = useCMSPageContext()
+  const page = {slug, typeName}
   const dispatch = useDispatch<store.AppDispatch>()
 
   const [height, setHeight] = useState(0)
@@ -37,17 +38,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
 
   const editing = useSelector(({cms}: store.RootState) => cms.options.editing)
 
-  let storeWorkingBlocks = useSelector(
-    ({cms}: store.RootState) =>
-      cms.dataLayer.working.pages[context.page.slug]?.fields[name]?.blocks
-  )
-
-  let storeBlocks = useSelector(
-    ({cms}: store.RootState) =>
-      cms.dataLayer.editing.pages[context.page.slug]?.fields[name]?.blocks
-  )
-
-  storeBlocks = deepmerge(storeWorkingBlocks || {}, storeBlocks || {})
+  const storeBlocks = useSelector(pageFieldBlocksSelector(slug, name))
 
   const blocksKeys = Object.keys(storeBlocks || {}).sort(
     (a, b) => parseInt(a) - parseInt(b)
@@ -83,7 +74,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
   const addNewBlock = (typeName: string) =>
     dispatch(
       registerField({
-        page: context.page,
+        page,
         fieldOptions: {
           fieldName: name,
           block: {
@@ -118,7 +109,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
           console.log('unregister')
           dispatch(
             unregisterField({
-              page: context.page,
+              page: page,
               fieldOptions: {
                 fieldName: name,
                 block: {
@@ -187,31 +178,3 @@ const StreamField: React.FC<StreamFieldProps> = ({
 }
 
 export default StreamField
-
-// const storePageData: {
-//   fields: {
-//     [name: string]: {
-//       blocks: {
-//         [position: string]: {
-//           typeName: string
-//           fields: {[name: string]: number | string | boolean}
-//         }
-//       }
-//     }
-//   }
-// } = {
-//   fields: {
-//     timeline: {
-//       blocks: {
-//         0: {
-//           typeName: 'TimelineBlock',
-//           fields: {
-//             date: '20.10.2001',
-//             heading: 'Welcome',
-//             body: '<b>bold body</b>'
-//           }
-//         }
-//       }
-//     }
-//   }
-// }

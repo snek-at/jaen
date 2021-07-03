@@ -7,45 +7,50 @@
  */
 
 export type {RootState, AppDispatch} from './index'
+export type PageIndex = any
 
 export type CMSSettings = {gitRemote?: string}
 
-type PageSpecs = {
+export type PageDetails = {
+  slug: string
+  title: string
+  childSlugs: string[]
+  hiddenChildSlugs: string[]
   typeName: string
   deleted?: boolean
 }
 
-export type PageIndex = {
-  rootPageSlug?: string
-  pages: {
-    [slug: string]: {
-      slug: string
-      title: string
-      childSlugs: string[]
-    } & PageSpecs
+export type PagesDetails = {[slug: string]: PageDetails}
+
+export type PageField = {
+  content?: string
+  blocks?: {
+    [position: string]: PageFieldBlock
+  }
+}
+export type PageFieldBlock = {
+  typeName: string
+  fields: {
+    [name: string]: string | undefined
   }
 }
 
-export type DataLayer = {
-  pages: {
-    [slug: string]: {
-      fields: {
-        [name: string]: {
-          content?: string
-          blocks?: {
-            [position: string]: {
-              typeName: string
-              fields: {
-                [name: string]: string | undefined
-              }
-            }
-          }
-        }
-      }
-      hiddenChildSlugs: string[]
-    } & PageSpecs
+export type PageFieldBlocks = PageField['blocks']
+
+export type DataLayerPages = {
+  [slug: string]: {
+    fields: {
+      [name: string]: PageField
+    }
+    details: PageDetails
   }
-  index: PageIndex
+}
+
+export type DataLayerPage = DataLayerPages[string]
+
+export type DataLayer = {
+  pages: DataLayerPages
+  rootPageSlug: string
 }
 
 export interface CMSOptions {
@@ -56,14 +61,15 @@ export interface CMSState {
   settings: CMSSettings
   options: CMSOptions
   dataLayer: {
-    origCksm?: string
     working: DataLayer & {updateFieldsCount: number}
     editing: DataLayer
   }
+  dataLayerChecksum?: string
 }
 
 export interface AuthState {
   authenticated: boolean
+  loading: boolean
 }
 
 export interface NotifyState {

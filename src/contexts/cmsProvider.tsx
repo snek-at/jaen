@@ -5,34 +5,22 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import md5 from 'crypto-js/md5'
-import React, {useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {Provider as ReduxProvider} from 'react-redux'
+import CryptoJS from 'crypto-js'
+import {isEqual} from 'lodash'
+import React, {useEffect} from 'react'
+import {Provider as ReduxProvider, useDispatch, useSelector} from 'react-redux'
 import {PersistGate} from 'redux-persist/lib/integration/react'
 import PageRouter from '~/router'
 import {persistor, store} from '~/store'
-import {store as storeTypes, components, ConnectedPageType} from '~/types'
+import {store as storeTypes, ConnectedPageType} from '~/types'
 
-import Menu from '~/components/Menu'
+import MgmtOverlay from '~/components/MgmtOverlay'
 import Notify from '~/components/Notify'
-import LoginModal from '~/components/modals/Login'
 
-import {login} from '~/store/actions/auth'
-import {
-  setSettings,
-  overrideWDL,
-  setIndex,
-  toggleMenu
-} from '~/store/actions/cms'
-import {indexSelector} from '~/store/selectors/cms'
+import {overrideWDL, setSettings} from '~/store/actions/cms'
+import {pagesSelector, rootPageSlugSelector} from '~/store/selectors/cms'
 
 import {CMSContext} from './context'
-import {
-  IndexKeyRefs,
-  ChildPageTypeNamesKeyRefs,
-  transformIndexTree
-} from './utils'
 
 interface CMSProviderProps {
   settings: storeTypes.CMSSettings
@@ -45,66 +33,52 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   children
 }) => {
   const dispatch = useDispatch<storeTypes.AppDispatch>()
+  const rootPageSlug = useSelector(rootPageSlugSelector)
 
-  const [registeredPages, setRegisteredPages] =
-    useState<ConnectedPageType[]>(pages)
+  // only rerender if page details changes
+  const dataLayerPages = useSelector(pagesSelector, (l, r) => {
+    const lKeys = Object.keys(l)
+    const rKeys = Object.keys(r)
 
-  const getRegisteredPage = (typeName: string) => {
-    return registeredPages.find(page => page.PageType === typeName)
-  }
+    if (!isEqual(lKeys, rKeys)) {
+      return false
+    }
 
-  const getChildPageTypeNames = (typeName: string) =>
-    getRegisteredPage(typeName)?.ChildPages.map(page => page.PageType)
+    for (const slug of lKeys) {
+      return isEqual(l[slug].details, r[slug].details)
+    }
 
-  const authenticated = useSelector(
-    (state: storeTypes.RootState) => state.auth.authenticated
+    return true
+  })
+
+  // remove fields from dataLayerPages because they are not up to date
+  const pagesDetails = Object.fromEntries(
+    Object.entries(dataLayerPages).map(([slug, page]) => [slug, page.details])
   )
-
-  const index = useSelector(indexSelector)
-
-  console.log('Merged index', index)
-
-  const [treeData, setTreeData] = useState<components.ExplorerTDN[]>()
-
-  const [keyRefs, setKeyRefs] = useState<{
-    indexKey: IndexKeyRefs
-    childPageTypeNamesKey: ChildPageTypeNamesKeyRefs
-  }>()
 
   useEffect(() => {
     dispatch(setSettings(settings))
   }, [settings])
 
   useEffect(() => {
-    if (index && index.pages && index.rootPageSlug) {
-      const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} =
-        transformIndexTree(index, getChildPageTypeNames)
-
-      setTreeData(treeData)
-      setKeyRefs({
-        indexKey: indexKeyRefs,
-        childPageTypeNamesKey: childPageTypeNamesKeyRefs
-      })
-    }
-  }, [index])
-
-  useEffect(() => {
     const fetchFile = async (url: string) => {
-      try {
-        const data: {
-          dataLayer: {working: storeTypes.DataLayer}
-          index: storeTypes.PageIndex
-        } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
+      const data: {
+        dataLayer: {working: storeTypes.DataLayer}
+      } = await fetch(url, {cache: 'no-store'}).then(res => res.json())
 
-        const layerOrigCksm = store.getState().cms.dataLayer.origCksm
-        const cksm = md5(JSON.stringify(data)).toString()
+      const checksum = store.getState().cms.dataLayerChecksum
+      const calcChecksum = CryptoJS.SHA256(JSON.stringify(data)).toString(
+        CryptoJS.enc.Hex
+      )
 
-        if (cksm !== layerOrigCksm) {
-          dispatch(overrideWDL({data: data.dataLayer.working, cksm}))
-          console.log('setindex', setIndex)
-          //dispatch(setIndex(data.index))
-        }
-      } catch {}
+      if (checksum !== calcChecksum) {
+        dispatch(
+          overrideWDL({
+            workingDataLayer: data.dataLayer.working,
+            checksum: calcChecksum
+          })
+        )
+      }
     }
 
     fetchFile(globalThis.location.origin + '/jaen-data.json')
@@ -114,7 +88,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
         fetchFile(
           `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json`
         )
-      }, 1000 * 60 * 1)
+      }, 1000 * 60 * 5)
       return () => clearInterval(interval)
     } else {
       console.warn(
@@ -123,33 +97,18 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
     }
   }, [])
 
-  useEffect(() => {
-    dispatch(login({}))
-  }, [])
-
   return (
     <CMSContext.Provider
       value={{
-        index,
-        registeredPages,
-        treeData,
-        keyRefs,
-        setRegisteredPages,
-        getRegisteredPage
+        registeredPages: pages,
+        rootPageSlug,
+        pagesDetails
       }}>
       <PageRouter>
         <Notify />
-        {authenticated ? <Menu /> : <LoginModal />}
-        {children}
+        <MgmtOverlay />
       </PageRouter>
-
-      <img
-        className="cms-edit"
-        style={{maxWidth: 50}}
-        src="https://avatars.githubusercontent.com/u/55870326?s=200&v=4"
-        title="Edit with snek"
-        onClick={() => dispatch(toggleMenu(true))}
-      />
+      {children}
     </CMSContext.Provider>
   )
 }

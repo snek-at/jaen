@@ -1,26 +1,23 @@
-import {Spin, Row} from 'antd'
-import React from 'react'
 import {
   BrowserRouter as Router,
   BrowserRouterProps,
   Route,
   Switch
 } from 'react-router-dom'
-import {ConnectedPageType, PageParamsType} from '~/types'
+import {store as storeTypes, ConnectedPageType} from '~/types'
 
 import {useCMSContext} from './contexts/context'
-import {PageIndex} from './store/types'
+import PageProvider from './contexts/pageProvider'
 
 export const generateRoutes = (
   registeredPages: ConnectedPageType[],
-  index: PageIndex
+  rootPageSlug: string,
+  pagesDetails: storeTypes.PagesDetails
 ) => {
-  const pages = index.pages
-
   const findPageComponent = (typeName: string) =>
     registeredPages.find(page => page.PageType === typeName)
 
-  const Page: React.FC<PageParamsType & {typeName: string}> = props => {
+  const Page: React.FC<{typeName: string}> = props => {
     const {typeName} = props
     const PageComponent = findPageComponent(typeName)
 
@@ -40,25 +37,31 @@ export const generateRoutes = (
     <Route
       exact
       path={path}
-      render={props => <Page typeName={typeName} slug={slug} {...props} />}
+      render={props => (
+        <PageProvider typeName={typeName} slug={slug}>
+          <Page typeName={typeName} {...props} />
+        </PageProvider>
+      )}
       key={key}
     />
   )
 
   const routes: JSX.Element[] = []
 
-  const travelIndexTree = (page: typeof index.pages[string], path = '/') => {
+  const travelIndexTree = (page: typeof pagesDetails[string], path = '/') => {
     const {typeName, slug, childSlugs, deleted} = page
 
     !deleted && routes.push(generateRoute(typeName, slug, path, routes.length))
 
     childSlugs.forEach(childSlug => {
-      travelIndexTree(pages[childSlug], path + `${childSlug}/`)
+      travelIndexTree(pagesDetails[childSlug], path + `${childSlug}/`)
     })
   }
 
-  if (pages) {
-    const rootPage = index.rootPageSlug && pages[index.rootPageSlug]
+  if (pagesDetails) {
+    const rootPage = pagesDetails[rootPageSlug]
+
+    console.log(pagesDetails)
 
     rootPage && travelIndexTree(rootPage)
   }
@@ -69,23 +72,11 @@ export const generateRoutes = (
 type PageRouterProps = {} & BrowserRouterProps
 
 const PageRouter: React.FC<PageRouterProps> = ({children}): JSX.Element => {
-  const {index, registeredPages} = useCMSContext()
-
+  const {registeredPages, rootPageSlug, pagesDetails} = useCMSContext()
   return (
     <Router>
       <Switch>
-        {index && generateRoutes(registeredPages, index)}
-        <Route
-          component={() =>
-            !index || !index.pages ? (
-              <Row justify={'center'}>
-                <Spin size="large" />
-              </Row>
-            ) : (
-              <div>404 Not found </div>
-            )
-          }
-        />
+        {generateRoutes(registeredPages, rootPageSlug, pagesDetails)}
       </Switch>
       {children}
     </Router>

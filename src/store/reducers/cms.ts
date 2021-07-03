@@ -6,12 +6,13 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createReducer} from '@reduxjs/toolkit'
-import {components, PageParamsType} from '~/types'
+import {union} from 'lodash'
+import {PageParamsType} from '~/types'
 
 import {diff} from '~/common/utils'
 
 import {cmsActions} from '../actions'
-import {CMSState, PageIndex} from '../types'
+import {CMSState} from '../types'
 
 const initialState: CMSState = {
   settings: {
@@ -22,8 +23,11 @@ const initialState: CMSState = {
     showMenu: false
   },
   dataLayer: {
-    working: {updateFieldsCount: 0, pages: {}, index: {pages: {}}},
-    editing: {pages: {}, index: {pages: {}}}
+    working: {updateFieldsCount: 0, pages: {}, rootPageSlug: 'home'},
+    editing: {
+      rootPageSlug: 'home',
+      pages: {}
+    }
   }
 }
 
@@ -77,6 +81,94 @@ const cmsReducer = createReducer(initialState, {
       ]
     }
   },
+  [cmsActions.registerPage.type]: (state, action) => {
+    const {page, rootPageSlug, pagesDetails} = action.payload
+
+    const {key, slug, title, typeName, isDraft} = page
+
+    const pathParts = (key as string).split('/').filter(item => item !== '')
+    const parentSlug =
+      pathParts[pathParts.length - 2] || (rootPageSlug as string)
+
+    state.dataLayer.editing.pages = {
+      ...state.dataLayer.editing.pages,
+      [slug]: {
+        ...state.dataLayer.editing.pages[slug],
+        details: diff(
+          {
+            slug,
+            title,
+            typeName,
+            childSlugs: isDraft ? [] : pagesDetails[slug].childSlugs,
+            hiddenChildSlugs: isDraft ? [] : pagesDetails[slug].hiddenChildSlugs
+          },
+          pagesDetails[slug] || {}
+        )
+      }
+    }
+
+    if (
+      !pagesDetails[parentSlug].childSlugs.includes(slug) &&
+      parentSlug !== slug
+    ) {
+      if (state.dataLayer.editing.pages[parentSlug]) {
+        state.dataLayer.editing.pages[parentSlug].details.childSlugs.push(slug)
+      } else {
+        state.dataLayer.editing.pages[parentSlug] = {
+          ...state.dataLayer.editing.pages[parentSlug],
+          details: {
+            ...state.dataLayer.editing.pages[parentSlug]?.details,
+            childSlugs: pagesDetails[parentSlug].childSlugs.concat([slug])
+          }
+        }
+      }
+    }
+  },
+  [cmsActions.unregisterPage.type]: (state, action) => {
+    const {page, rootPageSlug, pagesDetails} = action.payload
+
+    const {key, slug} = page
+
+    const pathParts = (key as string).split('/').filter(item => item !== '')
+    const parentSlug = pathParts[pathParts.length - 2] || rootPageSlug
+
+    state.dataLayer.editing.pages[slug] = {
+      ...state.dataLayer.editing.pages[slug],
+      details: {
+        ...state.dataLayer.editing.pages[slug]?.details,
+        deleted: true
+      }
+    }
+
+    const setDeleted = (slugs: string[], parentSlug: string) => {
+      slugs.forEach(slug => {
+        state.dataLayer.editing.pages[slug] = {
+          ...state.dataLayer.editing.pages[slug],
+          details: {
+            ...state.dataLayer.editing.pages[slug]?.details,
+            deleted: true
+          }
+        }
+
+        state.dataLayer.editing.pages[parentSlug] = {
+          ...state.dataLayer.editing.pages[parentSlug],
+          details: {
+            ...state.dataLayer.editing.pages[parentSlug]?.details,
+            childSlugs: pagesDetails[parentSlug].childSlugs.filter(
+              (e: string) => e !== slug
+            ),
+            hiddenChildSlugs: pagesDetails[parentSlug].hiddenChildSlugs.filter(
+              (e: string) => e !== slug
+            )
+          }
+        }
+
+        setDeleted(pagesDetails[slug].childSlugs, slug)
+      })
+    }
+
+    setDeleted([slug], parentSlug)
+  },
   [cmsActions.toggleEditing.type]: (state, action) => {
     state.options.editing = action.payload
   },
@@ -84,20 +176,43 @@ const cmsReducer = createReducer(initialState, {
     state.options.showMenu = action.payload
   },
   [cmsActions.overrideWDL.type]: (state, action) => {
-    const {data, cksm} = action.payload
-    state.dataLayer.origCksm = cksm
+    const {workingDataLayer, checksum} = action.payload
+
     state.dataLayer = {
       ...state.dataLayer,
       working: {
         ...state.dataLayer.working,
         updateFieldsCount: state.dataLayer.working.updateFieldsCount + 1,
-        ...data
+        ...workingDataLayer
+      }
+    }
+    state.dataLayerChecksum = checksum
+
+    // merge editing pages child slugs with new workingLayer pages child slugs
+    for (const [slug, page] of Object.entries(state.dataLayer.working.pages)) {
+      if (state.dataLayer.editing.pages[slug]) {
+        console.log(
+          'page',
+          page.details.childSlugs,
+          state.dataLayer.editing.pages[slug]?.details.childSlugs,
+          state.dataLayer.editing.pages[slug].details.childSlugs?.concat(
+            page.details.childSlugs || []
+          )
+        )
+        state.dataLayer.editing.pages[slug].details.childSlugs = union(
+          state.dataLayer.editing.pages[slug].details.childSlugs,
+          page.details.childSlugs
+        )
+        state.dataLayer.editing.pages[slug].details.hiddenChildSlugs = union(
+          state.dataLayer.editing.pages[slug].details.hiddenChildSlugs,
+          page.details.hiddenChildSlugs
+        )
       }
     }
   },
   [cmsActions.discardEditing.type]: (state, _action) => {
     state.options.editing = false
-    state.dataLayer.editing = initialState.dataLayer.editing
+    state.dataLayer.editing = {...state.dataLayer.editing, pages: {}} //initialState.dataLayer.editing
     state.dataLayer = {
       ...state.dataLayer,
       working: {
@@ -113,7 +228,7 @@ const cmsReducer = createReducer(initialState, {
       page
     }: {
       content: any
-      fieldOptions: components.EditableFieldOptions
+      fieldOptions: any
       page: PageParamsType
     } = action.payload
 
@@ -156,8 +271,7 @@ const cmsReducer = createReducer(initialState, {
               }
             }
           }
-        },
-        typeName: page.typeName
+        }
       }
     } else {
       if (workingPageFields[fieldName]?.content === content) {
@@ -172,8 +286,7 @@ const cmsReducer = createReducer(initialState, {
           [fieldName]: {
             content: content
           }
-        },
-        typeName: page.typeName
+        }
       }
     }
   },
@@ -186,107 +299,8 @@ const cmsReducer = createReducer(initialState, {
         ...workingLayer,
         updateFieldsCount: state.dataLayer.working.updateFieldsCount + 1
       },
-      editing: initialState.dataLayer.editing
+      editing: {...state.dataLayer.editing, pages: {}}
     }
-  },
-  [cmsActions.setIndex.type]: (state, action) => {
-    state.dataLayer.working.index = action.payload
-  },
-  [cmsActions.transferPageToIndex.type]: (state, action) => {
-    const {page, index}: {page: any; index: PageIndex} = action.payload
-    const {key, slug, title, typeName, isDraft} = page
-
-    const pathParts = (key as string).split('/').filter(item => item !== '')
-    const parentSlug = pathParts[pathParts.length - 2] || index.rootPageSlug
-
-    if (parentSlug) {
-      index.pages[parentSlug].childSlugs = index.pages[
-        parentSlug
-      ].childSlugs.filter(e => e !== slug)
-    }
-
-    state.dataLayer.editing.index.pages = {
-      ...state.dataLayer.editing.index.pages,
-      [slug]: {
-        slug,
-        title,
-        typeName,
-        childSlugs: isDraft
-          ? []
-          : state.dataLayer.editing.index.pages[slug].childSlugs || []
-      }
-    }
-
-    if (parentSlug) {
-      const parentChildSlugs = [...index.pages[parentSlug].childSlugs]
-      console.log('parent child slugs', parentChildSlugs, slug, parentSlug)
-      const identSlugs = slug === parentSlug
-
-      if (!identSlugs) {
-        !parentChildSlugs.includes(slug) && parentChildSlugs.push(slug)
-
-        console.log(
-          index.pages[parentSlug],
-          {slug, title, typeName},
-          diff(index.pages[parentSlug], {slug, title, typeName})
-        )
-
-        state.dataLayer.editing.index.pages = {
-          ...state.dataLayer.editing.index.pages,
-          [parentSlug]: {
-            ...diff(index.pages[parentSlug], {slug, title, typeName}),
-            childSlugs: parentChildSlugs || []
-          }
-        }
-      }
-    }
-  },
-  [cmsActions.deletePageFromIndex.type]: (state, action) => {
-    const {page, index}: {page: any; index: PageIndex} = action.payload
-    const {key, slug} = page
-
-    let slugs = key.split('/')
-    slugs.splice(slugs.length - 2, 1)
-    const parentKey = slugs.join('')
-
-    const parentSlug = parentKey === '' ? index.rootPageSlug : parentKey
-
-    const deletePage = (slug: string) => {
-      if (state.dataLayer.editing.index.pages[slug]) {
-        state.dataLayer.editing.index.pages[slug].deleted = true
-      } else if (state.dataLayer.working.index.pages[slug]) {
-        state.dataLayer.editing.index.pages[slug] = {
-          ...state.dataLayer.working.index.pages[slug],
-          deleted: true
-        }
-      }
-    }
-
-    deletePage(slug)
-
-    const filteredChilds = index.pages[parentSlug].childSlugs.filter(
-      e => e !== slug
-    )
-
-    if (state.dataLayer.editing.index.pages[parentSlug]) {
-      state.dataLayer.editing.index.pages[parentSlug].childSlugs =
-        filteredChilds
-    } else if (state.dataLayer.working.index.pages[parentSlug]) {
-      state.dataLayer.editing.index.pages[parentSlug] = {
-        ...state.dataLayer.working.index.pages[parentSlug],
-        childSlugs: filteredChilds
-      }
-    }
-
-    const deleteChildPages = (slugs: string[]) => {
-      slugs.forEach(slug => {
-        deletePage(slug)
-        deleteChildPages(index.pages[slug].childSlugs)
-      })
-    }
-
-    // Set all child pages to deleted=true
-    deleteChildPages(index.pages[slug].childSlugs)
   },
   [cmsActions.setHiddenChildSlugs.type]: (state, action) => {
     const {page, hiddenChildSlugs} = action.payload

@@ -13,7 +13,7 @@ import {
 } from 'antd'
 import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router'
-import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '~/contexts/utils'
+import {IndexKeyRefs, ChildPageTypeNamesKeyRefs} from '~/utils/pageTree'
 
 import {deepSearch} from '~/common/utils'
 
@@ -122,6 +122,7 @@ const Editor: React.FC<EditorProps> = ({
   const onNodeCreate = () => {
     if (selectedNode) {
       const newTree = [...tree]
+
       const parentNode = deepSearch(
         newTree,
         'key',

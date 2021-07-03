@@ -1,72 +1,33 @@
-import React, {useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+/**
+ * @license
+ * Copyright Nico Schett. All Rights Reserved.
+ *
+ * Use of this source code is governed by an EUPL-1.2 license that can be found
+ * in the LICENSE file at https://snek.at/license
+ */
+import React from 'react'
 import {CMSPageContext} from '~/contexts/context'
-import {store, PageParamsType} from '~/types'
-
-import {setHiddenChildSlugs as setHiddenChildSlugsAction} from '~/store/actions/cms'
-import {indexSelector} from '~/store/selectors/cms'
+import {PageParamsType} from '~/types'
 
 interface IConnectedPageType {
   PageType: string
   ChildPages: ConnectedPageType[]
 }
 
-export type ConnectedPageType = React.FC<{slug: string}> & IConnectedPageType
+export type ConnectedPageType = React.FC & IConnectedPageType
 
 type PageProviderProps = PageParamsType
 
-const PageProvider: React.FC<PageProviderProps> = React.memo(
-  ({children, slug, typeName}) => {
-    const dispatch = useDispatch<store.AppDispatch>()
-
-    const [page, _setPage] = useState<PageParamsType>({slug, typeName})
-
-    const setHiddenChildSlugs = (hiddenChildSlugs: string[]) =>
-      dispatch(setHiddenChildSlugsAction({page, hiddenChildSlugs}))
-
-    const index = useSelector(indexSelector)
-
-    const getChildPagesFromIndex = (fixedSlug?: string) => {
-      const slug = fixedSlug || page.slug
-
-      return (
-        index?.pages[slug]?.childSlugs
-          .map(childSlug => index.pages[childSlug])
-          .filter(page => !page.deleted) || []
-      )
-    }
-
-    const editingHiddenSlugs = useSelector(
-      ({cms}: store.RootState) =>
-        cms.dataLayer.editing.pages[page.slug]?.hiddenChildSlugs
-    )
-    const workingHiddenSlugs = useSelector(
-      ({cms}: store.RootState) =>
-        cms.dataLayer.working.pages[page.slug]?.hiddenChildSlugs
-    )
-
-    const getHiddenSlugs = () => {
-      return editingHiddenSlugs
-        ? editingHiddenSlugs || []
-        : workingHiddenSlugs || []
-    }
-
-    useEffect(() => {
-      document.title = index?.pages[page.slug]?.title || document.title
-    }, [page])
-
-    return (
-      <CMSPageContext.Provider
-        value={{
-          page,
-          getChildPagesFromIndex,
-          getHiddenSlugs,
-          setHiddenChildSlugs
-        }}>
-        {children}
-      </CMSPageContext.Provider>
-    )
-  }
-)
+const PageProvider: React.FC<PageProviderProps> = ({
+  children,
+  slug,
+  typeName
+}) => {
+  return (
+    <CMSPageContext.Provider value={{slug, typeName}}>
+      {children}
+    </CMSPageContext.Provider>
+  )
+}
 
 export default PageProvider

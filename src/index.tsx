@@ -11,4 +11,4 @@ export {
   IndexField,
   StreamField
 } from './components/fields'
-export {CMSProvider, PageProvider} from './contexts'
+export {CMSProvider} from './contexts'

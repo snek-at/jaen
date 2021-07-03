@@ -1,4 +1,4 @@
-/**
+/*
  * @license
  * Copyright Nico Schett. All Rights Reserved.
  *

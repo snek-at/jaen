@@ -1,7 +1,6 @@
 import {store} from '~/types'
 
-export type {ExplorerTDN} from './Explorer'
-
+export type {ExplorerTDN, PageNode} from './Explorer'
 export interface EditableFieldOptions {
   fieldName: string
   block?: {typeName: string; position: number; blockFieldName: string}

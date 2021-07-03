@@ -6,7 +6,7 @@
  * in the LICENSE file at https://snek.at/license
  */
 import React from 'react'
-import {connect, useStore} from 'react-redux'
+import {connect, useSelector} from 'react-redux'
 import {context} from '~/contexts'
 import {components, PageParamsType} from '~/types'
 import {store} from '~/types'
@@ -14,6 +14,7 @@ import {store} from '~/types'
 import SidebarEditor, {ButtonOptions} from '~/components/Editor'
 
 import {updatePageContent} from '~/store/actions/cms'
+import {pageFieldContentSelector} from '~/store/selectors/cms'
 
 type SubelementProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -44,37 +45,15 @@ export const EditableField: React.FC<EditableFieldProps> = ({
   const {buttonOptions, fieldOptions, editable, workingLayer, ...subProps} =
     props
 
-  const pageContext = context.useCMSPageContext()
-  const store = useStore<store.RootState>()
-
+  const {slug, typeName} = context.useCMSPageContext()
   const {fieldName, block} = fieldOptions
-  const page = pageContext.page
 
-  let field =
-    store.getState().cms.dataLayer.editing.pages[page.slug]?.fields[fieldName]
-
-  const workingField = workingLayer.pages[page.slug]?.fields[fieldName]
-
-  let content: string | undefined
-
-  if (!field) {
-    field = workingField
-  }
-
-  if (field) {
-    if (block && field.blocks) {
-      content =
-        field.blocks[block.position]?.fields?.[block.blockFieldName] ||
-        workingField?.blocks?.[block.position]?.fields?.[block.blockFieldName]
-    } else {
-      content = field.content
-    }
-  }
+  const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
 
   return (
     <div {...subProps}>
       <SidebarEditor
-        onChange={content => updateContent(content, page)}
+        onChange={content => updateContent(content, {slug, typeName})}
         text={content}
         buttonOptions={buttonOptions}
         editable={editable}

@@ -14,14 +14,9 @@ import {
   Typography,
   notification
 } from 'antd'
-import React, {useState} from 'react'
-import ReactJson from 'react-json-view'
-import {connect} from 'react-redux'
+import React from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {useCMSContext} from '~/contexts/context'
-import {store} from '~/types'
-
-import Explorer, {PageNode} from '~/components/Explorer/index'
-import {SnekIcon} from '~/components/icons'
 
 import {logout} from '~/store/actions/auth'
 import {
@@ -29,54 +24,38 @@ import {
   toggleMenu,
   discardEditing,
   publish,
-  deletePageFromIndex,
-  transferPageToIndex
+  registerPage,
+  unregisterPage
 } from '~/store/actions/cms'
-import {indexSelector} from '~/store/selectors/cms'
-import {PageIndex} from '~/store/types'
+import {pageTreeSelector} from '~/store/selectors/cms'
+import {RootState, AppDispatch} from '~/store/types'
 
-import './cmsmenu.scss'
+import Explorer from '../Explorer'
+import {SnekIcon} from '../icons'
 
 const {Text} = Typography
 
-type StateProps = store.AuthState &
-  store.CMSState & {index: PageIndex | undefined}
+export type CMSMenuProps = {}
 
-type DispatchProps = {
-  toggleEditing: (state: boolean) => void
-  toggleMenu: (state: boolean) => void
-  discardEditing: () => void
-  publish: () => void
-  logout: () => void
-  transferPageToIndex: (page: PageNode, index: PageIndex) => void
-  deletePageFromIndex: (page: PageNode, index: PageIndex) => void
-}
+export const Menu: React.FC<CMSMenuProps> = () => {
+  const dispatch = useDispatch<AppDispatch>()
 
-type OwnProps = {}
+  const {registeredPages, pagesDetails, rootPageSlug} = useCMSContext()
 
-export interface CMSMenuProps extends StateProps, DispatchProps, OwnProps {}
+  const {treeData, indexKeyRefs, childPageTypeNamesKeyRefs} = useSelector(
+    pageTreeSelector(registeredPages)
+  )
+  const {showMenu, editing} = useSelector(
+    (state: RootState) => state.cms.options
+  )
+  const authenticated = useSelector(
+    (state: RootState) => state.auth.authenticated
+  )
 
-export const Menu: React.FC<CMSMenuProps> = ({
-  authenticated,
-  options,
-  index,
-  dataLayer,
-  toggleEditing,
-  toggleMenu,
-  discardEditing,
-  publish,
-  logout,
-  transferPageToIndex,
-  deletePageFromIndex
-}) => {
-  const [view, setView] = useState<'EXPLORER' | 'EXPERT'>('EXPLORER')
-
-  const {showMenu, editing} = options
-
-  const toggleShow = () => toggleMenu(!showMenu)
+  const toggleShow = () => dispatch(toggleMenu(!showMenu))
 
   const onPublish = () => {
-    publish()
+    dispatch(publish())
 
     notification.success({
       message: 'The site will be published soon',
@@ -84,10 +63,6 @@ export const Menu: React.FC<CMSMenuProps> = ({
         'The site has been shipped to production. In about 30 seconds the new version is available.'
     })
   }
-
-  const cmsContext = useCMSContext()
-
-  const {treeData, keyRefs} = cmsContext
 
   return (
     <>
@@ -107,17 +82,7 @@ export const Menu: React.FC<CMSMenuProps> = ({
           <React.Fragment key={'control-group'}>
             {authenticated && (
               <>
-                {view === 'EXPLORER' && (
-                  <Button key="expert" onClick={() => setView('EXPERT')}>
-                    Expert
-                  </Button>
-                )}
-                {view === 'EXPERT' && (
-                  <Button key="explorer" onClick={() => setView('EXPLORER')}>
-                    Explorer
-                  </Button>
-                )}
-                <Button key="logout" onClick={() => logout()}>
+                <Button key="logout" onClick={() => dispatch(logout())}>
                   Sign out
                 </Button>
               </>
@@ -130,48 +95,48 @@ export const Menu: React.FC<CMSMenuProps> = ({
               <Space>
                 {editing ? (
                   <>
-                    <Button danger onClick={() => toggleEditing(false)}>
+                    <Button
+                      danger
+                      onClick={() => dispatch(toggleEditing(false))}>
                       Stop Editing
                     </Button>
-                    <Button onClick={() => discardEditing()}>Discard</Button>
                   </>
                 ) : (
-                  <Button onClick={() => toggleEditing(true)}>
+                  <Button onClick={() => dispatch(toggleEditing(true))}>
                     Start Editing
                   </Button>
                 )}
+                <Button onClick={() => dispatch(discardEditing())}>
+                  Discard
+                </Button>
                 <Button onClick={onPublish}>Publish</Button>
               </Space>
             </>
           </Row>
           <Divider />
 
-          {view === 'EXPLORER' && treeData && keyRefs && (
+          {treeData && indexKeyRefs && (
             <Explorer
               onNodeSave={node => {
                 const {isDraft, slug} = node
                 if (isDraft && slug) {
-                  const page = index?.pages[slug]
+                  const page = pagesDetails[slug]
                   if (page && !page.deleted) {
                     return false
                   }
                 }
-                index && transferPageToIndex(node, index)
+                dispatch(registerPage({page: node, rootPageSlug, pagesDetails}))
                 return true
               }}
-              onNodeDelete={node => index && deletePageFromIndex(node, index)}
+              onNodeDelete={node =>
+                dispatch(
+                  unregisterPage({page: node, rootPageSlug, pagesDetails})
+                )
+              }
               indexTree={treeData}
-              indexKeyRefs={keyRefs.indexKey}
-              childPageTypeNamesKeyRefs={keyRefs.childPageTypeNamesKey}
+              indexKeyRefs={indexKeyRefs}
+              childPageTypeNamesKeyRefs={childPageTypeNamesKeyRefs}
             />
-          )}
-          {view === 'EXPERT' && (
-            <>
-              <ReactJson
-                src={{index: index, dataLayer: dataLayer}}
-                theme={'monokai'}
-              />
-            </>
           )}
           <Divider />
         </>
@@ -180,34 +145,4 @@ export const Menu: React.FC<CMSMenuProps> = ({
   )
 }
 
-const mapStateToProps = (state: store.RootState): StateProps => ({
-  settings: state.cms.settings,
-  options: state.cms.options,
-  index: indexSelector(state),
-  dataLayer: state.cms.dataLayer,
-  authenticated: state.auth.authenticated
-})
-
-const mapDispatchToProps = (dispatch: store.AppDispatch): DispatchProps => ({
-  toggleEditing: (state: boolean) => dispatch(toggleEditing(state)),
-  toggleMenu: (state: boolean) => dispatch(toggleMenu(state)),
-  discardEditing: () => dispatch(discardEditing()),
-  publish: () => dispatch(publish()),
-  logout: () => dispatch(logout()),
-  transferPageToIndex: (page: PageNode, index: PageIndex) =>
-    dispatch(transferPageToIndex({page, index})),
-  deletePageFromIndex: (page: PageNode, index: PageIndex) =>
-    dispatch(deletePageFromIndex({page, index}))
-})
-
-const MenuContainer = connect<
-  StateProps,
-  DispatchProps,
-  OwnProps,
-  store.RootState
->(
-  mapStateToProps,
-  mapDispatchToProps
-)(Menu)
-
-export default MenuContainer
+export default Menu

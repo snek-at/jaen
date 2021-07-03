@@ -1,19 +1,26 @@
 import {GlobalOutlined, CarryOutOutlined} from '@ant-design/icons'
-import {store} from '~/types'
-import {components} from '~/types'
+import {ConnectedPageType} from '~/contexts'
+
+import {store as storeTypes, components as componentsTypes} from '../types'
 
 // import * as React from 'react'
 
-export type IndexKeyRefs = {[key: string]: store.PageIndex['pages'][string]}
+export type IndexKeyRefs = {[key: string]: any[string]}
 export type ChildPageTypeNamesKeyRefs = {[key: string]: string[] | undefined}
 
-export const transformIndexTree = (
-  index: store.PageIndex,
-  getChildPageTypeNames: (typeName: string) => string[] | undefined
+export const buildPageTree = (
+  pagesDetails: storeTypes.PagesDetails,
+  rootPageSlug: string,
+  registeredPages: ConnectedPageType[]
 ) => {
+  const getChildPageTypeNames = (typeName: string) =>
+    registeredPages
+      .find(page => page.PageType === typeName)
+      ?.ChildPages.map(page => page.PageType)
+
   const transformNode = (
-    page: store.PageIndex['pages'][string],
-    buildTree: components.ExplorerTDN = {
+    page: storeTypes.PageDetails,
+    buildTree: componentsTypes.ExplorerTDN = {
       key: '/',
       title: (
         <>
@@ -24,8 +31,8 @@ export const transformIndexTree = (
       children: []
     }
   ) => {
-    page.childSlugs.forEach(childSlug => {
-      const childPage = pages[childSlug]
+    page.childSlugs.forEach((childSlug: any) => {
+      const childPage = pagesDetails[childSlug]
 
       if (childPage) {
         const {title, typeName, deleted} = childPage
@@ -49,8 +56,7 @@ export const transformIndexTree = (
     return buildTree
   }
 
-  const pages = index.pages
-  const rootPage = index.rootPageSlug && pages[index.rootPageSlug]
+  const rootPage = pagesDetails[rootPageSlug]
 
   let treeData
   let indexKeyRefs: IndexKeyRefs = {}
