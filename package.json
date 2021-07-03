@@ -1,5 +1,5 @@
 {
-  "name": "@snek-shipyard/jaen-cms",
+  "name": "@snek-at/jaen",
   "version": "2.2.2",
   "description": "CMS framework for ReactJS",
   "scripts": {
@@ -20,14 +20,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snek-shipyard/jaen-cms.git"
+    "url": "git+https://github.com/snek-at/jaen.git"
   },
   "author": "Nico Schett",
   "license": "EUPL-1.2",
   "bugs": {
-    "url": "https://github.com/snek-shipyard/jaen-cms/issues"
+    "url": "https://github.com/snek-at/jaen/issues"
   },
-  "homepage": "https://github.com/snek-shipyard/jaen-cms#readme",
+  "homepage": "https://github.com/snek-at/jaen#readme",
   "devDependencies": {
     "@babel/cli": "^7.12.8",
     "@babel/core": "^7.12.9",
