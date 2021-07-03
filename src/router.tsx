@@ -61,8 +61,6 @@ export const generateRoutes = (
   if (pagesDetails) {
     const rootPage = pagesDetails[rootPageSlug]
 
-    console.log(pagesDetails)
-
     rootPage && travelIndexTree(rootPage)
   }
 
@@ -73,6 +71,7 @@ type PageRouterProps = {} & BrowserRouterProps
 
 const PageRouter: React.FC<PageRouterProps> = ({children}): JSX.Element => {
   const {registeredPages, rootPageSlug, pagesDetails} = useCMSContext()
+
   return (
     <Router>
       <Switch>

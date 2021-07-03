@@ -191,14 +191,6 @@ const cmsReducer = createReducer(initialState, {
     // merge editing pages child slugs with new workingLayer pages child slugs
     for (const [slug, page] of Object.entries(state.dataLayer.working.pages)) {
       if (state.dataLayer.editing.pages[slug]) {
-        console.log(
-          'page',
-          page.details.childSlugs,
-          state.dataLayer.editing.pages[slug]?.details.childSlugs,
-          state.dataLayer.editing.pages[slug].details.childSlugs?.concat(
-            page.details.childSlugs || []
-          )
-        )
         state.dataLayer.editing.pages[slug].details.childSlugs = union(
           state.dataLayer.editing.pages[slug].details.childSlugs,
           page.details.childSlugs
