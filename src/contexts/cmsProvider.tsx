@@ -14,6 +14,8 @@ import PageRouter from '~/router'
 import {persistor, store} from '~/store'
 import {store as storeTypes, ConnectedPageType} from '~/types'
 
+import {isDev} from '~/common/utils'
+
 import MgmtOverlay from '~/components/MgmtOverlay'
 import Notify from '~/components/Notify'
 
@@ -21,7 +23,6 @@ import {overrideWDL, setSettings} from '~/store/actions/cms'
 import {pagesSelector, rootPageSlugSelector} from '~/store/selectors/cms'
 
 import {CMSContext} from './context'
-import { isDev } from '~/common/utils'
 
 interface CMSProviderProps {
   settings: storeTypes.CMSSettings
@@ -82,13 +83,20 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       }
     }
 
-    !isDev() && fetchFile(globalThis.location.origin + '/jaen-data.json')
+    const fetchRemote = () =>
+      fetchFile(
+        `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json`
+      )
+
+    if (isDev()) {
+      fetchRemote()
+    } else {
+      fetchFile(globalThis.location.origin + '/jaen-data.json')
+    }
 
     if (settings.gitRemote) {
       const interval = setInterval(() => {
-        fetchFile(
-          `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json`
-        )
+        fetchRemote()
       }, 1000 * 60 * 1)
       return () => clearInterval(interval)
     } else {
