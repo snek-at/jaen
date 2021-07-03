@@ -211,7 +211,6 @@ const cmsReducer = createReducer(initialState, {
     }
   },
   [cmsActions.discardEditing.type]: (state, _action) => {
-    state.options.editing = false
     state.dataLayer.editing = {...state.dataLayer.editing, pages: {}} //initialState.dataLayer.editing
     state.dataLayer = {
       ...state.dataLayer,
