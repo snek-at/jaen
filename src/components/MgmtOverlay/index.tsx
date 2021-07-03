@@ -24,7 +24,6 @@ import LoginModal from '~/components/modals/Login'
 import {login, logout} from '~/store/actions/auth'
 import {discardEditing, toggleEditing} from '~/store/actions/cms'
 
-//import {toggleMenu} from '~/store/actions/cms'
 import SideMenu from './SideMenu'
 import SnekFabButton from './SnekFabButton'
 import './mgmtOverlay.scss'

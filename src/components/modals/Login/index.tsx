@@ -7,13 +7,13 @@
  */
 import {LockOutlined, UserOutlined} from '@ant-design/icons'
 import {Modal, Space, Typography, Form, Input, Button, Checkbox} from 'antd'
+import {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {store} from '~/types'
 
 import {SnekIcon} from '~/components/icons'
 
 import {login} from '~/store/actions/auth'
-import {toggleMenu} from '~/store/actions/cms'
 
 import './login.scss'
 
@@ -29,7 +29,8 @@ const LoginModal: React.FC<LoginModalProps> = () => {
   const dispatch = useDispatch<store.AppDispatch>()
 
   const onLogin = (values: LoginModalValues) => dispatch(login({creds: values}))
-  const setMenuToggle = (state: boolean) => dispatch(toggleMenu(state))
+
+  const [visible, setVisible] = useState(true)
 
   return (
     <Modal
@@ -42,9 +43,10 @@ const LoginModal: React.FC<LoginModalProps> = () => {
         </>
       }
       style={{top: 20}}
-      visible={true}
+      visible={visible}
+      destroyOnClose={true}
       footer={[]}
-      onCancel={() => setMenuToggle(false)}>
+      onCancel={() => setVisible(false)}>
       <Form name="basic" initialValues={{remember: true}} onFinish={onLogin}>
         <Form.Item
           name="username"

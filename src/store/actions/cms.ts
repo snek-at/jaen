@@ -35,8 +35,6 @@ export const unregisterPage = createAction<{
   pagesDetails: PagesDetails
 }>('cms/unregisterPage')
 
-export const toggleMenu = createAction<boolean>('cms/toggleMenu')
-
 export const overrideWDL =
   createAction<{workingDataLayer: WorkingDataLayer; checksum: string}>(
     'cms/overrideWDL'
