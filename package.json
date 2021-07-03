@@ -1,6 +1,6 @@
 {
   "name": "@snek-shipyard/jaen-cms",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "CMS framework for ReactJS",
   "scripts": {
     "type-check": "ttsc --noEmit",
