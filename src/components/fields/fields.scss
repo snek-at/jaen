@@ -6,6 +6,10 @@
   outline-offset: 1px;
 }
 
-.streamfield-add-button {
+.streamfield-add-button,
+.streamfield-add-button:hover,
+.streamfield-add-button:focus {
   background-color: $snekGreen;
+  color: white;
+  border-color: $snekDark;
 }

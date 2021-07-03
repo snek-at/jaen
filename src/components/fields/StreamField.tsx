@@ -12,8 +12,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useCMSPageContext} from '~/contexts/context'
 import {store} from '~/types'
 
-import cssVariables from '~/common/css/variables.module.scss'
-
 import {registerField, unregisterField} from '~/store/actions/cms'
 import {pageFieldBlocksSelector} from '~/store/selectors/cms'
 
@@ -130,23 +128,24 @@ const StreamField: React.FC<StreamFieldProps> = ({
     </Menu>
   )
 
-  const buttonStyle = {color: 'white', backgroundColor: cssVariables.snekGreen}
   const button = (
     <Row justify="center">
       {blocksTypes.length > 1 ? (
         <Dropdown.Button
+          type="primary"
           icon={<AppstoreAddOutlined />}
           overlay={AddBlockMenu}
           buttonsRender={([_leftButton, rightButton]) => [
             undefined,
             React.cloneElement(rightButton as any, {
-              style: buttonStyle
+              className: 'streamfield-add-button'
             })
           ]}
         />
       ) : (
         <Button
-          style={buttonStyle}
+          type="primary"
+          className="streamfield-add-button"
           icon={<AppstoreAddOutlined />}
           onClick={() => addNewBlock(blocksTypes[0])}
         />
