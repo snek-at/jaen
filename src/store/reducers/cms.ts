@@ -22,7 +22,22 @@ const initialState: CMSState = {
     editing: false
   },
   dataLayer: {
-    working: {updateFieldsCount: 0, pages: {}, rootPageSlug: 'home'},
+    working: {
+      updateFieldsCount: 0,
+      pages: {
+        home: {
+          details: {
+            slug: 'home',
+            title: 'Development HomePage',
+            typeName: 'HomePage',
+            childSlugs: [],
+            hiddenChildSlugs: []
+          },
+          fields: {}
+        }
+      },
+      rootPageSlug: 'home'
+    },
     editing: {
       rootPageSlug: 'home',
       pages: {}
