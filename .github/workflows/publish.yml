@@ -25,5 +25,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+    # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
+    - name: Github package registry authentication
+      run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
     - run: npm ci
-    - run: npm test
+    - run: npm all
