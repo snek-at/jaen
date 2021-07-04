@@ -12,7 +12,8 @@
     "build:types": "ttsc --emitDeclarationOnly",
     "all": "npm run build && npm run format && npm run lint && npm pack",
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline --ignore \"src/**/*.test.ts\" --copy-files",
-    "semantic-release": "semantic-release --branches main"
+    "semantic-release": "semantic-release --branches main",
+    "commit": "git-cz"
   },
   "main": "lib/index.js",
   "files": [
@@ -49,6 +50,7 @@
     "babel-plugin-inline-react-svg": "^2.0.1",
     "babel-plugin-root-import": "^6.6.0",
     "babel-plugin-transform-scss": "^1.0.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.26.0",
     "eslint-plugin-github": "^4.1.3",
     "eslint-plugin-react": "^7.24.0",
@@ -106,6 +108,11 @@
     "rules": {
       "react/prop-types": 0,
       "react/react-in-jsx-scope": "off"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
