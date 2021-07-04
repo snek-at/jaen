@@ -13,7 +13,9 @@
     "all": "npm run build && npm run format && npm run lint && npm pack",
     "build:js": "babel src/core --out-dir lib --extensions \".ts,.tsx\" --source-maps inline --ignore \"src/**/*.test.ts\" --copy-files",
     "semantic-release": "semantic-release --branches main",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "start": "craco start",
+    "web-build": "craco build"
   },
   "main": "lib/index.js",
   "files": [
@@ -46,6 +48,7 @@
     "@types/lodash": "^4.14.168",
     "@types/node": "^14.17.3",
     "@types/react": "^17.0.5",
+    "@types/react-dom": "^17.0.8",
     "@types/react-router-dom": "^5.1.7",
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-react-svg": "^2.0.1",
@@ -65,6 +68,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
+    "@craco/craco": "^6.2.0",
     "@draft-js-plugins/buttons": "^4.1.0",
     "@draft-js-plugins/editor": "^4.1.0",
     "@draft-js-plugins/image": "^4.1.1",
