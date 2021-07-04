@@ -18,7 +18,8 @@
   "main": "lib/index.js",
   "files": [
     "lib",
-    "LICENSES"
+    "LICENSES",
+    "drop-1.0.0.tgz"
   ],
   "repository": {
     "type": "git",
