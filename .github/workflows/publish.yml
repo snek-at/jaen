@@ -4,29 +4,28 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
     branches: '*'
 
 jobs:
   quality:
-
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        node-version: [ '14' ]
+        node-version: ['14']
         os: [ubuntu-latest, windows-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
-    - name: Github package registry authentication
-      run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
-    - run: npm ci
-    - run: npm all
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsid
+      - name: Github package registry authentication
+        run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+      - run: npm ci
+      - run: npm run all
