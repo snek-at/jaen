@@ -55,7 +55,7 @@ const HomePage: ConnectedPageType = () => {
         renderItem={(item, key, navigate) => (
           <p key={key}>
             Slug: {item.slug} Title: {item.title}{' '}
-            <a onClick={() => navigate()}>Goto</a>
+            <button onClick={() => navigate()}>Goto</button>
           </p>
         )}
       />
