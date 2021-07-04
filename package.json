@@ -78,7 +78,7 @@
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
-    "drop": "file:drop-1.0.0.tgz",
+    "drop": "https://raw.githubusercontent.com/snek-at/jaen/main/drop-1.0.0.tgz",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-diff-viewer": "^3.1.1",
