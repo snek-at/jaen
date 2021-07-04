@@ -3,4 +3,4 @@ lib/
 node_modules/
 jest.config.js
 
-src/common/utils.ts
+src/core/common/utils.ts
