@@ -24,7 +24,7 @@ export const CardBlock: BC<CardBlockType> = ({
         type="inner"
         title={blocks['title']}
         style={{width: streamFieldWidth}}
-        extra={<a href="#">{blocks['extra']}</a>}>
+        extra={<button>{blocks['extra']}</button>}>
         {blocks['text']}
         {'test123'}
       </Card>
