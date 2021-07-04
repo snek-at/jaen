@@ -19,14 +19,8 @@
     "baseUrl": ".",
     "outDir": "lib",
     "declaration": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./types"
-    ],
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "lib": ["dom", "esnext"],
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -36,7 +30,7 @@
       {
         "transform": "typescript-transform-paths",
         "afterDeclarations": true
-      },
+      }
     ]
   },
   "exclude": [
@@ -52,9 +46,5 @@
     "**/*.test.tsx",
     "coverage"
   ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

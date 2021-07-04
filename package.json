@@ -11,7 +11,7 @@
     "build": "npm run build:types && npm run build:js",
     "build:types": "ttsc --emitDeclarationOnly",
     "all": "npm run build && npm run format && npm run lint && npm pack",
-    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline --ignore \"src/**/*.test.ts\" --copy-files",
+    "build:js": "babel src/core --out-dir lib --extensions \".ts,.tsx\" --source-maps inline --ignore \"src/**/*.test.ts\" --copy-files",
     "semantic-release": "semantic-release --branches main",
     "commit": "git-cz"
   },
