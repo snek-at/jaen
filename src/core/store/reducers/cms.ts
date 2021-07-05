@@ -110,16 +110,21 @@ const cmsReducer = createReducer(initialState, {
       ...state.dataLayer.editing.pages,
       [slug]: {
         ...state.dataLayer.editing.pages[slug],
-        details: diff(
-          {
-            slug,
-            title,
-            typeName,
-            childSlugs: isDraft ? [] : pagesDetails[slug].childSlugs,
-            hiddenChildSlugs: isDraft ? [] : pagesDetails[slug].hiddenChildSlugs
-          },
-          pagesDetails[slug] || {}
-        )
+        details: {
+          ...state.dataLayer.editing.pages[slug]?.details,
+          ...diff(
+            {
+              slug,
+              title,
+              typeName,
+              childSlugs: isDraft ? [] : pagesDetails[slug].childSlugs,
+              hiddenChildSlugs: isDraft
+                ? []
+                : pagesDetails[slug].hiddenChildSlugs
+            },
+            pagesDetails[slug] || {}
+          )
+        }
       }
     }
 
@@ -127,10 +132,10 @@ const cmsReducer = createReducer(initialState, {
       !pagesDetails[parentSlug].childSlugs.includes(slug) &&
       parentSlug !== slug
     ) {
-        state.dataLayer.editing.pages[parentSlug] = {
-          ...state.dataLayer.editing.pages[parentSlug],
-          details: {
-            ...state.dataLayer.editing.pages[parentSlug]?.details,
+      state.dataLayer.editing.pages[parentSlug] = {
+        ...state.dataLayer.editing.pages[parentSlug],
+        details: {
+          ...state.dataLayer.editing.pages[parentSlug]?.details,
           childSlugs: pagesDetails[parentSlug].childSlugs.concat([slug]) || []
         }
       }
