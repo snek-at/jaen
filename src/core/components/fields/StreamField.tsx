@@ -95,13 +95,26 @@ const StreamField: React.FC<StreamFieldProps> = ({
   }
 
   const addNewBlock = (_typeName: string): void => {
+    let position
+    if (blocksKeys.length > 0) {
+      position = Math.min(...blocksKeys.map(e => parseInt(e)))
+    } else {
+      position = 0
+    }
+
+    if (reverseOrder) {
+      position++
+    } else {
+      position--
+    }
+
     dispatch(
       registerField({
         page,
         fieldOptions: {
           fieldName: name,
           block: {
-            position: reverseOrder ? blocksKeys.length : -blocksKeys.length,
+            position,
             typeName: _typeName
           }
         }
