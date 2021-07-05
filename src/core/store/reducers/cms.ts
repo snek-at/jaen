@@ -127,17 +127,11 @@ const cmsReducer = createReducer(initialState, {
       !pagesDetails[parentSlug].childSlugs.includes(slug) &&
       parentSlug !== slug
     ) {
-      if (state.dataLayer.editing.pages[parentSlug]) {
-        state.dataLayer.editing.pages[parentSlug]?.details?.childSlugs?.push(
-          slug
-        )
-      } else {
         state.dataLayer.editing.pages[parentSlug] = {
           ...state.dataLayer.editing.pages[parentSlug],
           details: {
             ...state.dataLayer.editing.pages[parentSlug]?.details,
-            childSlugs: pagesDetails[parentSlug].childSlugs.concat([slug])
-          }
+          childSlugs: pagesDetails[parentSlug].childSlugs.concat([slug]) || []
         }
       }
     }
