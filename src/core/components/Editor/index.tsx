@@ -27,7 +27,7 @@ import createLinkifyPlugin from '@draft-js-plugins/linkify'
 import {EditorState} from 'draft-js'
 import {stateToHTML} from 'draft-js-export-html'
 import {stateFromHTML} from 'draft-js-import-html'
-import React, {Fragment, useEffect, useRef, useState, useMemo} from 'react'
+import React, {Fragment, useEffect, useMemo} from 'react'
 
 import type {AtLeastOne} from '~/common/utils'
 
@@ -62,12 +62,17 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   editable = true,
   resetTrigger = 0
 }) => {
-  //   const [plugins, SideToolbar] = useMemo(() => {
-  //     const sideToolbarPlugin = createSideToolbarPlugin({
-  //       position: 'right'
-  //     })
-  //     return [[sideToolbarPlugin], sideToolbarPlugin.SideToolbar]
-  //   }, [])
+  useEffect(() => {
+    let es: EditorState
+    if (buttonOptions) {
+      es = EditorState.createWithContent(stateFromHTML(text))
+    } else {
+      es = createEditorStateWithText(text)
+    }
+
+    setEditorState(es)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetTrigger])
 
   const [plugins, InlineToolbar] = useMemo(() => {
     const imagePlugin = createImagePlugin()
@@ -81,40 +86,13 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
     ]
   }, [])
 
-  // const [{plugins, SideToolbar}] = useState(() => {
-
-  //   const toolbarPlugin = createInlineToolbarPlugin({position: 'right'})
-  //   const imagePlugin = createImagePlugin()
-  //   const {SideToolbar} = toolbarPlugin
-  //   const plugins = [toolbarPlugin, imagePlugin]
-  //   return {
-  //     plugins,
-  //     SideToolbar
-  //   }
-  // })
-
-  const editorRef = useRef<Editor | null>(null)
-
-  const [editorState, setEditorState] = useState(() => {
+  const [editorState, setEditorState] = React.useState(() => {
     if (buttonOptions) {
       return EditorState.createWithContent(stateFromHTML(text))
     } else {
       return createEditorStateWithText(text)
     }
   })
-
-  useEffect(() => {
-    let es: EditorState
-
-    // fixing issue with SSR https://github.com/facebook/draft-js/issues/2332#issuecomment-761573306
-    if (buttonOptions) {
-      es = EditorState.createWithContent(stateFromHTML(text))
-    } else {
-      es = createEditorStateWithText(text)
-    }
-
-    setEditorState(es)
-  }, [buttonOptions, text, resetTrigger])
 
   const onValueChange = (value: EditorState): void => {
     const toHTMLContent = (es: EditorState): string =>
@@ -141,14 +119,12 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   }
 
   return (
-    <div onClick={() => editorRef.current && editorRef.current.focus()}>
+    <>
       <Editor
         readOnly={!editable}
-        editorKey="InlineEditor"
         editorState={editorState}
         onChange={onValueChange}
         plugins={plugins}
-        ref={editor => (editorRef.current = editor)}
       />
       {buttonOptions && editable && (
         <InlineToolbar>
@@ -188,7 +164,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
           }
         </InlineToolbar>
       )}
-    </div>
+    </>
   )
 }
 
