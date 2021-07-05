@@ -18,6 +18,7 @@ import {
 } from '~/index'
 
 import {CardBlock} from '../blocks/Card'
+import ImprintPage from './Imprint'
 
 const HomePage: ConnectedPageType = () => {
   return (
@@ -71,6 +72,6 @@ const HomePage: ConnectedPageType = () => {
 }
 
 HomePage.PageType = 'HomePage'
-HomePage.ChildPages = [HomePage]
+HomePage.ChildPages = [HomePage, ImprintPage]
 
 export default HomePage

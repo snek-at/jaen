@@ -11,11 +11,12 @@ import ReactDOM from 'react-dom'
 
 import {CMSProvider} from './core'
 import {HomePage} from './examples/pages'
+import ImprintPage from './examples/pages/Imprint'
 
 ReactDOM.render(
   <CMSProvider
-    settings={{gitRemote: 'snek-shipyard/jaen-demo'}}
-    pages={[HomePage]}
+    settings={{gitRemote: 'snek-shipyard/jaen-demo2'}}
+    pages={[HomePage, ImprintPage]}
   />,
   document.getElementById('root')
 )
