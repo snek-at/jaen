@@ -7,6 +7,7 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
+import deepmerge from 'deepmerge'
 import _ from 'lodash'
 import process from 'process'
 
@@ -52,4 +53,45 @@ export const diff = function (obj1: any, obj2: any) {
     },
     {}
   )
+}
+
+// Ref: https://gist.github.com/Mazuh/8209a608a655f91b9de319872d7a660a
+export function compactObject(
+  data: {[x: string]: any},
+  deleteFn?: (value: {[x: string]: any}) => boolean
+) {
+  if (typeof data !== 'object') {
+    return data
+  }
+
+  return Object.keys(data).reduce(function (accumulator, key) {
+    const isObject = typeof data[key] === 'object'
+    const isArray = Array.isArray(data[key])
+
+    const isDeletable = deleteFn && data[key] && deleteFn(data[key])
+
+    const value: any = isObject ? compactObject(data[key], deleteFn) : data[key]
+    const isEmptyObject = isObject && !Object.keys(value) && !isArray
+
+    if (value === undefined || isEmptyObject || isDeletable) {
+      return accumulator
+    }
+
+    return Object.assign(accumulator, {
+      [key]: isArray ? Object.values(value) : value
+    })
+  }, {})
+}
+
+export const merge = <T>(x: Partial<T>, y: Partial<T>) => {
+  const merged = deepmerge(x || {}, y || {}, {
+    arrayMerge: (_target, source, _options) => source
+  })
+
+  const compact = compactObject(
+    merged,
+    value => value.deleted || value.details?.deleted
+  )
+
+  return compact
 }

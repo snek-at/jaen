@@ -13,6 +13,8 @@ import {createSelector} from '@reduxjs/toolkit'
 import deepmerge from 'deepmerge'
 import {ConnectedPageType} from '~/contexts'
 
+import {merge} from '~/common/utils'
+
 import {buildPageTree} from '~/utils/pageTree'
 
 import {Selector} from '.'
@@ -57,24 +59,14 @@ export const pagesSelector = createSelector<
 >(
   state => state.cms.dataLayer.working.pages,
   state => state.cms.dataLayer.editing.pages,
-  (wPages, ePages) => {
-    const merged = deepmerge(wPages || {}, ePages || {}, {
-      arrayMerge: (_target, source, _options) => source
-    })
-
-    const cleaned = Object.fromEntries(
-      Object.entries(merged).filter(([_slug, page]) => !page.details.deleted)
-    ) as WorkingDataLayerPages
-
-    return cleaned
-  }
+  (wPages, ePages) => merge(wPages || {}, ePages || {})
 )
 
 const dataLayer: Selector<CMSState['dataLayer'] | undefined> = state =>
   state.cms.dataLayer
 
 export const combinedDLSelector = createSelector(dataLayer, layer =>
-  deepmerge(layer?.working || {}, layer?.editing || {})
+  merge(layer?.working || {} || {}, layer?.editing || {})
 )
 
 export const pageTreeSelector = (registeredPages: ConnectedPageType[]) =>
@@ -123,9 +115,5 @@ export const pageFieldBlocksSelector = (slug: string, fieldName: string) =>
       state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]?.blocks,
     state =>
       state.cms.dataLayer.editing.pages?.[slug]?.fields?.[fieldName]?.blocks,
-    (wBlocks, eBlocks) => {
-      const blocks = deepmerge(wBlocks || {}, eBlocks || {})
-
-      return blocks
-    }
+    (wBlocks, eBlocks) => merge(wBlocks || {}, eBlocks || {})
   )
