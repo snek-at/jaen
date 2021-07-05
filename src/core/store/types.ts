@@ -28,12 +28,14 @@ export type PageField = {
   blocks?: {
     [position: string]: PageFieldBlock
   }
+  deleted?: boolean
 }
 export type PageFieldBlock = {
   typeName: string
   fields: {
     [name: string]: string | undefined
   }
+  deleted?: boolean
 }
 
 export type PageFieldBlocks = PageField['blocks']
