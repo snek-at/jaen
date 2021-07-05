@@ -82,7 +82,7 @@ export interface CMSState {
     working: WorkingDataLayer
     editing: EditingDataLayer
   }
-  dataLayerDiscardCount: number
+  dataLayerForceUpdateTrigger: number
   dataLayerChecksum?: string
 }
 

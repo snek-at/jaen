@@ -53,8 +53,8 @@ export const EditableField: React.FC<EditableFieldProps> = ({
   const {fieldName, block} = fieldOptions
 
   const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
-  const discardCount = useSelector(
-    (state: RootState) => state.cms.dataLayerDiscardCount
+  const resetTrigger = useSelector(
+    (state: RootState) => state.cms.dataLayerForceUpdateTrigger
   )
 
   return (
@@ -65,7 +65,7 @@ export const EditableField: React.FC<EditableFieldProps> = ({
           text={content}
           buttonOptions={buttonOptions}
           editable={editable}
-          resetTrigger={discardCount}
+          resetTrigger={resetTrigger}
         />
       </div>
     </div>
