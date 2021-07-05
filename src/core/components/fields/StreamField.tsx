@@ -9,6 +9,7 @@
  */
 import {AppstoreAddOutlined} from '@ant-design/icons'
 import {Menu, Row, Button, Col, Dropdown, Divider} from 'antd'
+import {isEqual} from 'lodash'
 import React, {useEffect, useState, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {store} from '~/types'
@@ -49,7 +50,18 @@ const StreamField: React.FC<StreamFieldProps> = ({
 
   const editing = useSelector(({cms}: store.RootState) => cms.options.editing)
 
-  const storeBlocks = useSelector(pageFieldBlocksSelector(slug, name))
+  const storeBlocks = useSelector(
+    pageFieldBlocksSelector(slug, name),
+    (l, r) => {
+      if (l && r) {
+        if (isEqual(Object.keys(l), Object.keys(r))) {
+          return true
+        }
+      }
+
+      return false
+    }
+  )
 
   const blocksKeys = Object.keys(storeBlocks || {}).sort(
     (a, b) => parseInt(a) - parseInt(b)
