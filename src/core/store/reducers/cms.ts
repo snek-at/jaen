@@ -84,19 +84,47 @@ const cmsReducer = createReducer(initialState, {
     const block = fieldOptions.block
 
     if (block) {
-      delete state.dataLayer.editing.pages[page.slug]?.fields?.[
+      state.dataLayer.editing.pages = {
+        ...state.dataLayer.editing.pages,
+        [page.slug]: {
+          ...state.dataLayer.editing.pages[page.slug],
+          fields: {
+            ...state.dataLayer.editing.pages[page.slug]?.fields,
+            [fieldOptions.fieldName]: {
+              ...state.dataLayer.editing.pages[page.slug]?.fields[
         fieldOptions.fieldName
-      ]?.blocks?.[block.position]
-      delete state.dataLayer.working.pages[page.slug]?.fields?.[
+              ],
+              blocks: {
+                ...state.dataLayer.editing.pages[page.slug]?.fields[
         fieldOptions.fieldName
-      ]?.blocks?.[block.position]
+                ]?.blocks,
+                [block.position]: {
+                  ...state.dataLayer.editing.pages[page.slug]?.fields[
+                    fieldOptions.fieldName
+                  ]?.blocks?.[block.position],
+                  deleted: true
+                }
+              }
+            }
+          }
+        }
+      }
     } else {
-      delete state.dataLayer.editing.pages[page.slug]?.fields?.[
+      state.dataLayer.editing.pages = {
+        ...state.dataLayer.editing.pages,
+        [page.slug]: {
+          ...state.dataLayer.editing.pages[page.slug],
+          fields: {
+            ...state.dataLayer.editing.pages[page.slug]?.fields,
+            [fieldOptions.fieldName]: {
+              ...state.dataLayer.editing.pages[page.slug]?.fields[
         fieldOptions.fieldName
-      ]
-      delete state.dataLayer.working.pages[page.slug]?.fields?.[
-        fieldOptions.fieldName
-      ]
+              ],
+              deleted: true
+            }
+          }
+        }
+      }
     }
 
     state.dataLayerForceUpdateTrigger += 1
