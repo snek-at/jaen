@@ -52,13 +52,15 @@ interface SidebarEditorProps {
   onChange: (content: string) => void
   buttonOptions?: ButtonOptions
   editable?: boolean
+  resetTrigger?: number
 }
 
 const SidebarEditor: React.FC<SidebarEditorProps> = ({
   text = 'No content available',
   onChange,
   buttonOptions,
-  editable = true
+  editable = true,
+  resetTrigger = 0
 }) => {
   //   const [plugins, SideToolbar] = useMemo(() => {
   //     const sideToolbarPlugin = createSideToolbarPlugin({
@@ -112,7 +114,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
     }
 
     setEditorState(es)
-  }, [buttonOptions, text])
+  }, [buttonOptions, text, resetTrigger])
 
   const onValueChange = (value: EditorState): void => {
     const toHTMLContent = (es: EditorState): string =>

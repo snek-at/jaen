@@ -45,7 +45,8 @@ const initialState: CMSState = {
       rootPageSlug: 'home',
       pages: {}
     }
-  }
+  },
+  dataLayerDiscardCount: 0
 }
 
 const cmsReducer = createReducer(initialState, {
@@ -228,6 +229,7 @@ const cmsReducer = createReducer(initialState, {
     }
   },
   [cmsActions.discardEditing.type]: (state, _action) => {
+    state.dataLayerDiscardCount += 1
     state.dataLayer.editing = {...state.dataLayer.editing, pages: {}} //initialState.dataLayer.editing
     state.dataLayer = {
       ...state.dataLayer,
