@@ -92,11 +92,11 @@ const cmsReducer = createReducer(initialState, {
             ...state.dataLayer.editing.pages[page.slug]?.fields,
             [fieldOptions.fieldName]: {
               ...state.dataLayer.editing.pages[page.slug]?.fields[
-        fieldOptions.fieldName
+                fieldOptions.fieldName
               ],
               blocks: {
                 ...state.dataLayer.editing.pages[page.slug]?.fields[
-        fieldOptions.fieldName
+                  fieldOptions.fieldName
                 ]?.blocks,
                 [block.position]: {
                   ...state.dataLayer.editing.pages[page.slug]?.fields[
@@ -118,7 +118,7 @@ const cmsReducer = createReducer(initialState, {
             ...state.dataLayer.editing.pages[page.slug]?.fields,
             [fieldOptions.fieldName]: {
               ...state.dataLayer.editing.pages[page.slug]?.fields[
-        fieldOptions.fieldName
+                fieldOptions.fieldName
               ],
               deleted: true
             }
@@ -155,7 +155,8 @@ const cmsReducer = createReducer(initialState, {
                 : pagesDetails[slug].hiddenChildSlugs
             },
             pagesDetails[slug] || {}
-          )
+          ),
+          deleted: undefined
         }
       }
     }
