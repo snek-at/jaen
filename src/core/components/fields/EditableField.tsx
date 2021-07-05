@@ -10,6 +10,7 @@
 import React from 'react'
 import {connect, useSelector} from 'react-redux'
 import {context} from '~/contexts'
+import {RootState} from '~/store'
 import {components, PageParamsType, store} from '~/types'
 
 import SidebarEditor, {ButtonOptions} from '~/components/Editor'
@@ -52,6 +53,9 @@ export const EditableField: React.FC<EditableFieldProps> = ({
   const {fieldName, block} = fieldOptions
 
   const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
+  const discardCount = useSelector(
+    (state: RootState) => state.cms.dataLayerDiscardCount
+  )
 
   return (
     <div>
@@ -61,6 +65,7 @@ export const EditableField: React.FC<EditableFieldProps> = ({
           text={content}
           buttonOptions={buttonOptions}
           editable={editable}
+          resetTrigger={discardCount}
         />
       </div>
     </div>
