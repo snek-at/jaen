@@ -46,7 +46,7 @@ const initialState: CMSState = {
       pages: {}
     }
   },
-  dataLayerDiscardCount: 0
+  dataLayerForceUpdateTrigger: 0
 }
 
 const cmsReducer = createReducer(initialState, {
@@ -75,6 +75,8 @@ const cmsReducer = createReducer(initialState, {
         }
       }
     }
+
+    state.dataLayerForceUpdateTrigger += 1
   },
   [cmsActions.unregisterField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
@@ -96,6 +98,8 @@ const cmsReducer = createReducer(initialState, {
         fieldOptions.fieldName
       ]
     }
+
+    state.dataLayerForceUpdateTrigger += 1
   },
   [cmsActions.registerPage.type]: (state, action) => {
     const {page, rootPageSlug, pagesDetails} = action.payload
@@ -228,7 +232,7 @@ const cmsReducer = createReducer(initialState, {
     }
   },
   [cmsActions.discardEditing.type]: (state, _action) => {
-    state.dataLayerDiscardCount += 1
+    state.dataLayerForceUpdateTrigger += 1
     state.dataLayer.editing = {...state.dataLayer.editing, pages: {}} //initialState.dataLayer.editing
     state.dataLayer = {
       ...state.dataLayer,
