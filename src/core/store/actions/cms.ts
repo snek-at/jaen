@@ -8,6 +8,7 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
+import CryptoJS from 'crypto-js'
 import BridgeDrop from 'drop'
 import {PageParamsType, components} from '~/types'
 
@@ -62,6 +63,46 @@ export const setHiddenChildSlugs = createAction<{
   page: PageParamsType
   hiddenChildSlugs: string[]
 }>('cms/setHiddenChildSlugs')
+
+export const fetchJaenData = createAsyncThunk<void, void, {}>(
+  'cms/fetchJaenData',
+  async (_, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState() as RootState
+
+      const fetchFile = async (url: string): Promise<void> => {
+        const res = await fetch(url, {cache: 'no-store'})
+        const data: {
+          dataLayer: {working: WorkingDataLayer}
+        } = await res.json()
+
+        const checksum = state.cms.dataLayer.values.checksum
+        const calcChecksum = CryptoJS.SHA256(JSON.stringify(data)).toString(
+          CryptoJS.enc.Hex
+        )
+
+        if (checksum !== calcChecksum) {
+          thunkAPI.dispatch(
+            overrideWDL({
+              dataLayer: {
+                working: data.dataLayer.working,
+                editing: state.cms.dataLayer.editing
+              },
+              checksum: calcChecksum
+            })
+          )
+        }
+      }
+
+      fetchFile(`${globalThis.location.origin}/jaen-data.json`)
+    } catch (err) {
+      console.error(err)
+      // Use `err.response.data` as `action.payload` for a `rejected` action,
+      // by explicitly returning it using the `rejectWithValue()` utility
+      return thunkAPI.rejectWithValue(err.response.data)
+    }
+  }
+)
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
