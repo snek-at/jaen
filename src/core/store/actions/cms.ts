@@ -12,6 +12,8 @@ import CryptoJS from 'crypto-js'
 import BridgeDrop from 'drop'
 import {PageParamsType, components} from '~/types'
 
+import {isDev} from '~/common/utils'
+
 import {BlockFieldOptions} from '~/components/blocks'
 
 import {RootState} from '..'
@@ -94,7 +96,11 @@ export const fetchJaenData = createAsyncThunk<void, void, {}>(
         }
       }
 
-      fetchFile(`${globalThis.location.origin}/jaen-data.json`)
+      // Do not fetch if state.cms.settings.gitRemote is not undefined in dev mode
+      // this leads to a onetime load in development and (n) laods in deployment
+      if (!(isDev() && state.cms.settings.gitRemote)) {
+        fetchFile(`${globalThis.location.origin}/jaen-data.json`)
+      }
     } catch (err) {
       console.error(err)
       // Use `err.response.data` as `action.payload` for a `rejected` action,
