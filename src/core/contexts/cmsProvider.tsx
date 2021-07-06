@@ -7,21 +7,18 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import CryptoJS from 'crypto-js'
 import {isEqual} from 'lodash'
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {Provider as ReduxProvider, useDispatch, useSelector} from 'react-redux'
 import {PersistGate} from 'redux-persist/lib/integration/react'
 import PageRouter from '~/router'
 import {persistor, store} from '~/store'
 import {store as storeTypes, ConnectedPageType} from '~/types'
 
-import {isDev} from '~/common/utils'
-
 import MgmtOverlay from '~/components/MgmtOverlay'
 import Notify from '~/components/Notify'
 
-import {overrideWDL, setSettings} from '~/store/actions/cms'
+import {fetchJaenData, setSettings} from '~/store/actions/cms'
 import {pagesSelector, rootPageSlugSelector} from '~/store/selectors/cms'
 
 import {CMSContext} from './context'
@@ -38,6 +35,24 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
 }) => {
   const dispatch = useDispatch<storeTypes.AppDispatch>()
   const rootPageSlug = useSelector(rootPageSlugSelector)
+
+  const intervalRef = useRef<number>()
+
+  useEffect(() => {
+    dispatch(fetchJaenData())
+
+    const id = window.setInterval(() => {
+      dispatch(fetchJaenData())
+    }, 1000 * 60 * 1)
+    intervalRef.current = id
+    return () => {
+      window.clearInterval(intervalRef.current)
+    }
+  })
+
+  useEffect(() => {
+    dispatch(setSettings(settings))
+  }, [dispatch, settings])
 
   // only rerender if page details changes
   const dataLayerPages = useSelector(pagesSelector, (l, r) => {
@@ -59,61 +74,6 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   const pagesDetails = Object.fromEntries(
     Object.entries(dataLayerPages).map(([slug, page]) => [slug, page.details])
   )
-
-  useEffect(() => {
-    dispatch(setSettings(settings))
-  }, [dispatch, settings])
-
-  useEffect(() => {
-    const fetchFile = async (url: string): Promise<void> => {
-      const res = await fetch(url, {cache: 'no-store'})
-      const data: {
-        dataLayer: {working: storeTypes.WorkingDataLayer}
-      } = await res.json()
-
-      const state = store.getState()
-
-      const checksum = state.cms.dataLayer.values.checksum
-      const calcChecksum = CryptoJS.SHA256(JSON.stringify(data)).toString(
-        CryptoJS.enc.Hex
-      )
-
-      if (checksum !== calcChecksum) {
-        dispatch(
-          overrideWDL({
-            dataLayer: {
-              working: data.dataLayer.working,
-              editing: state.cms.dataLayer.editing
-            },
-            checksum: calcChecksum
-          })
-        )
-      }
-    }
-
-    const fetchRemote = async (): Promise<void> =>
-      fetchFile(
-        `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json`
-      )
-
-    if (isDev()) {
-      fetchRemote()
-    } else {
-      fetchFile(`${globalThis.location.origin}/jaen-data.json`)
-    }
-
-    if (settings.gitRemote) {
-      const interval = setInterval(() => {
-        fetchRemote()
-      }, 1000 * 60 * 1)
-      return () => clearInterval(interval)
-    } else {
-      console.warn(
-        // eslint-disable-next-line no-template-curly-in-string
-        'Cannot fetch `https://raw.githubusercontent.com/${settings.gitRemote}/gh-pages/jaen-data.json` because gitRemote is undefined'
-      )
-    }
-  }, [dispatch, settings.gitRemote])
 
   return (
     <CMSContext.Provider
