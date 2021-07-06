@@ -71,7 +71,9 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
         dataLayer: {working: storeTypes.WorkingDataLayer}
       } = await res.json()
 
-      const checksum = store.getState().cms.dataLayerChecksum
+      const state = store.getState()
+
+      const checksum = state.cms.dataLayer.values.checksum
       const calcChecksum = CryptoJS.SHA256(JSON.stringify(data)).toString(
         CryptoJS.enc.Hex
       )
@@ -79,7 +81,10 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
       if (checksum !== calcChecksum) {
         dispatch(
           overrideWDL({
-            workingDataLayer: data.dataLayer.working,
+            dataLayer: {
+              working: data.dataLayer.working,
+              editing: state.cms.dataLayer.editing
+            },
             checksum: calcChecksum
           })
         )
