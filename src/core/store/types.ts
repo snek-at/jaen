@@ -70,6 +70,11 @@ export interface EditingDataLayer extends DataLayer {
   }
 }
 
+export interface ValuesDataLayer {
+  forceUpdateTrigger: number
+  checksum?: string
+}
+
 export type EditingDataLayerPages = EditingDataLayer['pages']
 export type EditingDataLayerPage = EditingDataLayerPages[string]
 export type EditingPageDetails = EditingDataLayerPage['details']
@@ -77,15 +82,16 @@ export type EditingPageDetails = EditingDataLayerPage['details']
 export interface CMSOptions {
   editing: boolean
 }
+
+export interface CMSDataLayer {
+  working: WorkingDataLayer
+  editing: EditingDataLayer
+  values: ValuesDataLayer
+}
 export interface CMSState {
   settings: CMSSettings
   options: CMSOptions
-  dataLayer: {
-    working: WorkingDataLayer
-    editing: EditingDataLayer
-  }
-  dataLayerForceUpdateTrigger: number
-  dataLayerChecksum?: string
+  dataLayer: CMSDataLayer
 }
 
 export interface AuthState {

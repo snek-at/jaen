@@ -54,7 +54,7 @@ export const EditableField: React.FC<EditableFieldProps> = ({
 
   const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
   const resetTrigger = useSelector(
-    (state: RootState) => state.cms.dataLayerForceUpdateTrigger
+    (state: RootState) => state.cms.dataLayer.values.forceUpdateTrigger
   )
 
   return (

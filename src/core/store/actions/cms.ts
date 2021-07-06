@@ -15,7 +15,12 @@ import {BlockFieldOptions} from '~/components/blocks'
 
 import {RootState} from '..'
 import {pagesSelector, rootPageSlugSelector} from '../selectors/cms'
-import {CMSSettings, PagesDetails, WorkingDataLayer} from '../types'
+import {
+  CMSSettings,
+  EditingDataLayer,
+  PagesDetails,
+  WorkingDataLayer
+} from '../types'
 
 export const setSettings = createAction<CMSSettings>('cms/setSettings')
 
@@ -39,10 +44,10 @@ export const unregisterPage = createAction<{
   pagesDetails: PagesDetails
 }>('cms/unregisterPage')
 
-export const overrideWDL =
-  createAction<{workingDataLayer: WorkingDataLayer; checksum: string}>(
-    'cms/overrideWDL'
-  )
+export const overrideWDL = createAction<{
+  dataLayer: {working: WorkingDataLayer; editing: EditingDataLayer}
+  checksum: string
+}>('cms/overrideWDL')
 
 export const toggleEditing = createAction<boolean>('cms/toggleEditing')
 export const discardEditing = createAction('cms/discardEditing')
