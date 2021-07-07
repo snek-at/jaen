@@ -1,0 +1,48 @@
+@import '../../../../common/css/colors.scss';
+
+.layout {
+  background: white;
+}
+
+.content {
+  width: auto !important;
+  padding: 10px;
+  min-height: 50vh;
+
+  .active {
+    outline: 2px solid $snekGreen;
+    outline-offset: 8px;
+  }
+
+  img {
+    /* Just in case there are inline attributes */
+    float: left;
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover;
+    margin: 10px;
+
+    &:hover {
+      cursor: pointer;
+      outline: 2px solid $snekGreen;
+      outline-offset: 8px;
+    }
+  }
+}
+
+.dropzone {
+  span {
+    position: absolute;
+    color: $snekGreen;
+    left: 50%;
+    top: 50%;
+    font-size: xx-large;
+    transform: translate(-25%, -25%);
+    cursor: default;
+  }
+}
+
+.sider {
+  background: white;
+  height: 100%;
+}

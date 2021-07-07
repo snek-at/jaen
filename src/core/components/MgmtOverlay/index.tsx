@@ -14,7 +14,8 @@ import {
   DeleteOutlined,
   EditFilled,
   LoginOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  FileImageOutlined
 } from '@ant-design/icons'
 import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
@@ -28,6 +29,7 @@ import {discardEditing, toggleEditing} from '~/store/actions/cms'
 import SideMenu from './SideMenu'
 import SnekFabButton from './SnekFabButton'
 import './mgmtOverlay.scss'
+import FilesModal from './modals/Files'
 import PublishModal from './modals/Publish'
 import SiteMenu from './modals/SiteMenu'
 
@@ -93,6 +95,12 @@ const MgmtOverlay: React.FC = () => {
               text: editing ? 'Preview' : 'Edit',
               icon: editing ? <EditFilled /> : <EditOutlined />,
               onClick: () => dispatch(toggleEditing(!editing))
+            },
+            {
+              text: 'Files',
+              icon: <FileImageOutlined />,
+              onClick: () => null,
+              renderElementOnClick: <FilesModal />
             },
             {
               text: 'Publish',
