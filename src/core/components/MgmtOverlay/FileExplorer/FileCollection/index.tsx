@@ -1,5 +1,14 @@
 import {DeleteTwoTone, EyeTwoTone} from '@ant-design/icons'
-import {Space, Button, Card, Collapse, Layout, Row, Typography} from 'antd'
+import {
+  Image as AntImage,
+  Space,
+  Button,
+  Card,
+  Collapse,
+  Layout,
+  Row,
+  Typography
+} from 'antd'
 import {useState} from 'react'
 
 import Image from '../Image'
@@ -68,7 +77,7 @@ const FileCollection: React.FC<FileCollectionProps> = ({items}) => {
                 hoverable
                 style={{width: 350}}
                 cover={
-                  <img
+                  <AntImage
                     alt={activeItem.description}
                     src={activeItem.src}
                     style={{objectFit: 'contain', height: '25rem'}}
