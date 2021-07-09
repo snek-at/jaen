@@ -17,11 +17,9 @@ import {merge} from '~/common/utils'
 
 import {buildPageTree} from '~/utils/pageTree'
 
-import {Selector} from '.'
 import {store} from '..'
 import {
   RootState,
-  CMSState,
   PageDetails,
   PageFieldBlocks,
   EditingPageDetails,
@@ -59,14 +57,8 @@ export const pagesSelector = createSelector<
 >(
   state => state.cms.dataLayer.working.pages,
   state => state.cms.dataLayer.editing.pages,
-  (wPages, ePages) => merge(wPages || {}, ePages || {})
-)
-
-const dataLayer: Selector<CMSState['dataLayer'] | undefined> = state =>
-  state.cms.dataLayer
-
-export const combinedDLSelector = createSelector(dataLayer, layer =>
-  merge(layer?.working || {} || {}, layer?.editing || {})
+  (wPages, ePages) =>
+    merge(wPages || {}, ePages || {}, value => value.details?.deleted)
 )
 
 export const pageTreeSelector = (registeredPages: ConnectedPageType[]) =>
@@ -115,5 +107,13 @@ export const pageFieldBlocksSelector = (slug: string, fieldName: string) =>
       state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]?.blocks,
     state =>
       state.cms.dataLayer.editing.pages?.[slug]?.fields?.[fieldName]?.blocks,
-    (wBlocks, eBlocks) => merge(wBlocks || {}, eBlocks || {})
+    (wBlocks, eBlocks) =>
+      merge(wBlocks || {}, eBlocks || {}, value => value.deleted)
+  )
+
+export const combinedDLSelector = createSelector(
+  [rootPageSlugSelector, pagesSelector, filesSelector],
+  (rootPageSlug, pages, files) => {
+    return {rootPageSlug, pages, files}
+  }
   )

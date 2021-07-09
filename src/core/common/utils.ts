@@ -83,15 +83,16 @@ export function compactObject(
   }, {})
 }
 
-export const merge = <T>(x: Partial<T>, y: Partial<T>) => {
+export const merge = <T>(
+  x: Partial<T>,
+  y: Partial<T>,
+  deleteFn?: (value: {[x: string]: any}) => boolean
+) => {
   const merged = deepmerge(x || {}, y || {}, {
     arrayMerge: (_target, source, _options) => source
   })
 
-  const compact = compactObject(
-    merged,
-    value => value.deleted || value.details?.deleted
-  )
+  const compact = compactObject(merged, deleteFn)
 
   return compact
 }
