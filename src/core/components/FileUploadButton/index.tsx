@@ -4,12 +4,17 @@ import {useDropzone} from 'react-dropzone'
 
 type FileUploadButtonProps = {
   onUpload(acceptedFiles: File[]): void
+  accept?: string | string[]
 }
 
-const FileUploadButton: React.FC<FileUploadButtonProps> = ({onUpload}) => {
+const FileUploadButton: React.FC<FileUploadButtonProps> = ({
+  onUpload,
+  accept
+}) => {
   const {getRootProps, getInputProps} = useDropzone({
     onDrop: onUpload,
-    noDrag: true
+    noDrag: true,
+    accept
   })
 
   return (

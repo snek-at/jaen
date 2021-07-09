@@ -1,17 +1,14 @@
 import React, {memo} from 'react'
 
-import {FileItem} from '../FileCollection'
+type ImageProps = {src: string} & React.DetailedHTMLProps<
+  React.ImgHTMLAttributes<HTMLImageElement>,
+  HTMLImageElement
+>
 
-type ImageProps = FileItem &
-  React.DetailedHTMLProps<
-    React.ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  >
-
-const Image: React.FC<ImageProps> = ({src, title, description, ...props}) => {
+const Image: React.FC<ImageProps> = ({src, title, alt, ...props}) => {
   return (
     <>
-      <img src={src} title={title} alt={description} {...props} />
+      <img src={src} title={title} alt={alt} {...props} />
     </>
   )
 }

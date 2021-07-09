@@ -40,8 +40,21 @@ export type PageFieldBlock = {
 
 export type PageFieldBlocks = PageField['blocks']
 
+export type FileInfo = {
+  url: string
+  meta: Partial<{
+    fileType: string
+    title: string
+    description: string
+    deleted?: boolean
+  }>
+}
+
+export type DataLayerFiles = {[index: string]: FileInfo}
+
 type DataLayer = {
   rootPageSlug: string
+  files: DataLayerFiles
 }
 
 export interface WorkingDataLayer extends DataLayer {

@@ -11,31 +11,56 @@ import {
 } from 'antd'
 import {useState} from 'react'
 
+import {FileInfo} from '~/store/types'
+
 import Image from '../Image'
 import './filecollection.scss'
 
 const {Content, Sider} = Layout
 const {Panel} = Collapse
 const {Text} = Typography
-export type FileItem = {title: string; src: string; description: string}
+
+type CollectionFile = {index: string} & FileInfo
 
 export type FileCollectionProps = {
-  items: FileItem[]
+  files: CollectionFile[]
+  onFileUpdate?: (index: string, meta: FileInfo['meta']) => void
+  onFileDelete?: (index: string) => void
   // onPreview???
 }
 
-const FileCollection: React.FC<FileCollectionProps> = ({items}) => {
-  const [activeItem, setActiveItem] = useState<FileItem>(items[0])
+const FileCollection: React.FC<FileCollectionProps> = ({
+  onFileUpdate,
+  onFileDelete,
+  files
+}) => {
+  const [selectedFile, setSelectedFile] = useState<CollectionFile | null>(null)
+
+  const onActiveUpdate = (updateMeta: FileInfo['meta']): void => {
+    if (selectedFile) {
+      const meta = {
+        ...selectedFile.meta,
+        ...updateMeta
+      }
+
+      setSelectedFile({...selectedFile, meta})
+
+      if (onFileUpdate) {
+        onFileUpdate(selectedFile.index, meta)
+      }
+    }
+  }
 
   const onActivePreview = (): void => {
     alert('preview')
   }
   const onActiveDelete = (): void => {
-    alert('delete')
-  }
+    if (onFileDelete && selectedFile) {
+      onFileDelete(selectedFile.index)
 
-  // eslint-disable-next-line no-console
-  console.log('activeitem', !!activeItem)
+      setSelectedFile(null)
+    }
+  }
 
   return (
     <Layout className="layout">
@@ -43,44 +68,46 @@ const FileCollection: React.FC<FileCollectionProps> = ({items}) => {
         className="content"
         onClick={event => {
           event.preventDefault()
+
           if (event.target === event.currentTarget) {
-            setActiveItem(items[0])
+            setSelectedFile(null)
           }
         }}>
-        {items.length === 0 ? (
+        {files.length === 0 ? (
           <div className="dropzone">
             <span>{"Drag 'n' drop some files here"}</span>
           </div>
         ) : (
-          items.map((item, key) => (
+          files.map((file, key) => (
             <Image
               key={key}
-              className={activeItem === item ? 'active' : ''}
+              className={selectedFile?.index === file.index ? 'active' : ''}
               onDoubleClick={onActivePreview}
               onClick={() => {
-                if (activeItem === item) {
-                  setActiveItem(items[0])
-                } else {
-                  setActiveItem(item)
+                if (selectedFile?.index !== file.index) {
+                  setSelectedFile(file)
                 }
               }}
-              {...item}
+              src={file.url}
+              title={file.meta?.title}
+              alt={file.meta?.description}
             />
           ))
         )}
       </Content>
       <Sider width={350} className="sider">
         <Row justify="center">
-          {activeItem && (
-            <>
+          <>
+            {selectedFile && (
               <Card
                 hoverable
                 style={{width: 350}}
                 cover={
                   <AntImage
-                    alt={activeItem.description}
-                    src={activeItem.src}
+                    alt={selectedFile.meta.description}
+                    src={selectedFile.url}
                     style={{objectFit: 'contain', height: '25rem'}}
+                    preview={true}
                   />
                 }>
                 <Collapse defaultActiveKey={['1', '2']} ghost>
@@ -88,10 +115,9 @@ const FileCollection: React.FC<FileCollectionProps> = ({items}) => {
                     <Text strong>Title: </Text>
                     <Text
                       editable={{
-                        onChange: value =>
-                          setActiveItem({...activeItem, title: value})
+                        onChange: value => onActiveUpdate({title: value})
                       }}>
-                      {activeItem.title}
+                      {selectedFile.meta.title}
                     </Text>
 
                     <br />
@@ -99,10 +125,9 @@ const FileCollection: React.FC<FileCollectionProps> = ({items}) => {
                     <Text strong>Des: </Text>
                     <Text
                       editable={{
-                        onChange: value =>
-                          setActiveItem({...activeItem, description: value})
+                        onChange: value => onActiveUpdate({description: value})
                       }}>
-                      {activeItem.description}
+                      {selectedFile.meta.description}
                     </Text>
                   </Panel>
                   <Panel header="Actions" key="2">
@@ -119,8 +144,8 @@ const FileCollection: React.FC<FileCollectionProps> = ({items}) => {
                   </Panel>
                 </Collapse>
               </Card>
-            </>
-          )}
+            )}
+          </>
         </Row>
       </Sider>
     </Layout>

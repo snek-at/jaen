@@ -96,3 +96,15 @@ export const merge = <T>(
 
   return compact
 }
+
+export const getNextIndexedObjectKey = (o: object): string => {
+  let key = Object.keys(o).pop()
+
+  if (!key) {
+    key = '0'
+  } else {
+    key = `${parseInt(key, 10) + 1}`
+  }
+
+  return key
+}

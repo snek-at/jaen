@@ -10,14 +10,15 @@
 import {createReducer} from '@reduxjs/toolkit'
 import {union} from 'lodash'
 
-import {diff} from '~/common/utils'
+import {diff, getNextIndexedObjectKey} from '~/common/utils'
 
 import {cmsActions} from '~/store/actions'
 import {CMSState, EditingDataLayer} from '~/store/types'
 
 const initialState: EditingDataLayer = {
   rootPageSlug: 'home',
-  pages: {}
+  pages: {},
+  files: {}
 }
 
 const editingReducer = createReducer(initialState, {
@@ -223,6 +224,25 @@ const editingReducer = createReducer(initialState, {
         state.pages[slug].details.childSlugs = childSlugs
         state.pages[slug].details.hiddenChildSlugs = hiddenChildSlugs
       }
+    }
+  },
+
+  [cmsActions.addFile.fulfilled.type]: (state, action) => {
+    const {url, fileMeta} = action.payload
+
+    state.files[getNextIndexedObjectKey(state.files)] = {url, meta: fileMeta}
+  },
+  [cmsActions.removeFile.type]: (state, action) => {
+    const index = action.payload
+
+    state.files[index].meta.deleted = true
+  },
+  [cmsActions.updateFile.type]: (state, action) => {
+    const {index, meta, combinedFiles} = action.payload
+
+    state.files[index].meta = {
+      ...state.files[index].meta,
+      ...diff(meta, combinedFiles[index]?.meta)
     }
   }
 })

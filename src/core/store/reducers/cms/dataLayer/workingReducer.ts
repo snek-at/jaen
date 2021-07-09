@@ -25,6 +25,7 @@ const initialState: WorkingDataLayer = {
       fields: {}
     }
   },
+  files: {},
   rootPageSlug: 'home'
 }
 

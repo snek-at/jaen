@@ -16,11 +16,14 @@ import {isDev} from '~/common/utils'
 
 import {BlockFieldOptions} from '~/components/blocks'
 
+import {ipfsActions} from '.'
 import {RootState} from '..'
-import {pagesSelector, rootPageSlugSelector} from '../selectors/cms'
+import {combinedDLSelector} from '../selectors/cms'
 import {
   CMSSettings,
+  DataLayerFiles,
   EditingDataLayer,
+  FileInfo,
   PagesDetails,
   WorkingDataLayer
 } from '../types'
@@ -127,10 +130,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         )
       }
 
-      const rootPageSlug = rootPageSlugSelector(state)
-      const pages = pagesSelector(state)
-
-      const layer = {rootPageSlug, pages}
+      const layer = combinedDLSelector(state)
 
       const publishData = JSON.stringify({
         dataLayer: {working: layer}
@@ -156,3 +156,27 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
     }
   }
 )
+
+export const addFile = createAsyncThunk<
+  {url: string; fileMeta: FileInfo['meta']},
+  {file: File; fileMeta: FileInfo['meta']},
+  {}
+>('cms/addFile', async ({file, fileMeta}, thunkAPI) => {
+  try {
+    const {url} = await thunkAPI.dispatch(ipfsActions.add({file})).unwrap()
+
+    return {url, fileMeta}
+  } catch (err) {
+    console.error(err)
+    // Use `err.response.data` as `action.payload` for a `rejected` action,
+    // by explicitly returning it using the `rejectWithValue()` utility
+    return thunkAPI.rejectWithValue(err.response.data)
+  }
+})
+
+export const removeFile = createAction<string>('cms/removeFile')
+export const updateFile = createAction<{
+  index: string
+  meta: FileInfo['meta']
+  combinedFiles: DataLayerFiles
+}>('cms/updateFile')
