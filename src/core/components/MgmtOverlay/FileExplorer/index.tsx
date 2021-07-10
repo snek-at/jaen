@@ -41,12 +41,13 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
 
         if (dataUrl) {
           // WA: Get latest files state in async context
-          files[getNextIndexedObjectKey(files)] = {
-            url: dataUrl,
-            meta: {fileType: acceptedFile.type}
-          }
-
-          setFiles({...files})
+          setFiles({
+            ...files,
+            [getNextIndexedObjectKey(files)]: {
+              url: dataUrl,
+              meta: {fileType: acceptedFile.type}
+            }
+          })
         }
       }
 

@@ -12,6 +12,7 @@ import CryptoJS from 'crypto-js'
 import BridgeDrop from 'drop'
 import {PageParamsType, components} from '~/types'
 
+import {encrypt} from '~/common/crypt'
 import {isDev} from '~/common/utils'
 
 import {BlockFieldOptions} from '~/components/blocks'
@@ -50,10 +51,45 @@ export const unregisterPage = createAction<{
   pagesDetails: PagesDetails
 }>('cms/unregisterPage')
 
-export const overrideWDL = createAction<{
-  dataLayer: {working: WorkingDataLayer; editing: EditingDataLayer}
-  checksum: string
-}>('cms/overrideWDL')
+// export const overrideWDL = createAction<{
+//   dataLayer: {working: WorkingDataLayer; editing: EditingDataLayer}
+//   checksum: string
+// }>('cms/overrideWDL')
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const overrideWDL: any = createAsyncThunk<
+  {
+    dataLayer: {
+      working: WorkingDataLayer
+      editing: EditingDataLayer
+    }
+    checksum: string
+    key: string | undefined
+  },
+  {
+    workingDataLayer: WorkingDataLayer
+    checksum: string
+  },
+  {}
+>('cms/overrideWDL', async ({workingDataLayer, checksum}, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState() as RootState
+
+    return {
+      dataLayer: {
+        working: workingDataLayer,
+        editing: state.cms.dataLayer.editing
+      },
+      checksum,
+      key: state.auth.secret
+    }
+  } catch (err) {
+    console.error(err)
+    // Use `err.response.data` as `action.payload` for a `rejected` action,
+    // by explicitly returning it using the `rejectWithValue()` utility
+    return thunkAPI.rejectWithValue(err.response.data)
+  }
+})
 
 export const toggleEditing = createAction<boolean>('cms/toggleEditing')
 export const discardEditing = createAction('cms/discardEditing')
@@ -89,10 +125,7 @@ export const fetchJaenData = createAsyncThunk<void, void, {}>(
         if (checksum !== calcChecksum) {
           thunkAPI.dispatch(
             overrideWDL({
-              dataLayer: {
-                working: data.dataLayer.working,
-                editing: state.cms.dataLayer.editing
-              },
+              workingDataLayer: data.dataLayer.working,
               checksum: calcChecksum
             })
           )
@@ -130,10 +163,22 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         )
       }
 
-      const layer = combinedDLSelector(state)
+      const combinedLayer = combinedDLSelector(state)
+
+      // Encrypt some sections of layer
+      const clear = {files: combinedLayer.files}
+      const cipher = encrypt(clear, state.auth.secret)
+
+      const wokringLayer: WorkingDataLayer = {
+        rootPageSlug: combinedLayer.rootPageSlug,
+        pages: combinedLayer.pages,
+        crypt: {
+          cipher
+        }
+      }
 
       const publishData = JSON.stringify({
-        dataLayer: {working: layer}
+        dataLayer: {working: wokringLayer}
       })
 
       const {data, errors} =
@@ -147,7 +192,9 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         throw new Error(`DropAPI publish failed`)
       }
 
-      return layer
+      wokringLayer.crypt.clear = clear
+
+      return wokringLayer
     } catch (err) {
       console.error(err)
       // Use `err.response.data` as `action.payload` for a `rejected` action,
@@ -157,15 +204,20 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
   }
 )
 
-export const addFile = createAsyncThunk<
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const addFile: any = createAsyncThunk<
   {url: string; fileMeta: FileInfo['meta']},
   {file: File; fileMeta: FileInfo['meta']},
   {}
 >('cms/addFile', async ({file, fileMeta}, thunkAPI) => {
   try {
+    const state = thunkAPI.getState() as RootState
+
+    const {files} = combinedDLSelector(state)
+
     const {url} = await thunkAPI.dispatch(ipfsActions.add({file})).unwrap()
 
-    return {url, fileMeta}
+    return {url, fileMeta, combinedFiles: files}
   } catch (err) {
     console.error(err)
     // Use `err.response.data` as `action.payload` for a `rejected` action,

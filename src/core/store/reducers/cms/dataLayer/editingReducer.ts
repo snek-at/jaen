@@ -196,7 +196,7 @@ const editingReducer = createReducer(initialState, {
   [cmsActions.publish.fulfilled.type]: (_state, _action) => initialState,
   [cmsActions.discardEditing.type]: (_state, _action) => initialState,
 
-  [cmsActions.overrideWDL.type]: (state, action) => {
+  [cmsActions.overrideWDL.fulfilled.type]: (state, action) => {
     const {dataLayer} = action.payload
 
     const {working, editing} = dataLayer as CMSState['dataLayer']
@@ -228,21 +228,36 @@ const editingReducer = createReducer(initialState, {
   },
 
   [cmsActions.addFile.fulfilled.type]: (state, action) => {
-    const {url, fileMeta} = action.payload
+    const {url, fileMeta, combinedFiles} = action.payload
 
-    state.files[getNextIndexedObjectKey(state.files)] = {url, meta: fileMeta}
+    state.files[getNextIndexedObjectKey(combinedFiles)] = {url, meta: fileMeta}
   },
   [cmsActions.removeFile.type]: (state, action) => {
     const index = action.payload
 
-    state.files[index].meta.deleted = true
+    state.files = {
+      ...state.files,
+      [index]: {
+        ...state.files[index],
+        meta: {
+          ...state.files[index]?.meta,
+          deleted: true
+        }
+      }
+    }
   },
   [cmsActions.updateFile.type]: (state, action) => {
     const {index, meta, combinedFiles} = action.payload
 
-    state.files[index].meta = {
-      ...state.files[index].meta,
-      ...diff(meta, combinedFiles[index]?.meta)
+    state.files = {
+      ...state.files,
+      [index]: {
+        ...state.files[index],
+        meta: {
+          ...state.files[index]?.meta,
+          ...diff(meta, combinedFiles[index]?.meta)
+        }
+      }
     }
   }
 })

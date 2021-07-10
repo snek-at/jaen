@@ -9,6 +9,8 @@
  */
 import {createReducer} from '@reduxjs/toolkit'
 
+import {decrypt} from '~/common/crypt'
+
 import {cmsActions} from '~/store/actions'
 import {WorkingDataLayer} from '~/store/types'
 
@@ -25,14 +27,33 @@ const initialState: WorkingDataLayer = {
       fields: {}
     }
   },
-  files: {},
+  crypt: {
+    cipher: undefined,
+    clear: {
+      files: {}
+    }
+  },
   rootPageSlug: 'home'
 }
 
 const workingReducer = createReducer(initialState, {
   [cmsActions.publish.fulfilled.type]: (_state, action) => action.payload,
-  [cmsActions.overrideWDL.type]: (_state, action) =>
-    action.payload.dataLayer.working
+  [cmsActions.overrideWDL.fulfilled.type]: (state, action) => {
+    const {dataLayer, key} = action.payload
+
+    if (key) {
+      const ciphertext = dataLayer.working.crypt.cipher
+
+      if (ciphertext) {
+        state.crypt = {
+          clear: decrypt<typeof state.crypt.clear>(ciphertext, key)
+        }
+      }
+    }
+
+    state.rootPageSlug = dataLayer.working.rootPageSlug
+    state.pages = dataLayer.working.pages
+  }
 })
 
 export default workingReducer

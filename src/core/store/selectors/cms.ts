@@ -26,7 +26,9 @@ import {
   EditingDataLayerPages,
   PagesDetails,
   WorkingDataLayerPages,
-  DataLayerFiles
+  DataLayerFiles,
+  WorkingDataLayer,
+  CleanDataLayer
 } from '../types'
 
 export const rootPageSlugSelector = createSelector<
@@ -114,16 +116,31 @@ export const pageFieldBlocksSelector = (slug: string, fieldName: string) =>
 
 export const filesSelector = createSelector<
   RootState,
-  DataLayerFiles,
+  DataLayerFiles | undefined,
   DataLayerFiles,
   DataLayerFiles
 >(
-  state => state.cms.dataLayer.working.files,
+  state => state.cms.dataLayer.working.crypt.clear?.files,
   state => state.cms.dataLayer.editing.files,
   (wFiles, eFiles) => {
-    const merged = merge(wFiles, eFiles, value => value.meta?.deleted)
+    const merged = merge(wFiles || {}, eFiles, value => value.meta?.deleted)
 
     return merged
+  }
+)
+
+export const workingDLSelector = createSelector<
+  RootState,
+  WorkingDataLayer,
+  CleanDataLayer
+>(
+  state => state.cms.dataLayer.working,
+  workingLayer => {
+    const {rootPageSlug, pages, crypt} = workingLayer
+
+    const layer = {rootPageSlug, pages, files: crypt?.clear?.files || {}}
+
+    return layer
   }
 )
 

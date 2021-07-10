@@ -14,6 +14,7 @@ import {AuthState} from '../types'
 
 const initialState: AuthState = {
   authenticated: false,
+  secret: 'SECRETSECRET',
   loading: false
 }
 

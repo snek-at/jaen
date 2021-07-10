@@ -54,6 +54,17 @@ export type DataLayerFiles = {[index: string]: FileInfo}
 
 type DataLayer = {
   rootPageSlug: string
+}
+
+export interface CleanDataLayer extends DataLayer {
+  pages: {
+    [slug: string]: {
+      fields: {
+        [name: string]: PageField
+      }
+      details: PageDetails
+    }
+  }
   files: DataLayerFiles
 }
 
@@ -64,6 +75,12 @@ export interface WorkingDataLayer extends DataLayer {
         [name: string]: PageField
       }
       details: PageDetails
+    }
+  }
+  crypt: {
+    cipher?: string
+    clear?: {
+      files: DataLayerFiles
     }
   }
 }
@@ -81,6 +98,7 @@ export interface EditingDataLayer extends DataLayer {
       details: Partial<PageDetails>
     }
   }
+  files: DataLayerFiles
 }
 
 export interface ValuesDataLayer {
@@ -109,6 +127,7 @@ export interface CMSState {
 
 export interface AuthState {
   authenticated: boolean
+  secret: string
   loading: boolean
 }
 

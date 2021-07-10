@@ -17,7 +17,7 @@ const initialState: ValuesDataLayer = {
 }
 
 const valuesReducer = createReducer(initialState, {
-  [cmsActions.overrideWDL.type]: (state, action) => {
+  [cmsActions.overrideWDL.fulfilled.type]: (state, action) => {
     const {checksum} = action.payload
 
     state.checksum = checksum
