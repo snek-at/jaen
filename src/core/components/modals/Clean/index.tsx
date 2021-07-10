@@ -11,11 +11,19 @@ import Modal from 'antd/lib/modal/Modal'
 
 type CleanModalProps = {width?: number}
 
-const CleanModal: React.FC<CleanModalProps> = (
-  {children, ...props} = {width: 1000}
-) => {
+const CleanModal: React.FC<CleanModalProps> = ({
+  children,
+  width = 1000,
+  ...props
+}) => {
   return (
-    <Modal {...props} visible title={null} footer={null} closable={false}>
+    <Modal
+      width={width}
+      {...props}
+      visible
+      title={null}
+      footer={null}
+      closable={false}>
       {children}
     </Modal>
   )
