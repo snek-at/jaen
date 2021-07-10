@@ -93,6 +93,7 @@ const FileCollection: React.FC<FileCollectionProps> = ({
               )}
               {file.meta.fileType === 'application/pdf' && (
                 <div
+                  className={selectedFile?.index === file.index ? 'active' : ''}
                   onDoubleClick={onActivePreview}
                   onClick={() => {
                     if (selectedFile?.index !== file.index) {
