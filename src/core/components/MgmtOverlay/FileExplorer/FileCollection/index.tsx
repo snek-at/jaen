@@ -79,7 +79,9 @@ const FileCollection: React.FC<FileCollectionProps> = ({
               {file.meta.fileType?.startsWith('image') && (
                 <Image
                   key={key}
-                  className={selectedFile?.index === file.index ? 'active' : ''}
+                  className={`${
+                    selectedFile?.index === file.index && 'active'
+                  } element`}
                   onDoubleClick={onActivePreview}
                   onClick={() => {
                     if (selectedFile?.index !== file.index) {
@@ -93,7 +95,9 @@ const FileCollection: React.FC<FileCollectionProps> = ({
               )}
               {file.meta.fileType === 'application/pdf' && (
                 <div
-                  className={selectedFile?.index === file.index ? 'active' : ''}
+                  className={`${
+                    selectedFile?.index === file.index && 'active'
+                  } element`}
                   onDoubleClick={onActivePreview}
                   onClick={() => {
                     if (selectedFile?.index !== file.index) {
