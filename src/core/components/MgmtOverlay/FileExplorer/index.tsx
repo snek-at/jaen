@@ -81,14 +81,14 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
   } | null>(null)
 
   const onFilePreview = (index: string): void => {
-    if (view === 'IMAGES') {
+    if (view === 'IMAGE') {
       setShowPreview({
         src: files[index].url,
         type: 'IMAGE'
       })
     }
 
-    if (view === 'DOCUMENTS') {
+    if (view === 'PDF') {
       setShowPreview({
         src: files[index].url,
         type: 'PDF'
@@ -100,7 +100,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
     setShowPreview(null)
   }
 
-  const [view, setView] = useState<'IMAGES' | 'VIDEOS' | 'DOCUMENTS'>('IMAGES')
+  const [view, setView] = useState<'IMAGE' | 'PDF'>('PDF')
 
   useEffect(() => {
     setFiles(storedFiles)
@@ -119,11 +119,11 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
           return false
         }
 
-        if (view === 'IMAGES' && fileType.startsWith('image/')) {
+        if (view === 'IMAGE' && fileType.startsWith('image/')) {
           return true
         }
 
-        if (view === 'DOCUMENTS' && fileType === 'application/pdf') {
+        if (view === 'PDF' && fileType === 'application/pdf') {
           return true
         }
 
@@ -177,17 +177,14 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
                   <Divider plain orientation="left">
                     Media
                   </Divider>
-                  <Menu.Item key="1" onClick={() => setView('IMAGES')}>
+                  <Menu.Item key="1" onClick={() => setView('IMAGE')}>
                     Images
                   </Menu.Item>
-                  <Menu.Item key="2" onClick={() => setView('VIDEOS')}>
-                    Videos
-                  </Menu.Item>
                   <Divider plain orientation="left">
-                    Other
-                  </Divider>
-                  <Menu.Item key="3" onClick={() => setView('DOCUMENTS')}>
                     Documents
+                  </Divider>
+                  <Menu.Item key="2" onClick={() => setView('PDF')}>
+                    PDFs
                   </Menu.Item>
                 </Menu>
               </Layout.Sider>
