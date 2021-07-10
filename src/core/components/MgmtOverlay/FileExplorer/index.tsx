@@ -36,6 +36,8 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
       const reader = new FileReader()
       reader.readAsDataURL(acceptedFile)
 
+      const meta = {fileType: acceptedFile.type, title: acceptedFile.name}
+
       reader.onload = () => {
         const dataUrl = reader.result?.toString()
 
@@ -45,7 +47,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
             ...files,
             [getNextIndexedObjectKey(files)]: {
               url: dataUrl,
-              meta: {fileType: acceptedFile.type}
+              meta
             }
           })
         }
@@ -54,7 +56,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
       dispatch(
         cmsActions.addFile({
           file: acceptedFile,
-          fileMeta: {fileType: acceptedFile.type}
+          fileMeta: meta
         })
       )
     }
