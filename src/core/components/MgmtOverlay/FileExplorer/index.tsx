@@ -169,7 +169,6 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
                 <Menu
                   mode="inline"
                   defaultSelectedKeys={['1']}
-                  defaultOpenKeys={['sub1']}
                   style={{height: '100%'}}>
                   <Row justify="center">
                     <FileUploadButton onUpload={onUpload} />
