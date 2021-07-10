@@ -22,6 +22,7 @@ const FilesModal: React.FC = () => {
         width={1650}
         visible
         title={<Header className="modal-header">File Explorer</Header>}
+        closable={false}
         footer={[]}
         className="modal">
         <Layout>
