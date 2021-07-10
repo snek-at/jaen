@@ -1,15 +1,7 @@
-import {DeleteTwoTone, EyeTwoTone} from '@ant-design/icons'
-import {
-  Image as AntImage,
-  Space,
-  Button,
-  Card,
-  Collapse,
-  Layout,
-  Row,
-  Typography
-} from 'antd'
+import {DeleteTwoTone, EyeTwoTone, LoadingOutlined} from '@ant-design/icons'
+import {Space, Button, Card, Collapse, Layout, Row, Typography} from 'antd'
 import {useState} from 'react'
+import {Document, Page} from 'react-pdf'
 
 import {FileInfo} from '~/store/types'
 
@@ -20,18 +12,19 @@ const {Content, Sider} = Layout
 const {Panel} = Collapse
 const {Text} = Typography
 
-type CollectionFile = {index: string} & FileInfo
+export type CollectionFile = {index: string} & FileInfo
 
 export type FileCollectionProps = {
   files: CollectionFile[]
   onFileUpdate?: (index: string, meta: FileInfo['meta']) => void
   onFileDelete?: (index: string) => void
-  // onPreview???
+  onFilePreview?: (index: string) => void
 }
 
 const FileCollection: React.FC<FileCollectionProps> = ({
   onFileUpdate,
   onFileDelete,
+  onFilePreview,
   files
 }) => {
   const [selectedFile, setSelectedFile] = useState<CollectionFile | null>(null)
@@ -52,8 +45,11 @@ const FileCollection: React.FC<FileCollectionProps> = ({
   }
 
   const onActivePreview = (): void => {
-    alert('preview')
+    if (onFilePreview && selectedFile) {
+      onFilePreview(selectedFile.index)
+    }
   }
+
   const onActiveDelete = (): void => {
     if (onFileDelete && selectedFile) {
       onFileDelete(selectedFile.index)
@@ -79,19 +75,40 @@ const FileCollection: React.FC<FileCollectionProps> = ({
           </div>
         ) : (
           files.map((file, key) => (
-            <Image
-              key={key}
-              className={selectedFile?.index === file.index ? 'active' : ''}
-              onDoubleClick={onActivePreview}
-              onClick={() => {
-                if (selectedFile?.index !== file.index) {
-                  setSelectedFile(file)
-                }
-              }}
-              src={file.url}
-              title={file.meta?.title}
-              alt={file.meta?.description}
-            />
+            <>
+              {file.meta.fileType?.startsWith('image') && (
+                <Image
+                  key={key}
+                  className={selectedFile?.index === file.index ? 'active' : ''}
+                  onDoubleClick={onActivePreview}
+                  onClick={() => {
+                    if (selectedFile?.index !== file.index) {
+                      setSelectedFile(file)
+                    }
+                  }}
+                  src={file.url}
+                  title={file.meta?.title}
+                  alt={file.meta?.description}
+                />
+              )}
+              {file.meta.fileType === 'application/pdf' && (
+                <div
+                  onDoubleClick={onActivePreview}
+                  onClick={() => {
+                    if (selectedFile?.index !== file.index) {
+                      setSelectedFile(file)
+                    }
+                  }}>
+                  <Document file={file.url} loading={<LoadingOutlined spin />}>
+                    <Page
+                      className={'document-page'}
+                      pageNumber={1}
+                      loading={<LoadingOutlined spin />}
+                    />
+                  </Document>
+                </div>
+              )}
+            </>
           ))
         )}
       </Content>
@@ -103,12 +120,26 @@ const FileCollection: React.FC<FileCollectionProps> = ({
                 hoverable
                 style={{width: 350}}
                 cover={
-                  <AntImage
-                    alt={selectedFile.meta.description}
-                    src={selectedFile.url}
-                    style={{objectFit: 'contain', height: '25rem'}}
-                    preview={true}
-                  />
+                  <>
+                    {selectedFile.meta.fileType?.startsWith('image') && (
+                      <Image
+                        alt={selectedFile.meta.description}
+                        src={selectedFile.url}
+                        style={{objectFit: 'contain', height: '25rem'}}
+                      />
+                    )}
+                    {selectedFile.meta.fileType === 'application/pdf' && (
+                      <Document
+                        file={selectedFile.url}
+                        loading={<LoadingOutlined spin />}>
+                        <Page
+                          className={'document-page'}
+                          pageNumber={1}
+                          loading={<LoadingOutlined spin />}
+                        />
+                      </Document>
+                    )}
+                  </>
                 }>
                 <Collapse defaultActiveKey={['1', '2']} ghost>
                   <Panel header="Details" key="1">

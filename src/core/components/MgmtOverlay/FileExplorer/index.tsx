@@ -8,6 +8,7 @@ import {AppDispatch, RootState} from '~/store'
 
 import {getNextIndexedObjectKey} from '~/common/utils'
 
+import FilePreview, {PreviewTypes} from '~/components/FilePreview'
 import FileUploadButton from '~/components/FileUploadButton'
 
 import {cmsActions} from '~/store/actions'
@@ -74,6 +75,31 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
     dispatch(removeFile(index))
   }
 
+  const [showPreview, setShowPreview] = useState<{
+    src: string
+    type: PreviewTypes
+  } | null>(null)
+
+  const onFilePreview = (index: string): void => {
+    if (view === 'IMAGES') {
+      setShowPreview({
+        src: files[index].url,
+        type: 'IMAGE'
+      })
+    }
+
+    if (view === 'DOCUMENTS') {
+      setShowPreview({
+        src: files[index].url,
+        type: 'PDF'
+      })
+    }
+  }
+
+  const onClosePreview = (): void => {
+    setShowPreview(null)
+  }
+
   const [view, setView] = useState<'IMAGES' | 'VIDEOS' | 'DOCUMENTS'>('IMAGES')
 
   useEffect(() => {
@@ -81,8 +107,51 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forceUpdateTrigger, view])
 
+  const fileCollection = (): JSX.Element => {
+    const collection = Object.entries(files)
+      .map(([index, file]) => {
+        return {index, ...file}
+      })
+      .filter(e => {
+        const fileType = e.meta.fileType
+
+        if (!fileType) {
+          return false
+        }
+
+        if (view === 'IMAGES' && fileType.startsWith('image/')) {
+          return true
+        }
+
+        if (view === 'DOCUMENTS' && fileType === 'application/pdf') {
+          return true
+        }
+
+        return false
+      })
+      .reverse()
+
+    return (
+      <FileCollection
+        onFileUpdate={onFileUpdate}
+        onFileDelete={onFileDelete}
+        onFilePreview={onFilePreview}
+        files={collection}
+      />
+    )
+  }
+
   return (
     <>
+      {!!showPreview && (
+        <FilePreview
+          onClose={onClosePreview}
+          visible={!!showPreview}
+          src={showPreview.src}
+          type={showPreview.type}
+        />
+      )}
+
       <Dropzone onDrop={onUpload}>
         {({getRootProps, getInputProps, isDragActive, isDragAccept}) => (
           <div {...getRootProps()} onClick={event => event.stopPropagation()}>
@@ -122,21 +191,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
                   </Menu.Item>
                 </Menu>
               </Layout.Sider>
-              <Layout.Content>
-                {view === 'IMAGES' && (
-                  <FileCollection
-                    onFileUpdate={onFileUpdate}
-                    onFileDelete={onFileDelete}
-                    files={Object.entries(files)
-                      .map(([index, file]) => {
-                        return {index, ...file}
-                      })
-                      .reverse()}
-                  />
-                )}
-                {view === 'VIDEOS' && <FileCollection files={[]} />}
-                {view === 'DOCUMENTS' && <FileCollection files={[]} />}
-              </Layout.Content>
+              <Layout.Content>{fileCollection()}</Layout.Content>
             </Layout>
           </div>
         )}

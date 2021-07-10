@@ -12,8 +12,11 @@ import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
 import '@draft-js-plugins/linkify/lib/plugin.css'
 import 'antd/dist/antd.css'
 import 'draft-js/dist/Draft'
+import {pdfjs} from 'react-pdf'
 
 import '~/common/css/base.scss'
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
 
 export type {BC, ConnectedPageType} from '~/types'
 
