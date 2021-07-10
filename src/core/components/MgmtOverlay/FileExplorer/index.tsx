@@ -100,7 +100,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
     setShowPreview(null)
   }
 
-  const [view, setView] = useState<'IMAGE' | 'PDF'>('PDF')
+  const [view, setView] = useState<'IMAGE' | 'PDF'>('IMAGE')
 
   useEffect(() => {
     setFiles(storedFiles)
