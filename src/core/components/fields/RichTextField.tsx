@@ -9,7 +9,9 @@
  */
 import React from 'react'
 
-import EditableField, {OwnProps as RichTextFieldProps} from './EditableField'
+import EditableField, {
+  EditableFieldProps as RichTextFieldProps
+} from './EditableField'
 
 const RichTextField: React.ComponentType<RichTextFieldProps> = props => (
   <EditableField

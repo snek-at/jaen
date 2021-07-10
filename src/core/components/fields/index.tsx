@@ -15,4 +15,4 @@ export {default as EditableField} from './EditableField'
 export {default as IndexField} from './IndexField'
 export {default as StreamField} from './StreamField'
 
-export type {OwnProps as EditableFieldProps} from './EditableField'
+export type {EditableFieldProps} from './EditableField'

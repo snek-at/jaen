@@ -98,6 +98,7 @@ export const updatePageContent = createAction<{
   content: string
   fieldOptions: BlockFieldOptions
   page: PageParamsType
+  workingDataLayer: WorkingDataLayer
 }>('cms/updatePageContent')
 
 export const setHiddenChildSlugs = createAction<{

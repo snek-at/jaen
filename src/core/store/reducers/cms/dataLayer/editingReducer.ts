@@ -179,6 +179,66 @@ const editingReducer = createReducer(initialState, {
     setDeleted([slug], parentSlug)
   },
 
+  [cmsActions.updatePageContent.type]: (state, action) => {
+    const {content, fieldOptions, page, workingDataLayer} = action.payload
+
+    const {fieldName, block} = fieldOptions
+
+    const workingPageFields = workingDataLayer.pages[page.slug]?.fields || {}
+    const editingPageFields = state.pages[page.slug]?.fields || {}
+
+    if (block) {
+      const blockContent =
+        workingPageFields[fieldName]?.blocks?.[block.position]?.fields?.[
+          block.blockFieldName
+        ]
+
+      if (blockContent === content) {
+        const editingBlocks = editingPageFields[fieldName]?.blocks
+        if (editingBlocks) {
+          delete editingBlocks[block.position].fields[block.blockFieldName]
+        }
+        return
+      }
+
+      state.pages[page.slug] = {
+        ...state.pages[page.slug],
+        fields: {
+          ...editingPageFields,
+          [fieldName]: {
+            blocks: {
+              ...editingPageFields[fieldName]?.blocks,
+              [block.position]: {
+                ...editingPageFields[fieldName]?.blocks?.[block.position],
+                typeName: block.typeName,
+                fields: {
+                  ...editingPageFields[fieldName]?.blocks?.[block.position]
+                    ?.fields,
+                  [block.blockFieldName]: content
+                }
+              }
+            }
+          }
+        }
+      }
+    } else {
+      if (workingPageFields[fieldName]?.content === content) {
+        delete editingPageFields[fieldName]
+        return
+      }
+
+      state.pages[page.slug] = {
+        ...state.pages[page.slug],
+        fields: {
+          ...editingPageFields,
+          [fieldName]: {
+            content
+          }
+        }
+      }
+    }
+  },
+
   [cmsActions.setHiddenChildSlugs.type]: (state, action) => {
     const {page, hiddenChildSlugs} = action.payload
 
