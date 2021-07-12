@@ -7,8 +7,8 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {DeleteTwoTone, EyeTwoTone, LoadingOutlined} from '@ant-design/icons'
-import {Space, Button, Card, Collapse, Layout, Row, Typography} from 'antd'
+import {LoadingOutlined} from '@ant-design/icons'
+import {Layout} from 'antd'
 import {useState} from 'react'
 import {Document, Page} from 'react-pdf'
 
@@ -17,55 +17,45 @@ import {FileInfo} from '~/store/types/cms/dataLayer'
 import Image from '../Image'
 import './filecollection.scss'
 
-const {Content, Sider} = Layout
-const {Panel} = Collapse
-const {Text} = Typography
+const {Content} = Layout
 
 export type CollectionFile = {index: string} & FileInfo
 
 export type FileCollectionProps = {
   files: CollectionFile[]
+  onFileSelect?: (index: string | null) => void
   onFileUpdate?: (index: string, meta: FileInfo['meta']) => void
   onFileDelete?: (index: string) => void
   onFilePreview?: (index: string) => void
 }
 
 const FileCollection: React.FC<FileCollectionProps> = ({
-  onFileUpdate,
-  onFileDelete,
+  onFileSelect,
   onFilePreview,
   files
 }) => {
-  const [selectedFile, setSelectedFile] = useState<CollectionFile | null>(null)
+  const [selectedFileIndex, setSelectedFile] = useState<string | null>(null)
 
-  const onActiveUpdate = (updateMeta: FileInfo['meta']): void => {
-    if (selectedFile) {
-      const meta = {
-        ...selectedFile.meta,
-        ...updateMeta
-      }
-
-      setSelectedFile({...selectedFile, meta})
-
-      if (onFileUpdate) {
-        onFileUpdate(selectedFile.index, meta)
-      }
+  const onActiveSelect = (index: string | null): void => {
+    setSelectedFile(index)
+    if (onFileSelect) {
+      onFileSelect(index)
     }
   }
 
   const onActivePreview = (): void => {
-    if (onFilePreview && selectedFile) {
-      onFilePreview(selectedFile.index)
+    if (onFilePreview && selectedFileIndex) {
+      onFilePreview(selectedFileIndex)
     }
   }
 
-  const onActiveDelete = (): void => {
-    if (onFileDelete && selectedFile) {
-      onFileDelete(selectedFile.index)
+  // const onActiveDelete = (): void => {
+  //   if (onFileDelete && selectedFile) {
+  //     onFileDelete(selectedFile.index)
 
-      setSelectedFile(null)
-    }
-  }
+  //     setSelectedFile(null)
+  //   }
+  // }
 
   return (
     <Layout className="layout">
@@ -75,7 +65,7 @@ const FileCollection: React.FC<FileCollectionProps> = ({
           event.preventDefault()
 
           if (event.target === event.currentTarget) {
-            setSelectedFile(null)
+            onActiveSelect(null)
           }
         }}>
         {files.length === 0 ? (
@@ -89,13 +79,11 @@ const FileCollection: React.FC<FileCollectionProps> = ({
                 <Image
                   key={key}
                   className={`${
-                    selectedFile?.index === file.index && 'active'
+                    selectedFileIndex === file.index && 'active'
                   } element`}
                   onDoubleClick={onActivePreview}
                   onClick={() => {
-                    if (selectedFile?.index !== file.index) {
-                      setSelectedFile(file)
-                    }
+                    onActiveSelect(file.index)
                   }}
                   src={file.url}
                   title={file.meta?.title}
@@ -105,12 +93,12 @@ const FileCollection: React.FC<FileCollectionProps> = ({
               {file.meta.fileType === 'application/pdf' && (
                 <div
                   className={`${
-                    selectedFile?.index === file.index && 'active'
+                    selectedFileIndex === file.index && 'active'
                   } element`}
                   onDoubleClick={onActivePreview}
                   onClick={() => {
-                    if (selectedFile?.index !== file.index) {
-                      setSelectedFile(file)
+                    if (selectedFileIndex !== file.index) {
+                      onActiveSelect(file.index)
                     }
                   }}>
                   <Document file={file.url} loading={<LoadingOutlined spin />}>
@@ -126,73 +114,6 @@ const FileCollection: React.FC<FileCollectionProps> = ({
           ))
         )}
       </Content>
-      <Sider width={350} className="sider">
-        <Row justify="center">
-          <>
-            {selectedFile && (
-              <Card
-                hoverable
-                style={{width: 350}}
-                cover={
-                  <>
-                    {selectedFile.meta.fileType?.startsWith('image') && (
-                      <Image
-                        alt={selectedFile.meta.description}
-                        src={selectedFile.url}
-                        style={{objectFit: 'contain', height: '25rem'}}
-                      />
-                    )}
-                    {selectedFile.meta.fileType === 'application/pdf' && (
-                      <Document
-                        file={selectedFile.url}
-                        loading={<LoadingOutlined spin />}>
-                        <Page
-                          className={'document-page'}
-                          pageNumber={1}
-                          loading={<LoadingOutlined spin />}
-                        />
-                      </Document>
-                    )}
-                  </>
-                }>
-                <Collapse defaultActiveKey={['1', '2']} ghost>
-                  <Panel header="Details" key="1">
-                    <Text strong>Title: </Text>
-                    <Text
-                      editable={{
-                        onChange: value => onActiveUpdate({title: value})
-                      }}>
-                      {selectedFile.meta.title}
-                    </Text>
-
-                    <br />
-
-                    <Text strong>Des: </Text>
-                    <Text
-                      editable={{
-                        onChange: value => onActiveUpdate({description: value})
-                      }}>
-                      {selectedFile.meta.description}
-                    </Text>
-                  </Panel>
-                  <Panel header="Actions" key="2">
-                    <Space>
-                      <Button shape="round" onClick={onActivePreview}>
-                        <EyeTwoTone />
-                        Preview
-                      </Button>
-                      <Button shape="round" onClick={onActiveDelete}>
-                        <DeleteTwoTone />
-                        Delete
-                      </Button>
-                    </Space>
-                  </Panel>
-                </Collapse>
-              </Card>
-            )}
-          </>
-        </Row>
-      </Sider>
     </Layout>
   )
 }

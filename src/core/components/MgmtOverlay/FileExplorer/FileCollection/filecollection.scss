@@ -62,17 +62,3 @@
     cursor: default;
   }
 }
-
-.sider {
-  background: white;
-  height: 100%;
-
-  .document-page {
-    > * {
-      // object-fit: 'contain';
-      // height: '5rem';
-      width: 100% !important;
-      height: auto !important;
-    }
-  }
-}

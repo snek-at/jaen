@@ -7,11 +7,27 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {FileAddFilled} from '@ant-design/icons'
-import {Row, Divider, Layout, Menu} from 'antd'
+import {
+  DeleteTwoTone,
+  EyeTwoTone,
+  FileAddFilled,
+  LoadingOutlined
+} from '@ant-design/icons'
+import {
+  Row,
+  Divider,
+  Layout,
+  Menu,
+  Card,
+  Collapse,
+  Space,
+  Button,
+  Typography
+} from 'antd'
 import {omit} from 'lodash'
 import {useEffect, useState} from 'react'
 import Dropzone from 'react-dropzone'
+import {Document, Page} from 'react-pdf'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppDispatch, RootState} from '~/store'
 
@@ -26,7 +42,10 @@ import {filesSelector} from '~/store/selectors/cms'
 import {FileInfo} from '~/store/types/cms/dataLayer'
 
 import FileCollection from './FileCollection'
+import Image from './Image'
 import './fileexplorer.scss'
+
+export type IndexedFile = {index: string} & FileInfo
 
 type FileExplorerProps = {}
 
@@ -39,6 +58,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
   const storedFiles = useSelector(filesSelector)
 
   const [files, setFiles] = useState(storedFiles)
+  const [selectedFile, setSelectedFile] = useState<IndexedFile | null>(null)
 
   const onUpload = (acceptedFiles: File[]): void => {
     for (const acceptedFile of acceptedFiles) {
@@ -71,15 +91,36 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
     }
   }
 
-  const onFileUpdate = (index: string, meta: FileInfo['meta']): void => {
-    setFiles({
-      ...files,
-      [index]: {
-        ...files[index],
-        meta
+  const onFileSelect = (index: string | null): void => {
+    if (index === null) {
+      setSelectedFile(null)
+    } else {
+      if (selectedFile?.index !== index) {
+        setSelectedFile({index, ...files[index]})
       }
-    })
-    dispatch(updateFile({index, meta, combinedFiles: storedFiles}))
+    }
+  }
+
+  const onFileUpdate = (updateMeta: FileInfo['meta']): void => {
+    if (selectedFile) {
+      const meta = {
+        ...selectedFile.meta,
+        ...updateMeta
+      }
+
+      setSelectedFile({...selectedFile, meta})
+
+      const index = selectedFile.index
+
+      setFiles({
+        ...files,
+        [index]: {
+          ...files[index],
+          meta
+        }
+      })
+      dispatch(updateFile({index, meta, combinedFiles: storedFiles}))
+    }
   }
 
   const onFileDelete = (index: string): void => {
@@ -145,7 +186,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
 
     return (
       <FileCollection
-        onFileUpdate={onFileUpdate}
+        onFileSelect={onFileSelect}
         onFileDelete={onFileDelete}
         onFilePreview={onFilePreview}
         files={collection}
@@ -176,8 +217,8 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
               </div>
             )}
 
-            <Layout>
-              <Layout.Sider className="site-layout-background" width={200}>
+            <Layout className="layout">
+              <Layout.Sider width={200}>
                 <Menu
                   mode="inline"
                   defaultSelectedKeys={['1']}
@@ -200,6 +241,85 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
                 </Menu>
               </Layout.Sider>
               <Layout.Content>{fileCollection()}</Layout.Content>
+              <Layout.Sider width={350} className="sider">
+                <Row justify="center">
+                  <>
+                    {selectedFile && (
+                      <Card
+                        hoverable
+                        style={{width: 350}}
+                        cover={
+                          <>
+                            {selectedFile.meta.fileType?.startsWith(
+                              'image'
+                            ) && (
+                              <Image
+                                alt={selectedFile.meta.description}
+                                src={selectedFile.url}
+                                style={{objectFit: 'contain', height: '25rem'}}
+                              />
+                            )}
+                            {selectedFile.meta.fileType ===
+                              'application/pdf' && (
+                              <Document
+                                file={selectedFile.url}
+                                loading={<LoadingOutlined spin />}>
+                                <Page
+                                  className={'document-page'}
+                                  pageNumber={1}
+                                  loading={<LoadingOutlined spin />}
+                                />
+                              </Document>
+                            )}
+                          </>
+                        }>
+                        <Collapse defaultActiveKey={['1', '2']} ghost>
+                          <Collapse.Panel header="Details" key="1">
+                            <Typography.Text strong>Title: </Typography.Text>
+                            <Typography.Text
+                              editable={{
+                                onChange: value => onFileUpdate({title: value})
+                              }}>
+                              {selectedFile.meta.title}
+                            </Typography.Text>
+
+                            <br />
+
+                            <Typography.Text strong>Des: </Typography.Text>
+                            <Typography.Text
+                              editable={{
+                                onChange: value =>
+                                  onFileUpdate({description: value})
+                              }}>
+                              {selectedFile.meta.description}
+                            </Typography.Text>
+                          </Collapse.Panel>
+                          <Collapse.Panel header="Actions" key="2">
+                            <Space>
+                              <Button
+                                shape="round"
+                                onClick={() =>
+                                  onFilePreview(selectedFile.index)
+                                }>
+                                <EyeTwoTone />
+                                Preview
+                              </Button>
+                              <Button
+                                shape="round"
+                                onClick={() =>
+                                  onFileDelete(selectedFile.index)
+                                }>
+                                <DeleteTwoTone />
+                                Delete
+                              </Button>
+                            </Space>
+                          </Collapse.Panel>
+                        </Collapse>
+                      </Card>
+                    )}
+                  </>
+                </Row>
+              </Layout.Sider>
             </Layout>
           </div>
         )}
