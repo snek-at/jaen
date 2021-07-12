@@ -188,7 +188,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
       <FileCollection
         onFileSelect={onFileSelect}
         onFileDelete={onFileDelete}
-        onFilePreview={onFilePreview}
+        onFileDoubleClick={onFilePreview}
         files={collection}
       />
     )

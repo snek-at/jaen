@@ -26,12 +26,12 @@ export type FileCollectionProps = {
   onFileSelect?: (index: string | null) => void
   onFileUpdate?: (index: string, meta: FileInfo['meta']) => void
   onFileDelete?: (index: string) => void
-  onFilePreview?: (index: string) => void
+  onFileDoubleClick?: (index: string) => void
 }
 
 const FileCollection: React.FC<FileCollectionProps> = ({
   onFileSelect,
-  onFilePreview,
+  onFileDoubleClick,
   files
 }) => {
   const [selectedFileIndex, setSelectedFile] = useState<string | null>(null)
@@ -43,9 +43,9 @@ const FileCollection: React.FC<FileCollectionProps> = ({
     }
   }
 
-  const onActivePreview = (): void => {
-    if (onFilePreview && selectedFileIndex) {
-      onFilePreview(selectedFileIndex)
+  const onActiveDoubleClick = (): void => {
+    if (onFileDoubleClick && selectedFileIndex) {
+      onFileDoubleClick(selectedFileIndex)
     }
   }
 
@@ -81,7 +81,7 @@ const FileCollection: React.FC<FileCollectionProps> = ({
                   className={`${
                     selectedFileIndex === file.index && 'active'
                   } element`}
-                  onDoubleClick={onActivePreview}
+                  onDoubleClick={onActiveDoubleClick}
                   onClick={() => {
                     onActiveSelect(file.index)
                   }}
@@ -95,7 +95,7 @@ const FileCollection: React.FC<FileCollectionProps> = ({
                   className={`${
                     selectedFileIndex === file.index && 'active'
                   } element`}
-                  onDoubleClick={onActivePreview}
+                  onDoubleClick={onActiveDoubleClick}
                   onClick={() => {
                     if (selectedFileIndex !== file.index) {
                       onActiveSelect(file.index)
