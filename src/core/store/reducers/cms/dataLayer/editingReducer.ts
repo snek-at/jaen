@@ -7,37 +7,63 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {createReducer} from '@reduxjs/toolkit'
+import {createReducer, PayloadAction} from '@reduxjs/toolkit'
 import {union} from 'lodash'
 
 import {diff, getNextIndexedObjectKey} from '~/common/utils'
 
 import {cmsActions} from '~/store/actions'
-import {CMSState, EditingDataLayer} from '~/store/types'
+import {UpdatePageFieldActionPayload} from '~/store/actions/cms'
+import {
+  BlocksField,
+  DataLayer,
+  EditingDataLayer,
+  Field,
+  PlainField
+} from '~/store/types/cms/dataLayer'
 
-const initialState: EditingDataLayer = {
-  rootPageSlug: 'home',
-  pages: {},
-  files: {}
-}
+const initialState: EditingDataLayer = {}
 
 const editingReducer = createReducer(initialState, {
   [cmsActions.registerField.type]: (state, action) => {
     const {fieldOptions, page} = action.payload
 
-    const fields = state.pages[page.slug]?.fields?.[fieldOptions.fieldName]
+    const f = state.pages?.[page.slug]?.fields?.[fieldOptions.fieldName]
 
-    state.pages[page.slug] = {
-      ...state.pages[page.slug],
-      fields: {
-        ...state.pages[page.slug]?.fields,
-        [fieldOptions.fieldName]: {
-          ...fields,
-          blocks: {
-            ...fields?.blocks,
-            [fieldOptions.block.position]: {
-              ...fields?.blocks?.[fieldOptions.block],
-              typeName: fieldOptions.block.typeName
+    if (fieldOptions.block) {
+      const field = f as BlocksField
+
+      state.pages = {
+        ...state.pages,
+        [page.slug]: {
+          ...state.pages?.[page.slug],
+          fields: {
+            ...state.pages?.[page.slug]?.fields,
+            [fieldOptions.fieldName]: {
+              ...field,
+              _type: 'BlocksField',
+              blocks: {
+                ...field?.blocks,
+                [fieldOptions.block.position]: {
+                  typeName: fieldOptions.block.typeName
+                }
+              }
+            }
+          }
+        }
+      }
+    } else {
+      const field = f as PlainField
+
+      state.pages = {
+        ...state.pages,
+        [page.slug]: {
+          ...state.pages?.[page.slug],
+          fields: {
+            ...state.pages?.[page.slug]?.fields,
+            [fieldOptions.fieldName]: {
+              ...field,
+              _type: 'PlainField'
             }
           }
         }
@@ -49,21 +75,25 @@ const editingReducer = createReducer(initialState, {
 
     const block = fieldOptions.block
 
-    if (block) {
+    const field =
+      state.pages?.[page.slug]?.fields?.[fieldOptions.fieldName] ||
+      ({
+        _type: block ? 'BlocksField' : 'PlainField'
+      } as Field)
+
+    if (field?._type === 'BlocksField' && block) {
       state.pages = {
         ...state.pages,
         [page.slug]: {
-          ...state.pages[page.slug],
+          ...state.pages?.[page.slug],
           fields: {
-            ...state.pages[page.slug]?.fields,
+            ...state.pages?.[page.slug]?.fields,
             [fieldOptions.fieldName]: {
-              ...state.pages[page.slug]?.fields[fieldOptions.fieldName],
+              ...field,
               blocks: {
-                ...state.pages[page.slug]?.fields[fieldOptions.fieldName]
-                  ?.blocks,
+                ...field.blocks,
                 [block.position]: {
-                  ...state.pages[page.slug]?.fields[fieldOptions.fieldName]
-                    ?.blocks?.[block.position],
+                  ...field.blocks?.[block.position],
                   deleted: true
                 }
               }
@@ -71,15 +101,15 @@ const editingReducer = createReducer(initialState, {
           }
         }
       }
-    } else {
+    } else if (field?._type === 'PlainField') {
       state.pages = {
         ...state.pages,
         [page.slug]: {
-          ...state.pages[page.slug],
+          ...state.pages?.[page.slug],
           fields: {
-            ...state.pages[page.slug]?.fields,
+            ...state.pages?.[page.slug]?.fields,
             [fieldOptions.fieldName]: {
-              ...state.pages[page.slug]?.fields[fieldOptions.fieldName],
+              ...field,
               deleted: true
             }
           }
@@ -100,9 +130,9 @@ const editingReducer = createReducer(initialState, {
     state.pages = {
       ...state.pages,
       [slug]: {
-        ...state.pages[slug],
+        ...state.pages?.[slug],
         details: {
-          ...state.pages[slug]?.details,
+          ...state.pages?.[slug]?.details,
           ...diff(
             {
               slug,
@@ -124,11 +154,14 @@ const editingReducer = createReducer(initialState, {
       !pagesDetails[parentSlug].childSlugs.includes(slug) &&
       parentSlug !== slug
     ) {
-      state.pages[parentSlug] = {
-        ...state.pages[parentSlug],
-        details: {
-          ...state.pages[parentSlug]?.details,
-          childSlugs: pagesDetails[parentSlug].childSlugs.concat([slug]) || []
+      state.pages = {
+        ...state.pages,
+        [parentSlug]: {
+          ...state.pages?.[parentSlug],
+          details: {
+            ...state.pages?.[parentSlug]?.details,
+            childSlugs: pagesDetails[parentSlug].childSlugs.concat([slug]) || []
+          }
         }
       }
     }
@@ -141,34 +174,43 @@ const editingReducer = createReducer(initialState, {
     const pathParts = (key as string).split('/').filter(item => item !== '')
     const parentSlug = pathParts[pathParts.length - 2] || rootPageSlug
 
-    state.pages[slug] = {
-      ...state.pages[slug],
-      details: {
-        ...state.pages[slug]?.details,
-        deleted: true
+    state.pages = {
+      ...state.pages,
+      [slug]: {
+        ...state.pages?.[slug],
+        details: {
+          ...state.pages?.[slug]?.details,
+          deleted: true
+        }
       }
     }
 
     const setDeleted = (slugs: string[], _parentSlug: string): void => {
       for (const _slug of slugs) {
-        state.pages[_slug] = {
-          ...state.pages[_slug],
-          details: {
-            ...state.pages[_slug]?.details,
-            deleted: true
+        state.pages = {
+          ...state.pages,
+          [_slug]: {
+            ...state.pages?.[_slug],
+            details: {
+              ...state.pages?.[_slug]?.details,
+              deleted: true
+            }
           }
         }
 
-        state.pages[_parentSlug] = {
-          ...state.pages[_parentSlug],
-          details: {
-            ...state.pages[_parentSlug]?.details,
-            childSlugs: pagesDetails[_parentSlug].childSlugs.filter(
-              (e: string) => e !== _slug
-            ),
-            hiddenChildSlugs: pagesDetails[_parentSlug].hiddenChildSlugs.filter(
-              (e: string) => e !== _slug
-            )
+        state.pages = {
+          ...state.pages,
+          [_parentSlug]: {
+            ...state.pages?.[_parentSlug],
+            details: {
+              ...state.pages?.[_parentSlug]?.details,
+              childSlugs: pagesDetails[_parentSlug].childSlugs.filter(
+                (e: string) => e !== _slug
+              ),
+              hiddenChildSlugs: pagesDetails[
+                _parentSlug
+              ].hiddenChildSlugs.filter((e: string) => e !== _slug)
+            }
           }
         }
 
@@ -179,60 +221,81 @@ const editingReducer = createReducer(initialState, {
     setDeleted([slug], parentSlug)
   },
 
-  [cmsActions.updatePageContent.type]: (state, action) => {
-    const {content, fieldOptions, page, workingDataLayer} = action.payload
+  [cmsActions.updatePageField.type]: (
+    state,
+    action: PayloadAction<UpdatePageFieldActionPayload>
+  ) => {
+    const {slug, fieldDetails, workingDataLayer} = action.payload
 
-    const {fieldName, block} = fieldOptions
+    const editingPageFields = state.pages?.[slug]?.fields || {}
+    const workingPageFields = workingDataLayer.pages[slug]?.fields || {}
 
-    const workingPageFields = workingDataLayer.pages[page.slug]?.fields || {}
-    const editingPageFields = state.pages[page.slug]?.fields || {}
+    const editingField =
+      editingPageFields[fieldDetails.fieldName] ||
+      ({
+        _type: fieldDetails._type
+      } as Field)
+    const workingField = workingPageFields[fieldDetails.fieldName]
 
-    if (block) {
-      const blockContent =
-        workingPageFields[fieldName]?.blocks?.[block.position]?.fields?.[
-          block.blockFieldName
-        ]
+    if (
+      editingField?._type === 'BlocksField' &&
+      fieldDetails._type === 'BlocksField'
+    ) {
+      if (workingField?._type === 'BlocksField') {
+        const blockContent =
+          workingField.blocks?.[fieldDetails.blockPosition]?.fields?.[
+            fieldDetails.blockFieldName
+          ]
 
-      if (blockContent === content) {
-        const editingBlocks = editingPageFields[fieldName]?.blocks
-        if (editingBlocks) {
-          delete editingBlocks[block.position].fields[block.blockFieldName]
+        if (blockContent === fieldDetails.block) {
+          delete workingField.blocks?.[fieldDetails.blockPosition]?.fields?.[
+            fieldDetails.blockFieldName
+          ]
+          return
         }
-        return
       }
 
-      state.pages[page.slug] = {
-        ...state.pages[page.slug],
-        fields: {
-          ...editingPageFields,
-          [fieldName]: {
-            blocks: {
-              ...editingPageFields[fieldName]?.blocks,
-              [block.position]: {
-                ...editingPageFields[fieldName]?.blocks?.[block.position],
-                typeName: block.typeName,
-                fields: {
-                  ...editingPageFields[fieldName]?.blocks?.[block.position]
-                    ?.fields,
-                  [block.blockFieldName]: content
+      state.pages = {
+        ...state.pages,
+        [slug]: {
+          ...state.pages?.[slug],
+          fields: {
+            ...editingPageFields,
+            [fieldDetails.fieldName]: {
+              ...editingField,
+              blocks: {
+                ...editingField.blocks,
+                [fieldDetails.blockPosition]: {
+                  ...editingField.blocks?.[fieldDetails.blockPosition],
+                  fields: {
+                    ...editingField.blocks?.[fieldDetails.blockPosition]
+                      ?.fields,
+                    [fieldDetails.blockFieldName]: fieldDetails.block
+                  }
                 }
               }
             }
           }
         }
       }
-    } else {
-      if (workingPageFields[fieldName]?.content === content) {
-        delete editingPageFields[fieldName]
-        return
+    } else if (editingField?._type === 'PlainField') {
+      if (workingField?._type === 'PlainField') {
+        if (workingField.content === fieldDetails.block) {
+          delete editingPageFields[fieldDetails.fieldName]
+          return
+        }
       }
 
-      state.pages[page.slug] = {
-        ...state.pages[page.slug],
-        fields: {
-          ...editingPageFields,
-          [fieldName]: {
-            content
+      state.pages = {
+        ...state.pages,
+        [slug]: {
+          ...state.pages?.[slug],
+          fields: {
+            ...editingPageFields,
+            [fieldDetails.fieldName]: {
+              ...editingField,
+              content: fieldDetails.block
+            }
           }
         }
       }
@@ -247,7 +310,7 @@ const editingReducer = createReducer(initialState, {
     state.pages = {
       ...state.pages,
       [slug]: {
-        ...state.pages[slug],
+        ...state.pages?.[slug],
         hiddenChildSlugs
       }
     }
@@ -259,30 +322,45 @@ const editingReducer = createReducer(initialState, {
   [cmsActions.overrideWDL.fulfilled.type]: (state, action) => {
     const {dataLayer} = action.payload
 
-    const {working, editing} = dataLayer as CMSState['dataLayer']
+    const {working, editing} = dataLayer as DataLayer
 
     // merge editing pages child slugs with new workingLayer pages child slugs
     for (const [slug, page] of Object.entries(working.pages)) {
-      if (editing.pages[slug]) {
+      if (editing.pages?.[slug]) {
         const childSlugs = union(
-          state.pages[slug]?.details?.childSlugs,
+          state.pages?.[slug]?.details?.childSlugs,
           page.details?.childSlugs
         )
 
         const hiddenChildSlugs = union(
-          state.pages[slug]?.details?.hiddenChildSlugs,
+          state.pages?.[slug]?.details?.hiddenChildSlugs,
           page.details?.hiddenChildSlugs
         )
 
-        if (!state.pages[slug]?.details) {
-          state.pages[slug].details = {
-            childSlugs,
-            hiddenChildSlugs
+        if (!state.pages?.[slug]?.details) {
+          state.pages = {
+            ...state.pages,
+            [slug]: {
+              ...page,
+              details: {
+                childSlugs,
+                hiddenChildSlugs
+              }
+            }
           }
         }
 
-        state.pages[slug].details.childSlugs = childSlugs
-        state.pages[slug].details.hiddenChildSlugs = hiddenChildSlugs
+        state.pages = {
+          ...state.pages,
+          [slug]: {
+            ...state.pages[slug],
+            details: {
+              ...state.pages[slug]?.details,
+              childSlugs,
+              hiddenChildSlugs
+            }
+          }
+        }
       }
     }
   },
@@ -290,7 +368,10 @@ const editingReducer = createReducer(initialState, {
   [cmsActions.addFile.fulfilled.type]: (state, action) => {
     const {url, fileMeta, combinedFiles} = action.payload
 
-    state.files[getNextIndexedObjectKey(combinedFiles)] = {url, meta: fileMeta}
+    state.files = {
+      ...state.files,
+      [getNextIndexedObjectKey(combinedFiles)]: {url, meta: fileMeta}
+    }
   },
   [cmsActions.removeFile.type]: (state, action) => {
     const index = action.payload
@@ -298,9 +379,9 @@ const editingReducer = createReducer(initialState, {
     state.files = {
       ...state.files,
       [index]: {
-        ...state.files[index],
+        ...state.files?.[index],
         meta: {
-          ...state.files[index]?.meta,
+          ...state.files?.[index]?.meta,
           deleted: true
         }
       }
@@ -312,9 +393,9 @@ const editingReducer = createReducer(initialState, {
     state.files = {
       ...state.files,
       [index]: {
-        ...state.files[index],
+        ...state.files?.[index],
         meta: {
-          ...state.files[index]?.meta,
+          ...state.files?.[index]?.meta,
           ...diff(meta, combinedFiles[index]?.meta)
         }
       }

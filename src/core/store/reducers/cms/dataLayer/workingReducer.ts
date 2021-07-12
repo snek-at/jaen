@@ -12,7 +12,7 @@ import {createReducer} from '@reduxjs/toolkit'
 import {decrypt} from '~/common/crypt'
 
 import {cmsActions} from '~/store/actions'
-import {WorkingDataLayer} from '~/store/types'
+import {WorkingDataLayer} from '~/store/types/cms/dataLayer'
 
 const initialState: WorkingDataLayer = {
   pages: {

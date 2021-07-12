@@ -14,6 +14,10 @@ import process from 'process'
 export type AtLeastOne<T, U = {[K in keyof T]: Pick<T, K>}> = Partial<T> &
   U[keyof U]
 
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>
+}
+
 const development: boolean =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 

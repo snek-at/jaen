@@ -10,7 +10,7 @@
 import {notification} from 'antd'
 import {useEffect} from 'react'
 import {useSelector} from 'react-redux'
-import {store} from '~/types'
+import {RootState} from '~/store'
 
 const openNotificationWith = (
   type: 'success' | 'info' | 'warning' | 'error',
@@ -22,7 +22,7 @@ const openNotificationWith = (
 }
 
 const Notify: React.FC = () => {
-  const notifications = useSelector((state: store.RootState) => state.notify)
+  const notifications = useSelector((state: RootState) => state.notify)
 
   useEffect(() => {
     const error = notifications.error

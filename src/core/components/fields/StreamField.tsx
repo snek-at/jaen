@@ -12,7 +12,7 @@ import {Menu, Row, Button, Col, Dropdown, Divider} from 'antd'
 import {isEqual} from 'lodash'
 import React, {useEffect, useState, useRef} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {store} from '~/types'
+import {AppDispatch, RootState} from '~/store'
 
 import {useCMSPageContext} from '~/contexts/context'
 
@@ -35,7 +35,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
 }) => {
   const {slug, typeName} = useCMSPageContext()
   const page = {slug, typeName}
-  const dispatch = useDispatch<store.AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>()
 
   const [height, setHeight] = useState(0)
   const [width, setWidth] = useState(0)
@@ -48,7 +48,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
     }
   }, [ref.current?.clientHeight, ref.current?.clientWidth])
 
-  const editing = useSelector(({cms}: store.RootState) => cms.options.editing)
+  const editing = useSelector(({cms}: RootState) => cms.options.editing)
 
   const storeBlocks = useSelector(
     pageFieldBlocksSelector(slug, name),

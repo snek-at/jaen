@@ -13,43 +13,49 @@ import {createSelector} from '@reduxjs/toolkit'
 import deepmerge from 'deepmerge'
 import {ConnectedPageType} from '~/contexts'
 
-import {merge} from '~/common/utils'
+import {merge, RecursivePartial} from '~/common/utils'
 
 import {buildPageTree} from '~/utils/pageTree'
 
-import {store} from '..'
+import {RootState, store} from '..'
+import {TextBlock} from '../types/cms/blocks'
 import {
-  RootState,
-  PageDetails,
-  PageFieldBlocks,
-  EditingPageDetails,
-  EditingDataLayerPages,
-  PagesDetails,
-  WorkingDataLayerPages,
+  BaseDataLayer,
+  BlocksField,
+  BlocksFieldBlocks,
   DataLayerFiles,
+  EditingDataLayerPages,
+  PageDetails,
+  PagesDetails,
+  PlainField,
   WorkingDataLayer,
-  CleanDataLayer
-} from '../types'
+  WorkingDataLayerPages
+} from '../types/cms/dataLayer'
 
 export const rootPageSlugSelector = createSelector<
   RootState,
   string,
-  string,
+  string | undefined,
   string
 >(
   state => state.cms.dataLayer.working.rootPageSlug,
-  state => state.cms.dataLayer.editing.rootPageSlug,
+  state => state.cms.dataLayer.editing?.rootPageSlug,
   (wSlug, eSlug) => eSlug || wSlug
 )
 
 export const pageDetailsSelector = (slug: string) =>
-  createSelector<RootState, PageDetails, EditingPageDetails, PageDetails>(
+  createSelector<
+    RootState,
+    PageDetails,
+    RecursivePartial<PageDetails> | undefined,
+    PageDetails
+  >(
     state => state.cms.dataLayer.working.pages[slug]?.details,
-    state => state.cms.dataLayer.editing.pages[slug]?.details,
+    state => state.cms.dataLayer.editing.pages?.[slug]?.details,
     (wDetails, eDetails) =>
       deepmerge(wDetails || {}, eDetails || {}, {
         arrayMerge: (_target, source, _options) => source
-      })
+      }) as PageDetails
   )
 
 export const pagesSelector = createSelector<
@@ -80,7 +86,7 @@ export const pageTreeSelector = (registeredPages: ConnectedPageType[]) =>
     }
   )
 
-export const pageFieldContentSelector = (
+export const pageFieldTextSelector = (
   slug: string,
   fieldName: string,
   block?: {typeName: string; position: number; blockFieldName: string}
@@ -88,28 +94,64 @@ export const pageFieldContentSelector = (
   createSelector<RootState, string | undefined, string | undefined>(
     state =>
       block
-        ? state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]
-            ?.blocks?.[block.position]?.fields?.[block.blockFieldName]
-        : state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]
-            ?.content,
-    content => {
+        ? (
+            (
+              state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName] as
+                | BlocksField
+                | undefined
+            )?.blocks?.[block.position]?.fields?.[block.blockFieldName] as
+              | TextBlock
+              | undefined
+          )?.text
+        : (
+            (
+              state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName] as
+                | PlainField
+                | undefined
+            )?.content as TextBlock | undefined
+          )?.text,
+    text => {
       const editingField =
-        store.getState().cms.dataLayer.editing.pages[slug]?.fields?.[fieldName]
+        store.getState().cms.dataLayer.editing.pages?.[slug]?.fields?.[
+          fieldName
+        ]
 
-      const eContent = block
-        ? editingField?.blocks?.[block.position]?.fields?.[block.blockFieldName]
-        : editingField?.content
+      if (editingField?._type === 'PlainField') {
+        if (editingField.content?._type === 'TextBlock') {
+          return editingField.content.text || text
+        }
+      } else if (editingField?._type === 'BlocksField' && block) {
+        const blockField =
+          editingField?.blocks?.[block.position]?.fields?.[block.blockFieldName]
 
-      return eContent || content
+        if (blockField?._type === 'TextBlock') {
+          return blockField.text || text
+        }
+      }
+
+      return text
     }
   )
 
 export const pageFieldBlocksSelector = (slug: string, fieldName: string) =>
-  createSelector<RootState, PageFieldBlocks, PageFieldBlocks, PageFieldBlocks>(
+  createSelector<
+    RootState,
+    BlocksFieldBlocks | undefined,
+    BlocksFieldBlocks | undefined,
+    BlocksFieldBlocks
+  >(
     state =>
-      state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName]?.blocks,
+      (
+        state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName] as
+          | BlocksField
+          | undefined
+      )?.blocks,
     state =>
-      state.cms.dataLayer.editing.pages?.[slug]?.fields?.[fieldName]?.blocks,
+      (
+        state.cms.dataLayer.editing.pages?.[slug]?.fields?.[fieldName] as
+          | BlocksField
+          | undefined
+      )?.blocks,
     (wBlocks, eBlocks) =>
       merge(wBlocks || {}, eBlocks || {}, value => value.deleted)
   )
@@ -117,13 +159,17 @@ export const pageFieldBlocksSelector = (slug: string, fieldName: string) =>
 export const filesSelector = createSelector<
   RootState,
   DataLayerFiles | undefined,
-  DataLayerFiles,
+  RecursivePartial<DataLayerFiles> | undefined,
   DataLayerFiles
 >(
   state => state.cms.dataLayer.working.crypt.clear?.files,
   state => state.cms.dataLayer.editing.files,
   (wFiles, eFiles) => {
-    const merged = merge(wFiles || {}, eFiles, value => value.meta?.deleted)
+    const merged = merge(
+      wFiles || {},
+      eFiles || {},
+      value => value.meta?.deleted
+    )
 
     return merged
   }
@@ -132,7 +178,7 @@ export const filesSelector = createSelector<
 export const workingDLSelector = createSelector<
   RootState,
   WorkingDataLayer,
-  CleanDataLayer
+  BaseDataLayer
 >(
   state => state.cms.dataLayer.working,
   workingLayer => {

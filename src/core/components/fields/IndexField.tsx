@@ -12,16 +12,17 @@ import pickBy from 'lodash/pickBy'
 import React, {useEffect, useRef, useState} from 'react'
 import {useDispatch, useSelector, useStore} from 'react-redux'
 import {useHistory} from 'react-router'
-import {store as storeTypes} from '~/types'
+import {AppDispatch, RootState} from '~/store'
 
 import {useCMSPageContext, useCMSContext} from '~/contexts/context'
 
 import {setHiddenChildSlugs} from '~/store/actions/cms'
 import {pageDetailsSelector, pageTreeSelector} from '~/store/selectors/cms'
+import {PageDetails} from '~/store/types/cms/dataLayer'
 
 const {Option} = Select
 
-type DataElement = storeTypes.PageDetails
+type DataElement = PageDetails
 
 type IndexFieldProps = {
   outerElement(dataSource?: DataElement[]): React.ReactElement
@@ -34,8 +35,8 @@ type IndexFieldProps = {
 }
 
 const IndexField: React.FC<IndexFieldProps> = ({fixedSlug, ...props}) => {
-  const rootState = useStore<storeTypes.RootState>().getState()
-  const dispatch = useDispatch<storeTypes.AppDispatch>()
+  const rootState = useStore<RootState>().getState()
+  const dispatch = useDispatch<AppDispatch>()
   const history = useHistory()
   const {registeredPages} = useCMSContext()
   const {slug, typeName} = useCMSPageContext()
@@ -46,9 +47,7 @@ const IndexField: React.FC<IndexFieldProps> = ({fixedSlug, ...props}) => {
 
   const {indexKeyRefs} = useSelector(pageTreeSelector(registeredPages))
 
-  const editing = useSelector(
-    (state: storeTypes.RootState) => state.cms.options.editing
-  )
+  const editing = useSelector((state: RootState) => state.cms.options.editing)
 
   const [height, setHeight] = useState(0)
   const [width, setWidth] = useState(0)

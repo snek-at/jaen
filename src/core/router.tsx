@@ -13,15 +13,16 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
-import {store as storeTypes, ConnectedPageType} from '~/types'
+import {ConnectedPageType} from '~/types'
 
 import {useCMSContext} from './contexts/context'
 import PageProvider from './contexts/pageProvider'
+import {PagesDetails} from './store/types/cms/dataLayer'
 
 export const generateRoutes = (
   registeredPages: ConnectedPageType[],
   rootPageSlug: string,
-  pagesDetails: storeTypes.PagesDetails
+  pagesDetails: PagesDetails
 ): JSX.Element[] => {
   const findPageComponent = (typeName: string): ConnectedPageType | undefined =>
     registeredPages.find(page => page.PageType === typeName)

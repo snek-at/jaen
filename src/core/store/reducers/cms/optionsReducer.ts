@@ -10,9 +10,9 @@
 import {createReducer} from '@reduxjs/toolkit'
 
 import {cmsActions} from '~/store/actions'
-import {CMSOptions} from '~/store/types'
+import {CMSState} from '~/store/types'
 
-const initialState: CMSOptions = {
+const initialState: CMSState['options'] = {
   editing: false
 }
 

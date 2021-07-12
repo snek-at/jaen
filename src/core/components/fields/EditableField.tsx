@@ -15,8 +15,9 @@ import {components} from '~/types'
 
 import SidebarEditor, {ButtonOptions} from '~/components/Editor'
 
-import {updatePageContent} from '~/store/actions/cms'
-import {pageFieldContentSelector} from '~/store/selectors/cms'
+import {updatePageField} from '~/store/actions/cms'
+import {pageFieldTextSelector} from '~/store/selectors/cms'
+import {FieldUpdateDetails} from '~/store/types/cms/dataLayer'
 
 import './fields.scss'
 
@@ -33,7 +34,7 @@ export type EditableFieldProps = {
 export const EditableField: React.FC<EditableFieldProps> = ({...props}) => {
   const dispatch = useDispatch<AppDispatch>()
   const {buttonOptions, fieldOptions, ...subProps} = props
-  const {slug, typeName} = context.useCMSPageContext()
+  const {slug} = context.useCMSPageContext()
   const {fieldName, block} = fieldOptions
 
   const editable = useSelector((state: RootState) => state.cms.options.editing)
@@ -42,7 +43,7 @@ export const EditableField: React.FC<EditableFieldProps> = ({...props}) => {
     (state: RootState) => state.cms.dataLayer.working
   )
 
-  const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
+  const content = useSelector(pageFieldTextSelector(slug, fieldName, block))
   const resetTrigger = useSelector(
     (state: RootState) => state.cms.dataLayer.values.forceUpdateTrigger
   )
@@ -51,16 +52,39 @@ export const EditableField: React.FC<EditableFieldProps> = ({...props}) => {
     <div>
       <div className={editable ? 'field' : ''} {...subProps}>
         <SidebarEditor
-          onChange={newContent =>
+          onChange={newContent => {
+            let fieldDetails: FieldUpdateDetails
+
+            if (block) {
+              fieldDetails = {
+                _type: 'BlocksField',
+                blockFieldName: block.blockFieldName,
+                blockPosition: block.position,
+                fieldName,
+                block: {
+                  _type: 'TextBlock',
+                  text: newContent
+                }
+              }
+            } else {
+              fieldDetails = {
+                _type: 'PlainField',
+                fieldName,
+                block: {
+                  _type: 'TextBlock',
+                  text: newContent
+                }
+              }
+            }
+
             dispatch(
-              updatePageContent({
-                content: newContent,
-                fieldOptions,
-                page: {slug, typeName},
+              updatePageField({
+                slug,
+                fieldDetails,
                 workingDataLayer
               })
             )
-          }
+          }}
           text={content}
           buttonOptions={buttonOptions}
           editable={editable}

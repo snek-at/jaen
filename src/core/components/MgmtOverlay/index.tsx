@@ -19,7 +19,7 @@ import {
 } from '@ant-design/icons'
 import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {store as storeTypes} from '~/types'
+import {AppDispatch, RootState} from '~/store'
 
 import LoginModal from '~/components/modals/Login'
 
@@ -34,17 +34,13 @@ import PublishModal from './modals/Publish'
 import SiteMenu from './modals/SiteMenu'
 
 const MgmtOverlay: React.FC = () => {
-  const dispatch = useDispatch<storeTypes.AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>()
 
   const [showLoginModal, setShowLoginModal] = useState(false)
 
-  const {loading, authenticated} = useSelector(
-    (state: storeTypes.RootState) => state.auth
-  )
+  const {loading, authenticated} = useSelector((state: RootState) => state.auth)
 
-  const editing = useSelector(
-    (state: storeTypes.RootState) => state.cms.options.editing
-  )
+  const editing = useSelector((state: RootState) => state.cms.options.editing)
 
   useEffect(() => {
     dispatch(login({}))

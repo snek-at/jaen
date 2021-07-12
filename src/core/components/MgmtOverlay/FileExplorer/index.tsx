@@ -23,7 +23,7 @@ import FileUploadButton from '~/components/FileUploadButton'
 import {cmsActions} from '~/store/actions'
 import {removeFile, updateFile} from '~/store/actions/cms'
 import {filesSelector} from '~/store/selectors/cms'
-import {FileInfo} from '~/store/types'
+import {FileInfo} from '~/store/types/cms/dataLayer'
 
 import FileCollection from './FileCollection'
 import './fileexplorer.scss'

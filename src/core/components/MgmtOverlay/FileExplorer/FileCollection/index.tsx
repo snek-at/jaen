@@ -12,7 +12,7 @@ import {Space, Button, Card, Collapse, Layout, Row, Typography} from 'antd'
 import {useState} from 'react'
 import {Document, Page} from 'react-pdf'
 
-import {FileInfo} from '~/store/types'
+import {FileInfo} from '~/store/types/cms/dataLayer'
 
 import Image from '../Image'
 import './filecollection.scss'

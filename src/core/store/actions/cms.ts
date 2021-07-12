@@ -20,16 +20,17 @@ import {BlockFieldOptions} from '~/components/blocks'
 import {ipfsActions} from '.'
 import {RootState} from '..'
 import {combinedDLSelector} from '../selectors/cms'
+import {CMSState} from '../types'
 import {
-  CMSSettings,
   DataLayerFiles,
   EditingDataLayer,
+  FieldUpdateDetails,
   FileInfo,
   PagesDetails,
   WorkingDataLayer
-} from '../types'
+} from '../types/cms/dataLayer'
 
-export const setSettings = createAction<CMSSettings>('cms/setSettings')
+export const setSettings = createAction<CMSState['settings']>('cms/setSettings')
 
 export const registerField = createAction<{
   fieldOptions: BlockFieldOptions
@@ -94,12 +95,14 @@ export const overrideWDL: any = createAsyncThunk<
 export const toggleEditing = createAction<boolean>('cms/toggleEditing')
 export const discardEditing = createAction('cms/discardEditing')
 
-export const updatePageContent = createAction<{
-  content: string
-  fieldOptions: BlockFieldOptions
-  page: PageParamsType
+export type UpdatePageFieldActionPayload = {
+  slug: string
+  fieldDetails: FieldUpdateDetails
   workingDataLayer: WorkingDataLayer
-}>('cms/updatePageContent')
+}
+export const updatePageField = createAction<UpdatePageFieldActionPayload>(
+  'cms/updatePageField'
+)
 
 export const setHiddenChildSlugs = createAction<{
   page: PageParamsType
