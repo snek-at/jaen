@@ -41,8 +41,12 @@ export type BaseDataLayer = {
         fileType: string
         title: string
         description: string
-        deleted?: boolean
       }>
+      /**
+       * Contains a list of fieldNames that uses a specifc image
+       */
+      refs: string[]
+      deleted?: boolean
     }
   }
 }

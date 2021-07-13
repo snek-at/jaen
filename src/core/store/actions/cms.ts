@@ -169,7 +169,18 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
 
       const combinedLayer = combinedDLSelector(state)
 
-      // Encrypt some sections of layer
+      // Make a object from combinedLayer.files which contains files that refs list is not empty and preserve index
+      const usedFiles = Object.keys(combinedLayer.files).reduce(
+        (acc: DataLayerFiles, key) => {
+          const file = combinedLayer.files[key]
+          if (file.refs.length > 0) {
+            acc[key] = file
+          }
+          return acc
+        },
+        {}
+      )
+
       const clear = {files: combinedLayer.files}
       const cipher = encrypt(clear, state.auth.secret)
 
@@ -177,7 +188,8 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         rootPageSlug: combinedLayer.rootPageSlug,
         pages: combinedLayer.pages,
         crypt: {
-          cipher
+          cipher,
+          clear: {files: usedFiles}
         }
       }
 
@@ -236,3 +248,17 @@ export const updateFile = createAction<{
   meta: FileInfo['meta']
   combinedFiles: DataLayerFiles
 }>('cms/updateFile')
+
+export type FileRefActionPayload = {
+  /**
+   * fielRef:
+   *
+   * for PlainField: pageSlug + fieldName => home.heading
+   * for BlocksField: pageSlug + fieldName + position + blockFieldName => home.timeline.0.title
+   */
+  fieldRef: string
+  fileIndex: string
+}
+export const setFileRef = createAction<FileRefActionPayload>('cms/setFileRef')
+export const unsetFileRef =
+  createAction<FileRefActionPayload>('cms/unsetFileRef')

@@ -11,7 +11,8 @@ import {
   DeleteTwoTone,
   EyeTwoTone,
   FileAddFilled,
-  LoadingOutlined
+  LoadingOutlined,
+  SwapOutlined
 } from '@ant-design/icons'
 import {
   Row,
@@ -47,10 +48,17 @@ import './fileexplorer.scss'
 
 export type IndexedFile = {index: string} & FileInfo
 
-type FileExplorerProps = {}
+type View = 'IMAGE' | 'PDF'
 
-const FileExplorer: React.FC<FileExplorerProps> = () => {
+type FileExplorerProps = {
+  chooserView?: View
+  onChoose?: (fileIndex: string) => void
+}
+
+const FileExplorer: React.FC<FileExplorerProps> = ({chooserView, onChoose}) => {
   const dispatch = useDispatch<AppDispatch>()
+  // eslint-disable-next-line no-console
+  console.log('chooserView', chooserView)
 
   const forceUpdateTrigger = useSelector(
     (state: RootState) => state.cms.dataLayer.values.forceUpdateTrigger
@@ -76,7 +84,8 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
             ...files,
             [getNextIndexedObjectKey(files)]: {
               url: dataUrl,
-              meta
+              meta,
+              refs: []
             }
           })
         }
@@ -149,11 +158,18 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
     }
   }
 
+  const onFileChoose = (index: string): void => {
+    // call onChoose if defined and index present in storedFiles
+    if (onChoose && storedFiles[index]) {
+      onChoose(index)
+    }
+  }
+
   const onClosePreview = (): void => {
     setShowPreview(null)
   }
 
-  const [view, setView] = useState<'IMAGE' | 'PDF'>('IMAGE')
+  const [view, setView] = useState<View>(chooserView || 'IMAGE')
 
   useEffect(() => {
     setFiles(storedFiles)
@@ -188,7 +204,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
       <FileCollection
         onFileSelect={onFileSelect}
         onFileDelete={onFileDelete}
-        onFileDoubleClick={onFilePreview}
+        onFileDoubleClick={chooserView ? onFileChoose : onFilePreview}
         files={collection}
       />
     )
@@ -221,7 +237,7 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
               <Layout.Sider width={200}>
                 <Menu
                   mode="inline"
-                  defaultSelectedKeys={['1']}
+                  defaultSelectedKeys={chooserView === 'IMAGE' ? ['1'] : ['2']}
                   style={{height: '100%'}}>
                   <Row justify="center">
                     <FileUploadButton onUpload={onUpload} />
@@ -229,13 +245,19 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
                   <Divider plain orientation="left">
                     Media
                   </Divider>
-                  <Menu.Item key="1" onClick={() => setView('IMAGE')}>
+                  <Menu.Item
+                    key="1"
+                    onClick={() => setView('IMAGE')}
+                    disabled={chooserView && chooserView !== 'IMAGE'}>
                     Images
                   </Menu.Item>
                   <Divider plain orientation="left">
                     Documents
                   </Divider>
-                  <Menu.Item key="2" onClick={() => setView('PDF')}>
+                  <Menu.Item
+                    key="2"
+                    onClick={() => setView('PDF')}
+                    disabled={chooserView && chooserView !== 'PDF'}>
                     PDFs
                   </Menu.Item>
                 </Menu>
@@ -295,23 +317,36 @@ const FileExplorer: React.FC<FileExplorerProps> = () => {
                             </Typography.Text>
                           </Collapse.Panel>
                           <Collapse.Panel header="Actions" key="2">
-                            <Space>
-                              <Button
-                                shape="round"
-                                onClick={() =>
-                                  onFilePreview(selectedFile.index)
-                                }>
-                                <EyeTwoTone />
-                                Preview
-                              </Button>
-                              <Button
-                                shape="round"
-                                onClick={() =>
-                                  onFileDelete(selectedFile.index)
-                                }>
-                                <DeleteTwoTone />
-                                Delete
-                              </Button>
+                            <Space direction="vertical">
+                              {chooserView && (
+                                <Button
+                                  shape="round"
+                                  onClick={() =>
+                                    onFileChoose(selectedFile.index)
+                                  }>
+                                  <SwapOutlined />
+                                  Choose
+                                </Button>
+                              )}
+
+                              <Space>
+                                <Button
+                                  shape="round"
+                                  onClick={() =>
+                                    onFilePreview(selectedFile.index)
+                                  }>
+                                  <EyeTwoTone />
+                                  Preview
+                                </Button>
+                                <Button
+                                  shape="round"
+                                  onClick={() =>
+                                    onFileDelete(selectedFile.index)
+                                  }>
+                                  <DeleteTwoTone />
+                                  Delete
+                                </Button>
+                              </Space>
                             </Space>
                           </Collapse.Panel>
                         </Collapse>

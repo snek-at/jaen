@@ -13,7 +13,10 @@ import {union} from 'lodash'
 import {diff, getNextIndexedObjectKey} from '~/common/utils'
 
 import {cmsActions} from '~/store/actions'
-import {UpdatePageFieldActionPayload} from '~/store/actions/cms'
+import {
+  FileRefActionPayload,
+  UpdatePageFieldActionPayload
+} from '~/store/actions/cms'
 import {
   BlocksField,
   DataLayer,
@@ -370,7 +373,7 @@ const editingReducer = createReducer(initialState, {
 
     state.files = {
       ...state.files,
-      [getNextIndexedObjectKey(combinedFiles)]: {url, meta: fileMeta}
+      [getNextIndexedObjectKey(combinedFiles)]: {url, meta: fileMeta, refs: []}
     }
   },
   [cmsActions.removeFile.type]: (state, action) => {
@@ -381,9 +384,9 @@ const editingReducer = createReducer(initialState, {
       [index]: {
         ...state.files?.[index],
         meta: {
-          ...state.files?.[index]?.meta,
-          deleted: true
-        }
+          ...state.files?.[index]?.meta
+        },
+        deleted: true
       }
     }
   },
@@ -398,6 +401,37 @@ const editingReducer = createReducer(initialState, {
           ...state.files?.[index]?.meta,
           ...diff(meta, combinedFiles[index]?.meta)
         }
+      }
+    }
+  },
+  [cmsActions.setFileRef.type]: (
+    state,
+    action: PayloadAction<FileRefActionPayload>
+  ) => {
+    const {fieldRef, fileIndex} = action.payload
+
+    state.files = {
+      ...state.files,
+      [fileIndex]: {
+        ...state.files?.[fileIndex]
+      }
+    }
+
+    if (!state.files?.[fileIndex]?.refs?.includes(fieldRef)) {
+      state.files?.[fileIndex]?.refs?.push(fieldRef)
+    }
+  },
+  [cmsActions.unsetFileRef.type]: (
+    state,
+    action: PayloadAction<FileRefActionPayload>
+  ) => {
+    const {fieldRef, fileIndex} = action.payload
+
+    state.files = {
+      ...state.files,
+      [fileIndex]: {
+        ...state.files?.[fileIndex],
+        refs: state.files?.[fileIndex]?.refs?.filter(e => e !== fieldRef)
       }
     }
   }

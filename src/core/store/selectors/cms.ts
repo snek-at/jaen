@@ -18,7 +18,7 @@ import {merge, RecursivePartial} from '~/common/utils'
 import {buildPageTree} from '~/utils/pageTree'
 
 import {RootState, store} from '..'
-import {TextBlock} from '../types/cms/blocks'
+import {ContentBlocks, TextBlock} from '../types/cms/blocks'
 import {
   BaseDataLayer,
   BlocksField,
@@ -133,6 +133,53 @@ export const pageFieldTextSelector = (
     }
   )
 
+export const pageFieldContentSelector = (
+  slug: string,
+  fieldName: string,
+  block?: {typeName: string; position: number; blockFieldName: string}
+) =>
+  createSelector<
+    RootState,
+    ContentBlocks | undefined,
+    RecursivePartial<ContentBlocks> | undefined
+  >(
+    state =>
+      block
+        ? (
+            state.cms.dataLayer.working.pages?.[slug].fields?.[fieldName] as
+              | BlocksField
+              | undefined
+          )?.blocks?.[block.position]?.fields?.[block.blockFieldName]
+        : (
+            state.cms.dataLayer.working.pages?.[slug].fields?.[fieldName] as
+              | PlainField
+              | undefined
+          )?.content,
+    field => {
+      const editingField =
+        store.getState().cms.dataLayer.editing.pages?.[slug]?.fields?.[
+          fieldName
+        ]
+
+      if (editingField) {
+        if (editingField._type === 'PlainField') {
+          return editingField.content
+        }
+
+        if (editingField._type === 'BlocksField' && block) {
+          const blockField =
+            editingField?.blocks?.[block.position]?.fields?.[
+              block.blockFieldName
+            ]
+
+          return blockField
+        }
+      }
+
+      return field
+    }
+  )
+
 export const pageFieldBlocksSelector = (slug: string, fieldName: string) =>
   createSelector<
     RootState,
@@ -174,6 +221,11 @@ export const filesSelector = createSelector<
     return merged
   }
 )
+
+export const fileSelector = (index: string) =>
+  createSelector([filesSelector], files => {
+    return files[index]
+  })
 
 export const workingDLSelector = createSelector<
   RootState,

@@ -96,7 +96,7 @@ const MgmtOverlay: React.FC = () => {
               text: 'Files',
               icon: <FileImageOutlined />,
               onClick: () => null,
-              renderElementOnClick: <FilesModal />
+              renderElementOnClick: <FilesModal onClose={() => null} />
             },
             {
               text: 'Publish',
