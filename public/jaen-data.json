@@ -1,6 +1,29 @@
 {
   "dataLayer": {
     "working": {
+      "crypt": {
+        "cipher": "U2FsdGVkX1/nttgqUUQ0AfDXXWBUHsTQkK2yHIh9LKei0guO6nX8ezAUF/Z1LPUdoJQBnyVgyxWcmWL/t4lbbuyaliiq/Kn6+VSroooKyYqBQOG2dGYhgiVPhtBZWdbIDiRhBwT7r6zdsBvvpYeOxB4k6YS2Du3Liy8WHe4FsTejZJCZmvQXE3VU/KK/qYXbY810V78CdZIDptsjc8gHyD3roumGvs7wbhaDxQynGjb4bUYU7c+YNckSDHZN/9k+oR9K2XKlnv7xB3Bn1H4vlJo/3mfAAkJwzrvWrlhbDDJpujJoUzlDDsa7/qcDAzlZHwYn5F38waOnmGOsspauJdGxkQvOw1NKFeQY/DWv6YcphuWrLo41I+NRCG1fPd5GAOfGpOhR7SVG9d32OdrWN1UA6sifSSAwcMLZToPuo6GPa47EqXVCtbo94xa2tov4mHjLl5Z5gGs5AvuNsr3LgtHg0bI0BVjPa9FwLSHV4slO1KpSO0T2ZbFtVvF03poH1zLpWc0m5+0mvMZWllWeeIASZVIZ3EdPdAz/neTQGvEAZd/dwOoGfbcxdT04a0OPXuaOcult5ZYRv7JnSIMW8MTEBzduO6pHQehCxhA/QlIb7gmSnr8b1Bs2bjFAJ3R4eK4I1MyzvpnAPk+IkKv3Baeu8h5hEQRlwV6jP5gROefejbVhmEXbFXjQMugY/6qHslXSy27AUOrvDhnkzHj/TPR+URL3kFWH7ZP+Pm8KD9Qt0Axl/fBSgRKgWEWenLLv6QbtkH6NqQUSQSbr2/535vmQf5BYPQ98mNQJXLkvXj0=",
+        "clear": {
+          "files": {
+            "0": {
+              "meta": {
+                "fileType": "application/pdf",
+                "title": "Teamführung und Kommunikation.pdf"
+              },
+              "refs": ["home.pdf"],
+              "url": "https://ipfs.io/ipfs/QmQmPvcbzg6jHisT66eiAZgmZWRVFoLhthg2MZyJsZa6Ho"
+            },
+            "1": {
+              "meta": {
+                "fileType": "image/jpeg",
+                "title": "1200px-2018-05-02-Bushido-Maischberger-8748.jpg"
+              },
+              "refs": ["home.heroimage"],
+              "url": "https://ipfs.io/ipfs/QmdQaob7skeF5nqPczUJdQwfKBJ7f2SqbnWezqL4heCL5Z"
+            }
+          }
+        }
+      },
       "pages": {
         "home": {
           "details": {
@@ -10,7 +33,22 @@
             "title": "Default HomePage",
             "typeName": "HomePage"
           },
-          "fields": {}
+          "fields": {
+            "heroimage": {
+              "_type": "PlainField",
+              "content": {
+                "_type": "FileBlock",
+                "index": "1"
+              }
+            },
+            "pdf": {
+              "_type": "PlainField",
+              "content": {
+                "_type": "FileBlock",
+                "index": "0"
+              }
+            }
+          }
         }
       },
       "rootPageSlug": "home"
