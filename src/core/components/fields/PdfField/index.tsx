@@ -7,7 +7,7 @@ import {components} from '~/types'
 import FilesModal from '~/components/MgmtOverlay/modals/Files'
 import PdfViewer from '~/components/PdfViewer'
 
-import {updatePageField, setFileRef} from '~/store/actions/cms'
+import {updatePageField, setFileRef, unsetFileRef} from '~/store/actions/cms'
 import {pageFieldContentSelector, fileSelector} from '~/store/selectors/cms'
 import {FileBlock} from '~/store/types/cms/blocks'
 import {FieldUpdateDetails} from '~/store/types/cms/dataLayer'
@@ -40,9 +40,9 @@ const PdfField: React.FC<PdfFieldProps> = ({
   )
 
   const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
+  const index = (content as FileBlock)?.index
 
-  const file =
-    useSelector(fileSelector((content as FileBlock)?.index)) || defaultPdf
+  const file = useSelector(fileSelector(index)) || defaultPdf
 
   const [showModal, setShowModal] = useState(false)
 
@@ -59,7 +59,7 @@ const PdfField: React.FC<PdfFieldProps> = ({
       {showModal && (
         <FilesModal
           mode="CHOOSER_PDF"
-          onChoose={index => {
+          onChoose={newIndex => {
             setShowModal(false)
 
             let fieldDetails: FieldUpdateDetails
@@ -73,7 +73,7 @@ const PdfField: React.FC<PdfFieldProps> = ({
                 fieldName,
                 block: {
                   _type: 'FileBlock',
-                  index
+                  index: newIndex
                 }
               }
 
@@ -84,7 +84,7 @@ const PdfField: React.FC<PdfFieldProps> = ({
                 fieldName,
                 block: {
                   _type: 'FileBlock',
-                  index
+                  index: newIndex
                 }
               }
 
@@ -99,7 +99,11 @@ const PdfField: React.FC<PdfFieldProps> = ({
               })
             )
 
-            dispatch(setFileRef({fieldRef, fileIndex: index}))
+            if (index) {
+              dispatch(unsetFileRef({fieldRef, fileIndex: index}))
+            }
+
+            dispatch(setFileRef({fieldRef, fileIndex: newIndex}))
           }}
           onClose={() => setShowModal(false)}
         />

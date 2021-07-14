@@ -413,7 +413,8 @@ const editingReducer = createReducer(initialState, {
     state.files = {
       ...state.files,
       [fileIndex]: {
-        ...state.files?.[fileIndex]
+        ...state.files?.[fileIndex],
+        refs: state.files?.[fileIndex]?.refs || []
       }
     }
 
