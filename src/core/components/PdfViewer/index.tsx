@@ -1,3 +1,12 @@
+/**
+ * @license
+ *
+ * SPDX-FileCopyrightText: Copyright © 2021 snek.at
+ * SPDX-License-Identifier: EUPL-1.2
+ *
+ * Use of this source code is governed by an EUPL-1.2 license that can be found
+ * in the LICENSE file at https://snek.at/license
+ */
 import {SpecialZoomLevel, Viewer, Worker} from '@react-pdf-viewer/core'
 import '@react-pdf-viewer/core/lib/styles/index.css'
 import {defaultLayoutPlugin} from '@react-pdf-viewer/default-layout'
