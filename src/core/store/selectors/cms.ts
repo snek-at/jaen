@@ -172,7 +172,7 @@ export const pageFieldContentSelector = (
               block.blockFieldName
             ]
 
-          return blockField
+          return blockField || field
         }
       }
 
