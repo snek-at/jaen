@@ -14,7 +14,7 @@ import {FieldUpdateDetails} from '~/store/types/cms/dataLayer'
 import * as S from './style'
 
 const defaultImage = {
-  url: 'https://i.pinimg.com/originals/22/4e/77/224e771c14280dc2cc6ba4e9e95155eb.jpg',
+  url: 'https://via.placeholder.com/300?text=Select%20a%20image',
   meta: {
     title: 'No image selected',
     description: 'No image selected'
