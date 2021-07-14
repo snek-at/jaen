@@ -1,14 +1,6 @@
 import styled, {css} from 'styled-components'
 
-export const DropDown = styled.div`
-  transition: 0.2s all;
-  -webkit-transition: 0.2s all;
-  background: purple;
-  display: inline-block;
-`
-
-export const PdfViewer = styled.div`
-  height: 90vh;
+export const Pdf = styled.div`
   transition: 0.2s all;
   -webkit-transition: 0.2s all;
 

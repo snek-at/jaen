@@ -43,20 +43,18 @@ const PdfField: React.FC<PdfFieldProps> = ({
 
   const file =
     useSelector(fileSelector((content as FileBlock)?.index)) || defaultPdf
-  // eslint-disable-next-line no-console
-  console.log('content', content)
 
   const [showModal, setShowModal] = useState(false)
 
   return (
     <>
-      <S.PdfViewer
+      <S.Pdf
         onClick={() => editable && setShowModal(true)}
         editable={editable}
         className={pdfClassName}
         style={pdfStyle}>
         <PdfViewer src={file.url} />
-      </S.PdfViewer>
+      </S.Pdf>
 
       {showModal && (
         <FilesModal

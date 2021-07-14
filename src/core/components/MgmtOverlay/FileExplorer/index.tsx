@@ -57,8 +57,6 @@ type FileExplorerProps = {
 
 const FileExplorer: React.FC<FileExplorerProps> = ({chooserView, onChoose}) => {
   const dispatch = useDispatch<AppDispatch>()
-  // eslint-disable-next-line no-console
-  console.log('chooserView', chooserView)
 
   const forceUpdateTrigger = useSelector(
     (state: RootState) => state.cms.dataLayer.values.forceUpdateTrigger
@@ -237,7 +235,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({chooserView, onChoose}) => {
               <Layout.Sider width={200}>
                 <Menu
                   mode="inline"
-                  defaultSelectedKeys={chooserView === 'IMAGE' ? ['1'] : ['2']}
+                  defaultSelectedKeys={chooserView === 'PDF' ? ['2'] : ['1']}
                   style={{height: '100%'}}>
                   <Row justify="center">
                     <FileUploadButton onUpload={onUpload} />

@@ -27,6 +27,10 @@ export {
   SimpleTextField,
   SimpleRichTextField,
   IndexField,
-  StreamField
+  StreamField,
+  ImageField,
+  SimpleImageField,
+  PdfField,
+  SimplePdfField
 } from './components/fields'
 export {CMSProvider} from './contexts'

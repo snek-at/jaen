@@ -6,9 +6,9 @@ import '@react-pdf-viewer/print/lib/styles/index.css'
 
 import * as S from './style'
 
-type PdfViewerProps = {src: string}
+type PdfViewerProps = {src: string; toolbar?: boolean}
 
-const PdfViewer: React.FC<PdfViewerProps> = ({src}) => {
+const PdfViewer: React.FC<PdfViewerProps> = ({src, toolbar = false}) => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin({
     toolbarPlugin: {
       printPlugin: {
@@ -27,8 +27,9 @@ const PdfViewer: React.FC<PdfViewerProps> = ({src}) => {
           fileUrl={src}
           initialPage={0}
           theme="dark"
-          defaultScale={SpecialZoomLevel.PageFit}
-          plugins={[defaultLayoutPluginInstance]}
+          defaultScale={SpecialZoomLevel.PageWidth}
+          // set plugins if toolbar is enabled
+          plugins={toolbar ? [defaultLayoutPluginInstance] : []}
         />
       </S.PdfViewer>
     </Worker>

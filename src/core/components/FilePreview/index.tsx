@@ -91,7 +91,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({
         {src && (
           <>
             {type === 'IMAGE' && <S.Image scale={scale} alt="" src={src} />}
-            {type === 'PDF' && <PdfViewer src={src} />}
+            {type === 'PDF' && <PdfViewer src={src} toolbar />}
           </>
         )}
       </S.Content>
