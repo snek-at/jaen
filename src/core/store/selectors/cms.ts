@@ -212,11 +212,7 @@ export const filesSelector = createSelector<
   state => state.cms.dataLayer.working.crypt.clear?.files,
   state => state.cms.dataLayer.editing.files,
   (wFiles, eFiles) => {
-    const merged = merge(
-      wFiles || {},
-      eFiles || {},
-      value => value.meta?.deleted
-    )
+    const merged = merge(wFiles || {}, eFiles || {}, value => value.deleted)
 
     return merged
   }
