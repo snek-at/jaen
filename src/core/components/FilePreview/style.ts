@@ -41,12 +41,10 @@ export const Header = styled.div`
 
 export const HeaderElement = styled.div`
   cursor: pointer;
-
   text-align: right;
   display: flex;
   color: white;
   align-items: center;
-
   font-size: 1rem;
 
   > * {

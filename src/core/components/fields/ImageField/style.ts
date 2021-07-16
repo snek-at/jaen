@@ -19,7 +19,6 @@ export const DropDown = styled.div`
 export const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
-
   transition: 0.2s all;
   -webkit-transition: 0.2s all;
 
@@ -31,7 +30,6 @@ export const Image = styled.img`
       &:hover {
         filter: brightness(70%);
         -webkit-filter: brightness(70%);
-
         cursor: pointer;
       }
     `};
