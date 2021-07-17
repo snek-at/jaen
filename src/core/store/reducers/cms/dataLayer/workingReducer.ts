@@ -7,7 +7,7 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {createReducer} from '@reduxjs/toolkit'
+import {createReducer, PayloadAction} from '@reduxjs/toolkit'
 
 import {decrypt} from '~/common/crypt'
 
@@ -38,21 +38,23 @@ const initialState: WorkingDataLayer = {
 
 const workingReducer = createReducer(initialState, {
   [cmsActions.publish.fulfilled.type]: (_state, action) => action.payload,
-  [cmsActions.overrideWDL.fulfilled.type]: (state, action) => {
-    const {dataLayer, key} = action.payload
+  [cmsActions.overrideWDL.fulfilled.type]: (_state, action) =>
+    action.payload.dataLayer.working,
+  [cmsActions.decryptWDL.type]: (
+    state,
+    action: PayloadAction<cmsActions.DecryptWDLPayload>
+  ) => {
+    const {encryptionToken} = action.payload
 
-    if (key) {
-      const ciphertext = dataLayer.working.crypt.cipher
+    if (encryptionToken) {
+      const ciphertext = state.crypt.cipher
 
       if (ciphertext) {
         state.crypt = {
-          clear: decrypt<typeof state.crypt.clear>(ciphertext, key)
+          clear: decrypt<typeof state.crypt.clear>(ciphertext, encryptionToken)
         }
       }
     }
-
-    state.rootPageSlug = dataLayer.working.rootPageSlug
-    state.pages = dataLayer.working.pages
   }
 })
 

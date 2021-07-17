@@ -33,7 +33,7 @@ export const login = createAsyncThunk(
         throw new Error('Starting session failed')
       }
 
-      thunkAPI.dispatch(fetchMyJaenAccount())
+      await thunkAPI.dispatch(fetchMyJaenAccount())
 
       return session
     } catch (err) {

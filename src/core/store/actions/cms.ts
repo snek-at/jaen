@@ -65,7 +65,6 @@ export const overrideWDL: any = createAsyncThunk<
       editing: EditingDataLayer
     }
     checksum: string
-    key: string | undefined
   },
   {
     workingDataLayer: WorkingDataLayer
@@ -81,8 +80,7 @@ export const overrideWDL: any = createAsyncThunk<
         working: workingDataLayer,
         editing: state.cms.dataLayer.editing
       },
-      checksum,
-      key: state.auth.encryptionToken
+      checksum
     }
   } catch (err) {
     console.error(err)
@@ -91,6 +89,9 @@ export const overrideWDL: any = createAsyncThunk<
     return thunkAPI.rejectWithValue(err.response.data)
   }
 })
+
+export type DecryptWDLPayload = {encryptionToken: string}
+export const decryptWDL = createAction<DecryptWDLPayload>('cms/decryptWDL')
 
 export const toggleEditing = createAction<boolean>('cms/toggleEditing')
 export const discardEditing = createAction('cms/discardEditing')
@@ -127,12 +128,19 @@ export const fetchJaenData = createAsyncThunk<void, void, {}>(
         )
 
         if (checksum !== calcChecksum) {
-          thunkAPI.dispatch(
+          await thunkAPI.dispatch(
             overrideWDL({
               workingDataLayer: data.dataLayer.working,
               checksum: calcChecksum
             })
           )
+
+          if (state.auth.authenticated) {
+            // get encryption token
+            const encryptionToken = state.auth.encryptionToken
+
+            thunkAPI.dispatch(decryptWDL({encryptionToken}))
+          }
         }
       }
 

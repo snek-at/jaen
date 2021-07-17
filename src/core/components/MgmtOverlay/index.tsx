@@ -24,7 +24,7 @@ import {AppDispatch, RootState} from '~/store'
 import LoginModal from '~/components/modals/Login'
 
 import {login, logout} from '~/store/actions/auth'
-import {discardEditing, toggleEditing} from '~/store/actions/cms'
+import {decryptWDL, discardEditing, toggleEditing} from '~/store/actions/cms'
 
 import SideMenu from './SideMenu'
 import SnekFabButton from './SnekFabButton'
@@ -38,7 +38,9 @@ const MgmtOverlay: React.FC = () => {
 
   const [showLoginModal, setShowLoginModal] = useState(false)
 
-  const {loading, authenticated} = useSelector((state: RootState) => state.auth)
+  const {loading, authenticated, encryptionToken} = useSelector(
+    (state: RootState) => state.auth
+  )
 
   const editing = useSelector((state: RootState) => state.cms.options.editing)
 
@@ -49,8 +51,12 @@ const MgmtOverlay: React.FC = () => {
   useEffect(() => {
     if (authenticated) {
       setShowLoginModal(false)
+
+      if (!loading) {
+        dispatch(decryptWDL({encryptionToken}))
+      }
     }
-  }, [authenticated, loading])
+  }, [dispatch, authenticated, loading, encryptionToken])
 
   return (
     <>
