@@ -114,10 +114,18 @@ const ImageField: React.FC<ImageFieldProps> = ({
             )
 
             if (index) {
-              dispatch(unsetFileRef({fieldRef, fileIndex: index}))
+              dispatch(
+                unsetFileRef({
+                  fieldRef,
+                  fileIndex: index,
+                  workingDataLayer
+                })
+              )
             }
 
-            dispatch(setFileRef({fieldRef, fileIndex: newIndex}))
+            dispatch(
+              setFileRef({fieldRef, fileIndex: newIndex, workingDataLayer})
+            )
           }}
           onClose={() => setShowModal(false)}
         />

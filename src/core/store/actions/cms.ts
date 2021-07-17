@@ -258,6 +258,7 @@ export type FileRefActionPayload = {
    */
   fieldRef: string
   fileIndex: string
+  workingDataLayer: WorkingDataLayer
 }
 export const setFileRef = createAction<FileRefActionPayload>('cms/setFileRef')
 export const unsetFileRef =

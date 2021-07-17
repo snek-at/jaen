@@ -426,13 +426,20 @@ const editingReducer = createReducer(initialState, {
     state,
     action: PayloadAction<FileRefActionPayload>
   ) => {
-    const {fieldRef, fileIndex} = action.payload
+    const {fieldRef, fileIndex, workingDataLayer} = action.payload
 
-    state.files = {
-      ...state.files,
-      [fileIndex]: {
-        ...state.files?.[fileIndex],
-        refs: state.files?.[fileIndex]?.refs?.filter(e => e !== fieldRef)
+    // only set files if fileIndex is present in the workingDataLayer.crypt.clear.files
+    // or in the editingLayer
+    if (
+      workingDataLayer.crypt.clear?.files?.[fileIndex] ||
+      state.files?.[fileIndex]
+    ) {
+      state.files = {
+        ...state.files,
+        [fileIndex]: {
+          ...state.files?.[fileIndex],
+          refs: state.files?.[fileIndex]?.refs?.filter(ref => ref !== fieldRef)
+        }
       }
     }
   }
