@@ -8,12 +8,14 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createContext, useContext} from 'react'
-import {store as storeTypes, ConnectedPageType} from '~/types'
+import {ConnectedPageType} from '~/types'
+
+import {PagesDetails} from '~/store/types/cms/dataLayer'
 
 export type CMSContextType = {
   registeredPages: ConnectedPageType[]
   rootPageSlug: string
-  pagesDetails: storeTypes.PagesDetails
+  pagesDetails: PagesDetails
 }
 
 export type CMSPageContextType = {

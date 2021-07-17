@@ -11,7 +11,7 @@ import {LockOutlined, UserOutlined} from '@ant-design/icons'
 import {Modal, Space, Typography, Form, Input, Button, Checkbox} from 'antd'
 import {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
-import {store} from '~/types'
+import {AppDispatch} from '~/store'
 
 import {SnekIcon} from '~/components/icons'
 
@@ -28,7 +28,7 @@ export type LoginModalValues = {
 type LoginModalProps = {visible: boolean; onClose: () => void}
 
 const LoginModal: React.FC<LoginModalProps> = ({visible, onClose}) => {
-  const dispatch = useDispatch<store.AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>()
 
   const onLogin = (values: LoginModalValues): void => {
     dispatch(login({creds: values}))

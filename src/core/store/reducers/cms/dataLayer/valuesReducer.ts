@@ -10,14 +10,14 @@
 import {createReducer} from '@reduxjs/toolkit'
 
 import {cmsActions} from '~/store/actions'
-import {ValuesDataLayer} from '~/store/types'
+import {ValuesDataLayer} from '~/store/types/cms/dataLayer'
 
 const initialState: ValuesDataLayer = {
   forceUpdateTrigger: 0
 }
 
 const valuesReducer = createReducer(initialState, {
-  [cmsActions.overrideWDL.type]: (state, action) => {
+  [cmsActions.overrideWDL.fulfilled.type]: (state, action) => {
     const {checksum} = action.payload
 
     state.checksum = checksum

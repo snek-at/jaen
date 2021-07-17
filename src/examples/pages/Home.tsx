@@ -14,7 +14,9 @@ import {
   SimpleRichTextField,
   EditableField,
   IndexField,
-  StreamField
+  StreamField,
+  SimpleImageField,
+  SimplePdfField
 } from '~/index'
 
 import {CardBlock} from '../blocks/Card'
@@ -67,6 +69,17 @@ const HomePage: ConnectedPageType = () => {
           blocks={[CardBlock]}
         />
       </Card>
+      <SimpleImageField
+        name="heroimage"
+        imageStyle={{width: '500px', height: '500px', objectFit: 'cover'}}
+      />
+
+      <SimpleImageField
+        name="heroimage2"
+        imageStyle={{width: '500px', height: '500px', objectFit: 'cover'}}
+      />
+
+      <SimplePdfField name="pdf" pdfStyle={{height: 1000, width: 1000}} />
     </div>
   )
 }

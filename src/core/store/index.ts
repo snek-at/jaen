@@ -20,7 +20,7 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import {authReducer, cmsReducer, notifyReducer} from './reducers'
+import {authReducer, cmsReducer, ipfsReducer, notifyReducer} from './reducers'
 
 const persistConfig = {
   key: 'root',
@@ -34,6 +34,7 @@ const persistedReducer = persistReducer(
   combineReducers({
     auth: authReducer,
     cms: cmsReducer,
+    ipfs: ipfsReducer,
     notify: notifyReducer
   })
 )

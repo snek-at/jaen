@@ -10,4 +10,5 @@
 
 export {default as authReducer} from './auth'
 export {default as cmsReducer} from './cms'
+export {default as ipfsReducer} from './ipfs'
 export {default as notifyReducer} from './notify'

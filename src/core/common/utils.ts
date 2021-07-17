@@ -14,6 +14,10 @@ import process from 'process'
 export type AtLeastOne<T, U = {[K in keyof T]: Pick<T, K>}> = Partial<T> &
   U[keyof U]
 
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>
+}
+
 const development: boolean =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 
@@ -83,15 +87,28 @@ export function compactObject(
   }, {})
 }
 
-export const merge = <T>(x: Partial<T>, y: Partial<T>) => {
+export const merge = <T>(
+  x: Partial<T>,
+  y: Partial<T>,
+  deleteFn?: (value: {[x: string]: any}) => boolean
+) => {
   const merged = deepmerge(x || {}, y || {}, {
     arrayMerge: (_target, source, _options) => source
   })
 
-  const compact = compactObject(
-    merged,
-    value => value.deleted || value.details?.deleted
-  )
+  const compact = compactObject(merged, deleteFn)
 
   return compact
+}
+
+export const getNextIndexedObjectKey = (o: object): string => {
+  let key = Object.keys(o).pop()
+
+  if (!key) {
+    key = '0'
+  } else {
+    key = `${parseInt(key, 10) + 1}`
+  }
+
+  return key
 }

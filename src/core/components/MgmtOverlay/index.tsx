@@ -14,35 +14,35 @@ import {
   DeleteOutlined,
   EditFilled,
   LoginOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  FileImageOutlined
 } from '@ant-design/icons'
 import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {store as storeTypes} from '~/types'
+import {AppDispatch, RootState} from '~/store'
 
 import LoginModal from '~/components/modals/Login'
 
 import {login, logout} from '~/store/actions/auth'
-import {discardEditing, toggleEditing} from '~/store/actions/cms'
+import {decryptWDL, discardEditing, toggleEditing} from '~/store/actions/cms'
 
 import SideMenu from './SideMenu'
 import SnekFabButton from './SnekFabButton'
 import './mgmtOverlay.scss'
+import FilesModal from './modals/Files'
 import PublishModal from './modals/Publish'
 import SiteMenu from './modals/SiteMenu'
 
 const MgmtOverlay: React.FC = () => {
-  const dispatch = useDispatch<storeTypes.AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>()
 
   const [showLoginModal, setShowLoginModal] = useState(false)
 
-  const {loading, authenticated} = useSelector(
-    (state: storeTypes.RootState) => state.auth
+  const {loading, authenticated, encryptionToken} = useSelector(
+    (state: RootState) => state.auth
   )
 
-  const editing = useSelector(
-    (state: storeTypes.RootState) => state.cms.options.editing
-  )
+  const editing = useSelector((state: RootState) => state.cms.options.editing)
 
   useEffect(() => {
     dispatch(login({}))
@@ -51,8 +51,12 @@ const MgmtOverlay: React.FC = () => {
   useEffect(() => {
     if (authenticated) {
       setShowLoginModal(false)
+
+      if (!loading) {
+        dispatch(decryptWDL({encryptionToken}))
+      }
     }
-  }, [authenticated, loading])
+  }, [dispatch, authenticated, loading, encryptionToken])
 
   return (
     <>
@@ -93,6 +97,12 @@ const MgmtOverlay: React.FC = () => {
               text: editing ? 'Preview' : 'Edit',
               icon: editing ? <EditFilled /> : <EditOutlined />,
               onClick: () => dispatch(toggleEditing(!editing))
+            },
+            {
+              text: 'Files',
+              icon: <FileImageOutlined />,
+              onClick: () => null,
+              renderElementOnClick: <FilesModal onClose={() => null} />
             },
             {
               text: 'Publish',

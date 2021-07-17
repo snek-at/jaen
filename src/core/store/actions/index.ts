@@ -10,4 +10,5 @@
 
 export * as authActions from './auth'
 export * as cmsActions from './cms'
+export * as ipfsActions from './ipfs'
 export * as notifyActions from './notify'
