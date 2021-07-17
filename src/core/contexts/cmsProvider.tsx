@@ -12,19 +12,20 @@ import React, {useEffect, useRef} from 'react'
 import {Provider as ReduxProvider, useDispatch, useSelector} from 'react-redux'
 import {PersistGate} from 'redux-persist/lib/integration/react'
 import PageRouter from '~/router'
-import {persistor, store} from '~/store'
-import {store as storeTypes, ConnectedPageType} from '~/types'
+import {AppDispatch, persistor, store} from '~/store'
+import {ConnectedPageType} from '~/types'
 
 import MgmtOverlay from '~/components/MgmtOverlay'
 import Notify from '~/components/Notify'
 
 import {fetchJaenData, setSettings} from '~/store/actions/cms'
 import {pagesSelector, rootPageSlugSelector} from '~/store/selectors/cms'
+import {CMSState} from '~/store/types'
 
 import {CMSContext} from './context'
 
 interface CMSProviderProps {
-  settings: storeTypes.CMSSettings
+  settings: CMSState['settings']
   pages: ConnectedPageType[]
 }
 
@@ -33,7 +34,7 @@ const CMSProvider: React.FC<CMSProviderProps> = ({
   pages,
   children
 }) => {
-  const dispatch = useDispatch<storeTypes.AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>()
   const rootPageSlug = useSelector(rootPageSlugSelector)
 
   const intervalRef = useRef<number>()

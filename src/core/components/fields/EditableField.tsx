@@ -8,15 +8,16 @@
  * in the LICENSE file at https://snek.at/license
  */
 import React from 'react'
-import {connect, useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {context} from '~/contexts'
-import {RootState} from '~/store'
-import {components, PageParamsType, store} from '~/types'
+import {AppDispatch, RootState} from '~/store'
+import {components} from '~/types'
 
 import SidebarEditor, {ButtonOptions} from '~/components/Editor'
 
-import {updatePageContent} from '~/store/actions/cms'
-import {pageFieldContentSelector} from '~/store/selectors/cms'
+import {updatePageField} from '~/store/actions/cms'
+import {pageFieldTextSelector} from '~/store/selectors/cms'
+import {FieldUpdateDetails} from '~/store/types/cms/dataLayer'
 
 import './fields.scss'
 
@@ -25,34 +26,24 @@ type SubelementProps = React.DetailedHTMLProps<
   HTMLDivElement
 >
 
-type StateProps = components.CMSEditableProps
-
-type DispatchProps = {
-  updateContent: (content: string, page: PageParamsType) => void
-}
-
-export type OwnProps = {
+export type EditableFieldProps = {
   fieldOptions: components.EditableFieldOptions
   buttonOptions?: ButtonOptions
-}
+} & SubelementProps
 
-export interface EditableFieldProps
-  extends SubelementProps,
-    StateProps,
-    DispatchProps,
-    OwnProps {}
-
-export const EditableField: React.FC<EditableFieldProps> = ({
-  updateContent,
-  ...props
-}) => {
-  const {buttonOptions, fieldOptions, editable, workingLayer, ...subProps} =
-    props
-
-  const {slug, typeName} = context.useCMSPageContext()
+export const EditableField: React.FC<EditableFieldProps> = ({...props}) => {
+  const dispatch = useDispatch<AppDispatch>()
+  const {buttonOptions, fieldOptions, ...subProps} = props
+  const {slug} = context.useCMSPageContext()
   const {fieldName, block} = fieldOptions
 
-  const content = useSelector(pageFieldContentSelector(slug, fieldName, block))
+  const editable = useSelector((state: RootState) => state.cms.options.editing)
+
+  const workingDataLayer = useSelector(
+    (state: RootState) => state.cms.dataLayer.working
+  )
+
+  const content = useSelector(pageFieldTextSelector(slug, fieldName, block))
   const resetTrigger = useSelector(
     (state: RootState) => state.cms.dataLayer.values.forceUpdateTrigger
   )
@@ -61,7 +52,39 @@ export const EditableField: React.FC<EditableFieldProps> = ({
     <div>
       <div className={editable ? 'field' : ''} {...subProps}>
         <SidebarEditor
-          onChange={newContent => updateContent(newContent, {slug, typeName})}
+          onChange={newContent => {
+            let fieldDetails: FieldUpdateDetails
+
+            if (block) {
+              fieldDetails = {
+                _type: 'BlocksField',
+                blockFieldName: block.blockFieldName,
+                blockPosition: block.position,
+                fieldName,
+                block: {
+                  _type: 'TextBlock',
+                  text: newContent
+                }
+              }
+            } else {
+              fieldDetails = {
+                _type: 'PlainField',
+                fieldName,
+                block: {
+                  _type: 'TextBlock',
+                  text: newContent
+                }
+              }
+            }
+
+            dispatch(
+              updatePageField({
+                slug,
+                fieldDetails,
+                workingDataLayer
+              })
+            )
+          }}
           text={content}
           buttonOptions={buttonOptions}
           editable={editable}
@@ -72,32 +95,4 @@ export const EditableField: React.FC<EditableFieldProps> = ({
   )
 }
 
-const mapStateToProps = (
-  state: store.RootState,
-  _ownProps: OwnProps
-): StateProps => ({
-  workingLayer: state.cms.dataLayer.working,
-  editable: state.cms.options.editing
-})
-
-const mapDispatchToProps = (
-  dispatch: store.AppDispatch,
-  ownProps: OwnProps
-): DispatchProps => ({
-  updateContent: (content: string, page: PageParamsType) =>
-    dispatch(
-      updatePageContent({content, fieldOptions: ownProps.fieldOptions, page})
-    )
-})
-
-const EditableFieldPropsContainer = connect<
-  StateProps,
-  DispatchProps,
-  OwnProps,
-  store.RootState
->(
-  mapStateToProps,
-  mapDispatchToProps
-)(EditableField)
-
-export default EditableFieldPropsContainer
+export default EditableField

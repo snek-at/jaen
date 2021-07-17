@@ -12,20 +12,25 @@ import CryptoJS from 'crypto-js'
 import BridgeDrop from 'drop'
 import {PageParamsType, components} from '~/types'
 
+import {encrypt} from '~/common/crypt'
 import {isDev} from '~/common/utils'
 
 import {BlockFieldOptions} from '~/components/blocks'
 
+import {ipfsActions} from '.'
 import {RootState} from '..'
-import {pagesSelector, rootPageSlugSelector} from '../selectors/cms'
+import {combinedDLSelector} from '../selectors/cms'
+import {CMSState} from '../types'
 import {
-  CMSSettings,
+  DataLayerFiles,
   EditingDataLayer,
+  FieldUpdateDetails,
+  FileInfo,
   PagesDetails,
   WorkingDataLayer
-} from '../types'
+} from '../types/cms/dataLayer'
 
-export const setSettings = createAction<CMSSettings>('cms/setSettings')
+export const setSettings = createAction<CMSState['settings']>('cms/setSettings')
 
 export const registerField = createAction<{
   fieldOptions: BlockFieldOptions
@@ -47,19 +52,58 @@ export const unregisterPage = createAction<{
   pagesDetails: PagesDetails
 }>('cms/unregisterPage')
 
-export const overrideWDL = createAction<{
-  dataLayer: {working: WorkingDataLayer; editing: EditingDataLayer}
-  checksum: string
-}>('cms/overrideWDL')
+// export const overrideWDL = createAction<{
+//   dataLayer: {working: WorkingDataLayer; editing: EditingDataLayer}
+//   checksum: string
+// }>('cms/overrideWDL')
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const overrideWDL: any = createAsyncThunk<
+  {
+    dataLayer: {
+      working: WorkingDataLayer
+      editing: EditingDataLayer
+    }
+    checksum: string
+  },
+  {
+    workingDataLayer: WorkingDataLayer
+    checksum: string
+  },
+  {}
+>('cms/overrideWDL', async ({workingDataLayer, checksum}, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState() as RootState
+
+    return {
+      dataLayer: {
+        working: workingDataLayer,
+        editing: state.cms.dataLayer.editing
+      },
+      checksum
+    }
+  } catch (err) {
+    console.error(err)
+    // Use `err.response.data` as `action.payload` for a `rejected` action,
+    // by explicitly returning it using the `rejectWithValue()` utility
+    return thunkAPI.rejectWithValue(err.response.data)
+  }
+})
+
+export type DecryptWDLPayload = {encryptionToken: string}
+export const decryptWDL = createAction<DecryptWDLPayload>('cms/decryptWDL')
 
 export const toggleEditing = createAction<boolean>('cms/toggleEditing')
 export const discardEditing = createAction('cms/discardEditing')
 
-export const updatePageContent = createAction<{
-  content: string
-  fieldOptions: BlockFieldOptions
-  page: PageParamsType
-}>('cms/updatePageContent')
+export type UpdatePageFieldActionPayload = {
+  slug: string
+  fieldDetails: FieldUpdateDetails
+  workingDataLayer: WorkingDataLayer
+}
+export const updatePageField = createAction<UpdatePageFieldActionPayload>(
+  'cms/updatePageField'
+)
 
 export const setHiddenChildSlugs = createAction<{
   page: PageParamsType
@@ -84,15 +128,19 @@ export const fetchJaenData = createAsyncThunk<void, void, {}>(
         )
 
         if (checksum !== calcChecksum) {
-          thunkAPI.dispatch(
+          await thunkAPI.dispatch(
             overrideWDL({
-              dataLayer: {
-                working: data.dataLayer.working,
-                editing: state.cms.dataLayer.editing
-              },
+              workingDataLayer: data.dataLayer.working,
               checksum: calcChecksum
             })
           )
+
+          if (state.auth.authenticated) {
+            // get encryption token
+            const encryptionToken = state.auth.encryptionToken
+
+            thunkAPI.dispatch(decryptWDL({encryptionToken}))
+          }
         }
       }
 
@@ -127,13 +175,34 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         )
       }
 
-      const rootPageSlug = rootPageSlugSelector(state)
-      const pages = pagesSelector(state)
+      const combinedLayer = combinedDLSelector(state)
 
-      const layer = {rootPageSlug, pages}
+      // Make a object from combinedLayer.files which contains files that refs list is not empty and preserve index
+      const usedFiles = Object.keys(combinedLayer.files).reduce(
+        (acc: DataLayerFiles, key) => {
+          const file = combinedLayer.files[key]
+          if (file.refs.length > 0) {
+            acc[key] = file
+          }
+          return acc
+        },
+        {}
+      )
+
+      const clear = {files: combinedLayer.files}
+      const cipher = encrypt(clear, state.auth.encryptionToken)
+
+      const wokringLayer: WorkingDataLayer = {
+        rootPageSlug: combinedLayer.rootPageSlug,
+        pages: combinedLayer.pages,
+        crypt: {
+          cipher,
+          clear: {files: usedFiles}
+        }
+      }
 
       const publishData = JSON.stringify({
-        dataLayer: {working: layer}
+        dataLayer: {working: wokringLayer}
       })
 
       const {data, errors} =
@@ -147,7 +216,9 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         throw new Error(`DropAPI publish failed`)
       }
 
-      return layer
+      wokringLayer.crypt.clear = clear
+
+      return wokringLayer
     } catch (err) {
       console.error(err)
       // Use `err.response.data` as `action.payload` for a `rejected` action,
@@ -156,3 +227,47 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
     }
   }
 )
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const addFile: any = createAsyncThunk<
+  {url: string; fileMeta: FileInfo['meta']},
+  {file: File; fileMeta: FileInfo['meta']},
+  {}
+>('cms/addFile', async ({file, fileMeta}, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState() as RootState
+
+    const {files} = combinedDLSelector(state)
+
+    const {url} = await thunkAPI.dispatch(ipfsActions.add({file})).unwrap()
+
+    return {url, fileMeta, combinedFiles: files}
+  } catch (err) {
+    console.error(err)
+    // Use `err.response.data` as `action.payload` for a `rejected` action,
+    // by explicitly returning it using the `rejectWithValue()` utility
+    return thunkAPI.rejectWithValue(err.response.data)
+  }
+})
+
+export const removeFile = createAction<string>('cms/removeFile')
+export const updateFile = createAction<{
+  index: string
+  meta: FileInfo['meta']
+  combinedFiles: DataLayerFiles
+}>('cms/updateFile')
+
+export type FileRefActionPayload = {
+  /**
+   * fielRef:
+   *
+   * for PlainField: pageSlug + fieldName => home.heading
+   * for BlocksField: pageSlug + fieldName + position + blockFieldName => home.timeline.0.title
+   */
+  fieldRef: string
+  fileIndex: string
+  workingDataLayer: WorkingDataLayer
+}
+export const setFileRef = createAction<FileRefActionPayload>('cms/setFileRef')
+export const unsetFileRef =
+  createAction<FileRefActionPayload>('cms/unsetFileRef')

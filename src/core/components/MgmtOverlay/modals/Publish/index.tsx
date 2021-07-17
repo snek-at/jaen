@@ -10,18 +10,18 @@
 import {Space, Row, Divider, Button, Typography, notification} from 'antd'
 import ReactDiffViewer from 'react-diff-viewer'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppDispatch, RootState} from '~/store'
+import {AppDispatch} from '~/store'
 
 import CleanModal from '~/components/modals/Clean'
 
 import {publish} from '~/store/actions/cms'
-import {combinedDLSelector} from '~/store/selectors/cms'
+import {combinedDLSelector, workingDLSelector} from '~/store/selectors/cms'
 
 const PublishModal: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
 
-  const working = useSelector((state: RootState) => state.cms.dataLayer.working)
-  const updatedWorking = useSelector(combinedDLSelector)
+  const cleanedWorking = useSelector(workingDLSelector)
+  const cleandedCombinedWorking = useSelector(combinedDLSelector)
 
   const onPublish = (): void => {
     dispatch(publish())
@@ -62,8 +62,8 @@ const PublishModal: React.FC = () => {
             Content <u>after</u> publish
           </Typography.Text>
         }
-        oldValue={JSON.stringify(working, null, 2)}
-        newValue={JSON.stringify(updatedWorking, null, 2)}
+        oldValue={JSON.stringify(cleanedWorking, null, 2)}
+        newValue={JSON.stringify(cleandedCombinedWorking, null, 2)}
         splitView
       />
     </CleanModal>

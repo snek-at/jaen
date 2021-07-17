@@ -8,7 +8,13 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {Card} from 'antd'
-import {BC, prepareBlocks, EditableField, RichTextField} from '~/index'
+import {
+  BC,
+  prepareBlocks,
+  EditableField,
+  RichTextField,
+  ImageField
+} from '~/index'
 
 type CardBlockType = {title: string; extra: string; text: string}
 
@@ -26,7 +32,7 @@ export const CardBlock: BC<CardBlockType> = ({
         style={{width: streamFieldWidth}}
         extra={<button>{blocks['extra']}</button>}>
         {blocks['text']}
-        {'test123'}
+        {blocks['image']}
       </Card>
     </>
   )
@@ -34,6 +40,7 @@ export const CardBlock: BC<CardBlockType> = ({
 
 CardBlock.BlockType = 'CardBlock'
 CardBlock.BlockFields = {
+  image: ImageField,
   title: EditableField,
   extra: EditableField,
   text: RichTextField

@@ -7,10 +7,12 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {createReducer} from '@reduxjs/toolkit'
+import {createReducer, PayloadAction} from '@reduxjs/toolkit'
+
+import {decrypt} from '~/common/crypt'
 
 import {cmsActions} from '~/store/actions'
-import {WorkingDataLayer} from '~/store/types'
+import {WorkingDataLayer} from '~/store/types/cms/dataLayer'
 
 const initialState: WorkingDataLayer = {
   pages: {
@@ -25,13 +27,35 @@ const initialState: WorkingDataLayer = {
       fields: {}
     }
   },
+  crypt: {
+    cipher: undefined,
+    clear: {
+      files: {}
+    }
+  },
   rootPageSlug: 'home'
 }
 
 const workingReducer = createReducer(initialState, {
   [cmsActions.publish.fulfilled.type]: (_state, action) => action.payload,
-  [cmsActions.overrideWDL.type]: (_state, action) =>
-    action.payload.dataLayer.working
+  [cmsActions.overrideWDL.fulfilled.type]: (_state, action) =>
+    action.payload.dataLayer.working,
+  [cmsActions.decryptWDL.type]: (
+    state,
+    action: PayloadAction<cmsActions.DecryptWDLPayload>
+  ) => {
+    const {encryptionToken} = action.payload
+
+    if (encryptionToken) {
+      const ciphertext = state.crypt.cipher
+
+      if (ciphertext) {
+        state.crypt = {
+          clear: decrypt<typeof state.crypt.clear>(ciphertext, encryptionToken)
+        }
+      }
+    }
+  }
 })
 
 export default workingReducer

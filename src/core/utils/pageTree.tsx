@@ -13,15 +13,17 @@ import {ConnectedPageType} from '~/contexts'
 
 import {ExplorerTDN} from '~/components/Explorer'
 
-import {store as storeTypes, components as componentsTypes} from '../types'
+import {PageDetails, PagesDetails} from '~/store/types/cms/dataLayer'
+
+import {components as componentsTypes} from '../types'
 
 // import * as React from 'react'
 
-export type IndexKeyRefs = {[key: string]: storeTypes.PageDetails}
+export type IndexKeyRefs = {[key: string]: PageDetails}
 export type ChildPageTypeNamesKeyRefs = {[key: string]: string[] | undefined}
 
 export const buildPageTree = (
-  pagesDetails: storeTypes.PagesDetails,
+  pagesDetails: PagesDetails,
   rootPageSlug: string,
   registeredPages: ConnectedPageType[]
 ): {
@@ -35,7 +37,7 @@ export const buildPageTree = (
       ?.ChildPages.map(page => page.PageType)
 
   const transformNode = (
-    page: storeTypes.PageDetails,
+    page: PageDetails,
     buildTree: componentsTypes.ExplorerTDN = {
       key: '/',
       title: (

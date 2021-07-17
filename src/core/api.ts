@@ -9,9 +9,20 @@
  */
 import {BifrostBridge} from '@schettnet/bridge'
 import BridgeDrop from 'drop'
+import ipfsClient from 'ipfs-http-client'
+
+// > Bridge
 
 BridgeDrop.bridge = new BifrostBridge({
   httpUrl: 'https://origin.snek.at/graphql'
 })
 
 export const BridgeSession = BridgeDrop.bridge.session
+
+// > ipfs
+
+export const ipfs = ipfsClient.create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https'
+})

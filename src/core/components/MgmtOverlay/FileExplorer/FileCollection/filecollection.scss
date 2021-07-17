@@ -1,0 +1,64 @@
+/**
+ * @license
+ *
+ * SPDX-FileCopyrightText: Copyright © 2021 snek.at
+ * SPDX-License-Identifier: EUPL-1.2
+ *
+ * Use of this source code is governed by an EUPL-1.2 license that can be found
+ * in the LICENSE file at https://snek.at/license
+ */
+
+@import '../../../../common/css/colors.scss';
+
+.layout {
+  background: white;
+}
+
+.content {
+  width: auto !important;
+  padding: 10px;
+  height: 70vh;
+  overflow: auto;
+
+  .active {
+    outline: 2px solid $snekGreen;
+    outline-offset: 8px;
+  }
+
+  .document-page {
+    > * {
+      width: 150px !important;
+      height: 150px !important;
+    }
+  }
+
+  .element {
+    /* Just in case there are inline attributes */
+    max-width: 100%;
+    max-height: 100%;
+    float: left;
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover;
+    margin: 10px;
+    //overflow: hidden;
+
+    &:hover {
+      cursor: pointer;
+      outline: 2px solid $snekGreen;
+      outline-offset: 8px;
+    }
+  }
+}
+
+.dropzone {
+  span {
+    position: absolute;
+    color: $snekGreen;
+    left: 50%;
+    top: 50%;
+    font-size: xx-large;
+    transform: translate(-25%, -25%);
+    cursor: default;
+  }
+}

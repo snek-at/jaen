@@ -10,9 +10,9 @@
 import {createReducer} from '@reduxjs/toolkit'
 
 import {cmsActions} from '~/store/actions'
-import {CMSSettings} from '~/store/types'
+import {CMSState} from '~/store/types'
 
-const initialState: CMSSettings = {
+const initialState: CMSState['settings'] = {
   gitRemote: undefined
 }
 
