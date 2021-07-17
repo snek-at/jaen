@@ -15,7 +15,7 @@ import ImprintPage from './examples/pages/Imprint'
 
 ReactDOM.render(
   <CMSProvider
-    settings={{gitRemote: 'snek-shipyard/jaen-demo2'}}
+    settings={{gitRemote: 'snek-shipyard/jaen-demo'}}
     pages={[HomePage, ImprintPage]}
   />,
   document.getElementById('root')
