@@ -90,8 +90,8 @@ Customizable, extensible and open-source.
 | `Fixed parent for IndexField` | ✅️ |  |  |  |
 | `TextField`                   | ✅️ |  |  |  |
 | `Dynamic Routes`              | ✅️ |  |  |  |
-| `DocumentField`               |  | ✅️ |  |  |
-| `MediaField`                  |  | ✅️ |  |  |
+| `PdfField`               |  | ✅️ |  |  |
+| `ImageField`                  |  | ✅️ |  |  |
 | `StreamField`                 |  | ✅️ |  |  |
 | `LinkField`                   |  | ✅️ |  |  |
 | `Gatsby`                      |  |  | ✅️ |  |
