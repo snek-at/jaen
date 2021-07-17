@@ -7,14 +7,14 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {createReducer} from '@reduxjs/toolkit'
+import {createReducer, PayloadAction} from '@reduxjs/toolkit'
 
 import {authActions} from '../actions'
 import {AuthState} from '../types'
 
 const initialState: AuthState = {
   authenticated: false,
-  secret: 'SECRETSECRET',
+  encryptionToken: 'WEAK_ENCRYPTION_TOKEN', // is replaced after successful login
   loading: false
 }
 
@@ -28,7 +28,13 @@ const authReducer = createReducer(initialState, {
     state.loading = false
   },
   [authActions.logout.fulfilled.type]: (state, _action) =>
-    void (state.authenticated = false)
+    void (state.authenticated = false),
+  [authActions.fetchMyJaenAccount.fulfilled.type]: (
+    state,
+    action: PayloadAction<authActions.MyJaenAccountPayload>
+  ) => {
+    state.encryptionToken = action.payload.encryptionToken
+  }
 })
 
 export default authReducer

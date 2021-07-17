@@ -82,7 +82,7 @@ export const overrideWDL: any = createAsyncThunk<
         editing: state.cms.dataLayer.editing
       },
       checksum,
-      key: state.auth.secret
+      key: state.auth.encryptionToken
     }
   } catch (err) {
     console.error(err)
@@ -182,7 +182,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
       )
 
       const clear = {files: combinedLayer.files}
-      const cipher = encrypt(clear, state.auth.secret)
+      const cipher = encrypt(clear, state.auth.encryptionToken)
 
       const wokringLayer: WorkingDataLayer = {
         rootPageSlug: combinedLayer.rootPageSlug,

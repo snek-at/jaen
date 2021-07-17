@@ -6,7 +6,7 @@ export type {default as CMSState} from './cms'
 
 export type AuthState = {
   authenticated: boolean
-  secret: string
+  encryptionToken: string
   loading: boolean
 }
 
