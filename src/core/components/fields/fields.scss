@@ -11,9 +11,8 @@
 @import '../../common/css/colors.scss';
 
 .field:hover {
-  outline: 2.5px solid $snekGreen;
   border-radius: 7px;
-  outline-offset: 1px;
+  box-shadow: 0 0 0 2.5px $snekGreen;
 }
 
 .streamfield-add-button,
