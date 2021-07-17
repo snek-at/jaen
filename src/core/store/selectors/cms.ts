@@ -146,12 +146,12 @@ export const pageFieldContentSelector = (
     state =>
       block
         ? (
-            state.cms.dataLayer.working.pages?.[slug].fields?.[fieldName] as
+            state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName] as
               | BlocksField
               | undefined
           )?.blocks?.[block.position]?.fields?.[block.blockFieldName]
         : (
-            state.cms.dataLayer.working.pages?.[slug].fields?.[fieldName] as
+            state.cms.dataLayer.working.pages?.[slug]?.fields?.[fieldName] as
               | PlainField
               | undefined
           )?.content,
