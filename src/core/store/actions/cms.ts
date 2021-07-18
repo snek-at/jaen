@@ -10,10 +10,11 @@
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
 import CryptoJS from 'crypto-js'
 import BridgeDrop from 'drop'
+import gzip from 'gzip-js'
 import {PageParamsType, components} from '~/types'
 
 import {encrypt} from '~/common/crypt'
-import {isDev} from '~/common/utils'
+import {blobToFile, isDev} from '~/common/utils'
 
 import {BlockFieldOptions} from '~/components/blocks'
 
@@ -201,15 +202,36 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         }
       }
 
-      const publishData = JSON.stringify({
-        dataLayer: {working: wokringLayer}
-      })
+      // encrypt and gzip dataLayer
+      const byteNumbers = gzip.zip(
+        encrypt(
+          {dataLayer: {working: wokringLayer}},
+          state.auth.encryptionToken
+        ),
+        {
+          level: 9,
+          name: 'jaen-data.json.crypt',
+          timestamp: Date.now()
+        }
+      )
 
+      const blob = new Blob([new Uint8Array(byteNumbers)])
+
+      // upload blob to ipfs
+      const uploaded = await thunkAPI
+        .dispatch(
+          ipfsActions.add({
+            file: blobToFile(blob, 'jaen-data.json.crypt.gz')
+          })
+        )
+        .unwrap()
+
+      // publish ipfs file url
       const {data, errors} =
         await BridgeDrop.buildIn.mutations.doJaenPublishFormPageMutation({
           url: '/jaen-publish',
           // eslint-disable-next-line camelcase
-          values: {git_remote: gitRemote, jaen_data: publishData}
+          values: {git_remote: gitRemote, jaendata_url: uploaded.url}
         })
 
       if (!data?.jaenPublishFormPage || errors) {
