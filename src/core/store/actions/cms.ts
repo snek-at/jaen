@@ -202,7 +202,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         }
       }
 
-      // encrypt and gzip dataLayer
+      // Encrypt and gzip dataLayer
       const byteNumbers = gzip.zip(
         encrypt(
           {dataLayer: {working: workingLayer}},
@@ -217,7 +217,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
 
       const blob = new Blob([new Uint8Array(byteNumbers)])
 
-      // upload blob to ipfs
+      // Upload blob to ipfs
       const uploaded = await thunkAPI
         .dispatch(
           ipfsActions.add({
@@ -226,7 +226,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         )
         .unwrap()
 
-      // publish ipfs file url
+      // Publish ipfs file url
       const {data, errors} =
         await BridgeDrop.buildIn.mutations.doJaenPublishFormPageMutation({
           url: '/jaen-publish',
