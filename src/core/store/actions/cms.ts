@@ -193,7 +193,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
       const clear = {files: combinedLayer.files}
       const cipher = encrypt(clear, state.auth.encryptionToken)
 
-      const wokringLayer: WorkingDataLayer = {
+      const workingLayer: WorkingDataLayer = {
         rootPageSlug: combinedLayer.rootPageSlug,
         pages: combinedLayer.pages,
         crypt: {
@@ -205,7 +205,7 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
       // encrypt and gzip dataLayer
       const byteNumbers = gzip.zip(
         encrypt(
-          {dataLayer: {working: wokringLayer}},
+          {dataLayer: {working: workingLayer}},
           state.auth.encryptionToken
         ),
         {
@@ -238,9 +238,9 @@ export const publish: any = createAsyncThunk<WorkingDataLayer, void, {}>(
         throw new Error(`DropAPI publish failed`)
       }
 
-      wokringLayer.crypt.clear = clear
+      workingLayer.crypt.clear = clear
 
-      return wokringLayer
+      return workingLayer
     } catch (err) {
       console.error(err)
       // Use `err.response.data` as `action.payload` for a `rejected` action,
