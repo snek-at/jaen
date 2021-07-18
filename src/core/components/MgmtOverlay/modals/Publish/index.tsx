@@ -7,10 +7,20 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {Space, Row, Divider, Button, Typography, notification} from 'antd'
-import ReactDiffViewer from 'react-diff-viewer'
+import {
+  Space,
+  Row,
+  Divider,
+  Button,
+  Typography,
+  notification,
+  Collapse
+} from 'antd'
+import {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppDispatch} from '~/store'
+
+import {htmlObjectDiff} from '~/common/diff'
 
 import CleanModal from '~/components/modals/Clean'
 
@@ -22,6 +32,12 @@ const PublishModal: React.FC = () => {
 
   const cleanedWorking = useSelector(workingDLSelector)
   const cleandedCombinedWorking = useSelector(combinedDLSelector)
+
+  const [layerDiff, setLayerDiff] = useState<string | null>(null)
+
+  const onChangeCollapse = (): void => {
+    setLayerDiff(htmlObjectDiff(cleanedWorking, cleandedCombinedWorking))
+  }
 
   const onPublish = (): void => {
     dispatch(publish())
@@ -47,25 +63,13 @@ const PublishModal: React.FC = () => {
         </Row>
       </Space>
 
-      <Row gutter={[0, 500]}></Row>
-      <Row gutter={[0, 500]}></Row>
-
       <Divider />
-      <ReactDiffViewer
-        leftTitle={
-          <Typography.Text>
-            Content <u>before</u> publish
-          </Typography.Text>
-        }
-        rightTitle={
-          <Typography.Text>
-            Content <u>after</u> publish
-          </Typography.Text>
-        }
-        oldValue={JSON.stringify(cleanedWorking, null, 2)}
-        newValue={JSON.stringify(cleandedCombinedWorking, null, 2)}
-        splitView
-      />
+
+      <Collapse defaultActiveKey={[]} ghost onChange={onChangeCollapse}>
+        <Collapse.Panel header="show more" key="1">
+          {layerDiff && <div dangerouslySetInnerHTML={{__html: layerDiff}} />}
+        </Collapse.Panel>
+      </Collapse>
     </CleanModal>
   )
 }
