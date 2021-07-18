@@ -14,7 +14,7 @@ import gzip from 'gzip-js'
 import {PageParamsType, components} from '~/types'
 
 import {encrypt} from '~/common/crypt'
-import {blobToFile, isDev} from '~/common/utils'
+import {blobToFile, isDevelopment} from '~/common/utils'
 
 import {BlockFieldOptions} from '~/components/blocks'
 
@@ -147,7 +147,7 @@ export const fetchJaenData = createAsyncThunk<void, void, {}>(
 
       // Do not fetch if state.cms.settings.gitRemote is not undefined in dev mode
       // this leads to a onetime load in development and (n) laods in deployment
-      if (!(isDev() && state.cms.settings.gitRemote)) {
+      if (!(isDevelopment && state.cms.settings.gitRemote)) {
         fetchFile(`${globalThis.location.origin}/jaen-data.json`)
       }
     } catch (err) {
