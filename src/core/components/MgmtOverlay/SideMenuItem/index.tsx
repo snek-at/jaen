@@ -15,7 +15,8 @@ import './sidemenuitem.scss'
 type MenuItemProps = {
   id: number
   text: string
-  icon: JSX.Element
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon: React.ComponentType<any>
   onClick: () => void
   renderElementOnClick?: JSX.Element
 }
@@ -23,19 +24,22 @@ type MenuItemProps = {
 const MenuItem: React.FC<MenuItemProps> = ({
   id,
   text,
-  icon,
+  Icon,
   onClick,
   renderElementOnClick
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showElement, setShowElement] = useState(false)
 
-  //const style: React.CSSProperties = {}
-
-  const styledIcon = (
-    <span style={{fontSize: '120%', color: isExpanded ? 'green' : 'black'}}>
-      {icon}
-    </span>
+  const icon = (
+    <Icon
+      style={{
+        fontSize: '120%',
+        display: 'inline-block',
+        verticalAlign: 'middle',
+        color: isExpanded ? 'green' : 'black'
+      }}
+    />
   )
 
   return (
@@ -59,15 +63,13 @@ const MenuItem: React.FC<MenuItemProps> = ({
         }}>
         {isExpanded ? (
           <>
-            <div>
-              {styledIcon}{' '}
-              <Typography.Text style={{padding: '0 1em 0 1em'}}>
-                {text}
-              </Typography.Text>
-            </div>
+            {icon}
+            <Typography.Text style={{padding: '0 1em 0 1em'}}>
+              {text}
+            </Typography.Text>
           </>
         ) : (
-          <div>{styledIcon}</div>
+          <>{icon}</>
         )}
       </div>
       {showElement && renderElementOnClick}

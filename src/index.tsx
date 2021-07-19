@@ -7,6 +7,8 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
+// A possible design library that could be used
+import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import ReactDOM from 'react-dom'
 
 import {CMSProvider} from './core'

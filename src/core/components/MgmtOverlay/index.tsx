@@ -89,30 +89,30 @@ const MgmtOverlay: React.FC = () => {
           items={[
             {
               text: 'Site Menu',
-              icon: <MenuOutlined />,
+              Icon: MenuOutlined,
               onClick: () => null,
               renderElementOnClick: <SiteMenu />
             },
             {
               text: editing ? 'Preview' : 'Edit',
-              icon: editing ? <EditFilled /> : <EditOutlined />,
+              Icon: editing ? EditFilled : EditOutlined,
               onClick: () => dispatch(toggleEditing(!editing))
             },
             {
               text: 'Files',
-              icon: <FileImageOutlined />,
+              Icon: FileImageOutlined,
               onClick: () => null,
               renderElementOnClick: <FilesModal onClose={() => null} />
             },
             {
               text: 'Publish',
-              icon: <CloudUploadOutlined />,
+              Icon: CloudUploadOutlined,
               onClick: () => null,
               renderElementOnClick: <PublishModal />
             },
             {
               text: 'Discard changes',
-              icon: <DeleteOutlined />,
+              Icon: DeleteOutlined,
               onClick: () => dispatch(discardEditing())
             }
           ]}
