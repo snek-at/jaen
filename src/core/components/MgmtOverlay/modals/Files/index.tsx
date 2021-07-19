@@ -34,13 +34,13 @@ const FilesModal: React.FC<FilesModalProps> = ({
         width={1650}
         visible
         title={
-          <Header className="modal-header">
+          <Header className="files-modal-header">
             {!mode ? 'File Explorer' : 'File Chooser'}
           </Header>
         }
         onCancel={onClose}
         footer={[]}
-        className="modal">
+        className="files-modal">
         <Layout>
           <Content>
             <FileExplorer
