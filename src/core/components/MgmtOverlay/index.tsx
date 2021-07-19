@@ -28,10 +28,10 @@ import {decryptWDL, discardEditing, toggleEditing} from '~/store/actions/cms'
 
 import SideMenu from './SideMenu'
 import SnekFabButton from './SnekFabButton'
-import './mgmtOverlay.scss'
 import FilesModal from './modals/Files'
 import PublishModal from './modals/Publish'
 import SiteMenu from './modals/SiteMenu'
+import * as S from './style'
 
 const MgmtOverlay: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -59,7 +59,7 @@ const MgmtOverlay: React.FC = () => {
   }, [dispatch, authenticated, loading, encryptionToken])
 
   return (
-    <>
+    <S.MgmtOverlay>
       <SnekFabButton
         fabOptions={[
           authenticated
@@ -89,36 +89,36 @@ const MgmtOverlay: React.FC = () => {
           items={[
             {
               text: 'Site Menu',
-              icon: <MenuOutlined />,
+              Icon: MenuOutlined,
               onClick: () => null,
               renderElementOnClick: <SiteMenu />
             },
             {
               text: editing ? 'Preview' : 'Edit',
-              icon: editing ? <EditFilled /> : <EditOutlined />,
+              Icon: editing ? EditFilled : EditOutlined,
               onClick: () => dispatch(toggleEditing(!editing))
             },
             {
               text: 'Files',
-              icon: <FileImageOutlined />,
+              Icon: FileImageOutlined,
               onClick: () => null,
               renderElementOnClick: <FilesModal onClose={() => null} />
             },
             {
               text: 'Publish',
-              icon: <CloudUploadOutlined />,
+              Icon: CloudUploadOutlined,
               onClick: () => null,
               renderElementOnClick: <PublishModal />
             },
             {
               text: 'Discard changes',
-              icon: <DeleteOutlined />,
+              Icon: DeleteOutlined,
               onClick: () => dispatch(discardEditing())
             }
           ]}
         />
       )}
-    </>
+    </S.MgmtOverlay>
   )
 }
 

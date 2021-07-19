@@ -1,6 +1,6 @@
 @import '../../../../common/css/colors.scss';
 
-.modal {
+.files-modal {
   .ant-modal-header {
     padding: 0 !important;
   }
@@ -10,7 +10,7 @@
   }
 }
 
-.modal-header {
+.files-modal-header {
   background: $snekDark;
   color: $snekGreen;
 }

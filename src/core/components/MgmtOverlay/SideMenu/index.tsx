@@ -15,7 +15,7 @@ import './sidemenu.scss'
 type SideMenuProps = {
   items: {
     text: string
-    icon: JSX.Element
+    Icon: React.ComponentType<unknown>
     onClick: () => void
     renderElementOnClick?: JSX.Element
   }[]

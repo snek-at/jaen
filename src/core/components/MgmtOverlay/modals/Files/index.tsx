@@ -7,8 +7,7 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {Layout} from 'antd'
-import Modal from 'antd/lib/modal/Modal'
+import {Layout, Modal} from 'antd'
 
 import FileExplorer from '../../FileExplorer'
 import './files.scss'
@@ -35,13 +34,13 @@ const FilesModal: React.FC<FilesModalProps> = ({
         width={1650}
         visible
         title={
-          <Header className="modal-header">
+          <Header className="files-modal-header">
             {!mode ? 'File Explorer' : 'File Chooser'}
           </Header>
         }
         onCancel={onClose}
         footer={[]}
-        className="modal">
+        className="files-modal">
         <Layout>
           <Content>
             <FileExplorer
