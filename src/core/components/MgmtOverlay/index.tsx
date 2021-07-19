@@ -28,10 +28,10 @@ import {decryptWDL, discardEditing, toggleEditing} from '~/store/actions/cms'
 
 import SideMenu from './SideMenu'
 import SnekFabButton from './SnekFabButton'
-import './mgmtOverlay.scss'
 import FilesModal from './modals/Files'
 import PublishModal from './modals/Publish'
 import SiteMenu from './modals/SiteMenu'
+import * as S from './style'
 
 const MgmtOverlay: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -59,7 +59,7 @@ const MgmtOverlay: React.FC = () => {
   }, [dispatch, authenticated, loading, encryptionToken])
 
   return (
-    <>
+    <S.MgmtOverlay>
       <SnekFabButton
         fabOptions={[
           authenticated
@@ -118,7 +118,7 @@ const MgmtOverlay: React.FC = () => {
           ]}
         />
       )}
-    </>
+    </S.MgmtOverlay>
   )
 }
 
