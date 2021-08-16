@@ -75,7 +75,6 @@ Customizable, extensible and open-source.
 * A fast, attractive interface for authors
 * Complete control over front-end design and structure
 * Fast out of the box, cache-friendly when you need it
-* Content API for 'headless' sites with de-coupled front-end
 * StreamField encourages flexible content without compromising structure
 * Excellent support for images and embedded content
 * Multi-site and multi-language ready
@@ -90,12 +89,12 @@ Customizable, extensible and open-source.
 | `Fixed parent for IndexField` | ✅️ |  |  |  |
 | `TextField`                   | ✅️ |  |  |  |
 | `Dynamic Routes`              | ✅️ |  |  |  |
-| `PdfField`               |  | ✅️ |  |  |
-| `ImageField`                  |  | ✅️ |  |  |
-| `StreamField`                 |  | ✅️ |  |  |
+| `PdfField`                    | ✅️ |  |  |  |
+| `ImageField`                  | ✅️ |  |  |  |
+| `StreamField`                 | ✅️ |  |  |  |
 | `LinkField`                   |  | ✅️ |  |  |
 | `Gatsby`                      |  |  | ✅️ |  |
-| `Converter (HELMUT)`          |  |  | ✅️ |  |
+| `Converter (HELMUT)`          |  |  |  | ✅️ |
 | `Smart Converter (SMARTMUT)`  |  |  |  | ✅️ |
 | `E-Commerce`                  |  |  |  | ✅️ |
 | `User Management`             |  |  |  | ✅️ |
@@ -164,13 +163,13 @@ The demo site will now be accessible at <http://localhost:3000/>.
 | `PageType`             	| string     |  |  |  |
 | `ChildPages`         		| [Pages]    |  |  |  |
 
-
 #### Fields
 | Field                         | Properties | Description | Wiki | Tutorial |
 |-------------------------------|------------|:-----------:|:----:|:--------:|
 | `SimpleTextField`             | name <br/> |  |  |  |
 | `SimpleRichTextField`         | name <br/> |  |  |  |
-| `SimpleImageField`            | name <br/> imageStyle|  |  |  |
+| `SimpleImageField`            | name <br/> |  |  |  |
+| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle |  |  |  |
 | `SimplePdfField`            	| name <br/> pdfStyle |  |  |  |
 | `StreamField`                 | name <br/> reverseOrder <br/> blocks|  |  |  |
 | `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem |  |  |  |
@@ -205,6 +204,7 @@ HomePage.ChildPages = [ImprintPage]
 
 export default HomePage
 ```
+
 ### Fields
 #### SimpleTextField
 ```javascript
@@ -244,6 +244,24 @@ const HomePage: ConnectedPageType = () => {
   return (
     <SimpleImageField
       name="siffield"
+    />
+  )
+}
+
+[...]
+
+export default HomePage
+```
+
+#### ImageField
+```javascript
+import {ImageField} from '@snek-at/jaen'
+
+const HomePage: ConnectedPageType = () => {
+  return (
+    <ImageField
+      fieldOptions={{fieldName: "iffield"}}
+      imageClassName="iffield"
       imageStyle={{width: '500px', height: '500px', objectFit: 'cover'}}
     />
   )
