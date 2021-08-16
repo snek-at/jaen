@@ -89,12 +89,12 @@ Customizable, extensible and open-source.
 | `Fixed parent for IndexField` | ✅️ |  |  |  |
 | `TextField`                   | ✅️ |  |  |  |
 | `Dynamic Routes`              | ✅️ |  |  |  |
-| `PdfField`                    |  | ✅️ |  |  |
-| `ImageField`                  |  | ✅️ |  |  |
-| `StreamField`                 |  | ✅️ |  |  |
+| `PdfField`                    | ✅️ |  |  |  |
+| `ImageField`                  | ✅️ |  |  |  |
+| `StreamField`                 | ✅️ |  |  |  |
 | `LinkField`                   |  | ✅️ |  |  |
 | `Gatsby`                      |  |  | ✅️ |  |
-| `Converter (HELMUT)`          |  |  | ✅️ |  |
+| `Converter (HELMUT)`          |  |  |  | ✅️ |
 | `Smart Converter (SMARTMUT)`  |  |  |  | ✅️ |
 | `E-Commerce`                  |  |  |  | ✅️ |
 | `User Management`             |  |  |  | ✅️ |
