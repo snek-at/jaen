@@ -107,7 +107,7 @@ Customizable, extensible and open-source.
 Chasing ones own tail is not inspiring.
 
 #### Disclaimer
-Not for crybabies. Do not touch if you are affraid to be a bit scratched.
+Not for crybabies. Do not touch if you are afraid of being scratched a little.
 
 ## [](#-get-up-and-running-in-5-minutes)🚀 Get Up and Running in 5 Minutes
 
