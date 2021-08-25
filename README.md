@@ -78,7 +78,8 @@ Customizable, extensible and open-source.
 * StreamField encourages flexible content without compromising structure
 * Excellent support for images and embedded content
 * Multi-site and multi-language ready
-* Powerd by blockchain and can be run for free
+* Powered by blockchain and can be run for free
+* Simple, intuitive "What you see is what you get" editing mode
 
 ### Roadmap
 | Feature                       | Shipped | Almost There | We're Writing the Code | Investigating |
