@@ -160,7 +160,7 @@ If you encounter any other issues getting this template to work we ask you to re
 #### Editing
 
 To edit the page you have to log into the CMS.<br />
-The standard user for this is **snekmin** and the password for the account is **ciscociso**.
+The standard user for this is **snekmin** and the password for the account is **ciscocisco**.
 
 ## [](#-how-to-code)💻 How to Code
 
