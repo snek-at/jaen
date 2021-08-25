@@ -161,18 +161,18 @@ The demo site will now be accessible at <http://localhost:3000/>.
 | Field                         | Type       | Description | Wiki | Tutorial |
 |-------------------------------|:----------:|:-----------:|:----:|:--------:|
 | `PageType`             	| string     | The PageType defines the name of your page in the context of the CMS. |  |  |
-| `ChildPages`         		| [Pages]    | ChildPages is an array of pages in which you define what childpages can be added to a paricular pagetype. |  |  |
+| `ChildPages`         		| [Pages]    | ChildPages is an array of pages in which you define what subpages can be added to a particular PageType. |  |  |
 
 #### Fields
 | Field                         | Properties | Description | Wiki | Tutorial |
 |-------------------------------|------------|:-----------:|:----:|:--------:|
 | `SimpleTextField`             | name <br/> | A SimpleTextField can be used to add short editable texts to your page.|  |  |
 | `SimpleRichTextField`         | name <br/> | SimpleRichtextField is used to provide an editable RichTextField to your page. |  |  |
-| `SimpleImageField`            | name <br/> | A SimpleImageField provides a editable image to your page. |  |  |
-| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle | The ImageField can is used to provide editable images that can also be passed an imageStyle parameter as well as a imageClassName parameter in order to style your images. |  |  |
+| `SimpleImageField`            | name <br/> | A SimpleImageField provides an editable image to your page. |  |  |
+| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle | The ImageField can is used to provide editable images that can also be passed an imageStyle parameter as well as an imageClassName parameter in order to style your images. |  |  |
 | `SimplePdfField`            	| name <br/> pdfStyle |  |  |  |
 | `StreamField`                 | name <br/> reverseOrder <br/> blocks| With a StreamField you can build your own JSX-Blocks with editable content and repeat them as often as you like. |  |  |
-| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and co to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. |  |  |
+| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and co pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. |  |  |
 
 ### App Settings
 ```javascript
