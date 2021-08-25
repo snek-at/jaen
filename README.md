@@ -4,7 +4,7 @@
   </a>
 </p>
 
-<h3 align="center">Snek Jaen Template</h3>
+<h3 align="center">Snek Jaen</h3>
 
 <p align="center">
   This is the official jaen project of snek-at.
@@ -139,7 +139,7 @@ The easiest method is to use a GitHub [Codespace](https://github.com/features/co
 - Or build a local copy of the library with `npm run build`
 
 #### Local Setup
-If you set this up locally, make sure you have the following pre-requisites:
+If you decide to set up locally, make sure you have the following prerequisites:
 
 - Add [GitHub npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) `npm login --registry=https://npm.pkg.github.com`
 - Use `npm install` to install all dependencies
@@ -147,6 +147,19 @@ If you set this up locally, make sure you have the following pre-requisites:
 - Or build a local copy of the library with `npm run build`
 
 The demo site will now be accessible at <http://localhost:3000/>.
+
+#### Troubleshooting
+
+If you are having trouble to get the template up and running there are a few things you can try:
+
+- node-sass requires you to use node15. If you have node16 you can use nvm to get the repository running without having to downgrade
+
+If you encounter any other issues getting this template to work we ask you to report it so that we can improve the documentation.
+
+#### Editing
+
+To edit the page you have to log into the CMS.<br />
+The standard user for this is **snekmin** and the password for the account is **ciscociso**.
 
 ## [](#-how-to-code)💻 How to Code
 
