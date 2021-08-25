@@ -220,7 +220,10 @@ export default HomePage
 ```
 
 ### Fields
-**It is advisable to give all the fields descriptive names.**
+Fields are data blocks that you can use to build adaptable React apps. 
+Fieldnames have to be unique when they are on the same page.
+
+It is advisable to give all the fields descriptive names.
 #### SimpleTextField
 
 The SimpleTextField is as the name implies quite simple. You just have to give the field a name.
