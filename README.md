@@ -185,8 +185,8 @@ The standard user for this is **snekmin** and the password for the account is **
 | `SimpleImageField`            | name <br/> | A SimpleImageField provides you with the option to embed a image of your choice. |  |  |
 | `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle | The ImageField can is used to provide editable images that can also be passed an imageStyle parameter as well as an imageClassName parameter in order to style your images. |  |  |
 | `SimplePdfField`            	| name <br/> pdfStyle | If you want to embed a PdfFile on your page you can use our SimplePdfField. |  |  |
-| `StreamField`                 | name <br/> reverseOrder <br/> blocks| With a StreamField you can build your own JSX-Blocks with editable content and repeat them as often as you like. |  |  |
-| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and co pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. |  |  |
+| `StreamField`                 | name <br/> reverseOrder <br/> blocks| With a StreamField you can build your own React-Components with editable content and repeat them as often as you like. |  |  |
+| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and more pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. |  |  |
 
 ### App Settings
 ```javascript
@@ -220,9 +220,8 @@ export default HomePage
 ```
 
 ### Fields
-Fields are data blocks that you can use to build adaptable React apps. 
+Fields are data blocks that you can use to build React apps which the enduser is able to maintain. 
 Fieldnames have to be unique when they are on the same page.
-
 It is advisable to give all the fields descriptive names.
 #### SimpleTextField
 
@@ -324,7 +323,7 @@ export default HomePage
 
 #### StreamField
 
-Jaen StreamFields enable you to build editable JSX-Blocks and to use as many of them as you like. In order to use this field you are required to build a block. You can find an example of a block below.
+Jaen StreamFields enable you to integrate editable blocks and to use as many of them as you like. In order to use this field you are required to build a block. You can find an example of a block below.
 
 ```javascript
 import {StreamField} from '@snek-at/jaen'
@@ -349,7 +348,7 @@ export default HomePage
 
 #### IndexField
 
-If you want to link to childpages of a slug the IndexField is your friend. In the fixedSlug field you can specify the parent, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons an co to your subpages.
+If you want to link to childpages of a slug the IndexField is your friend. In the fixedSlug field you can specify the parent, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons an more to your subpages.
 
 ```javascript
 import {IndexField} from '@snek-at/jaen'
@@ -376,7 +375,7 @@ export default HomePage
 
 
 ### Blocks
-The Block is the cornerstone of the StreamField.
+The Block is the keystone of the StreamField. With the help of blocks you can build complex React-Components with editable content.
 
 ```javascript
 import {
