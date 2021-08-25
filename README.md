@@ -117,7 +117,7 @@ Not for crybabies. Do not touch if you are afraid of being scratched a little.
 | ![image](https://user-images.githubusercontent.com/83394650/124399008-16b7d780-dd19-11eb-84bb-769462d5440e.png) | ![image](https://user-images.githubusercontent.com/83394650/124401575-6c48b000-dd2a-11eb-8316-7f583e5e98d7.png) |
 
 ### First Deployment
-The `GITHUB_TOKEN` has limitations for the first deployment so we have to select the GitHub Pages branch on the repository settings tab. After that, do the second deployment like the following pictures.
+The `GITHUB_TOKEN` has limitations for the first deployment so we have to select the GitHub Pages branch on the repository settings tab. After that follow the instrucions shown in the pictures below to deploy successfully.
 
 | First deployment failed | Go to the [settings tab](https://github.com/snek-at/jaen-template/settings/pages) |
 |---|---|
@@ -155,24 +155,24 @@ The demo site will now be accessible at <http://localhost:3000/>.
 #### App Settings
 | Field                         | Properties | Description | Wiki | Tutorial |
 |-------------------------------|------------|:-----------:|:----:|:--------:|
-| `CMSProvider`             	| settings <br/> pages |  |  |  |
+| `CMSProvider`             	| settings <br/> pages | The CMSProvider provides the repository with the redux state. |  |  |
 
 #### Page Settings
 | Field                         | Type       | Description | Wiki | Tutorial |
 |-------------------------------|:----------:|:-----------:|:----:|:--------:|
-| `PageType`             	| string     |  |  |  |
-| `ChildPages`         		| [Pages]    |  |  |  |
+| `PageType`             	| string     | The PageType defines the name of your page in the context of the CMS. |  |  |
+| `ChildPages`         		| [Pages]    | ChildPages is an array of pages in which you define what childpages can be added to a paricular pagetype. |  |  |
 
 #### Fields
 | Field                         | Properties | Description | Wiki | Tutorial |
 |-------------------------------|------------|:-----------:|:----:|:--------:|
-| `SimpleTextField`             | name <br/> |  |  |  |
-| `SimpleRichTextField`         | name <br/> |  |  |  |
-| `SimpleImageField`            | name <br/> |  |  |  |
-| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle |  |  |  |
+| `SimpleTextField`             | name <br/> | A SimpleTextField can be used to add short editable texts to your page.|  |  |
+| `SimpleRichTextField`         | name <br/> | SimpleRichtextField is used to provide an editable RichTextField to your page. |  |  |
+| `SimpleImageField`            | name <br/> | A SimpleImageField provides a editable image to your page. |  |  |
+| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle | The ImageField can is used to provide editable images that can also be passed an imageStyle parameter as well as a imageClassName parameter in order to style your images. |  |  |
 | `SimplePdfField`            	| name <br/> pdfStyle |  |  |  |
-| `StreamField`                 | name <br/> reverseOrder <br/> blocks|  |  |  |
-| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem |  |  |  |
+| `StreamField`                 | name <br/> reverseOrder <br/> blocks| With a StreamField you can build your own JSX-Blocks with editable content and repeat them as often as you like. |  |  |
+| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and co to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. |  |  |
 
 ### App Settings
 ```javascript
