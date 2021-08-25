@@ -220,6 +220,7 @@ export default HomePage
 ```
 
 ### Fields
+**It is advisable to give all the fields unique and descriptive names.**
 #### SimpleTextField
 ```javascript
 import {SimpleTextField} from '@snek-at/jaen'
@@ -234,6 +235,7 @@ const HomePage: ConnectedPageType = () => {
 
 export default HomePage
 ```
+The SimpleTextField is as the name implies quite simple. You just have to give the field a name.
 
 #### SimpleRichTextField
 ```javascript
@@ -249,6 +251,8 @@ const HomePage: ConnectedPageType = () => {
 
 export default HomePage
 ```
+
+SimpleRichTextField is also a quite simple field that only requires a name.
 
 #### SimpleImageField
 ```javascript
@@ -266,6 +270,9 @@ const HomePage: ConnectedPageType = () => {
 
 export default HomePage
 ```
+
+If you want to add an image to your page you can use the SimpleImageField. <br />
+It works by embedding an image that is hosted on the ipfs by the CMS.
 
 #### ImageField
 ```javascript
@@ -286,6 +293,8 @@ const HomePage: ConnectedPageType = () => {
 export default HomePage
 ```
 
+The ImageField is a more powerful version of the SimpleImageField. In addition to giving the field a name you also have the oppertunity to pass the field an imageClassName as well as an imageStyle property to fulfill your styling requirements. 
+
 #### SimplePdfField 
 ```javascript
 import {SimplePdfField} from '@snek-at/jaen'
@@ -300,6 +309,8 @@ const HomePage: ConnectedPageType = () => {
 
 export default HomePage
 ```
+
+SimplePdfFields as the name implies enables you to embed a PDF hosted on the ipfs.
 
 #### StreamField
 ```javascript
@@ -322,6 +333,8 @@ const HomePage: ConnectedPageType = () => {
 
 export default HomePage
 ```
+
+Jaen StreamFields enable you to build editable JSX-Blocks and to use as many of them as you like. In order to use this field you are required to build a block. You can find an example of a block below.
 
 #### IndexField
 ```javascript
@@ -346,6 +359,54 @@ const HomePage: ConnectedPageType = () => {
 
 export default HomePage
 ```
+
+If you want to link to childpages of a slug the IndexField is your friend. In the fixedSlug field you can specify the parent, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons an co to your subpages.
+
+### Blocks
+
+```javascript
+import {
+  BC,
+  prepareBlocks,
+  ImageField,
+  EditableField,
+  RichTextField
+} from '@snek-at/jaen'
+
+type CardBlockType = {title: string; extra: string; text: string}
+
+export const CardBlock: BC<CardBlockType> = ({
+  fieldOptions,
+  streamFieldWidth
+}) => {
+  const blocks = prepareBlocks<CardBlockType>(CardBlock, fieldOptions)
+
+  return (
+    <>
+      <Card
+        type="inner"
+        title={blocks['title']}
+        style={{width: streamFieldWidth}}
+        extra={<button>{blocks['extra']}</button>}>
+        {blocks['text']}
+        {blocks['image']}
+      </Card>
+    </>
+  )
+}
+
+CardBlock.BlockType = 'CardBlock'
+CardBlock.BlockFields = {
+  image: ImageField,
+  title: EditableField,
+  extra: EditableField,
+  text: RichTextField
+}
+
+export default CardBlock
+```
+
+The Block is the cornerstone of the StreamField.
 
 ## [](#-how-to-report-a-bug-or-request-a-feature)🐞 How to Report a Bug or Request a Feature
 
