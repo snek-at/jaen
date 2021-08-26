@@ -179,13 +179,13 @@ The standard user for this is **snekman** and the password for the account is **
 #### Fields
 | Field                         | Properties | Description | Wiki | Tutorial |
 |-------------------------------|------------|-------------|:----:|:--------:|
-| `SimpleTextField`             | name <br/> | A SimpleTextField can be used to add short editable texts to your page.|  |  |
+| `SimpleTextField`             | name <br/> | A SimpleTextField can be used to add short editable texts to your page.| [✅️](https://github.com/snek-at/jaen/wiki/SimpleTextField) |  |
 | `SimpleRichTextField`         | name <br/> | SimpleRichtextField is used to provide an editable RichTextField to your page. |  |  |
-| `SimpleImageField`            | name <br/> | A SimpleImageField provides you with the option to embed a image of your choice. |  |  |
+| `SimpleImageField`            | name <br/> | A SimpleImageField provides you with the option to embed a image of your choice. | [✅️](https://github.com/snek-at/jaen/wiki/SimpleImageField) |  |
 | `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle | The ImageField can is used to provide editable images that can also be passed an imageStyle parameter as well as an imageClassName parameter in order to style your images. |  |  |
 | `SimplePdfField`            	| name <br/> pdfStyle | If you want to embed a PdfFile on your page you can use our SimplePdfField. |  |  |
 | `StreamField`                 | name <br/> reverseOrder <br/> blocks| With a StreamField you can build your own React-Components with editable content and repeat them as often as you like. |  |  |
-| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and more pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. |  |  |
+| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and more pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
 
 ### App Settings
 ```javascript
