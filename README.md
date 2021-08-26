@@ -77,7 +77,6 @@ Customizable, extensible and open-source.
 * Fast out of the box, cache-friendly when you need it
 * StreamField encourages flexible content without compromising structure
 * Excellent support for images and embedded content
-* Multi-site and multi-language ready
 * Powered by blockchain and can be run for free
 * Simple, intuitive "What you see is what you get" editing mode
 
@@ -160,16 +159,16 @@ If you encounter any other issues getting this template to work we ask you to re
 #### Editing
 
 To edit the page you have to log into the CMS.<br />
-The standard user for this is **snekmin** and the password for the account is **ciscocisco**.
+The standard user for this is **snekman** and the password for the account is **ciscocisco**.
 
-## [](#-how-to-code)💻 How to Code
+## [](#-how-to-code)💻 How to Codes
 
 ### Overview
 
 #### App Settings
 | Field                         | Properties | Description | Wiki | Tutorial |
 |-------------------------------|------------|-------------|:----:|:--------:|
-| `CMSProvider`             	| settings <br/> pages | The CMSProvider provides the repository with the redux state. |  |  |
+| `CMSProvider`             	| settings <br/> pages | The CMSProvider registers a Jaen application and provides a way to share values (e.g fields) between Jaen and the template pages. |  |  |
 
 #### Page Settings
 | Field                         | Type       | Description | Wiki | Tutorial |
@@ -348,7 +347,7 @@ export default HomePage
 
 #### IndexField
 
-If you want to link to childpages of a slug the IndexField is your friend. In the fixedSlug field you can specify the parent, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons an more to your subpages.
+If you want to link to childpages of a slug the IndexField is your friend. The fixedSlug property is not required. When none is provided the children of the current page are used if you like it is possible to specify the parentpage, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons and more to your subpages.
 
 ```javascript
 import {IndexField} from '@snek-at/jaen'
