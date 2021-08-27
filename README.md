@@ -388,24 +388,26 @@ import {
   RichTextField
 } from '@snek-at/jaen'
 
-type CardBlockType = {title: string; extra: string; text: string}
+type BlockType = {
+  title: string
+  extra: string
+  text: string
+  }
 
-export const CardBlock: BC<CardBlockType> = ({
+const Block: BC<BlockType> = ({
   fieldOptions,
   streamFieldWidth
 }) => {
-  const blocks = prepareBlocks<CardBlockType>(CardBlock, fieldOptions)
+  const blocks = prepareBlocks<BlockType>(Block, fieldOptions)
 
   return (
     <>
-      <Card
-        type="inner"
-        title={blocks['title']}
-        style={{width: streamFieldWidth}}
-        extra={<button>{blocks['extra']}</button>}>
+      <div className="card">
+        <h1>{title}</h1>
         {blocks['text']}
         {blocks['image']}
-      </Card>
+        {blocks['extra']}
+      </div>
     </>
   )
 }
@@ -418,7 +420,7 @@ CardBlock.BlockFields = {
   text: RichTextField
 }
 
-export default CardBlock
+export default Block
 ```
 
 
