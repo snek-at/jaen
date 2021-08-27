@@ -412,8 +412,8 @@ const Block: BC<BlockType> = ({
   )
 }
 
-CardBlock.BlockType = 'CardBlock'
-CardBlock.BlockFields = {
+Block.BlockType = 'Block'
+Block.BlockFields = {
   image: ImageField,
   title: EditableField,
   extra: EditableField,
