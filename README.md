@@ -157,7 +157,7 @@ If you are having trouble to get the template up and running there are a few thi
 
 - node-sass requires you to use node15. If you have node16 you can use nvm to get the repository running without having to downgrade
 
-If you encounter any other issues getting this template to work we ask you to report it so that we can improve the documentation.
+If you encounter any other issues getting this template to work we ask you to [report it](https://github.com/snek-at/jaen/issues) so that we can improve the documentation.
 
 #### Editing
 
