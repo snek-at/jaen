@@ -227,7 +227,7 @@ Fieldnames have to be unique when they are on the same page.
 It is advisable to give all the fields descriptive names.
 #### SimpleTextField
 
-The SimpleTextField is as the name implies quite simple. You just have to give the field a name.
+The SimpleTextField is as the name implies quite simple. You just have to give the field a name.<div style="text-align: right">[Wiki](https://github.com/snek-at/jaen/wiki/SimpleTextField)</div>
 
 ```javascript
 import {SimpleTextField} from '@snek-at/jaen'
@@ -245,7 +245,7 @@ export default HomePage
 
 #### SimpleRichTextField
 
-SimpleRichTextField is also a quite simple field that only requires a name.
+SimpleRichTextField is also a quite simple field that only requires a name. <div style="text-align: right">[Wiki](https://github.com/snek-at/jaen/wiki/SimpleRichTextField)</div>
 
 ```javascript
 import {SimpleRichTextField} from '@snek-at/jaen'
@@ -264,7 +264,7 @@ export default HomePage
 #### SimpleImageField
 
 If you want to add an image to your page you can use the SimpleImageField. <br />
-It works by embedding an image that is hosted on the ipfs by the CMS.
+It works by embedding an image that is hosted on the ipfs by the CMS.<div style="text-align: right">[Wiki](https://github.com/snek-at/jaen/wiki/SimpleImageField)</div>
 
 ```javascript
 import {SimpleImageField} from '@snek-at/jaen'
@@ -284,7 +284,7 @@ export default HomePage
 
 #### ImageField
 
-The ImageField is a more powerful version of the SimpleImageField. In addition to giving the field a name you also have the oppertunity to pass the field an imageClassName as well as an imageStyle property to fulfill your styling requirements. 
+The ImageField is a more powerful version of the SimpleImageField. In addition to giving the field a name you also have the oppertunity to pass the field an imageClassName as well as an imageStyle property to fulfill your styling requirements. <div style="text-align: right">[Wiki](https://github.com/snek-at/jaen/wiki/ImageField)</div>
 
 ```javascript
 import {ImageField} from '@snek-at/jaen'
@@ -306,7 +306,7 @@ export default HomePage
 
 #### SimplePdfField 
 
-SimplePdfFields as the name implies enables you to embed a PDF hosted on the ipfs.
+SimplePdfFields as the name implies enables you to embed a PDF hosted on the ipfs.<div style="text-align: right">[Wiki](https://github.com/snek-at/jaen/wiki/SimplePdfField)</div>
 
 ```javascript
 import {SimplePdfField} from '@snek-at/jaen'
@@ -325,7 +325,7 @@ export default HomePage
 
 #### StreamField
 
-Jaen StreamFields enable you to integrate editable blocks and to use as many of them as you like. In order to use this field you are required to build a block. You can find an example of a block below.
+Jaen StreamFields enable you to integrate editable blocks and to use as many of them as you like. In order to use this field you are required to build a block. You can find an example of a block below.<div style="text-align: right">[Wiki](https://github.com/snek-at/jaen/wiki/StreamField)</div>
 
 ```javascript
 import {StreamField} from '@snek-at/jaen'
@@ -350,7 +350,7 @@ export default HomePage
 
 #### IndexField
 
-If you want to link to childpages of a slug the IndexField is your friend. The fixedSlug property is not required. When none is provided the children of the current page are used if you like it is possible to specify the parentpage, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons and more to your subpages.
+If you want to link to childpages of a slug the IndexField is your friend. The fixedSlug property is not required. When none is provided the children of the current page are used if you like it is possible to specify the parentpage, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons and more to your subpages.<div style="text-align: right">[Wiki](https://github.com/snek-at/jaen/wiki/IndexField)</div>
 
 ```javascript
 import {IndexField} from '@snek-at/jaen'
@@ -377,7 +377,7 @@ export default HomePage
 
 
 ### Blocks
-The Block is the keystone of the StreamField. With the help of blocks you can build complex React-Components with editable content.
+The Block is the keystone of the StreamField. With the help of blocks you can build complex React-Components with editable content.<div style="text-align: right">[Wiki](https://github.com/snek-at/jaen/wiki/Blocks)</div>
 
 ```javascript
 import {
