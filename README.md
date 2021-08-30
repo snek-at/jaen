@@ -7,7 +7,7 @@
 <h3 align="center">Snek Jaen</h3>
 
 <p align="center">
-  This is the official jaen project of snek-at.
+  This is the official jaen project provided by snek-at.
   Free, sexy and cutting edge CMS framework for ReactJS.
   <br>
   <br>
@@ -18,7 +18,7 @@
   ·
   <a href="https://github.com/snek-at/jaen/issues/new?template=feature_request.md">Request feature</a>
   ·
-  <a href="https://www.overleaf.com/read/bcxwhwbhrmps">Documentation</a>
+  <a href="https://github.com/snek-at/jaen/wiki">Documentation</a>
   <br>
   <br>
   <a href="https://www.codacy.com/gh/snek-at/jaen/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=snek-at/jaen&amp;utm_campaign=Badge_Grade">
