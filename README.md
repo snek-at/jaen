@@ -4,10 +4,10 @@
   </a>
 </p>
 
-<h3 align="center">Snek Jaen Template</h3>
+<h3 align="center">Snek Jaen</h3>
 
 <p align="center">
-  This is the official jaen project of snek-at.
+  This is the official jaen project provided by snek-at.
   Free, sexy and cutting edge CMS framework for ReactJS.
   <br>
   <br>
@@ -18,7 +18,7 @@
   ·
   <a href="https://github.com/snek-at/jaen/issues/new?template=feature_request.md">Request feature</a>
   ·
-  <a href="https://www.overleaf.com/read/bcxwhwbhrmps">Documentation</a>
+  <a href="https://github.com/snek-at/jaen/wiki">Documentation</a>
   <br>
   <br>
   <a href="https://www.codacy.com/gh/snek-at/jaen/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=snek-at/jaen&amp;utm_campaign=Badge_Grade">
@@ -38,6 +38,8 @@
     - [Deployment Options](#deployment-options)
         - [Codespace Setup](#codespace-setup)
         - [Local Setup](#local-setup)
+            - [Troubleshooting](#troubleshooting)
+    - [Editing](#editing)
 - [💻 How to Code](#-how-to-code)
     - [Overview](#overview)
         - [App Settings](#app-settings)
@@ -52,6 +54,7 @@
         - [SimplePdfField](#simplepdffield)
         - [StreamField](#streamfield)
         - [IndexField](#indexfield)
+    - [Blocks](#blocks)
 - [🐞 How to Report a Bug or Request a Feature](#-how-to-report-a-bug-or-request-a-feature)
 - [🤝 How to Contribute](#-how-to-contribute)
 - [💚 Thanks](#-thanks)
@@ -77,8 +80,8 @@ Customizable, extensible and open-source.
 * Fast out of the box, cache-friendly when you need it
 * StreamField encourages flexible content without compromising structure
 * Excellent support for images and embedded content
-* Multi-site and multi-language ready
-* Powerd by blockchain and can be run for free
+* Powered by blockchain and can be run for free
+* Simple, intuitive "What you see is what you get" editing mode
 
 ### Roadmap
 | Feature                       | Shipped | Almost There | We're Writing the Code | Investigating |
@@ -107,7 +110,7 @@ Customizable, extensible and open-source.
 Chasing ones own tail is not inspiring.
 
 #### Disclaimer
-Not for crybabies. Do not touch if you are affraid to be a bit scratched.
+Not for crybabies. Do not touch if you are afraid of being scratched a little.
 
 ## [](#-get-up-and-running-in-5-minutes)🚀 Get Up and Running in 5 Minutes
 
@@ -117,7 +120,7 @@ Not for crybabies. Do not touch if you are affraid to be a bit scratched.
 | ![image](https://user-images.githubusercontent.com/83394650/124399008-16b7d780-dd19-11eb-84bb-769462d5440e.png) | ![image](https://user-images.githubusercontent.com/83394650/124401575-6c48b000-dd2a-11eb-8316-7f583e5e98d7.png) |
 
 ### First Deployment
-The `GITHUB_TOKEN` has limitations for the first deployment so we have to select the GitHub Pages branch on the repository settings tab. After that, do the second deployment like the following pictures.
+The `GITHUB_TOKEN` has limitations for the first deployment so we have to select the GitHub Pages branch on the repository settings tab. After that follow the instrucions shown in the pictures below to deploy successfully.
 
 | First deployment failed | Go to the [settings tab](https://github.com/snek-at/jaen-template/settings/pages) |
 |---|---|
@@ -139,7 +142,7 @@ The easiest method is to use a GitHub [Codespace](https://github.com/features/co
 - Or build a local copy of the library with `npm run build`
 
 #### Local Setup
-If you set this up locally, make sure you have the following pre-requisites:
+If you decide to set up locally, make sure you have the following prerequisites:
 
 - Add [GitHub npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) `npm login --registry=https://npm.pkg.github.com`
 - Use `npm install` to install all dependencies
@@ -148,31 +151,44 @@ If you set this up locally, make sure you have the following pre-requisites:
 
 The demo site will now be accessible at <http://localhost:3000/>.
 
+#### Troubleshooting
+
+If you are having trouble to get the template up and running there are a few things you can try:
+
+- node-sass requires you to use node15. If you have node16 you can use nvm to get the repository running without having to downgrade
+
+If you encounter any other issues getting this template to work we ask you to [report it](https://github.com/snek-at/jaen/issues) so that we can improve the documentation.
+
+#### Editing
+
+To edit the page you have to log into the CMS.<br />
+The standard user for this is **snekman** and the password for the account is **ciscocisco**.
+
 ## [](#-how-to-code)💻 How to Code
 
 ### Overview
 
 #### App Settings
 | Field                         | Properties | Description | Wiki | Tutorial |
-|-------------------------------|------------|:-----------:|:----:|:--------:|
-| `CMSProvider`             	| settings <br/> pages |  |  |  |
+|-------------------------------|------------|-------------|:----:|:--------:|
+| `CMSProvider`             	| settings <br/> pages | The CMSProvider registers a Jaen application and provides a way to share values (e.g fields) between Jaen and the template pages. |  |  |
 
 #### Page Settings
 | Field                         | Type       | Description | Wiki | Tutorial |
-|-------------------------------|:----------:|:-----------:|:----:|:--------:|
-| `PageType`             	| string     |  |  |  |
-| `ChildPages`         		| [Pages]    |  |  |  |
+|-------------------------------|:----------:|-------------|:----:|:--------:|
+| `PageType`             	| string     | The PageType defines the name of your page in the context of the CMS. |  |  |
+| `ChildPages`         		| [Pages]    | ChildPages is an array of pages in which you define what subpages can be added to a particular PageType. |  |  |
 
 #### Fields
 | Field                         | Properties | Description | Wiki | Tutorial |
-|-------------------------------|------------|:-----------:|:----:|:--------:|
-| `SimpleTextField`             | name <br/> |  |  |  |
-| `SimpleRichTextField`         | name <br/> |  |  |  |
-| `SimpleImageField`            | name <br/> |  |  |  |
-| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle |  |  |  |
-| `SimplePdfField`            	| name <br/> pdfStyle |  |  |  |
-| `StreamField`                 | name <br/> reverseOrder <br/> blocks|  |  |  |
-| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem |  |  |  |
+|-------------------------------|------------|-------------|:----:|:--------:|
+| `SimpleTextField`             | name <br/> | A SimpleTextField can be used to add short editable texts to your page.| [✅️](https://github.com/snek-at/jaen/wiki/SimpleTextField) |  |
+| `SimpleRichTextField`         | name <br/> | SimpleRichtextField is used to provide an editable RichTextField to your page. | [✅️](https://github.com/snek-at/jaen/wiki/SimpleRichTextField) |  |
+| `SimpleImageField`            | name <br/> | A SimpleImageField provides you with the option to embed a image of your choice. | [✅️](https://github.com/snek-at/jaen/wiki/SimpleImageField) |  |
+| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle | The ImageField can is used to provide editable images that can also be passed an imageStyle parameter as well as an imageClassName parameter in order to style your images. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField) |  |
+| `SimplePdfField`            	| name <br/> pdfStyle | If you want to embed a PdfFile on your page you can use our SimplePdfField. | [✅️](https://github.com/snek-at/jaen/wiki/SimplePdfField) |  |
+| `StreamField`                 | name <br/> reverseOrder <br/> blocks| With a StreamField you can build your own React-Components with editable content and repeat them as often as you like. | [✅️](https://github.com/snek-at/jaen/wiki/StreamField) |  |
+| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and more pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
 
 ### App Settings
 ```javascript
@@ -206,7 +222,13 @@ export default HomePage
 ```
 
 ### Fields
+Fields are data blocks that you can use to build React apps which the enduser is able to maintain. 
+Fieldnames have to be unique when they are on the same page.
+It is advisable to give all the fields descriptive names.
 #### SimpleTextField
+
+The SimpleTextField is as the name implies quite simple. You just have to give the field a name.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimpleTextField)</div>
+
 ```javascript
 import {SimpleTextField} from '@snek-at/jaen'
 
@@ -221,7 +243,10 @@ const HomePage: ConnectedPageType = () => {
 export default HomePage
 ```
 
-#### SimpleRichTextField
+#### SimpleRichTextField 
+
+SimpleRichTextField is also a quite simple field that only requires a name. <div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimpleRichTextField)</div>
+
 ```javascript
 import {SimpleRichTextField} from '@snek-at/jaen'
 
@@ -237,6 +262,10 @@ export default HomePage
 ```
 
 #### SimpleImageField
+
+If you want to add an image to your page you can use the SimpleImageField. <br />
+It works by embedding an image that is hosted on the ipfs by the CMS.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimpleImageField)</div>
+
 ```javascript
 import {SimpleImageField} from '@snek-at/jaen'
 
@@ -254,6 +283,9 @@ export default HomePage
 ```
 
 #### ImageField
+
+The ImageField is a more powerful version of the SimpleImageField. In addition to giving the field a name you also have the oppertunity to pass the field an imageClassName as well as an imageStyle property to fulfill your styling requirements. <div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
+
 ```javascript
 import {ImageField} from '@snek-at/jaen'
 
@@ -273,6 +305,9 @@ export default HomePage
 ```
 
 #### SimplePdfField 
+
+SimplePdfFields as the name implies enables you to embed a PDF hosted on the ipfs.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimplePdfField)</div>
+
 ```javascript
 import {SimplePdfField} from '@snek-at/jaen'
 
@@ -287,7 +322,11 @@ const HomePage: ConnectedPageType = () => {
 export default HomePage
 ```
 
+
 #### StreamField
+
+Jaen StreamFields enable you to integrate editable blocks and to use as many of them as you like. In order to use this field you are required to build a block. You can find an example of a block below.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField)</div>
+
 ```javascript
 import {StreamField} from '@snek-at/jaen'
 import {CardBlock} from '...'
@@ -310,6 +349,9 @@ export default HomePage
 ```
 
 #### IndexField
+
+If you want to link to childpages of a slug the IndexField is your friend. The fixedSlug property is not required. When none is provided the children of the current page are used. If you like, it is possible to specify the parentpage, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons and more to your subpages.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
+
 ```javascript
 import {IndexField} from '@snek-at/jaen'
 
@@ -332,6 +374,55 @@ const HomePage: ConnectedPageType = () => {
 
 export default HomePage
 ```
+
+
+### Blocks
+The Block is the keystone of the StreamField. With the help of blocks you can build complex React-Components with editable content.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks)</div>
+
+```javascript
+import {
+  BC,
+  prepareBlocks,
+  ImageField,
+  EditableField,
+  RichTextField
+} from '@snek-at/jaen'
+
+type BlockType = {
+  title: string
+  extra: string
+  text: string
+  }
+
+const Block: BC<BlockType> = ({
+  fieldOptions,
+  streamFieldWidth
+}) => {
+  const blocks = prepareBlocks<BlockType>(Block, fieldOptions)
+
+  return (
+    <>
+      <div className="card">
+        <h1>{title}</h1>
+        {blocks['text']}
+        {blocks['image']}
+        {blocks['extra']}
+      </div>
+    </>
+  )
+}
+
+Block.BlockType = 'Block'
+Block.BlockFields = {
+  image: ImageField,
+  title: EditableField,
+  extra: EditableField,
+  text: RichTextField
+}
+
+export default Block
+```
+
 
 ## [](#-how-to-report-a-bug-or-request-a-feature)🐞 How to Report a Bug or Request a Feature
 
