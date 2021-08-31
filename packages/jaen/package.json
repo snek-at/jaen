@@ -1,6 +1,6 @@
 {
   "name": "@snek-at/jaen",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "main": "index.js",
   "license": "EUPL-1.2",
   "dependencies": {
