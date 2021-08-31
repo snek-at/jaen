@@ -1,11 +1,11 @@
 import {Button, useDisclosure} from '@chakra-ui/react'
 import {PageExplorer, PageExplorerProps} from '@snek-at/jaen-shared-ui'
+import {navigate} from 'gatsby'
 import * as React from 'react'
-import {useEffect} from 'react'
 import {v4 as uuidv4} from 'uuid'
 
-import {useAllSitePage} from '../../../contexts/cms'
-import {useAppDispatch} from '../../../store'
+import {useAllSitePage, useCMSContext} from '../../../contexts/cms'
+import {useAppDispatch, useAppSelector} from '../../../store'
 import * as actions from '../../../store/actions/siteActions'
 import {withRedux} from '../../../store/withRedux'
 import {PageType} from '../../../types'
@@ -40,8 +40,17 @@ const transformToItems = (pages: {
 
 const PagesTab: React.FC<{}> = () => {
   const dispatch = useAppDispatch()
+
+  const cmsContext = useCMSContext()
   const allSitePage = useAllSitePage()
   const fileSelector = useDisclosure()
+
+  const dynamicPaths = useAppSelector(state => state.site.routing.dynamicPaths)
+
+  const templates = React.useMemo(
+    () => cmsContext.templates.map(e => e.TemplateName),
+    [cmsContext.templates]
+  )
 
   const [fileSelectorPageId, setFileSelectorPageId] = React.useState<
     string | null
@@ -51,7 +60,7 @@ const PagesTab: React.FC<{}> = () => {
     string | null
   >(null)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (nextRoutingUpdate) {
       const dynamicPaths = resolveDynamicPath(nextRoutingUpdate, allSitePage)
       alert(JSON.stringify(dynamicPaths))
@@ -121,10 +130,12 @@ const PagesTab: React.FC<{}> = () => {
       })
     )
     updateRouting(id)
+    handleNavigate(id)
   }
   const handlePageDelete = (id: string) => {
     dispatch(actions.deletePage(id))
     updateRouting(id)
+    handleNavigate(null)
   }
   const handlePageMove = (pageId: string, parentPageId: string | null) => {
     dispatch(
@@ -135,12 +146,34 @@ const PagesTab: React.FC<{}> = () => {
     )
 
     updateRouting(pageId)
+    handleNavigate(pageId)
   }
 
   const handleItemImageClick = (pageId: string) => {
     setFileSelectorPageId(pageId)
 
     fileSelector.onOpen()
+  }
+
+  const handleNavigate = (pageId: string | null) => {
+    let pagePath
+    const nodes = allSitePage.nodes
+    if (pageId) {
+      pagePath = Object.keys(dynamicPaths).find(
+        key => dynamicPaths[key] === pageId
+      )
+
+      if (!pagePath) {
+        pagePath = nodes[pageId].path
+      }
+    }
+
+    const currentPath =
+      typeof window !== 'undefined' && window.location.pathname
+
+    if (currentPath !== pagePath) {
+      navigate(pagePath || '/')
+    }
   }
 
   // TODO: move to a loading state in order to improve performence
@@ -153,11 +186,12 @@ const PagesTab: React.FC<{}> = () => {
       <PageExplorer
         items={items}
         rootItemIds={allSitePage.rootNodeIds}
-        templates={['My nice page template']}
+        templates={templates}
         onItemCreate={handlePageCreate}
         onItemDelete={handlePageDelete}
         onItemUpdate={handlePageUpdate}
         onItemMove={handlePageMove}
+        onItemSelect={handleNavigate}
         onItemImageClick={handleItemImageClick}
       />
       {fileSelector.isOpen && (

@@ -40,6 +40,7 @@ export type PageExplorerProps = {
   items: Items
   rootItemIds: string[]
   templates: string[]
+  onItemSelect: (id: string | null) => void
   onItemCreate: (
     parentId: string | null,
     title: string,
@@ -84,6 +85,7 @@ const PageExplorer: React.FC<PageExplorerProps> = props => {
 
   const handleItemSelect = (id: string | null) => {
     setSelectedItem(id)
+    props.onItemSelect(id)
   }
 
   const handleItemDelete = (id: string) => {

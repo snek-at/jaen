@@ -49,9 +49,10 @@ export const usePage = (id: string): ResolvedPageType => {
 }
 
 export const useCMSPage = (id: string): ResolvedPageType => {
-  const context = useCMSContext()
+  const pages = useAllSitePage()
 
-  const nodes = context.site.allSitePage.nodes
+  const nodes = pages.nodes
+  console.log('nodes, id', nodes, id)
   const cNode = nodes[id]
 
   let resolvedPage = ({...cNode} as unknown) as ResolvedPageType
@@ -130,6 +131,7 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
             nodes {
               id
               slug
+              path
               template
               parent {
                 id

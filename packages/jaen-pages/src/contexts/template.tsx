@@ -1,5 +1,8 @@
 import {createContext, useContext} from 'react'
+import {useSelector} from 'react-redux'
 
+import {useAppSelector} from '../store'
+import {withRedux} from '../store/withRedux'
 import {ResolvedPageType} from '../types'
 import {useCMSContext, useCMSPage} from './cms'
 
@@ -33,10 +36,16 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
   id,
   ...props
 }) => {
-  const page = useCMSPage(id)
+  const pathName = typeof window !== 'undefined' && window.location.pathname
+
+  const dynamicPaths = useAppSelector(({site}) => site.routing.dynamicPaths)
+
+  const page = useCMSPage((pathName && dynamicPaths[pathName]) || id)
   const {templates} = useCMSContext()
 
-  const isDynamic = page.dynamic
+  const isDynamic = pathName && Object.keys(dynamicPaths).includes(pathName)
+
+  console.log('isDynamic', isDynamic, pathName, dynamicPaths)
 
   const findTemplate = (name: string) => {
     const template = templates.find(t => t.TemplateName === name)
@@ -50,6 +59,8 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
 
   const Template = page.template ? findTemplate(page.template) : null
 
+  console.log('Template', Template, templates, page)
+
   return (
     <TemplateContext.Provider value={{pageId: id, page}}>
       {isDynamic && Template ? <Template /> : children}
@@ -57,4 +68,4 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
   )
 }
 
-export default TemplateProvider
+export default withRedux(TemplateProvider)
