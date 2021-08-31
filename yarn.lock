@@ -1015,7 +1015,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
-"@babel/plugin-transform-typescript@^7.15.0":
+"@babel/plugin-transform-typescript@^7.14.6", "@babel/plugin-transform-typescript@^7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.15.0.tgz#553f230b9d5385018716586fc48db10dd228eb7e"
   integrity sha512-WIIEazmngMEEHDaPTx0IZY48SaAmjVWe3TRSX7cmJXn0bEv9midFzAjxiruOWYIVf5iQ10vFx7ASDpgEO08L5w==
@@ -1118,7 +1118,7 @@
     core-js-compat "^3.16.0"
     semver "^6.3.0"
 
-"@babel/preset-flow@^7.12.1":
+"@babel/preset-flow@^7.12.1", "@babel/preset-flow@^7.14.0":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/preset-flow/-/preset-flow-7.14.5.tgz#a1810b0780c8b48ab0bece8e7ab8d0d37712751c"
   integrity sha512-pP5QEb4qRUSVGzzKx9xqRuHUrM/jEzMqdrZpdMA+oUCRgd5zM1qGr5y5+ZgAL/1tVv1H0dyk5t4SKJntqyiVtg==
@@ -4610,67 +4610,6 @@
     "@chakra-ui/react" "^1.6.6"
     gatsby "^3.12.0"
 
-"@snek-at/jaen-pages@2.0.0-beta.1":
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@snek-at/jaen-pages/-/jaen-pages-2.0.0-beta.1.tgz#0ec8d4a59ffcf1ef32aa08f9864b249e711472c6"
-  integrity sha512-mx/9LYaNDTRj6QGIu2Xsb7hMGb2pO9DOkgUm6pIQuFQylSSQrEnJHx3R+cBJ2gWFm9XpXABhkqarEi3n5CrHUw==
-  dependencies:
-    "@chakra-ui/icons" "^1.0.15"
-    "@chakra-ui/react" "^1.6.6"
-    "@ckeditor/ckeditor5-build-balloon" "^29.1.0"
-    "@ckeditor/ckeditor5-react" "^3.0.2"
-    "@emotion/react" "^11.4.1"
-    "@emotion/styled" "^11.3.0"
-    "@loadable/component" "^5.15.0"
-    "@react-icons/all-files" "^4.1.0"
-    "@reduxjs/toolkit" "^1.6.1"
-    "@snek-at/gatsby-plugin-chakra-ui" "1.0.0-beta.4"
-    "@snek-at/jaen" "2.0.0-beta.1"
-    "@snek-at/jaen-shared-ui" "2.0.0-beta.1"
-    "@snek-at/snek-finder" "^1.0.0-beta.9"
-    deepmerge "^4.2.2"
-    esm "^3.2.25"
-    framer-motion "^4.1.17"
-    gatsby-plugin-image "^1.12.0"
-    gatsby-plugin-sharp "^3.12.0"
-    gatsby-transformer-sharp "^3.12.0"
-    immutability-helper "^3.1.1"
-    ipfs-http-client "^52.0.2"
-    juice "^8.0.0"
-    lodash "^4.17.21"
-    react "^17.0.2"
-    react-redux "^7.2.4"
-    uuid "^8.3.2"
-
-"@snek-at/jaen-shared-ui@2.0.0-beta.1":
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@snek-at/jaen-shared-ui/-/jaen-shared-ui-2.0.0-beta.1.tgz#f31e69db012a887cfa0dd84ebf58a3a0a5cb31e0"
-  integrity sha512-N7Gouzi22A38UbUH2nLSuEykXrCD/av+aR4O52xVbgEVaMHm3TjYtAtbZziqGGQc7QGZx+m6+jFPzAcAKn5gxQ==
-  dependencies:
-    "@atlaskit/tree" "^8.4.0"
-    "@chakra-ui/icons" "^1.0.15"
-    "@chakra-ui/react" "^1.6.6"
-    "@emotion/react" "^11"
-    "@emotion/styled" "^11"
-    "@fortawesome/fontawesome-svg-core" "^1.2.36"
-    "@fortawesome/free-regular-svg-icons" "^5.15.4"
-    "@fortawesome/react-fontawesome" "^0.1.15"
-    "@snek-at/react-lottie" "1.0.0-beta.3"
-    "@snek-at/snek-finder" "1.0.0-beta.9"
-    framer-motion "^4.1.17"
-    react "^17.0.2"
-    react-analytics-charts "^1.2.12"
-    react-use-analytics-api "^1.4.16"
-
-"@snek-at/jaen@2.0.0-beta.1":
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@snek-at/jaen/-/jaen-2.0.0-beta.1.tgz#0416544c3c2e2e3eef77c8525e5b96bc5d448862"
-  integrity sha512-ZYpcgQgHWA4UvITwsY4M/uSJYuc+pEec6XAEloYei5Xm18RJSBxyN4eQTn56O3ODvX1ZQxtHefuKq84joji9pQ==
-  dependencies:
-    "@loadable/component" "^5.15.0"
-    "@snek-at/jaen-shared-ui" "2.0.0-beta.1"
-    react "^17.0.2"
-
 "@snek-at/react-lottie@1.0.0-beta.3":
   version "1.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/@snek-at/react-lottie/-/react-lottie-1.0.0-beta.3.tgz#e2200b4bee31247cecaa9d8c9170207d8ff8b5ae"
@@ -7651,6 +7590,22 @@ babel-plugin-transform-react-remove-prop-types@^0.4.24:
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.24.tgz#f2edaf9b4c6a5fbe5c1d678bfb531078c1555f3a"
   integrity sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==
 
+babel-preset-gatsby-package@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-gatsby-package/-/babel-preset-gatsby-package-1.13.0.tgz#a701346450ffb745c84debfed5b94c545de97b8b"
+  integrity sha512-1cRH8E6L6tKbnHZc9OLF5wvyFhg4wRykIBzyvSOdmHJ7GNEa0khgDcMRPeLhhsMBF4qWEmjWUhWZ59VdUO5oKA==
+  dependencies:
+    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.14.5"
+    "@babel/plugin-proposal-optional-chaining" "^7.14.5"
+    "@babel/plugin-syntax-dynamic-import" "^7.8.3"
+    "@babel/plugin-transform-runtime" "^7.14.5"
+    "@babel/plugin-transform-typescript" "^7.14.6"
+    "@babel/preset-env" "^7.14.9"
+    "@babel/preset-flow" "^7.14.0"
+    "@babel/preset-react" "^7.14.0"
+    babel-plugin-dynamic-import-node "^2.3.3"
+    core-js "^3.10.0"
+
 babel-preset-gatsby@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/babel-preset-gatsby/-/babel-preset-gatsby-1.12.0.tgz#e34ba94b24525cf37471521626c4f4db2f54e2fd"
@@ -9330,6 +9285,11 @@ core-js@^3.0.4, core-js@^3.6.5, core-js@^3.8.2, core-js@^3.9.0:
   version "3.16.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.16.1.tgz#f4485ce5c9f3c6a7cb18fa80488e08d362097249"
   integrity sha512-AAkP8i35EbefU+JddyWi12AWE9f2N/qr/pwnDtWz4nyUIBGMJPX99ANFFRSw6FefM374lDujdtLDyhN2A/btHw==
+
+core-js@^3.10.0:
+  version "3.16.4"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.16.4.tgz#0fb1029a554fc2688c0963d7c900e188188a78e0"
+  integrity sha512-Tq4GVE6XCjE+hcyW6hPy0ofN3hwtLudz5ZRdrlCnsnD/xkm/PWQRudzYHiKgZKUcefV6Q57fhDHjZHJP5dpfSg==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"

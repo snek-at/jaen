@@ -2,6 +2,7 @@
   "name": "@snek-at/jaen-pages",
   "version": "2.0.0-beta.4",
   "main": "index.js",
+  "types": "dist/index.d.ts",
   "license": "EUPL-1.2",
   "dependencies": {
     "@chakra-ui/icons": "^1.0.15",
@@ -14,7 +15,7 @@
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@snek-at/gatsby-plugin-chakra-ui": "1.0.0-beta.4",
-    "@snek-at/jaen": "2.0.0-beta.1",
+    "@snek-at/jaen": "2.0.0-beta.4",
     "@snek-at/jaen-shared-ui": "2.0.0-beta.3",
     "@snek-at/snek-finder": "^1.0.0-beta.9",
     "deepmerge": "^4.2.2",
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@types/loadable__component": "^5.13.4",
     "@types/uuid": "^8.3.1",
+    "babel-preset-gatsby-package": "^1.13.0",
     "electron": "^13.2.3",
     "gatsby-plugin-emotion": "^6.11.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.24"

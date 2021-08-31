@@ -2,6 +2,7 @@
   "name": "@snek-at/jaen",
   "version": "2.0.0-beta.4",
   "main": "index.js",
+  "types": "dist/index.d.ts",
   "license": "EUPL-1.2",
   "dependencies": {
     "@loadable/component": "^5.15.0",
@@ -10,6 +11,7 @@
   },
   "devDependencies": {
     "@snek-at/gatsby-plugin-chakra-ui": "^1.0.0-beta.4",
+    "babel-preset-gatsby-package": "^1.13.0",
     "gatsby-plugin-emotion": "^6.11.0"
   }
 }
