@@ -1,0 +1,41 @@
+{
+  "name": "@snek-at/jaen-pages",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@chakra-ui/icons": "^1.0.15",
+    "@chakra-ui/react": "^1.6.6",
+    "@ckeditor/ckeditor5-build-balloon": "^29.1.0",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@loadable/component": "^5.15.0",
+    "@react-icons/all-files": "^4.1.0",
+    "@reduxjs/toolkit": "^1.6.1",
+    "@snek-at/gatsby-plugin-chakra-ui": "1.0.0-beta.4",
+    "@snek-at/jaen": "*",
+    "@snek-at/jaen-shared-ui": "*",
+    "@snek-at/snek-finder": "^1.0.0-beta.9",
+    "deepmerge": "^4.2.2",
+    "esm": "^3.2.25",
+    "framer-motion": "^4.1.17",
+    "gatsby-plugin-image": "^1.12.0",
+    "gatsby-plugin-sharp": "^3.12.0",
+    "gatsby-transformer-sharp": "^3.12.0",
+    "immutability-helper": "^3.1.1",
+    "ipfs-http-client": "^52.0.2",
+    "juice": "^8.0.0",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/loadable__component": "^5.13.4",
+    "@types/uuid": "^8.3.1",
+    "electron": "^13.2.3",
+    "gatsby-plugin-emotion": "^6.11.0",
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.24"
+  }
+}

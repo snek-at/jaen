@@ -1,0 +1,10 @@
+{
+  "button": {
+    "en": "Discard",
+    "de": "Verwerfen"
+  },
+  "tooltip": {
+    "en": "Click this button to discard your changes",
+    "de": "Drücken Sie auf diesen Knopf um ihre Veränderungen zu verwerfen"
+  }
+}

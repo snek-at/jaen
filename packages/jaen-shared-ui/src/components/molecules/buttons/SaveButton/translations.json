@@ -1,0 +1,10 @@
+{
+  "button": {
+    "en": "Save",
+    "de": "Speichern"
+  },
+  "tooltip": {
+    "en": "To save your page click on this button",
+    "de": "Zum speichern Ihrer Seite müssen Sie diesen Knopf drücken"
+  }
+}

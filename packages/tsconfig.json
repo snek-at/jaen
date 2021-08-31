@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    {"path": "jaen"},
+    {"path": "jaen-pages"},
+    {"path": "jaen-shared-ui"}
+  ]
+}
