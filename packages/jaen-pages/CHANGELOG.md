@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.7](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.6...@snek-at/jaen-pages-v2.0.0-beta.7) (2021-08-31)
+
+
+### Bug Fixes
+
+* **.babelrc:** add preset-react ([36a0f2c](https://github.com/snek-at/jaen/commit/36a0f2cba18b74a4a2a20e94bdc9d61f29c7089b))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.6](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.5...@snek-at/jaen-pages-v2.0.0-beta.6) (2021-08-31)
 
 
