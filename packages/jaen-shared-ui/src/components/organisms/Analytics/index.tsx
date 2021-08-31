@@ -24,8 +24,6 @@ import {
 } from 'react-analytics-charts'
 import {useAnalyticsApi} from 'react-use-analytics-api'
 
-import SiteSettings from '../../molecules/SiteSettings'
-
 const Analytics: React.FC = () => {
   const {ready, gapi, authorized, error} = useAnalyticsApi()
   const [viewId, setViewId] = useState('')
