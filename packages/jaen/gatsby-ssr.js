@@ -1,3 +1,6 @@
-import * as ssr from './dist/gatsby/gatsby-ssr'
+import {JaenCoreProvider} from './src'
 
-export const wrapRootElement = ssr.wrapRootElement
+export const wrapRootElement = ({element}) => {
+  // @ts-ignore
+  return <JaenCoreProvider plugins={[]}>{element}</JaenCoreProvider>
+}

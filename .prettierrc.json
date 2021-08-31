@@ -16,5 +16,6 @@
     "^~/utils/(.*)$",
     "^[./]"
   ],
-  "importOrderSeparation": true
+  "importOrderSeparation": true,
+  "experimentalBabelParserPluginsList": ["jsx", "typescript"]
 }

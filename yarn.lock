@@ -4610,6 +4610,15 @@
     "@chakra-ui/react" "^1.6.6"
     gatsby "^3.12.0"
 
+"@snek-at/jaen@2.0.0-beta.6":
+  version "2.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/@snek-at/jaen/-/jaen-2.0.0-beta.6.tgz#dff27ac7071f6add3d7c9afc13aec5f3d23c1fa5"
+  integrity sha512-Td6WTNr/0tFt94qWoRqG56aRTHm8roAVxyZycpzrDHo7UL7h0o21PMvw++LHU4BppoS7fkE5kEp6j5JJExLviQ==
+  dependencies:
+    "@loadable/component" "^5.15.0"
+    "@snek-at/jaen-shared-ui" "2.0.0-beta.3"
+    react "^17.0.2"
+
 "@snek-at/react-lottie@1.0.0-beta.3":
   version "1.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/@snek-at/react-lottie/-/react-lottie-1.0.0-beta.3.tgz#e2200b4bee31247cecaa9d8c9170207d8ff8b5ae"
