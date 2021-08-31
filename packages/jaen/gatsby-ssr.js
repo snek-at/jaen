@@ -1,3 +1,3 @@
-import * as ssr from './dist/gatsby/gatsby-ssr'
+import * as ssr from './src/gatsby/gatsby-ssr'
 
 export const wrapRootElement = ssr.wrapRootElement
