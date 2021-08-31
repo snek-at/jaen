@@ -2,7 +2,7 @@
   "name": "@snek-at/jaen-pages",
   "version": "2.0.0-beta.1",
   "main": "index.js",
-  "license": "MIT",
+  "license": "EUPL-1.2",
   "dependencies": {
     "@chakra-ui/icons": "^1.0.15",
     "@chakra-ui/react": "^1.6.6",

@@ -3,7 +3,7 @@
   "version": "2.0.0-beta.1",
   "main": "index.js",
   "types": "src/index.ts",
-  "license": "MIT",
+  "license": "EUPL-1.2",
   "dependencies": {
     "@loadable/component": "^5.15.0",
     "@snek-at/jaen-shared-ui": "2.0.0-beta.1",
