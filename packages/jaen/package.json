@@ -1,12 +1,12 @@
 {
   "name": "@snek-at/jaen",
-  "version": "1.0.0",
+  "version": "2.0.0-beta.1",
   "main": "index.js",
   "types": "src/index.ts",
   "license": "MIT",
   "dependencies": {
     "@loadable/component": "^5.15.0",
-    "@snek-at/jaen-shared-ui": "*",
+    "@snek-at/jaen-shared-ui": "2.0.0-beta.1",
     "react": "^17.0.2"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@snek-at/jaen-pages",
-  "version": "1.0.0",
+  "version": "2.0.0-beta.1",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
@@ -14,8 +14,8 @@
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@snek-at/gatsby-plugin-chakra-ui": "1.0.0-beta.4",
-    "@snek-at/jaen": "*",
-    "@snek-at/jaen-shared-ui": "*",
+    "@snek-at/jaen": "2.0.0-beta.1",
+    "@snek-at/jaen-shared-ui": "2.0.0-beta.1",
     "@snek-at/snek-finder": "^1.0.0-beta.9",
     "deepmerge": "^4.2.2",
     "esm": "^3.2.25",
