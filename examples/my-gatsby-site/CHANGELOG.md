@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.4](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.3...my-gatsby-site-v1.0.0-beta.4) (2021-08-31)
+
+
+### Bug Fixes
+
+* **.babelrc:** add preset-react ([36a0f2c](https://github.com/snek-at/jaen/commit/36a0f2cba18b74a4a2a20e94bdc9d61f29c7089b))
+
 # [my-gatsby-site-v1.0.0-beta.3](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.2...my-gatsby-site-v1.0.0-beta.3) (2021-08-31)
 
 
