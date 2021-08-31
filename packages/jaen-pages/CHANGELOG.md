@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.5](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.4...@snek-at/jaen-pages-v2.0.0-beta.5) (2021-08-31)
+
+
+### Bug Fixes
+
+* enable transpiling ([037856a](https://github.com/snek-at/jaen/commit/037856a4bad791be351cc03b2afb29c65f9b8bff))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.4](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.3...@snek-at/jaen-pages-v2.0.0-beta.4) (2021-08-31)
 
 
