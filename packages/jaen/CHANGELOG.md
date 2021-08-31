@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.6](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.5...@snek-at/jaen-v2.0.0-beta.6) (2021-08-31)
+
+
+### Bug Fixes
+
+* **package.json:** add dist to files ([243b531](https://github.com/snek-at/jaen/commit/243b53141fc7069c1f3244a40f3fd683c987dcde))
+
 # [@snek-at/jaen-v2.0.0-beta.5](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.4...@snek-at/jaen-v2.0.0-beta.5) (2021-08-31)
 
 
