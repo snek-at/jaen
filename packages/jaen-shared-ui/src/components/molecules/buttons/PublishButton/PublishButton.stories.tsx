@@ -14,3 +14,10 @@ export const Primary = Template.bind({})
 Primary.args = {
   onPublishClick: () => null
 }
+
+export const Disabled = Template.bind({})
+
+Disabled.args = {
+  onPublishClick: () => null,
+  disabled: true
+}

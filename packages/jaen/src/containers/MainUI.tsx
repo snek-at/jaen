@@ -18,23 +18,28 @@ const MainUI: React.FC<MainUIProps> = ({ui: {hotbar, tabs}}) => {
   const dispatch = useAppDispatch()
   const authenticated = useAppSelector(state => state.auth.authenticated)
 
-  const handleLogin = async (username: string, password: string) => {
+  const login = async (
+    username: string,
+    password: string,
+    isGuest: boolean
+  ) => {
     const res = (await dispatch(
-      authActions.login({creds: {username, password}})
+      authActions.login({creds: {username, password}, isGuest})
     )) as any
 
-    console.log('res', res.error)
-
     if (res.error) {
-      console.log('false')
       return false
     }
 
     return true
   }
 
-  const handleGuestLogin = () => {
-    return handleLogin('snekman', 'ciscocisco')
+  const handleLogin = async (username: string, password: string) => {
+    return login(username, password, username === 'snekman')
+  }
+
+  const handleGuestLogin = async () => {
+    return login('snekman', 'ciscocisco', true)
   }
 
   const handleLogout = () => {

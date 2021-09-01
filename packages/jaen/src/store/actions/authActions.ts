@@ -19,10 +19,11 @@ export const login = createAsyncThunk(
   async (
     args: {
       creds?: {username: string; password: string}
+      isGuest?: boolean
     },
     thunkAPI
   ) => {
-    const {creds} = args
+    const {creds, isGuest} = args
 
     try {
       const session = await Bridge.session.begin(creds || undefined)
@@ -31,7 +32,7 @@ export const login = createAsyncThunk(
         throw new Error('Starting session failed')
       }
 
-      return session
+      return {session, isGuest}
     } catch (err) {
       // Use `err.response.data` as `action.payload` for a `rejected` action,
       // by explicitly returning it using the `rejectWithValue()` utility

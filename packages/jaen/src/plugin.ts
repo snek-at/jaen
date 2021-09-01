@@ -1,3 +1,5 @@
+import {AuthState} from './store/types'
+
 type HotbarMain = {
   start: JSX.Element[]
   end: JSX.Element[]
@@ -21,6 +23,7 @@ export type PluginUI = {
 
 export type PluginCallbacks = {
   onPublish: () => Promise<object>
+  getAuthState: () => AuthState
 }
 
 export type Plugin = {

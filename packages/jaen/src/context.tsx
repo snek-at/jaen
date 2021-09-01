@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import MainUI from './containers/MainUI'
 import {PluginCallbacks, getPublishValue, getUI, Plugin} from './plugin'
+import {store} from './store'
 
 export type JaenCoreContextType = {} & PluginCallbacks
 export const JaenCoreContext = React.createContext<
@@ -30,11 +31,11 @@ export const JaenCoreProvider: React.FC<JaenCoreProviderProps> = ({
 }) => {
   const ui = getUI(plugins)
   const onPublish = () => getPublishValue(plugins)
-  const onAuthenticate = () => {}
+  const getAuthState = () => store.getState().auth
 
   return (
     <>
-      <JaenCoreContext.Provider value={{onPublish}}>
+      <JaenCoreContext.Provider value={{onPublish, getAuthState}}>
         <MainUI ui={ui} />
         {children}
       </JaenCoreContext.Provider>

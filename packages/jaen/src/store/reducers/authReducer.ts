@@ -22,12 +22,17 @@ const authReducer = createReducer(initialState, {
     state.loading = true
   },
   [actions.login.fulfilled.type]: (state, action) => {
-    const {anonymous} = action.payload
-    if (!anonymous) state.authenticated = true
+    const {session, isGuest} = action.payload
+    if (!session.anonymous) {
+      state.authenticated = true
+      state.isGuest = isGuest
+    }
     state.loading = false
   },
-  [actions.logout.fulfilled.type]: (state, _action) =>
-    void (state.authenticated = false)
+  [actions.logout.fulfilled.type]: (state, _action) => {
+    state.authenticated = false
+    state.isGuest = false
+  }
 })
 
 export default authReducer

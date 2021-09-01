@@ -7,8 +7,11 @@ import {withRedux} from '../../../store/withRedux'
 const Button: React.FC = () => {
   const core = useJaenCoreContext()
 
+  const isDisabled = core.getAuthState().isGuest
+
   return (
     <PublishButton
+      disabled={isDisabled}
       onPublishClick={() => {
         core.onPublish().then(res => console.log('PUBLISH', res))
       }}

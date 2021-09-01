@@ -2,10 +2,10 @@ import {Button, Badge, useColorMode, Tooltip} from '@chakra-ui/react'
 import {Lottie} from '@snek-at/react-lottie'
 
 import {APublishLottie} from '../../../atoms/icons/APublishIcon'
-
 import translations from './translations.json'
 
 export type PublishButtonProps = {
+  disabled?: boolean
   onPublishClick: () => void
 }
 
@@ -34,30 +34,26 @@ const PublishButton: React.FC<PublishButtonProps> = props => {
 
   return (
     <Lottie lottie={lottie} forceReloadDeps={[lottie]}>
-        {({container, animation}) => (
-          <Tooltip
+      {({container, animation}) => (
+        <Tooltip
           hasArrow
           label={CONTENT.tooltip}
           placement="bottom-start"
           fontSize="md">
-            <Button
-              size="sm"
-              variant="outline"
-              leftIcon={container}
-              rightIcon={
-                <Badge borderRadius="full" px="2" colorScheme="green">
-                  authorised
-                </Badge>
-              }
-              onClick={() => {
-                animation.playSegments([0, animation.totalFrames], true)
-                props.onPublishClick()
-              }}
-              {...(props as any)}>
-              {CONTENT.button}
-            </Button>
-          </Tooltip>
-        )}
+          <Button
+            disabled={props.disabled}
+            size="sm"
+            variant="outline"
+            leftIcon={container}
+            onClick={() => {
+              animation.playSegments([0, animation.totalFrames], true)
+              props.onPublishClick()
+            }}
+            {...(props as any)}>
+            {CONTENT.button}
+          </Button>
+        </Tooltip>
+      )}
     </Lottie>
   )
 }
