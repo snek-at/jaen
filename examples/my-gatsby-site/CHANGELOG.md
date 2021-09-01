@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.5](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.4...my-gatsby-site-v1.0.0-beta.5) (2021-09-01)
+
+
+### Bug Fixes
+
+* remove transpiling ([9ec9b59](https://github.com/snek-at/jaen/commit/9ec9b59b69515bbdf3c47b77c9434ce2b38632f3))
+
 # [my-gatsby-site-v1.0.0-beta.4](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.3...my-gatsby-site-v1.0.0-beta.4) (2021-08-31)
 
 
