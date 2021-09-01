@@ -1,55 +1,64 @@
 {
+  "pages": {
+    "hello-world1": {
+      "context": {
+        "fileUrl": "https://ipfs.io/ipfs/QmVyFXfVen3CNFB5BLwPyqFg9Vk7MEziAaPJLyHwpwbPgu",
+        "createdAt": "2021-09-01T20:03:27.933Z"
+      },
+      "migrations": [
+        {
+          "fileUrl": "https://ipfs.io/ipfs/QmVyFXfVen3CNFB5BLwPyqFg9Vk7MEziAaPJLyHwpwbPgu",
+          "createdAt": "2021-09-01T20:03:27.933Z"
+        }
+      ]
+    },
+    "hello-world0": {
+      "context": {
+        "fileUrl": "https://ipfs.io/ipfs/QmRWD4zhU6U2DoEw77zjsEXS55L3ex1jqcX5thtGAApGpm",
+        "createdAt": "2021-09-01T20:03:27.933Z"
+      },
+      "migrations": [
+        {
+          "fileUrl": "https://ipfs.io/ipfs/QmRWD4zhU6U2DoEw77zjsEXS55L3ex1jqcX5thtGAApGpm",
+          "createdAt": "2021-09-01T20:03:27.933Z"
+        }
+      ]
+    }
+  },
   "site": {
     "context": {
-      "date": "da",
-      "file": "io.io"
+      "createdAt": "2021-09-01T20:03:27.933Z",
+      "fileUrl": "https://ipfs.io/ipfs/QmZsCwyHLpnaTofw8AePSzNex56mJCJLAZK2cez8efmRx4"
     },
     "migrations": [
       {
-        "date": "da",
-        "file": "io.io"
-      },
-      {
-        "date": "da",
-        "file": "io.io"
+        "createdAt": "2021-09-01T20:03:27.933Z",
+        "fileUrl": "https://ipfs.io/ipfs/QmZsCwyHLpnaTofw8AePSzNex56mJCJLAZK2cez8efmRx4"
       }
     ]
   },
   "snekFinder": {
-    "initBackendLink": "http://localhost:8080/init"
-  },
-  "pages": {
-    "0000-000": {
-      "context": {
-        "date": "da",
-        "file": "io.io"
-      },
-      "migrations": [
-        {
-          "date": "da",
-          "file": "io.io"
-        },
-        {
-          "date": "da",
-          "file": "io.io"
-        }
-      ]
+    "context": {
+      "createdAt": "2021-09-01T20:03:27.933Z",
+      "fileUrl": "https://cloudflare-ipfs.com/ipfs/QmTQuWjjrskwL9nsoM99hckUhg59dnF51hXV6BgjcbYso2"
     },
-    "111-111": {
-      "context": {
-        "date": "da",
-        "file": "io.io"
+    "migrations": [
+      {
+        "createdAt": "2021-09-01T20:03:27.933Z",
+        "fileUrl": "https://ipfs.io/ipfs/QmTQuWjjrskwL9nsoM99hckUhg59dnF51hXV6BgjcbYso2"
       },
-      "migrations": [
-        {
-          "date": "da",
-          "file": "io.io"
-        },
-        {
-          "date": "da",
-          "file": "io.io"
-        }
-      ]
-    }
+      {
+        "createdAt": "2021-09-01T20:03:27.933Z",
+        "fileUrl": "https://ipfs.io/ipfs/QmTQuWjjrskwL9nsoM99hckUhg59dnF51hXV6BgjcbYso2"
+      },
+      {
+        "createdAt": "2021-09-01T20:03:27.933Z",
+        "fileUrl": "https://ipfs.io/ipfs/QmTQuWjjrskwL9nsoM99hckUhg59dnF51hXV6BgjcbYso2"
+      },
+      {
+        "createdAt": "2021-09-01T20:03:27.933Z",
+        "fileUrl": "https://ipfs.io/ipfs/QmTQuWjjrskwL9nsoM99hckUhg59dnF51hXV6BgjcbYso2"
+      }
+    ]
   }
 }

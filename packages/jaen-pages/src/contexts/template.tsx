@@ -45,8 +45,6 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
 
   const isDynamic = pathName && Object.keys(dynamicPaths).includes(pathName)
 
-  console.log('isDynamic', isDynamic, pathName, dynamicPaths)
-
   const findTemplate = (name: string) => {
     const template = templates.find(t => t.TemplateName === name)
 
@@ -58,8 +56,6 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
   }
 
   const Template = page.template ? findTemplate(page.template) : null
-
-  console.log('Template', Template, templates, page)
 
   return (
     <TemplateContext.Provider value={{pageId: id, page}}>

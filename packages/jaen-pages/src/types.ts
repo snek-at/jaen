@@ -171,6 +171,35 @@ export type SiteType = {
   allSitePage: SitePages
 }
 
+export type RemoteFileMigration = {
+  createdAt: string
+  fileUrl: string
+}
+
+export type JaenPagesEntity = {
+  context: RemoteFileMigration
+}
+
+export interface JaenPagesEntityWithMigrations extends JaenPagesEntity {
+  migrations: RemoteFileMigration[]
+}
+
+export type JaenPages = {
+  site?: JaenPagesEntityWithMigrations
+  snekFinder?: JaenPagesEntityWithMigrations
+  pages: {
+    [id: string]: JaenPagesEntityWithMigrations
+  }
+}
+
+export interface JaenPagesPublish {
+  site?: JaenPagesEntity
+  snekFinder?: JaenPagesEntity
+  pages: {
+    [id: string]: JaenPagesEntity
+  }
+}
+
 // Site Meta update
 // site page structure update
 // site page meta update

@@ -90,8 +90,6 @@ const LoginMain: React.FC<LoginMainProps> = props => {
   const handleLogin = async () => {
     const success = await props.onLogin(username, password)
 
-    console.log('success', success)
-
     if (success) {
       setToastMessage({
         title: 'Login successful',

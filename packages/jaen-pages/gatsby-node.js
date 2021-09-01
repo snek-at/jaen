@@ -1,4 +1,23 @@
+require('isomorphic-fetch')
+
 const path = require('path')
+const fs = require('fs')
+
+const {mergeBaseWithMigration} = require('./src/tools/publish/merge')
+
+exports.onPreBootstrap = async ({graphql, actions}) => {
+  const migrationUrl = process.env.JAEN_PAGES_NEW_MIGRATION
+  const jaenPagesPath = path.resolve('./jaen-pages.json')
+
+  if (migrationUrl) {
+    // get file content fs
+    const fileContent = JSON.parse(fs.readFileSync(jaenPagesPath, 'utf8'))
+    const migrationFile = await (await fetch(migrationUrl)).json()
+    const newBaseData = await mergeBaseWithMigration(fileContent, migrationFile)
+
+    fs.writeFileSync(jaenPagesPath, JSON.stringify(newBaseData, null, 2))
+  }
+}
 
 exports.onCreatePage = ({page, actions}) => {
   const {createPage, deletePage} = actions

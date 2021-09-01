@@ -52,7 +52,6 @@ export const useCMSPage = (id: string): ResolvedPageType => {
   const pages = useAllSitePage()
 
   const nodes = pages.nodes
-  console.log('nodes, id', nodes, id)
   const cNode = nodes[id]
 
   let resolvedPage = ({...cNode} as unknown) as ResolvedPageType

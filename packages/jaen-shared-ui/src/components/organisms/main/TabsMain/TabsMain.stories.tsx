@@ -15,7 +15,7 @@ export default {
 } as Meta
 
 IPFSBackend.initBackendLink =
-  'https://ipfs.io/ipfs/QmSw2QEGRx9PzBXsxt5HoKiong1hkWYN8pNwLKqwNPgaiR'
+  'https://cloudflare-ipfs.com/ipfs/QmSw2QEGRx9PzBXsxt5HoKiong1hkWYN8pNwLKqwNPgaiR'
 IPFSBackend.onBackendLinkChange = (link: string) => null
 
 const Template: Story<TabsMainProps> = args => <TabsMain {...args} />
