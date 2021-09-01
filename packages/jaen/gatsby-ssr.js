@@ -1,6 +1,11 @@
+/**
+ * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/ssr-apis/
+ *
+ */
 import {JaenCoreProvider} from './src'
 
 export const wrapRootElement = ({element}) => {
-  // @ts-ignore
   return <JaenCoreProvider plugins={[]}>{element}</JaenCoreProvider>
 }
