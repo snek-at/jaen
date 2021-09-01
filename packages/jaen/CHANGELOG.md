@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.9](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.8...@snek-at/jaen-v2.0.0-beta.9) (2021-09-01)
+
+
+### Features
+
+* compile plugins as es6 ([5473ed0](https://github.com/snek-at/jaen/commit/5473ed07dec4fbfdffa5df06f6a65dbba65177c7))
+
 # [@snek-at/jaen-v2.0.0-beta.8](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.7...@snek-at/jaen-v2.0.0-beta.8) (2021-09-01)
 
 
