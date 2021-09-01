@@ -19,6 +19,7 @@
     "@snek-at/jaen-shared-ui": "2.0.0-beta.3",
     "@snek-at/snek-finder": "^1.0.0-beta.9",
     "deepmerge": "^4.2.2",
+    "electron": "^14.0.0",
     "esm": "^3.2.25",
     "framer-motion": "^4.1.17",
     "gatsby-plugin-compile-es6-packages": "^2.1.1",
@@ -37,7 +38,6 @@
     "@types/loadable__component": "^5.13.4",
     "@types/uuid": "^8.3.1",
     "babel-preset-gatsby-package": "^1.13.0",
-    "electron": "^13.2.3",
     "gatsby-plugin-emotion": "^6.11.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.24"
   }
