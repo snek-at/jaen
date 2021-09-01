@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.8](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.7...@snek-at/jaen-v2.0.0-beta.8) (2021-09-01)
+
+
+### Bug Fixes
+
+* remove transpiling ([9ec9b59](https://github.com/snek-at/jaen/commit/9ec9b59b69515bbdf3c47b77c9434ce2b38632f3))
+
 # [@snek-at/jaen-v2.0.0-beta.7](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.6...@snek-at/jaen-v2.0.0-beta.7) (2021-08-31)
 
 
