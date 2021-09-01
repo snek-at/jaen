@@ -1,4 +1,10 @@
-import {Input, InputGroup, InputLeftElement, HStack} from '@chakra-ui/react'
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  HStack,
+  Divider
+} from '@chakra-ui/react'
 
 import {SearchIcon} from '../../../atoms/icons'
 import {
@@ -7,8 +13,13 @@ import {
   QuestionButton,
   GithubButton
 } from '../../../molecules/buttons'
+import ExitButton from '../../../molecules/buttons/ExitButton'
 
-const MainHeader: React.FC = () => {
+export type HeaderMainProps = {
+  onLogout: () => void
+}
+
+const HeaderMain: React.FC<HeaderMainProps> = props => {
   return (
     <>
       <HStack>
@@ -23,9 +34,11 @@ const MainHeader: React.FC = () => {
         <GithubButton />
         <QuestionButton />
         <DmToggleButton onDmToggleChange={() => null} />
+        <Divider orientation="vertical" />
+        <ExitButton onClick={props.onLogout} />
       </HStack>
     </>
   )
 }
 
-export default MainHeader
+export default HeaderMain

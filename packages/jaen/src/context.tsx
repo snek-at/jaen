@@ -2,11 +2,8 @@ import {ChakraProvider} from '@chakra-ui/react'
 import loadable from '@loadable/component'
 import * as React from 'react'
 
+import MainUI from './containers/MainUI'
 import {PluginCallbacks, getPublishValue, getUI, Plugin} from './plugin'
-
-const LoadableUI = loadable(
-  () => import('@snek-at/jaen-shared-ui/dist/components/app/Main')
-)
 
 export type JaenCoreContextType = {} & PluginCallbacks
 export const JaenCoreContext = React.createContext<
@@ -31,15 +28,14 @@ export const JaenCoreProvider: React.FC<JaenCoreProviderProps> = ({
   children,
   plugins
 }) => {
-  const {hotbar, tabs} = getUI(plugins)
+  const ui = getUI(plugins)
   const onPublish = () => getPublishValue(plugins)
+  const onAuthenticate = () => {}
 
   return (
     <>
       <JaenCoreContext.Provider value={{onPublish}}>
-        <ChakraProvider>
-          <LoadableUI hotbar={hotbar} tabs={tabs} authenticated={true} />
-        </ChakraProvider>
+        <MainUI ui={ui} />
         {children}
       </JaenCoreContext.Provider>
     </>

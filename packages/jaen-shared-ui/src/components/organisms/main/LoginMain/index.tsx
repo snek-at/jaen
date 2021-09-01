@@ -18,8 +18,10 @@ import {
   PopoverArrow,
   PopoverBody,
   PopoverHeader,
-  PopoverCloseButton
+  PopoverCloseButton,
+  useToast
 } from '@chakra-ui/react'
+import * as React from 'react'
 
 const avatars = [
   {
@@ -44,7 +46,78 @@ const avatars = [
   }
 ]
 
-export default function JoinOurTeam() {
+export type LoginMainProps = {
+  /**
+   * Fired when the user clicks the login button
+   *
+   * @returns {Promise<boolean>} - true if the login was successful, false otherwise
+   */
+  onLogin: (username: string, password: string) => Promise<boolean> | undefined
+  /**
+   * Fired when the user clicks the "guest login" button
+   *
+   * @returns {Promise<boolean>} - true if the login was successful, false otherwise
+   */
+  onGuestLogin: () => Promise<boolean> | undefined
+}
+
+const LoginMain: React.FC<LoginMainProps> = props => {
+  const [toastMessage, setToastMessage] = React.useState<{
+    title: string
+    body: string
+    status: 'success' | 'error'
+  } | null>(null)
+
+  const [username, setUsername] = React.useState('')
+  const [password, setPassword] = React.useState('')
+
+  const toast = useToast()
+
+  React.useEffect(() => {
+    if (toastMessage) {
+      const {title, body, status} = toastMessage
+
+      toast({
+        title,
+        description: body,
+        status,
+        duration: 9000,
+        isClosable: true
+      })
+    }
+  }, [toastMessage, toast])
+
+  const handleLogin = async () => {
+    const success = await props.onLogin(username, password)
+
+    console.log('success', success)
+
+    if (success) {
+      setToastMessage({
+        title: 'Login successful',
+        body: 'You have successfully logged into Jaen',
+        status: 'success'
+      })
+    } else {
+      setToastMessage({
+        title: 'Login failed',
+        body: 'You have entered an invalid username or password',
+        status: 'error'
+      })
+    }
+  }
+  const handleGuestLogin = async () => {
+    const success = await props.onGuestLogin()
+
+    if (success) {
+      setToastMessage({
+        title: 'Login successful',
+        body: 'You are now authenticated as snekman',
+        status: 'success'
+      })
+    }
+  }
+
   const guestLoginPopover = (
     <Popover>
       <PopoverTrigger>
@@ -54,7 +127,16 @@ export default function JoinOurTeam() {
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>Guest Login</PopoverHeader>
-        <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
+        <PopoverBody>
+          <Text>
+            You can use the guest login to preview all features used to power
+            this site.
+          </Text>
+          <br />
+          <Link color="green.500" onClick={handleGuestLogin}>
+            Continue as snekman!
+          </Link>
+        </PopoverBody>
       </PopoverContent>
     </Popover>
   )
@@ -165,7 +247,7 @@ export default function JoinOurTeam() {
               </Text>
             </Heading>
             <Text color={'gray.500'} fontSize={{base: 'sm', sm: 'md'}}>
-              Manage this site by entering your login details or using our{' '}
+              Manage this site by entering your login credentials or using our{' '}
               {guestLoginPopover}.
             </Text>
           </Stack>
@@ -179,6 +261,8 @@ export default function JoinOurTeam() {
                 _placeholder={{
                   color: 'gray.500'
                 }}
+                value={username}
+                onChange={e => setUsername(e.target.value)}
               />
               <Input
                 placeholder="Enter password"
@@ -189,6 +273,8 @@ export default function JoinOurTeam() {
                 _placeholder={{
                   color: 'gray.500'
                 }}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
               />
             </Stack>
             <Button
@@ -200,7 +286,8 @@ export default function JoinOurTeam() {
               _hover={{
                 bgGradient: 'linear(to-r, green.500,green.400)',
                 boxShadow: 'xl'
-              }}>
+              }}
+              onClick={handleLogin}>
               Login
             </Button>
           </Box>
@@ -210,3 +297,5 @@ export default function JoinOurTeam() {
     </Box>
   )
 }
+
+export default LoginMain

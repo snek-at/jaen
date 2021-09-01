@@ -1,6 +1,7 @@
 export {default as FileIcon} from './FileIcon'
 export {default as FolderCloseIcon} from './FolderCloseIcon'
 export {default as FolderOpenIcon} from './FolderOpenIcon'
+export {default as ExitIcon} from './ExitIcon'
 
 export {default as SnekIcon} from './SnekIcon'
 export {default as ADmToggleIcon} from './ADmToggle'

@@ -21,13 +21,17 @@ import {
   HotbarMainProps,
   TabsMainProps,
   TabsMain,
-  LoginMain
+  LoginMain,
+  LoginMainProps,
+  HeaderMainProps
 } from '../../organisms/main'
 
 export type MainProps = {
   hotbar: HotbarMainProps
   tabs: TabsMainProps
   authenticated: boolean
+  login: LoginMainProps
+  header: HeaderMainProps
 }
 
 const Main: React.FC<MainProps> = props => {
@@ -39,45 +43,43 @@ const Main: React.FC<MainProps> = props => {
       <Box pos="fixed" bottom={5} right={5} ref={btnRef as any}>
         <JaenToggleButton ref={btnRef as any} onClick={onOpen} />
       </Box>
-      <Portal>
-        <Drawer
-          placement="right"
-          size="6xl"
-          isOpen={isOpen}
-          onClose={onClose}
-          finalFocusRef={btnRef as any}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
+      <Drawer
+        placement="right"
+        size="6xl"
+        isOpen={isOpen}
+        onClose={onClose}
+        finalFocusRef={btnRef as any}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
 
-            {props.authenticated ? (
-              <>
-                <DrawerHeader>
-                  <HeaderMain />
-                </DrawerHeader>
-                <Divider />
-                <DrawerBody pd={0} mt={2}>
-                  <HotbarMain {...props.hotbar} />
-                  <TabsMain {...props.tabs} />
-                </DrawerBody>
-                <Divider />
-                <DrawerFooter py={2}>
-                  <FooterMain />
-                </DrawerFooter>
-              </>
-            ) : (
-              <>
-                <DrawerHeader>
-                  <SnekButton />
-                </DrawerHeader>
-                <DrawerBody pd={0} mt={2}>
-                  <LoginMain />
-                </DrawerBody>
-              </>
-            )}
-          </DrawerContent>
-        </Drawer>
-      </Portal>
+          {props.authenticated ? (
+            <>
+              <DrawerHeader>
+                <HeaderMain {...props.header} />
+              </DrawerHeader>
+              <Divider />
+              <DrawerBody pd={0} mt={2}>
+                <HotbarMain {...props.hotbar} />
+                <TabsMain {...props.tabs} />
+              </DrawerBody>
+              <Divider />
+              <DrawerFooter py={2}>
+                <FooterMain />
+              </DrawerFooter>
+            </>
+          ) : (
+            <>
+              <DrawerHeader>
+                <SnekButton />
+              </DrawerHeader>
+              <DrawerBody pd={0} mt={2}>
+                <LoginMain {...props.login} />
+              </DrawerBody>
+            </>
+          )}
+        </DrawerContent>
+      </Drawer>
     </>
   )
 }
