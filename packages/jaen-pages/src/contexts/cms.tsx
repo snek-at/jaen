@@ -49,7 +49,11 @@ export const usePage = (id: string): ResolvedPageType => {
 }
 
 export const useCMSPage = (id: string): ResolvedPageType => {
+  console.log(id)
+
   const pages = useAllSitePage()
+
+  console.log(pages)
 
   const nodes = pages.nodes
   const cNode = nodes[id]
@@ -119,90 +123,90 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
               }
             }
           }
-          jaenPageRootIds: allJaenPage(filter: {parent: {id: {eq: null}}}) {
-            distinct(field: id)
-          }
           sitePageRootIds: allSitePage(filter: {parent: {id: {eq: null}}}) {
             distinct(field: id)
           }
-          allJaenPage {
-            allPaths: distinct(field: path)
-            nodes {
-              id
-              slug
-              path
-              template
-              parent {
-                id
-              }
-              children {
-                id
-              }
-              pageMetadata {
-                title
-                description
-                image
-                canonical
-                datePublished
-                social {
-                  twitter
-                  fbAppId
-                }
-                isBlogPost
-              }
-            }
-          }
           allSitePage {
             nodes {
-              path
               id
-              title: internalComponentName
+              path
               parent {
                 id
               }
               children {
                 id
+              }
+              context {
+                jaenContext {
+                  id
+                  slug
+                  template
+                  pageMetadata {
+                    title
+                    description
+                    image
+                    canonical
+                    datePublished
+                    isBlogPost
+                  }
+                }
               }
             }
           }
         }
       `}
-      render={({
-        site: {siteMetadata},
-        allJaenPage,
-        allSitePage,
-        jaenPageRootIds,
-        sitePageRootIds
-      }) => {
-        const structure = allJaenPage as {
-          allPaths: string[]
-          nodes: (PageType & {id: string})[]
+      render={({site: {siteMetadata}, sitePageRootIds, allSitePage}) => {
+        const site: SiteType = {
+          allSitePage: {rootNodeIds: sitePageRootIds.distinct, nodes: {}},
+          siteMetadata
         }
 
-        const staticNodes = allSitePage.nodes.filter(
-          (node: any) => !structure.allPaths.includes(node.path)
-        ) as (PageType & {id: string})[]
+        for (const node of allSitePage.nodes) {
+          const jaenContext = node.context?.jaenContext
+          const id = jaenContext?.id || node.id
 
-        const site: SiteType = {
-          siteMetadata,
-          allSitePage: {
-            rootNodeIds: jaenPageRootIds.distinct.concat(
-              sitePageRootIds.distinct
-            ),
-            nodes: {}
+          site.allSitePage.nodes[id] = {
+            parent: node.parent,
+            children: node.children,
+            path: node.path,
+            slug: jaenContext?.slug,
+            template: jaenContext?.template,
+            fields: jaenContext?.fields,
+            pageMetadata: jaenContext?.pageMetadata
           }
         }
 
-        site.allSitePage.rootNodeIds = []
+        // const structure: =  {
+        //   allPaths: string[]
+        //   nodes: (PageType & {id: string})[]
+        // }
 
-        for (const {id, ...node} of structure.nodes.concat(staticNodes)) {
-          site.allSitePage.nodes[id] = node
-        }
+        // const staticNodes = allSitePage.nodes.filter(
+        //   (node: any) => !structure.allPaths.includes(node.path)
+        // ) as (PageType & {id: string})[]
+
+        // const site: SiteType = {
+        //   siteMetadata,
+        //   allSitePage: {
+        //     rootNodeIds: jaenPageRootIds.distinct.concat(
+        //       sitePageRootIds.distinct
+        //     ),
+        //     nodes: {}
+        //   }
+        // }
+
+        // site.allSitePage.rootNodeIds = []
+
+        // for (const {id, ...node} of structure.nodes.concat(staticNodes)) {
+        //   site.allSitePage.nodes[id] = node
+        // }
+
+        // console.log(allSitePage)
 
         return (
           <CMSContext.Provider
             value={{
-              site,
+              site: site,
               templates: props.templates
             }}>
             {children}

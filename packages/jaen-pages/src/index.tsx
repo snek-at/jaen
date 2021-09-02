@@ -3,7 +3,7 @@ import loadable from '@loadable/component'
 import DiscardButton from './containers/ui/hotbar/DiscardButton'
 import EditButton from './containers/ui/hotbar/EditButton'
 import PublishButton from './containers/ui/hotbar/PublishButton'
-import { upload } from './ipfs'
+import {upload} from './ipfs'
 import {store} from './store'
 import {JaenPagesEntity, JaenPagesPublish} from './types'
 
@@ -53,7 +53,7 @@ export default {
 
       if (nodes) {
         for (const [id, node] of Object.entries(nodes)) {
-          const paylaod = JSON.stringify({id, page: node})
+          const paylaod = JSON.stringify(node)
 
           const url = await upload(paylaod)
           newPages[id] = {context: {fileUrl: url, createdAt}}

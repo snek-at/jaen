@@ -1,4 +1,5 @@
 import update from 'immutability-helper'
+import 'isomorphic-fetch'
 
 import {merge} from '../../common/utils'
 import {upload} from '../../ipfs'

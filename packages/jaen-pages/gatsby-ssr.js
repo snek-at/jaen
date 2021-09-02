@@ -11,7 +11,7 @@ export const wrapRootElement = ({element}, pluginOptions) => {
 export const wrapPageElement = ({element, props}, pluginOptions) => {
   const {pageContext} = props
 
-  const pageId = pageContext.jaenPageId
+  const {jaenContext} = pageContext
 
-  return <TemplateProvider id={pageId}>{element}</TemplateProvider>
+  return <TemplateProvider id={jaenContext.id}>{element}</TemplateProvider>
 }

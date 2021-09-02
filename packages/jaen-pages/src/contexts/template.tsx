@@ -40,6 +40,7 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
 
   const dynamicPaths = useAppSelector(({site}) => site.routing.dynamicPaths)
 
+  console.log(pathName && dynamicPaths[pathName], id)
   const page = useCMSPage((pathName && dynamicPaths[pathName]) || id)
   const {templates} = useCMSContext()
 
