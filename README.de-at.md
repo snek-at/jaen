@@ -26,7 +26,7 @@
   </a>
 </p>
 
-## [](#table-of-contents)What’s In This Document
+## [](#table-of-contents)Was Sie erwartet
 - [💪 Motivation](#-motivation)
     - [Jaen Features](#jaen-features)
     - [Roadmap](#roadmap)
@@ -42,16 +42,12 @@
     - [Editieren](#editieren)
 - [💻 Anwendung](#-anwendung)
     - [Übersicht](#übersicht)
-        - [App Einstellungen](#app-einstellungen)
         - [Seiten Einstellungen](#seiten-einstellungen)
         - [Felder](#felder)
-    - [App Einstellungen](#app-einstellungen)
     - [Seiten Einstellungen](#seiten-einstellungen)
     - [Felder](#felder)
-        - [SimpleTextField](#simpletextfield)
-        - [SimpleRichTextField](#simplerichtextfield)
-        - [SimpleImageField](#simpleimagefield)
-        - [SimplePdfField](#simplepdffield)
+        - [TextField](textfield)
+        - [ImageField](#imagefield)
         - [StreamField](#streamfield)
         - [IndexField](#indexfield)
     - [Blöcke](#blöcke)
@@ -60,6 +56,7 @@
 - [💚 Danksagung](#-danksagung)
 - [💼 Schöpfer](#-schöpfer)
 - [🤔 FAQs](#-faqs)
+- [:exploding_head: Trivia](#-trivia)
 - [📝 Urheberrechte und Lizenz](#-copyright-and-license)
 
 ## [](#-motivation)💪 Motivation
@@ -95,11 +92,11 @@ Spezialisiert mit gut und genau geführten Dokumentationen für die Schnittstell
 | `Fixed parent for IndexField` | ✅️ |  |  |  |
 | `TextField`                   | ✅️ |  |  |  |
 | `Dynamic Routes`              | ✅️ |  |  |  |
-| `PdfField`                    | ✅️ |  |  |  |
 | `ImageField`                  | ✅️ |  |  |  |
 | `StreamField`                 | ✅️ |  |  |  |
+| `Gatsby`                      | ✅️ |  |  |  |
+| `PdfField`                    |  | ✅️ |  |  |
 | `LinkField`                   |  | ✅️ |  |  |
-| `Gatsby`                      |  |  | ✅️ |  |
 | `Converter (HELMUT)`          |  |  |  | ✅️ |
 | `Smart Converter (SMARTMUT)`  |  |  |  | ✅️ |
 | `E-Commerce`                  |  |  |  | ✅️ |
@@ -144,26 +141,22 @@ The easiest method is to use a GitHub [Codespace](https://github.com/features/co
 
 Der einfachste Weg ist die Nutzung eines GitHub [Codespace](https://github.com/features/codespaces) (in der Beta). Erstellen Sie einfach einen Codespace vom Code Menü. Warten Sie bis der Codespace fertig Aufgesetzt ist und öffnen Sie ein Konsolenfenster (Strg-`, Steuerung-Backquote) und:
 
-- Fügen Sie die [GitHub npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) hinzu `npm login --registry=https://npm.pkg.github.com`
 - Erstellen sie eine .env und setzen Sie eine PUBLIC_URL
-- Starten sie die Seite Lokal mit `npm start`
-- Oder kompilieren sie eine lokale Kopie mit `npm run build`
+- Starten sie die Seite Lokal mit `yarn start`
+- Oder kompilieren sie eine lokale Kopie mit `yarn run build`
 
 #### Lokales Setup
 Wenn Sie sich dazu entscheiden ein lokales Setup zu verwenden, stellen Sie sicher, dass Sie die folgenden Schritte beachten:
 
-- Fügen Sie die [GitHub npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) hinzu `npm login --registry=https://npm.pkg.github.com`
-- Nutzen Sie `npm install` um die Abhängigkeiten zu installieren
-- Starten sie die Seite Lokal mit `npm start`
-- Oder kompilieren sie eine lokale Kopie mit `npm run build`
+- Nutzen Sie `yarn install` um die Abhängigkeiten zu installieren
+- Starten sie die Seite Lokal mit `yarn start`
+- Oder kompilieren sie eine lokale Kopie mit `yarn run build`
 
-Die Demoseite ist nun unter <http://localhost:3000/> verfügbar.
+Die Demoseite ist nun unter <http://localhost:8000/> verfügbar.
 
 #### Fehlerbehebung
 
-Wenn Sie beim Aufsetzen des Templates Probleme haben können Sie die folgenden Dinge probieren:
-
-- node-sass nutzt Node15. Wenn Sie Node16 verwenden können Sie nvm nutzen um mehrere Node Versionen zu Installieren.
+- Dieses Repository wird mit yarn getestet. Wenn Sie npm verwenden könnten unerwartete Fehler auftreten.
 
 Wenn Sie während des Aufsetzen auf andere Probleme stoßen bitten wir Sie darum Ihr Problem [zu melden](https://github.com/snek-at/jaen/issues), sodass wir die Dokumentation verbessern können.
 
@@ -176,190 +169,157 @@ Der Standardnutzer hierfür ist **snekman** und das Passwort **ciscocisco**.
 
 ### Übersicht
 
-#### App Einstellungen
-| Field                         | Parameter | Beschreibung | Wiki | Tutorial |
-|-------------------------------|------------|-------------|:----:|:--------:|
-| `CMSProvider`             	| settings <br/> pages | Der CMSProvider registriert die Jaen Applikation und ermöglicht es Daten(z.B. Felder) zwischen Jaen und den Seiten zu übertragen. |  |  |
-
 #### Seiten Einstellungen
 | Feld                         | Typ       | Beschreibung | Wiki | Tutorial |
 |-------------------------------|:----------:|-------------|:----:|:--------:|
-| `PageType`             	| string     | Der PageType definiert den Namen Ihrer Seite im CMS. |  |  |
-| `ChildPages`         		| [Pages]    | In ChildPages setzen Sie fest welche Arten von Seiten ein PageType als Unterseiten haben kann. |  |  |
+| `TemplateName`             	| string     | Der TemplateName definiert den Namen Ihrer Seite im CMS. |  |  |
 
 #### Felder
 | Feld                         | Parameter | Beschreibung | Wiki | Tutorial |
 |-------------------------------|------------|-------------|:----:|:--------:|
-| `SimpleTextField`             | name <br/> | Ein SimpleTextField wird genutzt um kurze editierbare Texte auf Ihre Seite hinzuzufügen. | [✅️](https://github.com/snek-at/jaen/wiki/SimpleTextField) |  |
-| `SimpleRichTextField`         | name <br/> | SimpleRichtextField wird genutzt um größere RichText Blöcke auf Ihre Seite zu bringen. | [✅️](https://github.com/snek-at/jaen/wiki/SimpleRichTextField) |  |
-| `SimpleImageField`            | name <br/> | Mit dem SimpleImageField können Sie ein Bild auf Ihrer Webseite einbetten. | [✅️](https://github.com/snek-at/jaen/wiki/SimpleImageField) |  |
-| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle | Das ImageField muss genutzt werden, wenn Sie Bilder auf Ihrer Seite brauchen, die gestylt werden müssen. Hiefür haben Sie die Möglichkeiten, einen className mit dem imageClassName Parameter zu setzen oder Sie stylen das Bild direkt mit dem imageStyle. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField) |  |
-| `SimplePdfField`            	| name <br/> pdfStyle | Wenn Sie auf Ihrer Seite eine PDF einbetten wollen können Sie dies mit dem SimplePdfField. | [✅️](https://github.com/snek-at/jaen/wiki/SimplePdfField) |  |
-| `StreamField`                 | name <br/> reverseOrder <br/> blocks| Ein StreamField bietet Ihnen die Möglichkeit mehrere React-Components sooft wie Ihnen beliebt zu wiederholen. | [✅️](https://github.com/snek-at/jaen/wiki/StreamField) |  |
-| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | Das IndexField ist dafür da Links und Blöcke zu bauen, die Daten von Subseiten benötigen. <br /> Mit dem fixedSlug Parameter können Sie entscheiden von welcher Seite Sie die Subseiten verwenden wollen. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
-
-### App Settings
-```javascript
-import {CMSProvider} from '@snek-at/jaen'
-
-import {HomePage} from '...'
-import ImprintPage from '...'
-
-const App: React.FC = () => {
-  return (
-    <div style={{margin: 150}}>
-      <CMSProvider
-        settings={{gitRemote: process.env.REACT_APP_JAEN_GIT_REMOTE}}
-        pages={[HomePage, ImprintPage]}></CMSProvider>
-    </div>
-  )
-}
-)
-```
+| `TextField`             | fieldName <br/> initValue | Ein SimpleTextField wird genutzt um kurze editierbare Texte auf Ihre Seite hinzuzufügen. | [✅️](https://github.com/snek-at/jaen/wiki/TextField) |  |
+| `ImageField`                  | fieldName <br/> initValue | Das ImageField muss genutzt werden, wenn Sie Bilder auf Ihrer Seite brauchen. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField) |  |
+| `StreamField`                 | fieldName <br/> reverseOrder <br/> blocks <br/> initValue | Ein StreamField bietet Ihnen die Möglichkeit mehrere React-Components sooft wie Ihnen beliebt zu wiederholen. | [✅️](https://github.com/snek-at/jaen/wiki/StreamField) |  |
+| `IndexField`                  | fixedSlug <br/> onRender | Das IndexField ist dafür da Links und Blöcke zu bauen, die Daten von Subseiten benötigen. <br /> Mit dem fixedSlug Parameter können Sie entscheiden von welcher Seite Sie die Subseiten verwenden wollen. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
 
 ### Page Settings
 ```javascript
-import ImprintPage from '...'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
-const HomePage: ConnectedPageType = () => {...}
+const HomePage: JaenTemplate = () => {...}
 
-HomePage.PageType = 'HomePage'
-HomePage.ChildPages = [ImprintPage]
+HomePage.TemplateName = 'HomePage'
 
 export default HomePage
 ```
 
+jaen-config.js
+```javascript
+[...]
+
+pages: {
+      resolve: require('@snek-at/jaen-pages'),
+      templates: [require('./src/templates/yourpage/index.tsx')]
+    }
+    
+[...]
+```
+gatsby-config.js
+```javascript
+[...]
+
+plugins: [
+    '@snek-at/jaen',
+    {
+      resolve: '@snek-at/jaen-pages',
+      options: {
+        templates: {
+          HomePage: path.resolve('src/templates/home/index.tsx')
+        }
+      }
+    }
+  ]
+  
+[...]
+```
 ### Fields
 Felde sind die Datenblöcke, die Sie verwenden können um Ihre React Apps für den Endnutzer bearbeitbar zu gestalten.
 Die Namen der Felder müssen auf der jeweiligen Seite einzigartig sein.
 Es wird empfohlen beschreibende Namen zu nutzen.
 
-#### SimpleTextField
+#### TextField
 
-Das SimpleTextField ist einfach zu nutzen. Geben Sie dem Feld einfach einen Namen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimpleTextField)</div>
-
-```javascript
-import {SimpleTextField} from '@snek-at/jaen'
-
-const HomePage: ConnectedPageType = () => {
-  return (
-    <SimpleTextField name="stffield" />
-  )
-}
-
-[...]
-
-export default HomePage
-```
-
-#### SimpleRichTextField 
-
-Auch das SimpleRichTextField ist einfach zu nutzen, da man dem Feld nur einen Namen geben muss. <div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimpleRichTextField)</div>
+Mithilfe des TextFields können Sie editierbare RichTextFields (`rtf={true}`) oder ebenfalls editierbare SimpleTextFields (`rtf={false}`) auf Ihre Webseite bringen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimpleTextField)</div>
 
 ```javascript
-import {SimpleRichTextField} from '@snek-at/jaen'
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
-const HomePage: ConnectedPageType = () => {
-  return (
-    <SimpleRichTextField name="srtffield" />
-  )
-}
-
-[...]
-
-export default HomePage
-```
-
-#### SimpleImageField
-
-Zum einbetten von Bildern können Sie das SimpleImageField nutzen. <br />
-Es funktioniert indem ein Bild, das auf der IPFS gespeichert wird, auf der Seite eingebetter wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimpleImageField)</div>
-
-```javascript
-import {SimpleImageField} from '@snek-at/jaen'
-
-const HomePage: ConnectedPageType = () => {
-  return (
-    <SimpleImageField
-      name="siffield"
+const HomePage: JaenTemplate = () => {
+  return(
+    <fields.TextField 
+      fieldName="hometext"
+      initValue="<p>Your text</p>
+      rtf={true}
     />
   )
 }
 
-[...]
-
+HomePage.TemplateName="HomePage"
 export default HomePage
+
 ```
 
 #### ImageField
 
-Zusätzlich zum Namen, den Sie dem SimpleImageField geben müssen, hat das ImageField auch noch die Möglichkeit das Bild zu stylen indem man einen imageClassName oder einen imageStyle hinzufügt. <div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
+Zum einbetten von Bildern können Sie das SimpleImageField nutzen. <br />
+Es funktioniert indem ein Bild, das auf der IPFS gespeichert wird, auf der Seite eingebetter wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
 
 ```javascript
-import {ImageField} from '@snek-at/jaen'
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
-const HomePage: ConnectedPageType = () => {
-  return (
-    <ImageField
-      fieldOptions={{fieldName: "iffield"}}
-      imageClassName="iffield"
-      imageStyle={{width: '500px', height: '500px', objectFit: 'cover'}}
+const HomePage: JaenTemplate = () => {
+  return(
+    <fields.ImageField 
+      fieldName="homeimage"
+      initValue={{src: "../../images/yourimage.imagetype", alt: "homeimage", title: "homeimage"}}
     />
   )
 }
 
-[...]
-
 export default HomePage
 ```
-
-#### SimplePdfField 
-
-Das SimplePdfField erlaubt es Ihnen eine auf der IPFS gespeicherte PDF-Datei einzubetten.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimplePdfField)</div>
-
-```javascript
-import {SimplePdfField} from '@snek-at/jaen'
-
-const HomePage: ConnectedPageType = () => {
-  return (
-     <SimplePdfField name="spffield" pdfStyle={{height: 1000, width: 1000}} />
-  )
-}
-
-[...]
-
-export default HomePage
-```
-
 
 #### StreamField
 
 Das StreamField ermöglicht es Ihnen editierbare Blocks in Ihre Seite einzubauen und diese sooft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField)</div>
 
 ```javascript
-import {StreamField} from '@snek-at/jaen'
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen/src/types'
 import {CardBlock} from '...'
 
-const HomePage: ConnectedPageType = () => {
+const HomePage: JaenTemplate = () => {
   return (
-    <div style={{width: '50%', display: 'table'}}>
-      <StreamField
+    <div style={{width: '50%'}}>
+      <fields.StreamField
         reverseOrder={false}
-        name={'timeline'}
+        fieldName={'timeline'}
         blocks={[CardBlock]}
+	initValue={{
+	  
+	  0: {
+	    typeName: 'CardBlock',
+	    fields: {
+	      cardtitle: {
+	        _type: 'TextBlock',
+		text: '<p>This is a title</p>'
+	      },
+	      cardimg: {
+	        _type: 'FileBlock',
+		src: 'path/to/your/image',
+		alt: 'yourAlt',
+		title: 'yourTitle'
+	      }
+	    }
+	  },
+	  1: {
+	    [...]
+	  }
+	}}
       />
     </div>
   )
 }
 
-[...]
+HomePage.TemplateName = 'HomePage'
 
 export default HomePage
 ```
-
 #### IndexField
 
-Wenn Sie einen Link auf die Subseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite auf der das IndexField ist dafür genutzt. Das outerElement ist HTML-Tags der Ihre Links umgiebt und renderItem erlaubt Ihnen die React-Components, die die Daten oder den Link der Subseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
+Wenn Sie einen Link auf die Subseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite auf der das IndexField ist dafür genutzt. onRender erlaubt Ihnen die React-Components, die die Daten oder den Link der Subseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
 
 ```javascript
 import {IndexField} from '@snek-at/jaen'
@@ -389,47 +349,34 @@ export default HomePage
 Der Block ist der Eckstein des StreamFields. Mit seiner Hilfe können Sie React-Componenten bauen, die im StreamField sooft wie gewünscht wiederholt werden können.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks)</div>
 
 ```javascript
-import {
-  BC,
-  prepareBlocks,
-  ImageField,
-  EditableField,
-  RichTextField
-} from '@snek-at/jaen'
+import {blocks, fields} from '@snek-at/jaen-pages'
+import {ImageType} from '@snek-at/jaen-pages/src/containers/JaenImage'
 
 type BlockType = {
-  title: string
-  extra: string
-  text: string
-  }
+  cardtitle: string,
+  cardimg: ImageType
+}
 
-const Block: BC<BlockType> = ({
-  fieldOptions,
-  streamFieldWidth
-}) => {
-  const blocks = prepareBlocks<BlockType>(Block, fieldOptions)
-
+const CardBlock: blocks.BC<BlockType> = ({values}) => {
   return (
-    <>
-      <div className="card">
-        <h1>{title}</h1>
-        {blocks['text']}
-        {blocks['image']}
-        {blocks['extra']}
-      </div>
-    </>
+    <div className="card">
+      <h1>{values.cardtitle}</h1>
+      {values.cardimg}
+    </div>
   )
 }
 
-Block.BlockType = 'Block'
-Block.BlockFields = {
-  image: ImageField,
-  title: EditableField,
-  extra: EditableField,
-  text: RichTextField
+CardBlock.BlockType = 'CardBlock'
+CardBlock.BlockFields = {
+  image: fields.ImageField,
+  title: fields.TextField
+}
+CardBlock.defaultValues = {
+  cardtitle: 'This is your title.',
+  cardimg: {src: 'path/to/img', alt: 'yourAlt', title: 'yourTitle'}
 }
 
-export default Block
+export default CardBlock
 ```
 
 
@@ -482,7 +429,7 @@ Wir haben noch keine externen Entwickler. Um Ihren Namen hier zu sehen, [tragen 
       <a href="https://github.com/kleberbaum">Florian Kleber</a>
     </td>
     <td>
-      <a href="https://github.com/petute">Daniel Petutschnigg</a>
+      <a href="https://github.com/petute">Daniel<br/> Petutschnigg</a>
     </td>
   </tr>
 </table>
@@ -505,6 +452,20 @@ Wir haben noch keine externen Entwickler. Um Ihren Namen hier zu sehen, [tragen 
 **Q:** Wie kann ich ein Feature für die Roadmap beantragen?
 
 **A:** Bitte öffnen Sie ein Issue! Sie können [hier](https://github.com/snek-at/jaen/blob/master/CONTRIBUTING.MD) nachlesen was beim mitwirken zu beachten ist. Issues von der Community werden mit dem Tag "Proposed" gekennzeichnet und werden vom Team überprüft.
+
+## [](#-trivia):exploding_head: Trivia
+#### Name:
+In Österreich ist der erste Monat des Jahres der Jänner. Da wir in diesem Monat mit der Arbeit an Jaen begannen, bekam es seinen Namen.
+#### Aussprache:
+Jaen wird wie (Jän)ner [ˈjɛn] oder (Jan)uary [ˈdʒæn] ausgesprochen.
+#### Passwort:
+Das Standardpasswort ist **ciscocisco**. Der Ursprung hiervon liegt in unserer Schulzeit. In der Schule für Netzwerktechnik, die der Großteil von uns besuchte, war in den Cisco-Kursen das Passwort stehts ciscocisco.
+#### Releases:
+Jeder unserer Releases schmückt sich mit einem Lied. Hoffentlich haben Sie Spaß damit.
+#### Maskottchen:
+Das inoffizielle Maskottchen für Jaen ist eine junge Frau mit einer E-Gitarre.
+
+### <3
 
 ## [](#-urheberrechte-und-lizent)📝 Urheberrechte und Lizenz
 
