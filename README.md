@@ -365,7 +365,7 @@ const CardBlock: blocks.BC<BlockType> = ({values}) =>
 CardBlock.BlockType = 'CardBlock'
 CardBlock.BlockFields = {
   image: fields.ImageField,
-  title: fields.EditableField
+  title: fields.TextField
 }
 CardBlock.defaultValues = {
   cardtitle: 'This is your title.',
