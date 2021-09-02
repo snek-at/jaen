@@ -353,7 +353,7 @@ type BlockType = {
   cardimg: ImageType
 }
 
-const CardBlock: blocks.BC<BlockType> = ({values}) => 
+const CardBlock: blocks.BC<BlockType> = ({values}) => {
   return (
     <div className="card">
       <h1>{values.cardtitle}</h1>
