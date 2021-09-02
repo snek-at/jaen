@@ -318,24 +318,22 @@ export default HomePage
 If you want to link to childpages of a slug the IndexField is your friend. The fixedSlug property is not required. When none is provided the children of the current page are used. If you like, it is possible to specify the parentpage, the outerElement is the wrapper for all your items and the renderItem property allows you to build cards, teasers, buttons and more to your subpages.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
 
 ```javascript
-import {IndexField} from '@snek-at/jaen'
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
-const HomePage: ConnectedPageType = () => {
+const HomePage: JaenTemplate = () => {
   return (
-    <IndexField
-      fixedSlug={'home'}
-      outerElement={() => <div />}
-      renderItem={(item, key, navigate) => (
-        <p key={key}>
-          Slug: {item.slug} Title: {item.title}{' '}
-          <button onClick={() => navigate()}>Goto</button>
-        </p>
-       )}
+    <fields.IndexField
+      fixedSlug={'pageId'}
+      onRender={(page) => (
+        return(
+	  [...]
+	)
     />
   )
 }
 
-[...]
+HomePage.TemplateName = "HomePage"
 
 export default HomePage
 ```
