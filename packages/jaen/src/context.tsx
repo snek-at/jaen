@@ -6,7 +6,7 @@ import MainUI from './containers/MainUI'
 import {PluginCallbacks, getPublishValue, getUI, Plugin} from './plugin'
 import {store} from './store'
 
-export type JaenCoreContextType = {} & PluginCallbacks
+export type JaenCoreContextType = {remote: string} & PluginCallbacks
 export const JaenCoreContext = React.createContext<
   JaenCoreContextType | undefined
 >(undefined)
@@ -22,11 +22,13 @@ export const useJaenCoreContext = (): JaenCoreContextType => {
 }
 
 type JaenCoreProviderProps = {
+  remote: string
   plugins: Plugin[]
 }
 
 export const JaenCoreProvider: React.FC<JaenCoreProviderProps> = ({
   children,
+  remote,
   plugins
 }) => {
   const ui = getUI(plugins)
@@ -35,7 +37,7 @@ export const JaenCoreProvider: React.FC<JaenCoreProviderProps> = ({
 
   return (
     <>
-      <JaenCoreContext.Provider value={{onPublish, getAuthState}}>
+      <JaenCoreContext.Provider value={{onPublish, getAuthState, remote}}>
         <MainUI ui={ui} />
         {children}
       </JaenCoreContext.Provider>

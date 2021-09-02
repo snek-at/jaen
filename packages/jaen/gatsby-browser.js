@@ -5,6 +5,8 @@ export const wrapRootElement = ({element}) => {
   const config = require(___JAEN_CONFIG___)
   const plugins = config.plugins || []
 
+  console.log("config", config)
+
   const resolvedPlugins = Object.keys(plugins).map(key => {
     const plugin = plugins[key]
 
@@ -12,6 +14,8 @@ export const wrapRootElement = ({element}) => {
   })
 
   return (
-    <JaenCoreProvider plugins={resolvedPlugins}>{element}</JaenCoreProvider>
+    <JaenCoreProvider plugins={resolvedPlugins} remote={config.remote}>
+      {element}
+    </JaenCoreProvider>
   )
 }

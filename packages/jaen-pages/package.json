@@ -26,6 +26,7 @@
     "gatsby-plugin-image": "^1.12.0",
     "gatsby-plugin-sharp": "^3.12.0",
     "gatsby-transformer-sharp": "^3.12.0",
+    "graphql-tag": "^2.12.5",
     "immutability-helper": "^3.1.1",
     "ipfs-http-client": "^52.0.2",
     "juice": "^8.0.0",

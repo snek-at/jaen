@@ -7,5 +7,11 @@
 import {JaenCoreProvider} from './src'
 
 export const wrapRootElement = ({element}) => {
-  return <JaenCoreProvider plugins={[]}>{element}</JaenCoreProvider>
+  // @ts-ignore
+  const config = require(___JAEN_CONFIG___)
+  return (
+    <JaenCoreProvider plugins={[]} remote={config.remote}>
+      {element}
+    </JaenCoreProvider>
+  )
 }
