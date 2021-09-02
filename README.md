@@ -40,16 +40,12 @@
         - [Local Setup](#local-setup)
 - [💻 How to Code](#-how-to-code)
     - [Overview](#overview)
-        - [App Settings](#app-settings)
         - [Page Settings](#page-settings)
         - [Fields](#fields)
-    - [App Settings](#app-settings)
     - [Page Settings](#page-settings)
     - [Fields](#fields)
-        - [SimpleTextField](#simpletextfield)
-        - [SimpleRichTextField](#simplerichtextfield)
-        - [SimpleImageField](#simpleimagefield)
-        - [SimplePdfField](#simplepdffield)
+        - [TextField](#textfield)
+        - [ImageField](#imagefield)
         - [StreamField](#streamfield)
         - [IndexField](#indexfield)
 - [🐞 How to Report a Bug or Request a Feature](#-how-to-report-a-bug-or-request-a-feature)
@@ -57,6 +53,7 @@
 - [💚 Thanks](#-thanks)
 - [💼 Creators](#-creators)
 - [🤔 FAQs](#-faqs)
+- [:exploding_head: Trivia](#-trivia)
 - [📝 Copyright and License](#-copyright-and-license)
 
 ## [](#-motivation)💪 Motivation
@@ -65,7 +62,7 @@ A CMS **should not** be the defining feature of a webapp. Neither should Ecommer
 ERP integration **should not** force developer to cut corners.
 
 - Jaen **does not** interfere with **your** user experience.
-- Jean **does not** challange **your** application design.
+- Jean **does not** challenge **your** application design.
 - Jaen gives the power back to **you**.
 
 One thing and one thing only with clean and well documented interfaces.
@@ -89,11 +86,11 @@ Customizable, extensible and open-source.
 | `Fixed parent for IndexField` | ✅️ |  |  |  |
 | `TextField`                   | ✅️ |  |  |  |
 | `Dynamic Routes`              | ✅️ |  |  |  |
-| `PdfField`                    | ✅️ |  |  |  |
 | `ImageField`                  | ✅️ |  |  |  |
 | `StreamField`                 | ✅️ |  |  |  |
+| `Gatsby`                      | ✅️ |  |  |  |
+| `PdfField`                    |  | ✅️ |  |  |
 | `LinkField`                   |  | ✅️ |  |  |
-| `Gatsby`                      |  |  | ✅️ |  |
 | `Converter (HELMUT)`          |  |  |  | ✅️ |
 | `Smart Converter (SMARTMUT)`  |  |  |  | ✅️ |
 | `E-Commerce`                  |  |  |  | ✅️ |
@@ -133,156 +130,133 @@ We recomend to use [vscode](https://github.com/microsoft/vscode) as IDE in eithe
 #### Codespace Setup
 The easiest method is to use a GitHub [Codespace](https://github.com/features/codespaces) (in beta). Just create a GitHub Codespace from the Code menu. Wait for the Codespace to complete provisioning. When the Codespace has completed provisioning open a terminal window (Ctrl-`, Control-backquote) and:
 
-- Add [GitHub npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) `npm login --registry=https://npm.pkg.github.com`
 - Create .env and set PUBLIC_URL
-- Start a local copy of the docs site with `npm start`
-- Or build a local copy of the library with `npm run build`
+- Start a local copy of the docs site with `yarn start`
+- Or build a local copy of the library with `yarn run build`
 
 #### Local Setup
 If you set this up locally, make sure you have the following pre-requisites:
 
-- Add [GitHub npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) `npm login --registry=https://npm.pkg.github.com`
-- Use `npm install` to install all dependencies
-- Start a local copy of the docs site with `npm start`
-- Or build a local copy of the library with `npm run build`
+- Use `yarn install` to install all dependencies
+- Start a local copy of the docs site with `yarn start`
+- Or build a local copy of the library with `yarn run build`
 
-The demo site will now be accessible at <http://localhost:3000/>.
+The demo site will now be accessible at <http://localhost:8000/>.
+
+#### Troubleshooting
+
+If you encounter any other issues getting this template to work we ask you to [report it](https://github.com/snek-at/jaen/issues) so that we can improve the documentation.
+
+#### Editing
+
+To edit the page you have to log into the CMS.<br />
+The standard user for this is **snekman** and the password for the account is **ciscocisco**.
 
 ## [](#-how-to-code)💻 How to Code
 
 ### Overview
 
-#### App Settings
-| Field                         | Properties | Description | Wiki | Tutorial |
-|-------------------------------|------------|:-----------:|:----:|:--------:|
-| `CMSProvider`             	| settings <br/> pages |  |  |  |
-
 #### Page Settings
 | Field                         | Type       | Description | Wiki | Tutorial |
-|-------------------------------|:----------:|:-----------:|:----:|:--------:|
-| `PageType`             	| string     |  |  |  |
-| `ChildPages`         		| [Pages]    |  |  |  |
+|-------------------------------|:----------:|-------------|:----:|:--------:|
+| `TemplateName`             	| string     | The TemplateName defines the name of your template in the context of the CMS. |  |  |
 
 #### Fields
 | Field                         | Properties | Description | Wiki | Tutorial |
-|-------------------------------|------------|:-----------:|:----:|:--------:|
-| `SimpleTextField`             | name <br/> |  |  |  |
-| `SimpleRichTextField`         | name <br/> |  |  |  |
-| `SimpleImageField`            | name <br/> |  |  |  |
-| `ImageField`                  | fieldOptions <br/> imageClassName <br/> imageStyle |  |  |  |
-| `SimplePdfField`            	| name <br/> pdfStyle |  |  |  |
-| `StreamField`                 | name <br/> reverseOrder <br/> blocks|  |  |  |
-| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem |  |  |  |
-
-### App Settings
-```javascript
-import {CMSProvider} from '@snek-at/jaen'
-
-import {HomePage} from '...'
-import ImprintPage from '...'
-
-const App: React.FC = () => {
-  return (
-    <div style={{margin: 150}}>
-      <CMSProvider
-        settings={{gitRemote: process.env.REACT_APP_JAEN_GIT_REMOTE}}
-        pages={[HomePage, ImprintPage]}></CMSProvider>
-    </div>
-  )
-}
-)
-```
+|-------------------------------|------------|-------------|:----:|:--------:|
+| `TextField`             | fieldName <br/> initValue <br/> rtf | TextField can be used to add editable texts to your page.| [✅️](https://github.com/snek-at/jaen/wiki/TextField) |  |
+| `ImageField`                  | fieldName <br/> initValue | The ImageField is used to provide editable images that are hosted on the ipfs. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField) |  |
+| `StreamField`                 | name <br/> reverseOrder <br/> blocks| With a StreamField you can build your own React-Components with editable content and repeat them as often as you like. | [✅️](https://github.com/snek-at/jaen/wiki/StreamField) |  |
+| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and more pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
 
 ### Page Settings
 ```javascript
-import ImprintPage from '...'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
-const HomePage: ConnectedPageType = () => {...}
+const HomePage: JaenTemplate = () => {...}
 
-HomePage.PageType = 'HomePage'
-HomePage.ChildPages = [ImprintPage]
+HomePage.TemplateName = 'HomePage'
 
 export default HomePage
+```
+
+jaen-config.js
+```javascript
+[...]
+
+pages: {
+      resolve: require('@snek-at/jaen-pages'),
+      templates: [require('./src/templates/yourpage/index.tsx')]
+    }
+    
+[...]
+```
+gatsby-config.js
+```javascript
+[...]
+
+plugins: [
+    '@snek-at/jaen',
+    {
+      resolve: '@snek-at/jaen-pages',
+      options: {
+        templates: {
+          HomePage: path.resolve('src/templates/home/index.tsx')
+        }
+      }
+    }
+  ]
+  
+[...]
 ```
 
 ### Fields
-#### SimpleTextField
+Fields are data blocks that you can use to build React apps which the enduser is able to maintain. 
+Fieldnames have to be unique when they are on the same page.
+It is advisable to give all the fields descriptive names.
+
+#### TextField
+
+The TextField is there to provide your react-components with editable content.
+It requires you to give it a fieldName and an initValue.
+The fieldName sets the name of the TextField for the CMS and the initValue sets the value the field has before it gets edited.
+By default the TextField provides you with an editable RichText. If you only need a short one liner for a heading etc. you can set rtf to false to restrict the field.
+
 ```javascript
-import {SimpleTextField} from '@snek-at/jaen'
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
-const HomePage: ConnectedPageType = () => {
-  return (
-    <SimpleTextField name="stffield" />
-  )
-}
-
-[...]
-
-export default HomePage
-```
-
-#### SimpleRichTextField
-```javascript
-import {SimpleRichTextField} from '@snek-at/jaen'
-
-const HomePage: ConnectedPageType = () => {
-  return (
-    <SimpleRichTextField name="srtffield" />
-  )
-}
-
-[...]
-
-export default HomePage
-```
-
-#### SimpleImageField
-```javascript
-import {SimpleImageField} from '@snek-at/jaen'
-
-const HomePage: ConnectedPageType = () => {
-  return (
-    <SimpleImageField
-      name="siffield"
+const HomePage: JaenTemplate = () => {
+  return(
+    <TextField 
+      fieldName="hometext"
+      initValue="<p>Your text</p>
+      rtf={true}
     />
   )
 }
 
-[...]
-
+HomePage.TemplateName="HomePage"
 export default HomePage
+
 ```
 
 #### ImageField
-```javascript
-import {ImageField} from '@snek-at/jaen'
 
-const HomePage: ConnectedPageType = () => {
-  return (
-    <ImageField
-      fieldOptions={{fieldName: "iffield"}}
-      imageClassName="iffield"
-      imageStyle={{width: '500px', height: '500px', objectFit: 'cover'}}
+The ImageField is the Jaen field that allows you to embed images hosted on the ipfs. It requires both a fieldName and an initValue.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
+
+```javascript
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
+
+const HomePage: JaenTemplate = () => {
+  return(
+    <ImageField 
+      fieldName="homeimage"
+      initValue={{src: "../../images/yourimage.imagetype", alt: "homeimage", title: "homeimage"}}
     />
   )
 }
-
-[...]
-
-export default HomePage
-```
-
-#### SimplePdfField 
-```javascript
-import {SimplePdfField} from '@snek-at/jaen'
-
-const HomePage: ConnectedPageType = () => {
-  return (
-     <SimplePdfField name="spffield" pdfStyle={{height: 1000, width: 1000}} />
-  )
-}
-
-[...]
 
 export default HomePage
 ```
@@ -358,22 +332,34 @@ to [contribute to our project](#contributing).
 ## [](#-creators)💼 Creators
 
 <table border="0">
-    <tr>
-	 <td>
-	    <a href="https://github.com/schettn">
-		<img src="https://avatars.githubusercontent.com/schettn?s=100" alt="Avatar schettn">
-	     </a>
-	</td>
-        <td>
-    	    <a href="https://github.com/kleberbaum">
-    	        <img src="https://avatars.githubusercontent.com/kleberbaum?s=100" alt="Avatar kleberbaum">
-          </a>
-        </td>
-    </tr>
-    <tr>
-	<td><a href="https://github.com/schettn">Nico Schett</a></td>
-        <td><a href="https://github.com/kleberbaum">Florian Kleber</a></td>
-    </tr>
+  <tr>
+	  <td>
+      <a href="https://github.com/schettn">
+        <img src="https://avatars.githubusercontent.com/schettn?s=100" alt="Avatar schettn">
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/kleberbaum">
+        <img src="https://avatars.githubusercontent.com/kleberbaum?s=100" alt="Avatar kleberbaum">
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/kleberbaum">
+        <img src="https://avatars.githubusercontent.com/petute?s=100" alt="Avatar petute">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://github.com/schettn">Nico Schett</a>
+    </td>
+    <td>
+      <a href="https://github.com/kleberbaum">Florian Kleber</a>
+    </td>
+    <td>
+      <a href="https://github.com/petute">Daniel<br/>Petutschnigg</a>
+    </td>
+  </tr>
 </table>
 
 ## [](#-faqs)🤔 FAQs
@@ -394,6 +380,21 @@ to [contribute to our project](#contributing).
 **Q:** How can I request a feature be added to the roadmap?
 
 **A:** Please open an issue! You can read about how to contribute [here](https://github.com/snek-at/jaen/blob/master/CONTRIBUTING.MD). Community submitted issues will be tagged "Proposed" and will be reviewed by the team.
+
+## [](#-trivia):exploding_head: Trivia
+#### Name:
+In Austria the first month of the year is called "Jänner" since we started working on this project in January we decided to name the project Jaen.
+#### Pronounciation:
+The name Jaen is pronounced (Jän)ner [ˈjɛn] or (Jan)uary [ˈdʒæn].
+#### Password:
+The standard password in Jaen is **ciscocisco**. The origin of this password where back at our time in school. Most of us went to school for network engineering and in the cisco courses the standard password would always be ciscocisco.
+#### Releases:
+Every one of our Jaen releases has it's own theme song. Have fun with it.
+#### Mascot:
+The inofficial mascot of this project is a girl holding an electric guitar.
+
+### <3
+
 
 ## [](#-copyright-and-license)📝 Copyright and License
 
