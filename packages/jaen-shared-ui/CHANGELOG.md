@@ -1,3 +1,18 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.4](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.3...@snek-at/jaen-shared-ui-v2.0.0-beta.4) (2021-09-02)
+
+
+### Bug Fixes
+
+* **package.json:** align monorepo package versions ([69661f7](https://github.com/snek-at/jaen/commit/69661f761edc4aa6c0839cb0a588dd328ec098a5))
+
+
+### Features
+
+* add jaen-pages migration workflow ([008918c](https://github.com/snek-at/jaen/commit/008918cc1c8d8ee88ad914f674b978ebc68e21c6))
+* add jaenPageContext ([2bf4da1](https://github.com/snek-at/jaen/commit/2bf4da1a154de2db83ebbec6fad5cfa3a758053b))
+* **auth:** add guest mode ([3431548](https://github.com/snek-at/jaen/commit/343154897e8b9794594b964b5f559c69e6cfdbc7))
+* add login ([1c2cbc5](https://github.com/snek-at/jaen/commit/1c2cbc5e56fd6b92337982c09f1f4e75b194de6a))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.3](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.2...@snek-at/jaen-shared-ui-v2.0.0-beta.3) (2021-08-31)
 
 
