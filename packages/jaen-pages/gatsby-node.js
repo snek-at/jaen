@@ -14,10 +14,11 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
     const page = await (await fetch(fileUrl)).json()
 
     if (page.template) {
+      console.log('children', page.children, page.parent)
       actions.createPage({
         path: page.path || `${id}/`,
-        parent: page.parent,
-        children: page.children,
+        parent: page.parent ? page.parent.id : null,
+        children: page.children.map(child => child.id),
         component: path.resolve(templates[page.template]),
         context: {
           jaenPageContext: {
@@ -65,9 +66,16 @@ exports.onCreatePage = async ({cache, page, actions}) => {
         ...page.context,
         jaenPageContext: {
           id,
+          template: '',
+          slug: '',
           ...cachedjaenPageContext,
           pageMetadata: {
             title: page.internalComponentName,
+            description: '',
+            image: '',
+            canonical: '',
+            datePublished: new Date().toISOString(),
+            isBlogPost: false,
             ...cachedjaenPageContext?.pageMetadata
           }
         }

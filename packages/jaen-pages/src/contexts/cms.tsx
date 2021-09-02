@@ -158,6 +158,8 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
 
         for (const node of allSitePage.nodes) {
           const jaenPageContext = node.context?.jaenPageContext
+
+          console.log('gogogo page', jaenPageContext?.id || node.id)
           const id = jaenPageContext?.id || node.id
 
           site.allSitePage.nodes[id] = {

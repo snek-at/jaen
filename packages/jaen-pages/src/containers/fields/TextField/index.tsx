@@ -41,7 +41,7 @@ const TextField: React.FC<TextFieldProps> = ({
   const updatedValue = (content as TextBlock | undefined)?.text
 
   const contextValue = (getFieldContent(
-    jaenPageContext.fields[fieldName],
+    jaenPageContext.fields?.[fieldName],
     block
   ) as TextBlock | undefined)?.text
 

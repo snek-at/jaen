@@ -62,12 +62,15 @@ export const resolveChildSlugs = (
   rootItemIds: string[],
   id: string | null
 ): string[] => {
+  console.log('children', id, rootItemIds)
+
   const children = id ? items[id].children : rootItemIds
 
   const childSlugs = []
 
   for (const siblingId of children) {
-    const slug = items[siblingId].data.slug
+    console.log(siblingId, items)
+    const slug = items[siblingId]?.data?.slug
 
     if (slug) {
       childSlugs.push(slug)

@@ -81,7 +81,7 @@ const PagesTab: React.FC<{}> = () => {
     slug: string,
     template: string
   ) => {
-    const pageId = uuidv4()
+    const pageId = `SitePage /${uuidv4()}`
     dispatch(
       actions.addPage({
         pageId,
@@ -180,6 +180,8 @@ const PagesTab: React.FC<{}> = () => {
   const items = React.useMemo(() => transformToItems(allSitePage.nodes), [
     allSitePage.nodes
   ])
+
+  console.log('items', items)
 
   return (
     <>
