@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.11](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.10...@snek-at/jaen-v2.0.0-beta.11) (2021-09-02)
+
+
+### Bug Fixes
+
+* page creaction and esm ([ab3bbda](https://github.com/snek-at/jaen/commit/ab3bbdabc37ae4ef14044bd6b29c4dfb80254362))
+
 # [@snek-at/jaen-v2.0.0-beta.10](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.9...@snek-at/jaen-v2.0.0-beta.10) (2021-09-02)
 
 
