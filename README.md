@@ -148,6 +148,8 @@ The demo site will now be accessible at <http://localhost:8000/>.
 
 #### Troubleshooting
 
+- You have to use yarn instead of npm. If you decide to use npm you might run into errors.
+
 If you encounter any other issues getting this template to work we ask you to [report it](https://github.com/snek-at/jaen/issues) so that we can improve the documentation.
 
 #### Editing
@@ -269,22 +271,44 @@ export default HomePage
 Jaen StreamFields enable you to integrate editable blocks and to use as many of them as you like. In order to use this field you are required to build a block. You can find an example of a block below.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField)</div>
 
 ```javascript
-import {StreamField} from '@snek-at/jaen'
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen/src/types'
 import {CardBlock} from '...'
 
-const HomePage: ConnectedPageType = () => {
+const HomePage: JaenTemplate = () => {
   return (
-    <div style={{width: '50%', display: 'table'}}>
+    <div style={{width: '50%'}}>
       <StreamField
         reverseOrder={false}
-        name={'timeline'}
+        fieldName={'timeline'}
         blocks={[CardBlock]}
+	initValue={{
+	  
+	  0: {
+	    typeName: 'CardBlock',
+	    fields: {
+	      cardtitle: {
+	        _type: 'TextBlock'
+		text: '<p>This is a title</p>'
+	      },
+	      cardimg: {
+	        _type: 'FileBlock'
+		src: 'path/to/your/image',
+		alt: 'yourAlt',
+		title: 'yourTitle'
+	      }
+	    }
+	  },
+	  1: {
+	    [...]
+	  }
+	}}
       />
     </div>
   )
 }
 
-[...]
+HomePage.TemplateName = 'HomePage'
 
 export default HomePage
 ```
@@ -321,47 +345,34 @@ export default HomePage
 The Block is the keystone of the StreamField. With the help of blocks you can build complex React-Components with editable content.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks)</div>
 
 ```javascript
-import {
-  BC,
-  prepareBlocks,
-  ImageField,
-  EditableField,
-  RichTextField
-} from '@snek-at/jaen'
+import {blocks, fields} from '@snek-at/jaen-pages'
+import {ImageType} from '@snek-at/jaen-pages/src/containers/JaenImage'
 
 type BlockType = {
-  title: string
-  extra: string
-  text: string
-  }
+  cardtitle: string,
+  cardimg: ImageType
+}
 
-const Block: BC<BlockType> = ({
-  fieldOptions,
-  streamFieldWidth
-}) => {
-  const blocks = prepareBlocks<BlockType>(Block, fieldOptions)
-
+const CardBlock: blocks.BC<BlockType> = ({values}) => 
   return (
-    <>
-      <div className="card">
-        <h1>{title}</h1>
-        {blocks['text']}
-        {blocks['image']}
-        {blocks['extra']}
-      </div>
-    </>
+    <div className="card">
+      <h1>{values.cardtitle}</h1>
+      {values.cardimg}
+    </div>
   )
 }
 
-Block.BlockType = 'Block'
-Block.BlockFields = {
-  image: ImageField,
-  title: EditableField,
-  extra: EditableField,
-  text: RichTextField
+CardBlock.BlockType = 'CardBlock'
+CardBlock.BlockFields = {
+  image: fields.ImageField,
+  title: fields.EditableField
+}
+CardBlock.defaultValues = {
+  cardtitle: 'This is your title.',
+  cardimg: {src: 'path/to/img', alt: 'yourAlt', title: 'yourTitle'}
 }
 
-export default Block
+export default CardBlock
 ```
 
 
@@ -445,7 +456,7 @@ In Austria the first month of the year is called "Jänner" since we started work
 #### Pronounciation:
 The name Jaen is pronounced (Jän)ner [ˈjɛn] or (Jan)uary [ˈdʒæn].
 #### Password:
-The standard password in Jaen is **ciscocisco**. The origin of this password where back at our time in school. Most of us went to school for network engineering and in the cisco courses the standard password would always be ciscocisco.
+The standard password in Jaen is **ciscocisco**. The origin of this password were back at our time in school. Most of us went to school for network engineering and in the cisco courses the standard password would always be ciscocisco.
 #### Releases:
 Every one of our Jaen releases has it's own theme song. Have fun with it.
 #### Mascot:
