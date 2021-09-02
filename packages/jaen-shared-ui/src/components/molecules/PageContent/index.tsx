@@ -23,6 +23,7 @@ export type Values = Partial<{
   image: string
   isBlogPost: boolean
   lastPublished?: string
+  locked?: boolean
 }>
 
 export type PageContentType = {
@@ -126,6 +127,7 @@ const PageContent: React.FC<PageContentType> = props => {
                 <Input
                   placeholder="My slug"
                   value={values.slug || ''}
+                  disabled={values.locked}
                   onChange={e => handleValuesChange('slug', e)}
                   onBlur={handleValuesCb}
                 />

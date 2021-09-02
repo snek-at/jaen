@@ -3,8 +3,6 @@ require('ts-node').register({compilerOptions: {esModuleInterop: true}})
 
 const {runMigration, getSiteData} = require('./src/tools/publish/run')
 
-console.log('before')
-
 runMigration()
 
 module.exports = {

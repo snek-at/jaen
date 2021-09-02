@@ -10,6 +10,7 @@ import {
 } from '../../../store/actions/siteActions'
 import {pageFieldContentSelector} from '../../../store/selectors/pages'
 import {withRedux} from '../../../store/withRedux'
+import {getFieldContent} from '../../../tools/fields'
 import {FieldIdentifier, FieldUpdateDetails, TextBlock} from '../../../types'
 import Editor from '../../Editor'
 
@@ -25,7 +26,8 @@ const TextField: React.FC<TextFieldProps> = ({
 }) => {
   const dispatch = useAppDispatch()
   const isEditing = useAppSelector(state => state.options.isEditing)
-  const {pageId} = useTemplate()
+  const {jaenPageContext} = useTemplate()
+  const pageId = jaenPageContext.id
 
   const {initValue, fieldName, block} = field
 
@@ -35,10 +37,17 @@ const TextField: React.FC<TextFieldProps> = ({
   const content = useSelector(
     pageFieldContentSelector(pageId, fieldName, block)
   )
-  const updatedValue = (content as TextBlock)?.text
+
+  const updatedValue = (content as TextBlock | undefined)?.text
+
+  const contextValue = (getFieldContent(
+    jaenPageContext.fields[fieldName],
+    block
+  ) as TextBlock | undefined)?.text
+
   const isRegistered = updatedValue !== undefined
 
-  const value = isRegistered ? updatedValue : initValue || ''
+  const value = isRegistered ? updatedValue : contextValue || initValue || ''
 
   const handleOnChange = (data: string) => {
     if (!isRegistered && data !== initValue) {

@@ -77,7 +77,8 @@ const PageExplorer: React.FC<PageExplorerProps> = props => {
       description: item.data.description,
       image: item.data.image,
       isBlogPost: item.data.isBlogPost,
-      lastPublished: item.data.lastPublished
+      lastPublished: item.data.lastPublished,
+      locked: item.data.locked
     }
   }
 

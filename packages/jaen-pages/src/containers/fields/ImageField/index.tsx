@@ -25,7 +25,8 @@ interface ImageFieldProps extends FieldIdentifier {
 const ImageField: React.FC<ImageFieldProps> = ({...field}) => {
   const dispatch = useAppDispatch()
   const isEditing = useAppSelector(state => state.options.isEditing)
-  const {pageId} = useTemplate()
+  const {jaenPageContext} = useTemplate()
+  const pageId = jaenPageContext.id
 
   const {initValue, fieldName, block} = field
 

@@ -49,12 +49,7 @@ export const usePage = (id: string): ResolvedPageType => {
 }
 
 export const useCMSPage = (id: string): ResolvedPageType => {
-  console.log(id)
-
   const pages = useAllSitePage()
-
-  console.log(pages)
-
   const nodes = pages.nodes
   const cNode = nodes[id]
 
@@ -137,7 +132,7 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
                 id
               }
               context {
-                jaenContext {
+                jaenPageContext {
                   id
                   slug
                   template
@@ -162,17 +157,17 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
         }
 
         for (const node of allSitePage.nodes) {
-          const jaenContext = node.context?.jaenContext
-          const id = jaenContext?.id || node.id
+          const jaenPageContext = node.context?.jaenPageContext
+          const id = jaenPageContext?.id || node.id
 
           site.allSitePage.nodes[id] = {
             parent: node.parent,
             children: node.children,
             path: node.path,
-            slug: jaenContext?.slug,
-            template: jaenContext?.template,
-            fields: jaenContext?.fields,
-            pageMetadata: jaenContext?.pageMetadata
+            slug: jaenPageContext?.slug,
+            template: jaenPageContext?.template,
+            fields: jaenPageContext?.fields,
+            pageMetadata: jaenPageContext?.pageMetadata
           }
         }
 

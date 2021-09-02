@@ -3,13 +3,16 @@ import {useSelector} from 'react-redux'
 
 import {useAppSelector} from '../store'
 import {withRedux} from '../store/withRedux'
-import {ResolvedPageType} from '../types'
+import {PageType, ResolvedPageType} from '../types'
 import {useCMSContext, useCMSPage} from './cms'
 
 // SEO: https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/master/src/components/SEO/SEO.js
 
-export type TemplateContextType = {
-  pageId: string
+interface TemplateProviderProps {
+  jaenPageContext: {id: string} & PageType
+}
+
+export interface TemplateContextType extends TemplateProviderProps {
   page: ResolvedPageType
 }
 
@@ -27,21 +30,18 @@ export const useTemplate = (): TemplateContextType => {
   return context
 }
 
-type TemplateProviderProps = {
-  id: string
-}
-
 export const TemplateProvider: React.FC<TemplateProviderProps> = ({
   children,
-  id,
+  jaenPageContext,
   ...props
 }) => {
   const pathName = typeof window !== 'undefined' && window.location.pathname
 
   const dynamicPaths = useAppSelector(({site}) => site.routing.dynamicPaths)
 
-  console.log(pathName && dynamicPaths[pathName], id)
-  const page = useCMSPage((pathName && dynamicPaths[pathName]) || id)
+  const page = useCMSPage(
+    (pathName && dynamicPaths[pathName]) || jaenPageContext.id
+  )
   const {templates} = useCMSContext()
 
   const isDynamic = pathName && Object.keys(dynamicPaths).includes(pathName)
@@ -59,7 +59,7 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
   const Template = page.template ? findTemplate(page.template) : null
 
   return (
-    <TemplateContext.Provider value={{pageId: id, page}}>
+    <TemplateContext.Provider value={{jaenPageContext, page}}>
       {isDynamic && Template ? <Template /> : children}
     </TemplateContext.Provider>
   )

@@ -1,6 +1,5 @@
 import {usePage} from '../../../contexts/cms'
 import {useTemplate} from '../../../contexts/template'
-import {useAppSelector} from '../../../store'
 import {withRedux} from '../../../store/withRedux'
 import {ResolvedPageType} from '../../../types'
 
@@ -10,8 +9,8 @@ interface IndexFieldProps {
 }
 
 const IndexField: React.FC<IndexFieldProps> = props => {
-  const template = useTemplate()
-  const page = usePage(props.fixedSlug || template.pageId)
+  const {jaenPageContext} = useTemplate()
+  const page = usePage(props.fixedSlug || jaenPageContext.id)
 
   return props.onRender(page)
 }

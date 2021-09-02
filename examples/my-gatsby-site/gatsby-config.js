@@ -13,6 +13,12 @@ module.exports = {
           SamplePage: path.resolve('src/templates/SamplePage.tsx')
         }
       }
-    }
+    }, 
+    {
+      resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+      options: {
+        devMode: true,
+      },
+    },
   ]
 }

@@ -20,19 +20,19 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
         children: page.children,
         component: path.resolve(templates[page.template]),
         context: {
-          jaenContext: {
+          jaenPageContext: {
             id,
             slug: page.slug,
             template: page.template,
             pageMetadata: {
               datePublished: createdAt,
               ...page.pageMetadata
-            }
+            },
+            fields: page.fields
           }
         }
       })
     } else {
-      console.log('Caching Jaen Static Page', id)
       await cache.set(`jaen-static-page-context-${id}`, {
         id,
         slug: page.slug,
@@ -49,26 +49,26 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
 exports.onCreatePage = async ({cache, page, actions}) => {
   const {createPage, deletePage} = actions
 
-  const {jaenContext} = page.context
+  const {jaenPageContext} = page.context
 
   const id = `SitePage ${page.path}`
-  const cachedJaenContext = await cache.get(`jaen-static-page-context-${id}`)
+  const cachedjaenPageContext = await cache.get(
+    `jaen-static-page-context-${id}`
+  )
 
-  console.log('someData', page, cachedJaenContext)
-
-  if (!jaenContext?.template) {
+  if (!jaenPageContext?.template) {
     deletePage(page)
     // You can access the variable "house" in your page queries now
     createPage({
       ...page,
       context: {
         ...page.context,
-        jaenContext: {
+        jaenPageContext: {
           id,
-          ...cachedJaenContext,
+          ...cachedjaenPageContext,
           pageMetadata: {
             title: page.internalComponentName,
-            ...cachedJaenContext?.pageMetadata
+            ...cachedjaenPageContext?.pageMetadata
           }
         }
       }

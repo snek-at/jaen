@@ -5,8 +5,6 @@ export const wrapRootElement = ({element}) => {
   const config = require(___JAEN_CONFIG___)
   const plugins = config.plugins || []
 
-  console.log("config", config)
-
   const resolvedPlugins = Object.keys(plugins).map(key => {
     const plugin = plugins[key]
 

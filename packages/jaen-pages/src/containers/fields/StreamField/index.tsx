@@ -40,7 +40,8 @@ const StreamField: React.FC<StreamFieldProps> = ({
 }) => {
   const dispatch = useAppDispatch()
 
-  const {pageId} = useTemplate()
+  const {jaenPageContext} = useTemplate()
+  const pageId = jaenPageContext.id
 
   // const [SFBlocks, setSFBlocks] = useState(
   //   (appState.site.allSitePage?.nodes?.[path]?.fields?.[

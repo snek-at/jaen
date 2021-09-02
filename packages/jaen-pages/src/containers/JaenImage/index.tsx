@@ -23,7 +23,6 @@ const JaenImage: React.FC<ImageProps> = ({editable = false, ...props}) => {
   const [initialImage, setInitialImage] = React.useState(props.initialImage)
 
   const fileSelector = useDisclosure()
-  const {pageId} = useTemplate()
 
   const handleFileClick = () => {
     fileSelector.onOpen()

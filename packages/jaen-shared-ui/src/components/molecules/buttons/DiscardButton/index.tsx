@@ -35,19 +35,19 @@ const DiscardButton: React.FC<DiscardButtonProps> = props => {
     <Lottie lottie={lottie} forceReloadDeps={[lottie]}>
       {({container, animation}) => (
         <Tooltip
-        hasArrow
-        label={CONTENT.tooltip}
-        placement="bottom-start"
-        fontSize="md">
+          hasArrow
+          label={CONTENT.tooltip}
+          placement="bottom-start"
+          fontSize="md">
           <Button
             size="sm"
             variant="outline"
             leftIcon={container}
-            rightIcon={
-              <Badge borderRadius="full" px="2" colorScheme="yellow">
-                143
-              </Badge>
-            }
+            // rightIcon={
+            //   <Badge borderRadius="full" px="2" colorScheme="yellow">
+            //     143
+            //   </Badge>
+            // }
             onClick={() => {
               animation.playSegments([0, animation.totalFrames], true)
               props.onDiscardClick()
