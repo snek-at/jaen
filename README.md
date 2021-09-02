@@ -220,7 +220,7 @@ It is advisable to give all the fields descriptive names.
 The TextField is there to provide your react-components with editable content.
 It requires you to give it a fieldName and an initValue.
 The fieldName sets the name of the TextField for the CMS and the initValue sets the value the field has before it gets edited.
-By default the TextField provides you with an editable RichText. If you only need a short one liner for a heading etc. you can set rtf to false to restrict the field.
+By default the TextField provides you with an editable RichText. If you only need a short one liner for a heading etc. you can set rtf to false to restrict the field.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/TextField)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
