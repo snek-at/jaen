@@ -278,7 +278,7 @@ import {CardBlock} from '...'
 const HomePage: JaenTemplate = () => {
   return (
     <div style={{width: '50%'}}>
-      <StreamField
+      <fields.StreamField
         reverseOrder={false}
         fieldName={'timeline'}
         blocks={[CardBlock]}
@@ -288,11 +288,11 @@ const HomePage: JaenTemplate = () => {
 	    typeName: 'CardBlock',
 	    fields: {
 	      cardtitle: {
-	        _type: 'TextBlock'
+	        _type: 'TextBlock',
 		text: '<p>This is a title</p>'
 	      },
 	      cardimg: {
-	        _type: 'FileBlock'
+	        _type: 'FileBlock',
 		src: 'path/to/your/image',
 		alt: 'yourAlt',
 		title: 'yourTitle'
