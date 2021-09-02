@@ -322,24 +322,22 @@ export default HomePage
 Wenn Sie einen Link auf die Subseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite auf der das IndexField ist dafür genutzt. onRender erlaubt Ihnen die React-Components, die die Daten oder den Link der Subseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
 
 ```javascript
-import {IndexField} from '@snek-at/jaen'
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
-const HomePage: ConnectedPageType = () => {
+const HomePage: JaenTemplate = () => {
   return (
-    <IndexField
-      fixedSlug={'home'}
-      outerElement={() => <div />}
-      renderItem={(item, key, navigate) => (
-        <p key={key}>
-          Slug: {item.slug} Title: {item.title}{' '}
-          <button onClick={() => navigate()}>Goto</button>
-        </p>
-       )}
+    <fields.IndexField
+      fixedSlug={'pageId'}
+      onRender={(page) => (
+        return(
+	  [...]
+	)
     />
   )
 }
 
-[...]
+HomePage.TemplateName = "HomePage"
 
 export default HomePage
 ```
