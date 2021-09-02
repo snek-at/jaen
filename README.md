@@ -228,7 +228,7 @@ import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
 const HomePage: JaenTemplate = () => {
   return(
-    <TextField 
+    <fields.TextField 
       fieldName="hometext"
       initValue="<p>Your text</p>
       rtf={true}
@@ -251,7 +251,7 @@ import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
 const HomePage: JaenTemplate = () => {
   return(
-    <ImageField 
+    <fields.ImageField 
       fieldName="homeimage"
       initValue={{src: "../../images/yourimage.imagetype", alt: "homeimage", title: "homeimage"}}
     />
