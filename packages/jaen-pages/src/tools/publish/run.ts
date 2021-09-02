@@ -30,7 +30,10 @@ export const runMigration = async () => {
 export const getSiteData = async () => {
   const fileContent = JSON.parse(fs.readFileSync(jaenPagesPath, 'utf8'))
 
-  const siteFileUrl = fileContent.site?.context?.fileUrl
+  const siteFileUrl =
+    fileContent.site &&
+    fileContent.site.context &&
+    fileContent.site.context.fileUrl
 
   if (siteFileUrl) {
     const siteFile = await (await fetch(siteFileUrl)).json()
