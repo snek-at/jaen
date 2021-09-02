@@ -309,24 +309,22 @@ export default HomePage
 
 #### IndexField
 ```javascript
-import {IndexField} from '@snek-at/jaen'
+import {fields} from '@snek-at/jaen-pages'
+import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 
-const HomePage: ConnectedPageType = () => {
+const HomePage: JaenTemplate = () => {
   return (
-    <IndexField
-      fixedSlug={'home'}
-      outerElement={() => <div />}
-      renderItem={(item, key, navigate) => (
-        <p key={key}>
-          Slug: {item.slug} Title: {item.title}{' '}
-          <button onClick={() => navigate()}>Goto</button>
-        </p>
-       )}
+    <fields.IndexField
+      fixedSlug={'pageId'}
+      onRender={(page) => (
+        return(
+	  [...]
+	)
     />
   )
 }
 
-[...]
+HomePage.TemplateName = "HomePage"
 
 export default HomePage
 ```
