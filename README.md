@@ -56,7 +56,7 @@
 - [💚 Thanks](#-thanks)
 - [💼 Creators](#-creators)
 - [🤔 FAQs](#-faqs)
-- [:exploding_head: Trivia](#-trivia)
+- [:exploding_head: Trivia](#explodinghead-trivia)
 - [📝 Copyright and License](#-copyright-and-license)
 
 ## [](#-motivation)💪 Motivation
@@ -448,7 +448,7 @@ to [contribute to our project](#contributing).
 
 **A:** Please open an issue! You can read about how to contribute [here](https://github.com/snek-at/jaen/blob/master/CONTRIBUTING.MD). Community submitted issues will be tagged "Proposed" and will be reviewed by the team.
 
-## [](#-trivia):exploding_head: Trivia
+## [](#explodinghead-trivia):exploding_head: Trivia
 #### Name:
 In Austria the first month of the year is called "Jänner" since we started working on this project in January we decided to name the project Jaen.
 #### Pronounciation:
