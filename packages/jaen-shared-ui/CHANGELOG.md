@@ -1,3 +1,11 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.5](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.4...@snek-at/jaen-shared-ui-v2.0.0-beta.5) (2021-09-02)
+
+
+### Bug Fixes
+
+* **package.json:** update version ([d20b7bf](https://github.com/snek-at/jaen/commit/d20b7bffb0627d44ca4a387b7befed35d21dd792))
+* page creaction and esm ([ab3bbda](https://github.com/snek-at/jaen/commit/ab3bbdabc37ae4ef14044bd6b29c4dfb80254362))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.4](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.3...@snek-at/jaen-shared-ui-v2.0.0-beta.4) (2021-09-02)
 
 
