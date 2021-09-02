@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.7](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.6...my-gatsby-site-v1.0.0-beta.7) (2021-09-02)
+
+
+### Bug Fixes
+
+* page creaction and esm ([ab3bbda](https://github.com/snek-at/jaen/commit/ab3bbdabc37ae4ef14044bd6b29c4dfb80254362))
+
 # [my-gatsby-site-v1.0.0-beta.6](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.5...my-gatsby-site-v1.0.0-beta.6) (2021-09-02)
 
 
