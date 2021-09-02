@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.12](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.11...@snek-at/jaen-pages-v2.0.0-beta.12) (2021-09-02)
+
+
+### Bug Fixes
+
+* remove optional chaining in esm module ([43ad1d2](https://github.com/snek-at/jaen/commit/43ad1d226812b84fa1280eb23b360fe21ef1fe59))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.11](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.10...@snek-at/jaen-pages-v2.0.0-beta.11) (2021-09-02)
 
 
