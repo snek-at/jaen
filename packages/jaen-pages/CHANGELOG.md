@@ -1,3 +1,19 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.10](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.9...@snek-at/jaen-pages-v2.0.0-beta.10) (2021-09-02)
+
+
+### Bug Fixes
+
+* **package.json:** align monorepo package versions ([69661f7](https://github.com/snek-at/jaen/commit/69661f761edc4aa6c0839cb0a588dd328ec098a5))
+
+
+### Features
+
+* add gatsby publishing ([83d2704](https://github.com/snek-at/jaen/commit/83d270482c60a7783b408c7f954e8e148e51e741))
+* add jaen-pages migration workflow ([008918c](https://github.com/snek-at/jaen/commit/008918cc1c8d8ee88ad914f674b978ebc68e21c6))
+* add jaenPageContext ([2bf4da1](https://github.com/snek-at/jaen/commit/2bf4da1a154de2db83ebbec6fad5cfa3a758053b))
+* send publish request on button press ([75d5cfc](https://github.com/snek-at/jaen/commit/75d5cfcb35bcde7e7f3d455b44b9921e1dd2eefa))
+* **auth:** add guest mode ([3431548](https://github.com/snek-at/jaen/commit/343154897e8b9794594b964b5f559c69e6cfdbc7))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.9](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.8...@snek-at/jaen-pages-v2.0.0-beta.9) (2021-09-01)
 
 
