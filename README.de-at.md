@@ -4,10 +4,10 @@
   </a>
 </p>
 
-<h3 align="center">Snek Jaen Template</h3>
+<h3 align="center">Snek Jaen</h3>
 
 <p align="center">
-  Sie befinden sich im offiziellen Jaen Template von snek-at.
+  Sie befinden sich im offiziellen Jaen Projekt von snek-at.
   Mit Jaen, dem innovativen, attraktiven und offenem CMS Framework für ReactJS.
   <br>
   <br>
@@ -25,6 +25,8 @@
     <img src="https://app.codacy.com/project/badge/Grade/bb3d984d38704860ba7ad800d319b8c4" />
   </a>
 </p>
+
+Read this wiki in a different language: [English](https://github.com/snek-at/jaen/blob/docs/update-readme/README.md)
 
 ## [](#table-of-contents)Was Sie erwartet
 - [💪 Motivation](#-motivation)
