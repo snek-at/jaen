@@ -8,7 +8,7 @@
 
 <p align="center">
   Sie befinden sich im offiziellen Jaen Template von snek-at.
-  Mit Jaen, dem innovativen, attraktiven gratis CMS Framework für ReactJS.
+  Mit Jaen, dem innovativen, attraktiven und offenem CMS Framework für ReactJS.
   <br>
   <br>
   <cite>"Nur eine leere Schüssel kann man füllen."</cite> - Lao Tzu
@@ -51,33 +51,31 @@
         - [StreamField](#streamfield)
         - [IndexField](#indexfield)
     - [Blöcke](#blöcke)
-- [🐞 Wie man einen Bug meldet oder eine Neuerung beantragt](#-wie-man-einen-bug-meldet-oder-eine-neuerung-beantragt)
+- [🐞 Wie man einen Bug meldet oder ein Feature beantragt](#-wie-man-einen-bug-meldet-oder-ein-feature-beantragt)
 - [🤝 Selbst mitwirken](#-selbst-mitwirken)
 - [💚 Danksagung](#-danksagung)
 - [💼 Schöpfer](#-schöpfer)
 - [🤔 FAQs](#-faqs)
-- [:exploding_head: Trivia](#-trivia)
+- [:exploding_head: Trivia](#exploding_head-trivia)
 - [📝 Urheberrechte und Lizenz](#-copyright-and-license)
 
 ## [](#-motivation)💪 Motivation
 
-Ein CMS **sollte nicht** der definierende Teil einer Webapp sein. Auch Ecommerce sollte das nicht noch etwas anderes als Ihr Code.
+Ein CMS **sollte nicht** der definierende Teil einer Webapp sein. Auch Ecommerce sollte das nicht sondern nur Ihr Code.
 ERP Integration **sollte** den Entwickler **nicht** dazu zwingen Kurven zu schneiden.
 
 - Jaen **wird Ihr** Nutzererlebnis **nicht** beeinträchtigen.
 - Jaen **wird Ihr** Anwendungsdesign **nicht** herausfordern.
 - Jaen gibt **Ihnen** die Kontrolle.
 
-One thing and one thing only with clean and well documented interfaces.
-Customizable, extensible and open-source.
-
 Spezialisiert mit gut und genau geführten Dokumentationen für die Schnittstellen.
+Flexibel, erweiterbar und Opensource.
 
 ### Jaen Features
 
 * Eine schnelle, attraktive "What you see is what you get" Oberfläche für Editoren
 * Die komplette Kontrolle über die Struktur und das Design des Frontends
-* Von Natur aus schnell, Zwischenspeicher freundlich wenn man es braucht
+* Von Natur aus schnell, Zwischenspeicher freundlich wenn notwendig
 * Das StreamField ermutigt flexiblen Inhalt ohne die Struktur zu gefährden
 * Unterstützung für Bilder und eingebettete Inhalte
 * Dezentralisiertes gratis Hosting über ein verteiltes Netzwerk
@@ -110,9 +108,8 @@ Spezialisiert mit gut und genau geführten Dokumentationen für die Schnittstell
 In einem Hamsterrad zu rennen ist nicht inspirierend.
 
 #### Disclaimer
-Not for crybabies. Do not touch if you are afraid of being scratched a little.
 
-Nichts für schwache Nerven. 
+Nichts für schwache Nerven. Wenn Sie sich dazu entscheiden Jaen zu nutzen könnten Sie einige Kratzer abbekommen.
 
 ## [](#-beginne-in-5-minuten-zu-arbeiten)🚀 Beginne in 5 Minuten zu arbeiten
 
@@ -123,7 +120,7 @@ Nichts für schwache Nerven.
 
 ### Erste Schritte
 
-Der `GITHUB_TOKEN`hat Limitierungen für das erste Deployment. Also müssen Sie den Github Pages branch in der Einstullungsseite Ihres Repositorys auswählen. Danach müssen Sie den Anweisungen, die in den Bildern unter diesem Text gezeigt werden, befolgen.
+Der `GITHUB_TOKEN`hat Limitierungen für das erste Deployment. Also müssen Sie den Github Pages branch in der Einstellungsseite Ihres Repositorys auswählen. Danach müssen Sie den Anweisungen, die in den Bildern unter diesem Text gezeigt werden, folgen.
 
 | Erstes Aufsetzen fehlgeschlagen | Gehen sie zu Ihrem Pages einstellungs Tab |
 |---|---|
@@ -137,9 +134,8 @@ Der `GITHUB_TOKEN`hat Limitierungen für das erste Deployment. Also müssen Sie 
 Wir empfehlen [VSCode](https://github.com/microsoft/vscode) als Entwickerumgebung entweder Lokal oder in einem Codespace.
 
 #### Codespace Setup
-The easiest method is to use a GitHub [Codespace](https://github.com/features/codespaces) (in beta). Just create a GitHub Codespace from the Code menu. Wait for the Codespace to complete provisioning. When the Codespace has completed provisioning open a terminal window (Ctrl-`, Control-backquote) and:
 
-Der einfachste Weg ist die Nutzung eines GitHub [Codespace](https://github.com/features/codespaces) (in der Beta). Erstellen Sie einfach einen Codespace vom Code Menü. Warten Sie bis der Codespace fertig Aufgesetzt ist und öffnen Sie ein Konsolenfenster (Strg-`, Steuerung-Backquote) und:
+Der einfachste Weg ist die Nutzung eines GitHub [Codespace](https://github.com/features/codespaces) (in der Beta). Erstellen Sie einfach einen Codespace vom Code Menü. Warten Sie bis der Codespace fertig Aufgesetzt ist und öffnen Sie ein Konsolenfenster (Strg-\`, Steuerung-Backquote) und:
 
 - Erstellen sie eine .env und setzen Sie eine PUBLIC_URL
 - Starten sie die Seite Lokal mit `yarn start`
@@ -223,7 +219,7 @@ plugins: [
 [...]
 ```
 ### Fields
-Felde sind die Datenblöcke, die Sie verwenden können um Ihre React Apps für den Endnutzer bearbeitbar zu gestalten.
+Felder sind die Datenblöcke, die Sie verwenden können um Ihre React Apps für den Endnutzer bearbeitbar zu gestalten.
 Die Namen der Felder müssen auf der jeweiligen Seite einzigartig sein.
 Es wird empfohlen beschreibende Namen zu nutzen.
 
@@ -252,8 +248,8 @@ export default HomePage
 
 #### ImageField
 
-Zum einbetten von Bildern können Sie das SimpleImageField nutzen. <br />
-Es funktioniert indem ein Bild, das auf der IPFS gespeichert wird, auf der Seite eingebetter wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
+Zum einbetten von Bildern können Sie das ImageField nutzen. <br />
+Es funktioniert indem ein Bild, das auf der IPFS gespeichert wird, auf der Seite eingebettet wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -378,9 +374,9 @@ export default CardBlock
 ```
 
 
-## [](#-wie-man-einen-bug-meldet-oder-eine-neuerung-beantragt)🐞 Wie man einen Bug meldet oder eine Neuerung beantragt
+## [](#-wie-man-einen-bug-meldet-oder-eine-neuerung-beantragt)🐞 Wie man einen Bug meldet oder ein Feature beantragt
 
-Haben Sie einen Bug gefunden oder haben Sie eine Idee für einen neuen Bestandteil? Bitte sehen Sie zuvor in den offenen und geschlossenen Issues nach, ob Ihr Problem schon behandelt wurde.
+Haben Sie einen Bug gefunden oder haben Sie eine Idee für ein neues Feature? Bitte sehen Sie zuvor in den offenen und geschlossenen Issues nach, ob Ihr Problem schon behandelt wurde.
 Wenn Sie den Bug oder die Idee darin nicht finden [öffnen Sie bitte ein neues Issue](https://github.com/snek-at/jaen/issues/new/choose).
 
 ## [](#-selbst-mitwirken)🤝 Selbst mitwirken
@@ -389,7 +385,7 @@ Wenn Sie den Bug oder die Idee darin nicht finden [öffnen Sie bitte ein neues I
 ![GitHub geschlossene Issues](https://img.shields.io/github/issues-closed-raw/snek-at/jaen?color=green)
 
 Bitte lesen Sie unsere
-[Contibutions Guidlines](https://github.com/snek-at/jaen/blob/master/CONTRIBUTING.md).
+[Contibution Guidlines](https://github.com/snek-at/jaen/blob/master/CONTRIBUTING.md).
 Darin werden Sie die Anleitungen zum öffnen von Issues, die Code Standards und Notizen zur Entwicklung finden.
 
 Der Code sollte unserem [Code Guide](https://github.com/snek-at/tonic/blob/master/STYLE_GUIDE.md) entsprechen, der von
@@ -434,14 +430,14 @@ Wir haben noch keine externen Entwickler. Um Ihren Namen hier zu sehen, [tragen 
 
 ## [](#-faqs)🤔 FAQs
 **Q:** Was bedeuten die Roadmap Kategorien?
-* Fertig - Hoffentlich haben Sie spaß damit. Hinterlassen Sie uns eine Rückmeldung über Ihre Erfahrungen!
+* Fertig - Hoffentlich haben Sie Spaß damit. Hinterlassen Sie uns eine Rückmeldung über Ihre Erfahrungen!
 * Fast geschafft - Wir sind dabei die letzten Änderungen vorzunehmen. Die Features in dieser kategorie können in den nächsten 2-4 Wochen erwartet werden.
 * Wir arbeiten daran - Die Entwicklung hat gestartet. Wir arbeiten daran es so schnell und gut wie möglich zu vervollständigen.
 * In Planung - Wir denken darüber nach. Dies kann bedeuten, dass wir schon designen oder das wir noch darüber nachdenken wie es funktionieren könnte. Diese Phase ist ein guter Zeitpunkt um vorzuschlagen, wie Sie gern ein Feature sehen würden und um Design Ideen einzureichen. 
 
 **Q:** Warum sind auf der Roadmap keine Termine?
 
-**A:** Auf der Roadmap sind keine Termine, da wir wissen, dass sich die Umstände ändern können und wir wollen den Spielraum um Sicherheitsprobleme zu lösen oder Nutzer zu untersützen. Manchmal müssen wir daher unsere Prioritäten ändern und wolen es aber gerne vermeiden Nutzer zu enttäuschen.
+**A:** Auf der Roadmap sind keine Termine, da wir wissen, dass sich die Umstände ändern können und wir wollen den Spielraum um Sicherheitsprobleme zu lösen oder Nutzer zu untersützen. Manchmal müssen wir daher unsere Prioritäten ändern und wollen es aber gerne vermeiden Nutzer zu enttäuschen.
 
 **Q:** Wie kann ich eine Rückmeldung hinterlassen oder mehr Information erhalten?
 
