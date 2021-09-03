@@ -225,7 +225,7 @@ Es wird empfohlen beschreibende Namen zu nutzen.
 
 #### TextField
 
-Mithilfe des TextFields können Sie editierbare RichTextFields (`rtf={true}`) oder ebenfalls editierbare SimpleTextFields (`rtf={false}`) auf Ihre Webseite bringen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/SimpleTextField)</div>
+Mithilfe des TextFields können Sie editierbare RichTextFields (`rtf={true}`) oder ebenfalls editierbare SimpleTextFields (`rtf={false}`) auf Ihre Webseite bringen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/TextField_ger-at)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -249,7 +249,7 @@ export default HomePage
 #### ImageField
 
 Zum einbetten von Bildern können Sie das ImageField nutzen. <br />
-Es funktioniert indem ein Bild, das auf der IPFS gespeichert wird, auf der Seite eingebettet wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
+Es funktioniert indem ein Bild, das auf der IPFS gespeichert wird, auf der Seite eingebettet wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField_ger-at)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -269,7 +269,7 @@ export default HomePage
 
 #### StreamField
 
-Das StreamField ermöglicht es Ihnen editierbare Blocks in Ihre Seite einzubauen und diese sooft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField)</div>
+Das StreamField ermöglicht es Ihnen editierbare Blocks in Ihre Seite einzubauen und diese sooft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -315,7 +315,7 @@ export default HomePage
 ```
 #### IndexField
 
-Wenn Sie einen Link auf die Subseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite auf der das IndexField ist dafür genutzt. onRender erlaubt Ihnen die React-Components, die die Daten oder den Link der Subseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
+Wenn Sie einen Link auf die Subseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite auf der das IndexField ist dafür genutzt. onRender erlaubt Ihnen die React-Components, die die Daten oder den Link der Subseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField_ger-at)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -340,7 +340,7 @@ export default HomePage
 
 
 ### Blöcke
-Der Block ist der Eckstein des StreamFields. Mit seiner Hilfe können Sie React-Componenten bauen, die im StreamField sooft wie gewünscht wiederholt werden können.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks)</div>
+Der Block ist der Eckstein des StreamFields. Mit seiner Hilfe können Sie React-Componenten bauen, die im StreamField sooft wie gewünscht wiederholt werden können.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks_ger-at)</div>
 
 ```javascript
 import {blocks, fields} from '@snek-at/jaen-pages'
