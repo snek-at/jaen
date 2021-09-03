@@ -168,8 +168,8 @@ The standard user for this is **snekman** and the password for the account is **
 |-------------------------------|------------|-------------|:----:|:--------:|
 | `TextField`             | fieldName <br/> initValue <br/> rtf | TextField can be used to add editable texts to your page.| [✅️](https://github.com/snek-at/jaen/wiki/TextField) |  |
 | `ImageField`                  | fieldName <br/> initValue | The ImageField is used to provide editable images that are hosted on the ipfs. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField) |  |
-| `StreamField`                 | name <br/> reverseOrder <br/> blocks| With a StreamField you can build your own React-Components with editable content and repeat them as often as you like. | [✅️](https://github.com/snek-at/jaen/wiki/StreamField) |  |
-| `IndexField`                  | fixedSlug <br/> outerElement <br/> renderItem | The IndexField provides you with the oppertunity to easily build links, buttons and more pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
+| `StreamField`                 | fieldName <br/> reverseOrder <br/> blocks <br/> initValue | With a StreamField you can build your own React-Components with editable content and repeat them as often as you like. | [✅️](https://github.com/snek-at/jaen/wiki/StreamField) |  |
+| `IndexField`                  | fixedSlug <br/> onRender | The IndexField provides you with the oppertunity to easily build links, buttons and more pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
 
 ### Page Settings
 ```javascript
