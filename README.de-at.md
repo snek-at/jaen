@@ -173,7 +173,7 @@ Der Standardnutzer hierfür ist **snekman** und das Passwort **ciscocisco**.
 #### Felder
 | Feld                         | Parameter | Beschreibung | Wiki | Tutorial |
 |-------------------------------|------------|-------------|:----:|:--------:|
-| `TextField`             | fieldName <br/> initValue | Ein SimpleTextField wird genutzt um kurze editierbare Texte auf Ihre Seite hinzuzufügen. | [✅️](https://github.com/snek-at/jaen/wiki/TextField) |  |
+| `TextField`             | fieldName <br/> initValue <br/> rtf | Ein TextField wird genutzt um editierbare Texte auf Ihre Seite hinzuzufügen. | [✅️](https://github.com/snek-at/jaen/wiki/TextField) |  |
 | `ImageField`                  | fieldName <br/> initValue | Das ImageField muss genutzt werden, wenn Sie Bilder auf Ihrer Seite brauchen. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField) |  |
 | `StreamField`                 | fieldName <br/> reverseOrder <br/> blocks <br/> initValue | Ein StreamField bietet Ihnen die Möglichkeit mehrere React-Components sooft wie Ihnen beliebt zu wiederholen. | [✅️](https://github.com/snek-at/jaen/wiki/StreamField) |  |
 | `IndexField`                  | fixedSlug <br/> onRender | Das IndexField ist dafür da Links und Blöcke zu bauen, die Daten von Subseiten benötigen. <br /> Mit dem fixedSlug Parameter können Sie entscheiden von welcher Seite Sie die Subseiten verwenden wollen. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
