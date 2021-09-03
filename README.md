@@ -26,6 +26,8 @@
   </a>
 </p>
 
+Read this readme in a different language: [Deutsch](https://github.com/snek-at/jaen/blob/docs/update-readme/README.de-at.md)
+
 ## [](#table-of-contents)What’s In This Document
 - [💪 Motivation](#-motivation)
     - [Jaen Features](#jaen-features)
