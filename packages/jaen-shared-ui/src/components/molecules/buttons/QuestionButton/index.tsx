@@ -1,11 +1,9 @@
 import {IconButton, Tooltip} from '@chakra-ui/react'
-
-import {QuestionIcon} from '../../../atoms/icons'
+import {QuestionIcon} from '@components/atoms/icons'
 
 import translations from './translations.json'
 
 const QuestionButton: React.FC = props => {
-
   const LM = 'en'
 
   type Translations = {[name: string]: {en: string; de: string}}
@@ -26,15 +24,11 @@ const QuestionButton: React.FC = props => {
 
   return (
     <Tooltip
-    hasArrow
-    label={CONTENT.tooltip}
-    placement="bottom-start"
-    fontSize="md">
-      <IconButton
-        variant="ghost"
-        aria-label="adad"
-        icon={<QuestionIcon />}
-      />
+      hasArrow
+      label={CONTENT.tooltip}
+      placement="bottom-start"
+      fontSize="md">
+      <IconButton variant="ghost" aria-label="adad" icon={<QuestionIcon />} />
     </Tooltip>
   )
 }

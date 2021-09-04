@@ -14,11 +14,10 @@ import {
   Checkbox,
   Button
 } from '@chakra-ui/react'
+import {PageContent} from '@components/molecules'
+import {Values} from '@components/molecules/PageContent'
+import PageTree from '@components/molecules/PageTree'
 import * as React from 'react'
-
-import {PageContent} from '../../molecules'
-import {Values} from '../../molecules/PageContent'
-import PageTree from '../../molecules/PageTree'
 
 export type Items = {
   [id: string]: {

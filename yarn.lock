@@ -7996,6 +7996,13 @@ babel-plugin-react-docgen@^4.1.0, babel-plugin-react-docgen@^4.2.1:
     lodash "^4.17.15"
     react-docgen "^5.0.0"
 
+babel-plugin-relative-path-import@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-relative-path-import/-/babel-plugin-relative-path-import-2.0.1.tgz#7d375931ca2153b5c61344098adb822ad638fef1"
+  integrity sha512-jOtB/Lef7QFNAEGRV4VmUvP/VsizpvOVonrTeTTE8TxVIR0FL/wJTzFQp4ei5Jf5+EWklFORmnsXOjLxvNVeRg==
+  dependencies:
+    slash "^1.0.0"
+
 babel-plugin-remove-graphql-queries@^3.12.0:
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-remove-graphql-queries/-/babel-plugin-remove-graphql-queries-3.12.0.tgz#b27b2536c893bd706534f2d58be8d9c598f60f04"
@@ -12614,6 +12621,11 @@ fuse.js@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-3.6.1.tgz#7de85fdd6e1b3377c23ce010892656385fd9b10c"
   integrity sha512-hT9yh/tiinkmirKrlv4KWOjztdoZo1mx9Qh4KvWqC7isoXwdUY3PNWUxceF4/qO9R6riA2C29jdTOeQOIROjgw==
+
+gatsby-alias-imports@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/gatsby-alias-imports/-/gatsby-alias-imports-1.0.6.tgz#1836b223b60e874dfa7a6a69813545ab0f7c3cea"
+  integrity sha512-v8RdbmSFenNxaifo118utlfdxqvJbBWv7Ygfb0kQm2ZLrW1meu8ARjx3gAZExfSwFmMhyyiUltOvQSVDy0Jrsw==
 
 gatsby-cli@^3.12.0:
   version "3.12.0"
@@ -21680,6 +21692,11 @@ sisteransi@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
+
+slash@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
+  integrity sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU=
 
 slash@^2.0.0:
   version "2.0.0"

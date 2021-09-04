@@ -1,13 +1,13 @@
+import {HStack, Spacer} from '@chakra-ui/react'
 import {
-  HStack,
-  Spacer,
-} from '@chakra-ui/react'
+  CopyrightButton,
+  LanguageButton,
+  VersionButton,
+  TooltipButton
+} from '@components/molecules/buttons'
 import React from 'react'
 
-import {CopyrightButton, LanguageButton, VersionButton, TooltipButton} from '../../../molecules/buttons'
-
-const MainFooter:React.FC = () => {
-
+const MainFooter: React.FC = () => {
   return (
     <>
       <HStack width="100%">

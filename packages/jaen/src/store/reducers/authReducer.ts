@@ -8,9 +8,9 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createReducer} from '@reduxjs/toolkit'
+import {AuthState} from '@store/types'
 
 import * as actions from '../actions/authActions'
-import {AuthState} from '../types'
 
 const initialState: AuthState = {
   authenticated: false,

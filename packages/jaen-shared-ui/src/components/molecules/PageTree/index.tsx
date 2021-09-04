@@ -19,11 +19,15 @@ import {
   HStack,
   useDisclosure
 } from '@chakra-ui/react'
+import {ContextMenu} from '@components/atoms'
+import {
+  FileIcon,
+  FolderCloseIcon,
+  FolderOpenIcon
+} from '@components/atoms/icons'
 import styled from '@emotion/styled'
 import {MouseEvent, useState, useMemo, useEffect} from 'react'
 
-import {ContextMenu} from '../../atoms'
-import {FileIcon, FolderCloseIcon, FolderOpenIcon} from '../../atoms/icons'
 import {CreatePageModal} from '../modals'
 import {resolveChildSlugs, titleToSlug, TreeConverter} from './treeconverter'
 

@@ -5,15 +5,14 @@ import {
   HStack,
   Divider
 } from '@chakra-ui/react'
-
-import {SearchIcon} from '../../../atoms/icons'
+import {SearchIcon} from '@components/atoms/icons'
 import {
   SnekButton,
   DmToggleButton,
   QuestionButton,
   GithubButton
-} from '../../../molecules/buttons'
-import ExitButton from '../../../molecules/buttons/ExitButton'
+} from '@components/molecules/buttons'
+import ExitButton from '@components/molecules/buttons/ExitButton'
 
 export type HeaderMainProps = {
   onLogout: () => void

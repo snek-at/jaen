@@ -1,8 +1,8 @@
+import {Primary as HotbarMain} from '@components/organisms/main/HotbarMain/HeaderMain.stories'
+import {Primary as TabsMain} from '@components/organisms/main/TabsMain/TabsMain.stories'
 import {Story, Meta} from '@storybook/react'
 
 import Main, {MainProps} from '.'
-import {Primary as HotbarMain} from '../../organisms/main/HotbarMain/HeaderMain.stories'
-import {Primary as TabsMain} from '../../organisms/main/TabsMain/TabsMain.stories'
 
 export default {
   title: 'App/Main',

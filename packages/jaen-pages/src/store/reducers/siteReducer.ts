@@ -1,10 +1,10 @@
 import {createReducer, PayloadAction} from '@reduxjs/toolkit'
+import {renameObjectKey} from '@src/tools'
+import {toPath, toSlug} from '@src/tools/site/path'
+import {BlocksField, PageMetadata, PlainField} from '@src/types'
 import update from 'immutability-helper'
 import {v4 as uuidv4} from 'uuid'
 
-import {renameObjectKey} from '../../tools'
-import {toPath, toSlug} from '../../tools/site/path'
-import {BlocksField, PageMetadata, PlainField} from '../../types'
 import * as actions from '../actions/siteActions'
 import {SiteState} from '../types'
 

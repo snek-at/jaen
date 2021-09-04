@@ -1,4 +1,25 @@
 {
   "presets": [["@babel/preset-react", {"runtime": "automatic"}]],
-  "plugins": ["inline-react-svg"]
+  "plugins": [
+    "inline-react-svg",
+    [
+      "babel-plugin-relative-path-import",
+      {
+        "paths": [
+          {
+            "rootPathPrefix": "@src",
+            "rootPathSuffix": "src"
+          },
+          {
+            "rootPathPrefix": "@assets",
+            "rootPathSuffix": "src/common/assets" // since we support relative paths you can also go into a parent directory
+          },
+          {
+            "rootPathPrefix": "@components",
+            "rootPathSuffix": "src/components" // since we support relative paths you can also go into a parent directory
+          }
+        ]
+      }
+    ]
+  ]
 }

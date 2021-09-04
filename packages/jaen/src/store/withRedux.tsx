@@ -1,6 +1,6 @@
 import {Provider as ReduxProvider} from 'react-redux'
 
-import {store} from '.'
+import {store} from './index'
 import {withStorageManager} from './localStorage'
 
 export const withRedux = <P extends object>(

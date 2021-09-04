@@ -1,22 +1,21 @@
-import React, {useEffect} from 'react'
-import {Provider as ReduxProvider, useSelector} from 'react-redux'
-
-import {useTemplate} from '../../../contexts/template'
-import {store, useAppDispatch, useAppSelector} from '../../../store'
 import {
   registerPageField,
   unregisterPageField,
   updatePageField
-} from '../../../store/actions/siteActions'
-import {pageFieldContentSelector} from '../../../store/selectors/pages'
-import {withRedux} from '../../../store/withRedux'
+} from '@actions/siteActions'
+import JaenImage, {ImageType} from '@containers/JaenImage'
+import {useTemplate} from '@contexts/template'
 import {
   FieldIdentifier,
   FieldUpdateDetails,
   FileBlock,
   TextBlock
-} from '../../../types'
-import JaenImage, {ImageType} from '../../JaenImage'
+} from '@src/types'
+import {store, useAppDispatch, useAppSelector} from '@store/index'
+import {pageFieldContentSelector} from '@store/selectors/pages'
+import {withRedux} from '@store/withRedux'
+import React, {useEffect} from 'react'
+import {Provider as ReduxProvider, useSelector} from 'react-redux'
 
 interface ImageFieldProps extends FieldIdentifier {
   initValue: ImageType

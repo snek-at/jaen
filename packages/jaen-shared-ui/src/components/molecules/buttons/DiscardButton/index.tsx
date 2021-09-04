@@ -1,7 +1,7 @@
 import {Button, Badge, useColorMode, Tooltip} from '@chakra-ui/react'
+import {ADiscardLottie} from '@components/atoms/icons/ADiscardIcon'
 import {Lottie} from '@snek-at/react-lottie'
 
-import {ADiscardLottie} from '../../../atoms/icons/ADiscardIcon'
 import translations from './translations.json'
 
 export type DiscardButtonProps = {

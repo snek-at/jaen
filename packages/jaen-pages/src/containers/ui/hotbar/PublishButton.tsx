@@ -3,11 +3,10 @@ import {BifrostBridge} from '@snek-at/bridge'
 import {useJaenCoreContext} from '@snek-at/jaen'
 import {PublishButton} from '@snek-at/jaen-shared-ui/dist/components/molecules/buttons'
 import {useAppDispatch} from '@snek-at/jaen/src/store'
+import {upload} from '@src/ipfs'
+import {withRedux} from '@store/withRedux'
 import gql from 'graphql-tag'
 import React from 'react'
-
-import {upload} from '../../../ipfs'
-import {withRedux} from '../../../store/withRedux'
 
 const Bridge = new BifrostBridge({
   httpUrl: 'https://origin.snek.at/graphql'

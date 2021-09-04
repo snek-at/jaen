@@ -1,7 +1,7 @@
 import {Button, Tooltip, useColorMode} from '@chakra-ui/react'
+import {ASaveLottie} from '@components/atoms/icons/ASave'
 import {Lottie} from '@snek-at/react-lottie'
 
-import {ASaveLottie} from '../../../atoms/icons/ASave'
 import translations from './translations.json'
 
 const SaveButton: React.FC = props => {

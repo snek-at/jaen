@@ -1,6 +1,5 @@
 import {IconButton} from '@chakra-ui/react'
-
-import {ExitIcon} from '../../../atoms/icons'
+import {ExitIcon} from '@components/atoms/icons'
 
 export type ExitButtonProps = {
   onClick: () => void

@@ -1,10 +1,9 @@
 import loadable from '@loadable/component'
 import IPFSBackend from '@snek-at/snek-finder/lib/backends/IPFSBackend'
+import * as actions from '@store/actions/sfActions'
+import {useAppDispatch, useAppSelector} from '@store/index'
+import {withRedux} from '@store/withRedux'
 import * as React from 'react'
-
-import {useAppDispatch, useAppSelector} from '../../store'
-import * as actions from '../../store/actions/sfActions'
-import {withRedux} from '../../store/withRedux'
 
 const SnekFinder = loadable(() => import('@snek-at/snek-finder'))
 

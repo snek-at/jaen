@@ -1,8 +1,8 @@
 import {Image, useDisclosure} from '@chakra-ui/react'
+import {useTemplate} from '@contexts/template'
+import {DesignProvider} from '@src/tools/chakra-ui'
 import * as React from 'react'
 
-import {useTemplate} from '../../contexts/template'
-import {DesignProvider} from '../../tools/chakra-ui'
 import SnekFinder from '../SnekFinder'
 
 export type ImageType = {

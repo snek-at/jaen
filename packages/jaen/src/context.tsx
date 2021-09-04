@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import MainUI from './containers/MainUI'
 import {PluginCallbacks, getPublishValue, getUI, Plugin} from './plugin'
-import {store} from './store'
+import {store} from './store/index'
 
 export type JaenCoreContextType = {remote: string} & PluginCallbacks
 export const JaenCoreContext = React.createContext<

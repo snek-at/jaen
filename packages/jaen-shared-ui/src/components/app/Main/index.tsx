@@ -11,9 +11,7 @@ import {
   useDisclosure,
   Portal
 } from '@chakra-ui/react'
-import React, {useRef} from 'react'
-
-import {JaenToggleButton, SnekButton} from '../../molecules/buttons'
+import {JaenToggleButton, SnekButton} from '@components/molecules/buttons'
 import {
   HeaderMain,
   HotbarMain,
@@ -24,7 +22,8 @@ import {
   LoginMain,
   LoginMainProps,
   HeaderMainProps
-} from '../../organisms/main'
+} from '@components/organisms/main'
+import React, {useRef} from 'react'
 
 export type MainProps = {
   hotbar: HotbarMainProps

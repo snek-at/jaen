@@ -1,4 +1,4 @@
-import {AuthState} from './store/types'
+import {AuthState} from '@store/types'
 
 type HotbarMain = {
   start: JSX.Element[]

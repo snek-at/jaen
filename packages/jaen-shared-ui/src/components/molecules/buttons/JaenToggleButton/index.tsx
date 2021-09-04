@@ -1,8 +1,7 @@
 import {Tooltip, IconButton, Text} from '@chakra-ui/react'
+import {SnekIcon} from '@components/atoms/icons'
 
-import {SnekIcon} from '../../../atoms/icons'
 import translations from './translations.json'
-
 
 export type JaenToggleButtonProps = {
   ref: React.Ref<HTMLButtonElement>
@@ -10,7 +9,6 @@ export type JaenToggleButtonProps = {
 }
 
 const JaenToggleButton: React.FC<JaenToggleButtonProps> = props => {
-
   const LM = 'en'
 
   type Translations = {[name: string]: {en: string; de: string}}
@@ -31,10 +29,10 @@ const JaenToggleButton: React.FC<JaenToggleButtonProps> = props => {
 
   return (
     <Tooltip
-    hasArrow
-    label={CONTENT.tooltip}
-    placement="bottom-start"
-    fontSize="md">
+      hasArrow
+      label={CONTENT.tooltip}
+      placement="bottom-start"
+      fontSize="md">
       <IconButton
         aria-label="Toggle snek jaen"
         w={[50, 60, 70]}

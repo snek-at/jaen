@@ -1,9 +1,9 @@
 import {Tooltip, IconButton, useColorMode} from '@chakra-ui/react'
+// import {DmToggle} from '@components/atoms/icons'
+import {ADmToggleLottie} from '@components/atoms/icons/ADmToggle'
 import {Lottie} from '@snek-at/react-lottie'
 import {useState} from 'react'
 
-// import {DmToggle} from '../../../atoms/icons'
-import {ADmToggleLottie} from '../../../atoms/icons/ADmToggle'
 import translations from './translations.json'
 
 export type DmToggleButtonProps = {
@@ -44,10 +44,10 @@ const ADmToggleButton: React.FC<DmToggleButtonProps> = props => {
     <Lottie lottie={lottie} forceReloadDeps={[lottie]}>
       {({animation, container}) => (
         <Tooltip
-        hasArrow
-        label={active ? CONTENT.tooltip_on : CONTENT.tooltip_off}
-        placement="bottom-start"
-        fontSize="md">
+          hasArrow
+          label={active ? CONTENT.tooltip_on : CONTENT.tooltip_off}
+          placement="bottom-start"
+          fontSize="md">
           <i
             onClick={() => {
               colorMode === 'dark'

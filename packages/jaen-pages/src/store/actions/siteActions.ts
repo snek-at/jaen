@@ -1,13 +1,12 @@
 import {DeepPartial} from '@chakra-ui/react'
 import {createAction} from '@reduxjs/toolkit'
-
 import {
   FieldIdentifier,
   FieldUpdateDetails,
   PageType,
   ReturnResolveDynamicPaths,
   SiteType
-} from '../../types'
+} from '@src/types'
 
 export type UpdateSiteMetaActionPayload = {
   meta: SiteType['siteMetadata']

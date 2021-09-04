@@ -1,7 +1,7 @@
-import {usePage} from '../../../contexts/cms'
-import {useTemplate} from '../../../contexts/template'
-import {withRedux} from '../../../store/withRedux'
-import {ResolvedPageType} from '../../../types'
+import {usePage} from '@contexts/cms'
+import {useTemplate} from '@contexts/template'
+import {ResolvedPageType} from '@src/types'
+import {withRedux} from '@store/withRedux'
 
 interface IndexFieldProps {
   fixedSlug?: string

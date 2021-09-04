@@ -1,6 +1,6 @@
 import {Button, Text, Tooltip} from '@chakra-ui/react'
+import {SnekIcon} from '@components/atoms/icons'
 
-import {SnekIcon} from '../../../atoms/icons'
 import translations from './translations.json'
 
 const SnekBrandButton: React.FC = props => {

@@ -1,18 +1,17 @@
-import React, {useEffect} from 'react'
-import {Provider as ReduxProvider, useSelector} from 'react-redux'
-
-import {useTemplate} from '../../../contexts/template'
-import {store, useAppDispatch, useAppSelector} from '../../../store'
+import Editor from '@containers/Editor'
+import {useTemplate} from '@contexts/template'
+import {getFieldContent} from '@src/tools/fields'
+import {FieldIdentifier, FieldUpdateDetails, TextBlock} from '@src/types'
 import {
   registerPageField,
   unregisterPageField,
   updatePageField
-} from '../../../store/actions/siteActions'
-import {pageFieldContentSelector} from '../../../store/selectors/pages'
-import {withRedux} from '../../../store/withRedux'
-import {getFieldContent} from '../../../tools/fields'
-import {FieldIdentifier, FieldUpdateDetails, TextBlock} from '../../../types'
-import Editor from '../../Editor'
+} from '@store/actions/siteActions'
+import {store, useAppDispatch, useAppSelector} from '@store/index'
+import {pageFieldContentSelector} from '@store/selectors/pages'
+import {withRedux} from '@store/withRedux'
+import React, {useEffect} from 'react'
+import {Provider as ReduxProvider, useSelector} from 'react-redux'
 
 interface TextFieldProps extends FieldIdentifier {
   rtf?: boolean

@@ -1,3 +1,3 @@
-import {BlocksField} from '../../../types'
+import {BlocksField} from '@src/types'
 
 export type InitValueType = BlocksField['blocks']

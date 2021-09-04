@@ -1,7 +1,7 @@
 import {Button, Badge, useColorMode, Tooltip} from '@chakra-ui/react'
+import {APublishLottie} from '@components/atoms/icons/APublishIcon'
 import {Lottie} from '@snek-at/react-lottie'
 
-import {APublishLottie} from '../../../atoms/icons/APublishIcon'
 import translations from './translations.json'
 
 export type PublishButtonProps = {

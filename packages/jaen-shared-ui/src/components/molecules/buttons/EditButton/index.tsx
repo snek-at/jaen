@@ -1,8 +1,8 @@
 import {Button, Tooltip, Badge, useColorMode} from '@chakra-ui/react'
+import {AEditLottie} from '@components/atoms/icons/AEdit'
 import {Lottie} from '@snek-at/react-lottie'
 import React, {useState} from 'react'
 
-import {AEditLottie} from '../../../atoms/icons/AEdit'
 import translations from './translations.json'
 
 export type EditButtonProps = {

@@ -1,10 +1,9 @@
 import {IconButton, Tooltip} from '@chakra-ui/react'
+import {GithubIcon} from '@components/atoms/icons'
 
-import {GithubIcon} from '../../../atoms/icons'
 import translations from './translations.json'
 
 const GithubButton: React.FC = props => {
-
   const LM = 'en'
 
   type Translations = {[name: string]: {en: string; de: string}}
@@ -25,15 +24,11 @@ const GithubButton: React.FC = props => {
 
   return (
     <Tooltip
-    hasArrow
-    label={CONTENT.tooltip}
-    placement="bottom-start"
-    fontSize="md">
-      <IconButton
-        variant="ghost"
-        aria-label="adad"
-        icon={<GithubIcon />}
-      />
+      hasArrow
+      label={CONTENT.tooltip}
+      placement="bottom-start"
+      fontSize="md">
+      <IconButton variant="ghost" aria-label="adad" icon={<GithubIcon />} />
     </Tooltip>
   )
 }

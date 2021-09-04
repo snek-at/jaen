@@ -7,22 +7,22 @@
  * Use of this source code is governed by an EUPL-1.2 license that can be found
  * in the LICENSE file at https://snek.at/license
  */
-import {SFWrapper} from '@snek-at/jaen-shared-ui'
-import React, {useEffect, useState, useRef, useMemo} from 'react'
-import {useCallback} from 'react'
-
-import {merge} from '../../../common/utils'
-import {useTemplate} from '../../../contexts/template'
-import {useAppDispatch, useAppSelector, useAppState} from '../../../store'
 import {
   deletePageField,
   registerPageField,
   unregisterPageField
-} from '../../../store/actions/siteActions'
-import {pageFieldBlocksSelector} from '../../../store/selectors/pages'
-import {withRedux} from '../../../store/withRedux'
-import {DesignProvider} from '../../../tools/chakra-ui'
-import {BlockItem, GenericBC, prepareBlocks} from '../../blocks'
+} from '@actions/siteActions'
+import {merge} from '@common/utils'
+import {BlockItem, GenericBC, prepareBlocks} from '@containers/blocks'
+import {useTemplate} from '@contexts/template'
+import {SFWrapper} from '@snek-at/jaen-shared-ui'
+import {DesignProvider} from '@src/tools/chakra-ui'
+import {useAppDispatch, useAppSelector, useAppState} from '@store/index'
+import {pageFieldBlocksSelector} from '@store/selectors/pages'
+import {withRedux} from '@store/withRedux'
+import React, {useEffect, useState, useRef, useMemo} from 'react'
+import {useCallback} from 'react'
+
 import {InitValueType} from './types'
 
 type StreamFieldProps = {

@@ -1,16 +1,15 @@
 import {Button, useDisclosure} from '@chakra-ui/react'
+import SnekFinder from '@containers/SnekFinder'
+import {useAllSitePage, useCMSContext} from '@contexts/cms'
 import {PageExplorer, PageExplorerProps} from '@snek-at/jaen-shared-ui'
+import {PageType} from '@src/types'
+import {resolveDynamicPath} from '@src/utils'
+import * as actions from '@store/actions/siteActions'
+import {useAppDispatch, useAppSelector} from '@store/index'
+import {withRedux} from '@store/withRedux'
 import {navigate} from 'gatsby'
 import * as React from 'react'
 import {v4 as uuidv4} from 'uuid'
-
-import {useAllSitePage, useCMSContext} from '../../../contexts/cms'
-import {useAppDispatch, useAppSelector} from '../../../store'
-import * as actions from '../../../store/actions/siteActions'
-import {withRedux} from '../../../store/withRedux'
-import {PageType} from '../../../types'
-import {resolveDynamicPath} from '../../../utils'
-import SnekFinder from '../../SnekFinder'
 
 const transformToItems = (pages: {
   [id: string]: PageType

@@ -1,8 +1,8 @@
 import {DeepPartial} from '@chakra-ui/react'
 import {createSelector} from '@reduxjs/toolkit'
+import {BlocksField, PlainField, ContentBlocks} from '@src/types'
 
 import {RootState} from '..'
-import {BlocksField, PlainField, ContentBlocks} from '../../types'
 
 export const pageFieldContentSelector = (
   path: string,

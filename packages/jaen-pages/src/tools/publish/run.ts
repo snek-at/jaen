@@ -1,8 +1,8 @@
+import {merge} from '@common/utils'
 import * as fs from 'fs'
 import 'isomorphic-fetch'
 import * as path from 'path'
 
-import {merge} from '../../common/utils'
 import {mergeBaseWithMigration} from './merge'
 
 const siteMetadataPath = path.resolve('./site-metadata.json')
