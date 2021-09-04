@@ -1,3 +1,11 @@
+# [my-gatsby-site-v1.0.0-beta.9](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.8...my-gatsby-site-v1.0.0-beta.9) (2021-09-04)
+
+
+### Bug Fixes
+
+* **indexfield:** fix page context ([74d6383](https://github.com/snek-at/jaen/commit/74d6383c5e52600dc64640e2e0e44c492110b758))
+* **package.json:** update versions ([8ce78ef](https://github.com/snek-at/jaen/commit/8ce78ef6a1b494f06428845f9470fe0717a030f3))
+
 # [my-gatsby-site-v1.0.0-beta.8](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.7...my-gatsby-site-v1.0.0-beta.8) (2021-09-04)
 
 
