@@ -58,7 +58,7 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
 
   const Template = page.template ? findTemplate(page.template) : null
 
-  if (isDynamic) {
+  if (pathName && isDynamic) {
     jaenPageContext.id = dynamicPaths[pathName]
   }
 
