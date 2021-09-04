@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.13](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.12...@snek-at/jaen-pages-v2.0.0-beta.13) (2021-09-04)
+
+
+### Features
+
+* add jaen-pages cli ([b2a9724](https://github.com/snek-at/jaen/commit/b2a972405f307e1682f5f72a23c1f026bbe9f2bb))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.12](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.11...@snek-at/jaen-pages-v2.0.0-beta.12) (2021-09-02)
 
 
