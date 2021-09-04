@@ -1,131 +1,132 @@
-import * as React from "react"
-import {fields} from "@snek-at/jaen-pages"
+import {fields} from '@snek-at/jaen-pages'
+import * as React from 'react'
+
 // import TestBlock from "../blocks/TestBlock"
 // import AirbnbBlock from "../blocks/AirbmbBlock"
 // import {Button} from "@chakra-ui/react"
 // styles
 const pageStyles = {
-  color: "#232129",
+  color: '#232129',
   padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
+  fontFamily: '-apple-system, Roboto, sans-serif, serif'
 }
 const headingStyles = {
   marginTop: 0,
   marginBottom: 64,
-  maxWidth: 320,
+  maxWidth: 320
 }
 const headingAccentStyles = {
-  color: "#663399",
+  color: '#663399'
 }
 const paragraphStyles = {
-  marginBottom: 48,
+  marginBottom: 48
 }
 const codeStyles = {
-  color: "#8A6534",
+  color: '#8A6534',
   padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
+  backgroundColor: '#FFF4DB',
+  fontSize: '1.25rem',
+  borderRadius: 4
 }
 const listStyles = {
   marginBottom: 96,
-  paddingLeft: 0,
+  paddingLeft: 0
 }
 const listItemStyles = {
   fontWeight: 300,
   fontSize: 24,
   maxWidth: 560,
-  marginBottom: 30,
+  marginBottom: 30
 }
 
 const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
+  color: '#8954A8',
+  fontWeight: 'bold',
   fontSize: 16,
-  verticalAlign: "5%",
+  verticalAlign: '5%'
 }
 
 const docLinkStyle = {
   ...linkStyle,
-  listStyleType: "none",
-  marginBottom: 24,
+  listStyleType: 'none',
+  marginBottom: 24
 }
 
 const descriptionStyle = {
-  color: "#232129",
+  color: '#232129',
   fontSize: 14,
   marginTop: 10,
   marginBottom: 0,
-  lineHeight: 1.25,
+  lineHeight: 1.25
 }
 
 const docLink = {
-  text: "Documentation",
-  url: "https://www.gatsbyjs.com/docs/",
-  color: "#8954A8",
+  text: 'Documentation',
+  url: 'https://www.gatsbyjs.com/docs/',
+  color: '#8954A8'
 }
 
 const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
+  color: '#fff',
+  backgroundColor: '#088413',
+  border: '1px solid #088413',
   fontSize: 11,
-  fontWeight: "bold",
+  fontWeight: 'bold',
   letterSpacing: 1,
   borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative",
+  padding: '4px 6px',
+  display: 'inline-block',
+  position: 'relative',
   top: -2,
   marginLeft: 10,
-  lineHeight: 1,
+  lineHeight: 1
 }
 
 // data
 const links = [
   {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/",
+    text: 'Tutorial',
+    url: 'https://www.gatsbyjs.com/docs/tutorial/',
     description:
       "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
+    color: '#E95800'
   },
   {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
+    text: 'How to Guides',
+    url: 'https://www.gatsbyjs.com/docs/how-to/',
     description:
       "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
+    color: '#1099A8'
   },
   {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
+    text: 'Reference Guides',
+    url: 'https://www.gatsbyjs.com/docs/reference/',
     description:
       "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
+    color: '#BC027F'
   },
   {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
+    text: 'Conceptual Guides',
+    url: 'https://www.gatsbyjs.com/docs/conceptual/',
     description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
+      'Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.',
+    color: '#0D96F2'
   },
   {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
+    text: 'Plugin Library',
+    url: 'https://www.gatsbyjs.com/plugins',
     description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
+      'Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.',
+    color: '#8EB814'
   },
   {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
+    text: 'Build and Host',
+    url: 'https://www.gatsbyjs.com/cloud',
     badge: true,
     description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
-  },
+      'Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!',
+    color: '#663399'
+  }
 ]
 
 // markup
@@ -143,7 +144,7 @@ const IndexPage = () => {
       </h1>
       <div style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.js</code> to see this page
-        update in real-time.{" "}
+        update in real-time.{' '}
         <span role="img" aria-label="Sunglasses smiley emoji">
           😎
         </span>
@@ -152,18 +153,16 @@ const IndexPage = () => {
         <li style={docLinkStyle}>
           <a
             style={linkStyle}
-            href={`${docLink.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-          >
+            href={`${docLink.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}>
             {docLink.text}
           </a>
         </li>
         {links.map((link, index) => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
+          <li key={link.url} style={{...listItemStyles, color: link.color}}>
             <span>
               <a
                 style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}
-              >
+                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter`}>
                 {link.text}
               </a>
               {link.badge && (
@@ -174,9 +173,8 @@ const IndexPage = () => {
 
               {/* <p style={descriptionStyle}>{link.description}</p> */}
               <div style={descriptionStyle}>
-              {/* <fields.TextField fieldName={`linkfield${index}`} initValue={link.description}/> */}
-                </div>
-
+                {/* <fields.TextField fieldName={`linkfield${index}`} initValue={link.description}/> */}
+              </div>
             </span>
           </li>
         ))}
@@ -211,10 +209,20 @@ const IndexPage = () => {
         }
       }} blocks={[TestBlock, AirbnbBlock]}/> */}
 
-      <fields.IndexField onRender={(page) => <div>tsetsiasihfasjhfjkshs {Object.keys(page.children)}</div>}/>
+      <fields.IndexField
+        onRender={page => (
+          <div>tsetsiasihfasjhfjkshs {Object.keys(page.children)}</div>
+        )}
+      />
 
-      <fields.ImageField fieldName="imagefield1" initValue={{src: "https://placekitten.com/800/600", alt: "ta", title: "daa"}} />
-      
+      <fields.ImageField
+        fieldName="imagefield1"
+        initValue={{
+          src: 'https://placekitten.com/800/600',
+          alt: 'ta',
+          title: 'daa'
+        }}
+      />
 
       {/* <fields.TextField fieldName="testfield" initValue={'<ul><li>4242424424243423</li></ul><figure class="media"><div data-oembed-url="https://www.youtube.com/watch?v=00cizszd4z0"><div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/00cizszd4z0" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div></div></figure>'}/> */}
       <img

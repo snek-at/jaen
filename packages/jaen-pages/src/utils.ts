@@ -28,11 +28,7 @@ export const resolveDynamicPath: ResolveDynamicPaths = (
   const affectedIds: string[] = []
   const basePath = resolvePath(baseId, nodes)
 
-  alert(`baseId: ${baseId} basePath: ${basePath}`)
-
   const resolveNode = (id: string, prevPath = basePath) => {
-    alert(`resolve ${id} path: ${prevPath}`)
-
     dynamicPaths[prevPath] = id
     affectedIds.push(id)
 

@@ -37,6 +37,8 @@ export const usePage = (id: string): ResolvedPageType => {
   const nodes = context.site.allSitePage.nodes
   const cNode = merge(nodes[id], storePages?.nodes?.[id] || {}) as PageType
 
+  console.log('[usePage]', nodes, id)
+
   let resolvedPage = ({...cNode} as unknown) as ResolvedPageType
 
   resolvedPage.parent = cNode.parent ? {page: nodes[cNode.parent.id]} : null

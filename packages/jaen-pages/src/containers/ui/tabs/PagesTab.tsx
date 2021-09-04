@@ -62,8 +62,7 @@ const PagesTab: React.FC<{}> = () => {
   React.useEffect(() => {
     if (nextRoutingUpdate) {
       const dynamicPaths = resolveDynamicPath(nextRoutingUpdate, allSitePage)
-      alert(JSON.stringify(dynamicPaths))
-
+      
       dispatch(actions.updateSiteRouting({dynamicPaths}))
 
       setNextRoutingUpdate(null)
