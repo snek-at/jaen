@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+const {Command} = require('commander')
+const program = new Command()
+
+require = require('esm')(module)
+require('source-map-support').install()
+require('ts-node').register({compilerOptions: {esModuleInterop: true}})
+
+const {runMigration} = require('../cli/publish')
+
+program.version('2.0.0')
+
+program
+  .command('build')
+  .description('run build steps for jaen-pages')
+  .option(
+    '-m, --migration <url>',
+    'jaen-pages migration (default: process.env.JAEN_PAGES_MIGRATION_URL)',
+    process.env.JAEN_PAGES_MIGRATION_URL
+  )
+  .action(async options => {
+    const JAEN_PAGES_MIGRATION_URL = options.migration
+
+    if (!JAEN_PAGES_MIGRATION_URL) {
+      console.error('[jaen-pages] Failed to run migration -> Please specify a migration URL')
+      process.exit(1)
+    }
+
+    try {
+      await runMigration(JAEN_PAGES_MIGRATION_URL)
+    } catch (err) {
+      console.error(
+        '[jaen-pages] Failed to run migration -> You must run this command inside your gatsby app!',
+        err
+      )
+    }
+  })
+
+program.parse(process.argv)

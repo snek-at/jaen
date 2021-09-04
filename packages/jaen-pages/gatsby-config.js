@@ -1,12 +1,4 @@
-require('source-map-support').install()
-require('ts-node').register({compilerOptions: {esModuleInterop: true}})
 const path = require('path')
-
-require = require('esm')(module)
-
-// const {runMigration, getSiteData} = require('./src/tools/publish/run')
-
-// runMigration()
 
 module.exports = {
   plugins: [
