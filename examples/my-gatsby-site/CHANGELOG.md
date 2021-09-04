@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.8](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.7...my-gatsby-site-v1.0.0-beta.8) (2021-09-04)
+
+
+### Features
+
+* add jaen-pages cli ([b2a9724](https://github.com/snek-at/jaen/commit/b2a972405f307e1682f5f72a23c1f026bbe9f2bb))
+
 # my-gatsby-site-v1.0.0 (2021-09-04)
 
 
