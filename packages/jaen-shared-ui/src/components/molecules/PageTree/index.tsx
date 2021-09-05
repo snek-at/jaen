@@ -148,7 +148,6 @@ const PageTree: React.FC<PageTreeProps> = ({
   )
 
   useEffect(() => {
-    console.log('[PageTree] items', items, tree)
     setTree(TreeConverter(items))
   }, [items])
 
@@ -229,8 +228,6 @@ const PageTree: React.FC<PageTreeProps> = ({
         </Flex>
       </Box>
     )
-
-    console.log('[PageTree]', item)
 
     return (
       <div

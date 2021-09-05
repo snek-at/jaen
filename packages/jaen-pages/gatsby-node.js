@@ -14,7 +14,6 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
     const page = await (await fetch(fileUrl)).json()
 
     if (page.template) {
-      console.log('children', page.children, page.parent)
       actions.createPage({
         path: page.path || `${id}/`,
         parent: page.parent ? page.parent.id : null,

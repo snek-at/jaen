@@ -56,15 +56,9 @@ const PagesTab: React.FC<{}> = () => {
   const fileSelector = useDisclosure()
 
   const dynamicPaths = useAppSelector(state => state.site.routing.dynamicPaths)
-
-  // const currentPath = useReactPath()
-
   const [currentPath, setCurrentPath] = React.useState(window.location.pathname)
 
-  console.log('[currentPath]', currentPath, window.location.pathname)
-
   const defaultSelection = React.useMemo(() => {
-    console.log('[defaultSelection] pls update')
     // find the node that matches the current path
     const dynamicId = currentPath && dynamicPaths[currentPath]
 
@@ -78,8 +72,6 @@ const PagesTab: React.FC<{}> = () => {
 
     return dynamicId
   }, [allSitePage.nodes, currentPath, dynamicPaths]) as string
-
-  console.log('[defaultSelection]', defaultSelection)
 
   const templates = React.useMemo(
     () => cmsContext.templates.map(e => e.TemplateName),
@@ -203,7 +195,6 @@ const PagesTab: React.FC<{}> = () => {
     }
 
     const newPagePath = pagePath || '/'
-    console.log('[handleNavigate]', currentPath, pagePath)
 
     setCurrentPath(newPagePath)
     navigate(newPagePath)
@@ -213,8 +204,6 @@ const PagesTab: React.FC<{}> = () => {
   const items = React.useMemo(() => transformToItems(allSitePage.nodes), [
     allSitePage.nodes
   ])
-
-  console.log('items', items)
 
   return (
     <>

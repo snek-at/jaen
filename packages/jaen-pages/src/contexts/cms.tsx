@@ -37,8 +37,6 @@ export const usePage = (id: string): ResolvedPageType => {
   const nodes = context.site.allSitePage.nodes
   const cNode = merge(nodes[id], storePages?.nodes?.[id] || {}) as PageType
 
-  console.log('[usePage]', nodes, id)
-
   let resolvedPage = ({...cNode} as unknown) as ResolvedPageType
 
   resolvedPage.parent = cNode.parent ? {page: nodes[cNode.parent.id]} : null
@@ -54,8 +52,6 @@ export const useCMSPage = (id: string): ResolvedPageType | null => {
   const pages = useAllSitePage()
   const nodes = pages.nodes
   const cNode = nodes[id]
-
-  console.log('[useCMSPage]', nodes, id)
 
   if (!cNode) {
     // page not found in CMS
@@ -166,8 +162,6 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
 
         for (const node of allSitePage.nodes) {
           const jaenPageContext = node.context?.jaenPageContext
-
-          console.log('gogogo page', jaenPageContext?.id || node.id)
           const id = jaenPageContext?.id || node.id
 
           site.allSitePage.nodes[id] = {

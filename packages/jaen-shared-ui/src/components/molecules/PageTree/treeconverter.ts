@@ -66,14 +66,11 @@ export const resolveChildSlugs = (
   rootItemIds: string[],
   id: string | null
 ): string[] => {
-  console.log('children', id, rootItemIds)
-
   const children = id ? items[id].children : rootItemIds
 
   const childSlugs = []
 
   for (const childId of children) {
-    console.log(childId, items)
     const child = items[childId]
 
     if (child) {
