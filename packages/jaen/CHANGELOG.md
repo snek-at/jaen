@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.12](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.11...@snek-at/jaen-v2.0.0-beta.12) (2021-09-05)
+
+
+### Bug Fixes
+
+* **chakra:** reset css ([2d1d195](https://github.com/snek-at/jaen/commit/2d1d1956ae3c61f188696ea268625395cb1ffe37))
+
 # [@snek-at/jaen-v2.0.0-beta.11](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.10...@snek-at/jaen-v2.0.0-beta.11) (2021-09-02)
 
 
