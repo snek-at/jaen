@@ -36,6 +36,7 @@ const transformToItems = (pages: {
             image: pageMetadata?.image || '',
             isBlogPost: pageMetadata?.isBlogPost || false,
             lastPublished: pageMetadata?.datePublished,
+            templateName: template,
             locked: !template
           },
           children: children.map(({id}) => id),

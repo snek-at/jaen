@@ -17,6 +17,7 @@ import {ChangeEvent, useEffect, useState} from 'react'
 import translations from './translations.json'
 
 export type Values = Partial<{
+  templateName: string | null
   title: string
   slug: string
   description: string
@@ -75,7 +76,12 @@ const PageContent: React.FC<PageContentType> = props => {
       <Stack spacing="24px" h="70vh">
         <Flex>
           <Box>
-            <Heading size="lg">{values.title}</Heading>
+            <Heading size="lg">
+              {values.title}{' '}
+              <Badge ml="1" fontSize="0.8em" colorScheme="green">
+                {values.templateName}
+              </Badge>
+            </Heading>
           </Box>
           <Spacer />
           <Box>

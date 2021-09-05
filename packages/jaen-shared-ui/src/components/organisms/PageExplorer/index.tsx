@@ -22,6 +22,7 @@ import * as React from 'react'
 export type Items = {
   [id: string]: {
     data: Partial<{
+      templateName: string | null
       title: string
       slug: string
       description: string
@@ -72,6 +73,7 @@ const PageExplorer: React.FC<PageExplorerProps> = props => {
     const item = props.items[id]
 
     return {
+      templateName: item.data.templateName,
       title: item.data.title,
       slug: item.data.slug,
       description: item.data.description,
