@@ -1,3 +1,17 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.6](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.5...@snek-at/jaen-shared-ui-v2.0.0-beta.6) (2021-09-05)
+
+
+### Bug Fixes
+
+* default page tree selection ([d4af71c](https://github.com/snek-at/jaen/commit/d4af71cba22d46a47c41b5bd33ed622360e8e067))
+* incorrect default selection ([950e5b6](https://github.com/snek-at/jaen/commit/950e5b64b831b0ed0157fd4bb0c110f97e4bcda4))
+* page deleting ([f151188](https://github.com/snek-at/jaen/commit/f1511888a65e875f56f3f1bccb775a00ecac714a))
+
+
+### Features
+
+* add template name to page content ([69e75b8](https://github.com/snek-at/jaen/commit/69e75b8ac694aa35f6630bbd6fc5617e5671afa9))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.5](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.4...@snek-at/jaen-shared-ui-v2.0.0-beta.5) (2021-09-02)
 
 
