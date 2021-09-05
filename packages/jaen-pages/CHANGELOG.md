@@ -1,3 +1,19 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.15](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.14...@snek-at/jaen-pages-v2.0.0-beta.15) (2021-09-05)
+
+
+### Bug Fixes
+
+* disable page updating on page change ([cbd2656](https://github.com/snek-at/jaen/commit/cbd2656579947d62e03efaf00212ee6533d2cb95))
+* **chakra:** reset css ([2d1d195](https://github.com/snek-at/jaen/commit/2d1d1956ae3c61f188696ea268625395cb1ffe37))
+* **streamfield:** remove SFBWrapper on editing ([548653b](https://github.com/snek-at/jaen/commit/548653b033d95146a73f779ab274840fb04a57af))
+* incorrect default selection ([950e5b6](https://github.com/snek-at/jaen/commit/950e5b64b831b0ed0157fd4bb0c110f97e4bcda4))
+* page deleting ([f151188](https://github.com/snek-at/jaen/commit/f1511888a65e875f56f3f1bccb775a00ecac714a))
+
+
+### Features
+
+* add template name to page content ([69e75b8](https://github.com/snek-at/jaen/commit/69e75b8ac694aa35f6630bbd6fc5617e5671afa9))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.14](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.13...@snek-at/jaen-pages-v2.0.0-beta.14) (2021-09-04)
 
 
