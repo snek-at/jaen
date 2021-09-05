@@ -1,4 +1,5 @@
 import {createContext, useContext} from 'react'
+import * as React from 'react'
 import {useSelector} from 'react-redux'
 
 import {useAppSelector} from '../store'
@@ -56,10 +57,16 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
     return template
   }
 
-  const Template = page.template ? findTemplate(page.template) : null
+  const Template = page?.template ? findTemplate(page?.template) : null
+
+  console.log('[Template]', pathName, isDynamic, page?.template)
 
   if (pathName && isDynamic) {
     jaenPageContext.id = dynamicPaths[pathName]
+  }
+
+  if (!page || page.deleted) {
+    return <>{'JaenPages 404'}</>
   }
 
   return (

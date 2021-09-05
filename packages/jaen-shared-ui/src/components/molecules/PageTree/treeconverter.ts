@@ -37,6 +37,10 @@ export const TreeConverter = (items: Items): TreeData => {
         tree.items[rootName].children.push(id)
       }
 
+      // if (item.deleted) {
+      //   return
+      // }
+
       const parentIter = genItemParent(items, id)
       const isExpanded = !nth(parentIter, 3)
 
@@ -68,12 +72,16 @@ export const resolveChildSlugs = (
 
   const childSlugs = []
 
-  for (const siblingId of children) {
-    console.log(siblingId, items)
-    const slug = items[siblingId]?.data?.slug
+  for (const childId of children) {
+    console.log(childId, items)
+    const child = items[childId]
 
-    if (slug) {
-      childSlugs.push(slug)
+    if (child) {
+      const slug = child.data?.slug
+
+      if (!child.deleted && slug) {
+        childSlugs.push(slug)
+      }
     }
   }
 

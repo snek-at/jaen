@@ -12,6 +12,10 @@ const IndexField: React.FC<IndexFieldProps> = props => {
   const {jaenPageContext} = useTemplate()
   const page = useCMSPage(props.fixedSlug || jaenPageContext.id)
 
+  if (!page) {
+    throw new Error(`Page not found: ${props.fixedSlug || jaenPageContext.id}`)
+  }
+
   return props.onRender(page)
 }
 

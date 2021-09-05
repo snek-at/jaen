@@ -50,10 +50,17 @@ export const usePage = (id: string): ResolvedPageType => {
   return resolvedPage
 }
 
-export const useCMSPage = (id: string): ResolvedPageType => {
+export const useCMSPage = (id: string): ResolvedPageType | null => {
   const pages = useAllSitePage()
   const nodes = pages.nodes
   const cNode = nodes[id]
+
+  console.log('[useCMSPage]', nodes, id)
+
+  if (!cNode) {
+    // page not found in CMS
+    return null
+  }
 
   let resolvedPage = ({...cNode} as unknown) as ResolvedPageType
 
@@ -79,8 +86,7 @@ export const useAllSitePage = () => {
 
   return merge(
     context.site.allSitePage,
-    storePages || {},
-    v => v.deleted
+    storePages || {}
   ) as typeof context.site.allSitePage
 }
 

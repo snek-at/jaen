@@ -32,6 +32,7 @@ export type Items = {
     }>
     children: string[]
     parent: string | null
+    deleted?: true
   }
 }
 

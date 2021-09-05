@@ -41,6 +41,7 @@ export type Items = {
     isRootItem?: true
     children: string[]
     parent: string | null
+    deleted?: true
   }
 }
 
@@ -142,6 +143,7 @@ const PageTree: React.FC<PageTreeProps> = ({items, rootItemIds, ...props}) => {
   )
 
   useEffect(() => {
+    console.log('[PageTree] items', items, tree)
     setTree(TreeConverter(items))
   }, [items])
 
@@ -223,6 +225,8 @@ const PageTree: React.FC<PageTreeProps> = ({items, rootItemIds, ...props}) => {
       </Box>
     )
 
+    console.log('[PageTree]', item)
+
     return (
       <div
         ref={provided.innerRef}
@@ -233,7 +237,7 @@ const PageTree: React.FC<PageTreeProps> = ({items, rootItemIds, ...props}) => {
           top: 'auto !important',
           left: 'auto !important'
         }}>
-        {renderedItem}
+        {!(item as any).deleted && renderedItem}
       </div>
     )
   }

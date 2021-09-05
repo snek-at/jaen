@@ -16,7 +16,15 @@ const transformToItems = (pages: {
 }): PageExplorerProps['items'] =>
   Object.fromEntries(
     Object.entries(pages).map(([id, page]) => {
-      const {title, slug, parent, children, template, pageMetadata} = page
+      const {
+        title,
+        slug,
+        parent,
+        children,
+        template,
+        pageMetadata,
+        deleted
+      } = page
 
       return [
         id,
@@ -31,7 +39,8 @@ const transformToItems = (pages: {
             locked: !template
           },
           children: children.map(({id}) => id),
-          parent: parent ? parent.id : null
+          parent: parent ? parent.id : null,
+          deleted
         }
       ]
     })
@@ -62,7 +71,7 @@ const PagesTab: React.FC<{}> = () => {
   React.useEffect(() => {
     if (nextRoutingUpdate) {
       const dynamicPaths = resolveDynamicPath(nextRoutingUpdate, allSitePage)
-      
+
       dispatch(actions.updateSiteRouting({dynamicPaths}))
 
       setNextRoutingUpdate(null)
@@ -131,9 +140,10 @@ const PagesTab: React.FC<{}> = () => {
     handleNavigate(id)
   }
   const handlePageDelete = (id: string) => {
-    dispatch(actions.deletePage(id))
-    updateRouting(id)
     handleNavigate(null)
+
+    dispatch(actions.deletePage(id))
+    // updateRouting(id)
   }
   const handlePageMove = (pageId: string, parentPageId: string | null) => {
     dispatch(
