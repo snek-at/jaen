@@ -1,3 +1,4 @@
+import {RevertCSSWrapper} from '@snek-at/jaen'
 import {fields} from '@snek-at/jaen-pages'
 import * as React from 'react'
 
@@ -134,6 +135,11 @@ const IndexPage = () => {
   return (
     <main style={pageStyles}>
       <title>Home Page</title>
+      <h1>FUUUUCK</h1>
+      <RevertCSSWrapper>
+        {' '}
+        <h1>pls dont fuck </h1>
+      </RevertCSSWrapper>
       <h1 style={headingStyles}>
         Congratulations
         <br />

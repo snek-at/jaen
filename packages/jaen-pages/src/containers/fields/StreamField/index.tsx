@@ -16,7 +16,7 @@ import {merge} from '@common/utils'
 import {BlockItem, GenericBC, prepareBlocks} from '@containers/blocks'
 import {useTemplate} from '@contexts/template'
 import {SFWrapper} from '@snek-at/jaen-shared-ui'
-import {DesignProvider} from '@src/tools/chakra-ui'
+import {RevertCSSWrapper} from '@src/../../jaen/src'
 import {useAppDispatch, useAppSelector, useAppState} from '@store/index'
 import {pageFieldBlocksSelector} from '@store/selectors/pages'
 import {withRedux} from '@store/withRedux'
@@ -185,15 +185,13 @@ const StreamField: React.FC<StreamFieldProps> = ({
 
   if (isEditing) {
     return (
-      <DesignProvider>
-        <SFWrapper ref={ref} fieldName={fieldName} blockTypes={blocksTypes}>
-          {renderedBlocks}
-        </SFWrapper>
-      </DesignProvider>
+      <SFWrapper ref={ref} fieldName={fieldName} blockTypes={blocksTypes}>
+        {renderedBlocks}
+      </SFWrapper>
     )
   }
 
-  return <>{renderedBlocks}</>
+  return <RevertCSSWrapper>{renderedBlocks}</RevertCSSWrapper>
 }
 
 export default withRedux(StreamField)

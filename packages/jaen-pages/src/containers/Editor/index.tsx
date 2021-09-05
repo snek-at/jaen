@@ -1,9 +1,19 @@
 // import {CKEditor} from '@ckeditor/ckeditor5-react'
 import {Box} from '@chakra-ui/react'
+import styled from '@emotion/styled'
 import loadable from '@loadable/component'
+import {RevertCSSWrapper} from '@src/../../jaen/src'
 import React, {useRef, useState, useEffect} from 'react'
 
 import './style.css'
+
+const EditorWrapper = styled(Box)`
+  display: inline-block;
+
+  .ck-content > * {
+    all: revert;
+  }
+`
 
 const LoadableCKEditor = loadable(() => import('@ckeditor/ckeditor5-react'), {
   resolveComponent: (editor: {CKEditor: any}) => editor.CKEditor
@@ -20,13 +30,13 @@ type EditorProps = {
 const Editor: React.FC<EditorProps> = props => {
   const raw = (
     <Box
-      display={'inline-block'}
       className="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline"
       dangerouslySetInnerHTML={{__html: props.data}}
     />
   )
 
   const editorConfig: {[key: string]: any} = {
+    editorClass: 'dasjdaioshdiashdiu',
     mediaEmbed: {
       previewsInData: true
     }
@@ -37,7 +47,7 @@ const Editor: React.FC<EditorProps> = props => {
   }
 
   return (
-    <Box display={'inline-block'}>
+    <EditorWrapper className="testestest">
       {props.editing ? (
         <LoadableCKEditor
           fallback={raw}
@@ -49,6 +59,9 @@ const Editor: React.FC<EditorProps> = props => {
           }
           config={editorConfig}
           data={props.data}
+          onLoad={(editor: any) => {
+            editor.writer.addClass('revert-css')
+          }}
           //@ts-ignore
           onChange={(event, editor) => {
             const data = editor.getData()
@@ -58,7 +71,7 @@ const Editor: React.FC<EditorProps> = props => {
       ) : (
         <>{raw}</>
       )}
-    </Box>
+    </EditorWrapper>
   )
 }
 

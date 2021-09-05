@@ -1,6 +1,5 @@
 import {Image, useDisclosure} from '@chakra-ui/react'
 import {useTemplate} from '@contexts/template'
-import {DesignProvider} from '@src/tools/chakra-ui'
 import * as React from 'react'
 
 import SnekFinder from '../SnekFinder'
@@ -66,7 +65,7 @@ const JaenImage: React.FC<ImageProps> = ({editable = false, ...props}) => {
   }
 
   return (
-    <DesignProvider>
+    <>
       {image}
       {fileSelector.isOpen && (
         <SnekFinder
@@ -83,7 +82,7 @@ const JaenImage: React.FC<ImageProps> = ({editable = false, ...props}) => {
           }}
         />
       )}
-    </DesignProvider>
+    </>
   )
 }
 
