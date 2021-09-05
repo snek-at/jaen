@@ -178,6 +178,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
           height={height}
           width={width}
           onDelete={deleteBlock}
+          isEditing={isEditing}
         />
       )
     }

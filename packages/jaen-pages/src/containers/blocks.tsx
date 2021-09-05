@@ -86,19 +86,28 @@ export const BlockItem = React.memo(
     width,
     initValue,
     position,
-    onDelete
+    onDelete,
+    isEditing
   }: any) => {
+    const blockItem = (
+      <Block
+        streamFieldHeight={height}
+        streamFieldWidth={width}
+        values={prepareBlocks(Block, {
+          fieldName,
+          initValue,
+          block
+        })}
+      />
+    )
+
+    if (!isEditing) {
+      return blockItem
+    }
+
     return (
       <SFBWrapper onDeleteClick={() => onDelete(position)}>
-        <Block
-          streamFieldHeight={height}
-          streamFieldWidth={width}
-          values={prepareBlocks(Block, {
-            fieldName,
-            initValue,
-            block
-          })}
-        />
+        {blockItem}
       </SFBWrapper>
     )
   },
