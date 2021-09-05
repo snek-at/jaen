@@ -1,4 +1,4 @@
-import {useCMSPage, usePage} from '@contexts/cms'
+import {useResolvedPage, usePage} from '@contexts/cms'
 import {useTemplate} from '@contexts/template'
 import {ResolvedPageType} from '@src/types'
 import {withRedux} from '@store/withRedux'
@@ -10,7 +10,7 @@ interface IndexFieldProps {
 
 const IndexField: React.FC<IndexFieldProps> = props => {
   const {jaenPageContext} = useTemplate()
-  const page = useCMSPage(props.fixedSlug || jaenPageContext.id)
+  const page = useResolvedPage(props.fixedSlug || jaenPageContext.id)
 
   if (!page) {
     throw new Error(`Page not found: ${props.fixedSlug || jaenPageContext.id}`)

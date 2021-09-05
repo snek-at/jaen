@@ -53,6 +53,13 @@ const SamplePage: JaenTemplate = () => {
           blocks={[TestBlock]}
         />
       </Box>
+      <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
+        <h1>TextField</h1>
+        <fields.TextField
+          fieldName="textfield1"
+          initValue="<p>textfield1</p>"
+        />
+      </Box>
     </>
   )
 }

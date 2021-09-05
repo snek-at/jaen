@@ -179,7 +179,10 @@ const IndexPage = () => {
 
               {/* <p style={descriptionStyle}>{link.description}</p> */}
               <div style={descriptionStyle}>
-                {/* <fields.TextField fieldName={`linkfield${index}`} initValue={link.description}/> */}
+                <fields.TextField
+                  fieldName={`linkfield${index}`}
+                  initValue={link.description}
+                />
               </div>
             </span>
           </li>

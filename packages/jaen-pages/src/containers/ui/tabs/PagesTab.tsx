@@ -1,6 +1,6 @@
 import {Button, useDisclosure} from '@chakra-ui/react'
 import SnekFinder from '@containers/SnekFinder'
-import {useAllSitePage, useCMSContext} from '@contexts/cms'
+import {usePages, useCMSContext} from '@contexts/cms'
 import {useLocation} from '@reach/router'
 import {PageExplorer, PageExplorerProps} from '@snek-at/jaen-shared-ui'
 import {PageType} from '@src/types'
@@ -52,7 +52,7 @@ const PagesTab: React.FC<{}> = () => {
   const dispatch = useAppDispatch()
 
   const cmsContext = useCMSContext()
-  const allSitePage = useAllSitePage()
+  const allSitePage = usePages()
   const fileSelector = useDisclosure()
 
   const dynamicPaths = useAppSelector(state => state.site.routing.dynamicPaths)

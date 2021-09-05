@@ -9,7 +9,6 @@ import * as ts from 'typescript'
 import {merge} from '../common/utils'
 import {store, useAppSelector} from '../store'
 import {withStorageManager} from '../store/localStorage'
-import {DesignProvider} from '../tools/chakra-ui'
 import {JaenTemplate, PageMetadata, PageType, ResolvedPageType} from '../types'
 import {SiteType} from '../types'
 
@@ -48,8 +47,8 @@ export const usePage = (id: string): ResolvedPageType => {
   return resolvedPage
 }
 
-export const useCMSPage = (id: string): ResolvedPageType | null => {
-  const pages = useAllSitePage()
+export const useResolvedPage = (id: string): ResolvedPageType | null => {
+  const pages = usePages()
   const nodes = pages.nodes
   const cNode = nodes[id]
 
@@ -76,9 +75,9 @@ export const useSiteMetadata = () => {
   return merge(context.site.siteMetadata, storeSiteMetadata || {})
 }
 
-export const useAllSitePage = () => {
+export const usePages = () => {
   const context = useCMSContext()
-  const storePages = useAppSelector(state => state.site.allSitePage)
+  const storePages = store.getState().site.allSitePage //useAppSelector(state => state.site.allSitePage)
 
   return merge(
     context.site.allSitePage,

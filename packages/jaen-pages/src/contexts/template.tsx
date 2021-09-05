@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux'
 import {useAppSelector} from '../store'
 import {withRedux} from '../store/withRedux'
 import {PageType, ResolvedPageType} from '../types'
-import {useCMSContext, useCMSPage} from './cms'
+import {useCMSContext, useResolvedPage} from './cms'
 
 // SEO: https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/master/src/components/SEO/SEO.js
 
@@ -40,7 +40,7 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
 
   const dynamicPaths = useAppSelector(({site}) => site.routing.dynamicPaths)
 
-  const page = useCMSPage(
+  const page = useResolvedPage(
     (pathName && dynamicPaths[pathName]) || jaenPageContext.id
   )
   const {templates} = useCMSContext()
