@@ -1,3 +1,11 @@
+# [my-gatsby-site-v1.0.0-beta.10](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.9...my-gatsby-site-v1.0.0-beta.10) (2021-09-05)
+
+
+### Bug Fixes
+
+* disable page updating on page change ([cbd2656](https://github.com/snek-at/jaen/commit/cbd2656579947d62e03efaf00212ee6533d2cb95))
+* **chakra:** reset css ([2d1d195](https://github.com/snek-at/jaen/commit/2d1d1956ae3c61f188696ea268625395cb1ffe37))
+
 # [my-gatsby-site-v1.0.0-beta.9](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.8...my-gatsby-site-v1.0.0-beta.9) (2021-09-04)
 
 
