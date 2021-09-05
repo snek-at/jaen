@@ -59,8 +59,8 @@ const PageExplorer: React.FC<PageExplorerProps> = props => {
   const [rootItemIds, setRootItemIds] = React.useState(props.rootItemIds)
   const [items, setItems] = React.useState(props.items)
 
-  const [selectedItem, setSelectedItem] = React.useState<string | null>(
-    Object.keys(props.items)[0]
+  const [selectedItem, setSelectedItem] = React.useState<string>(
+    props.defaultSelection
   )
 
   React.useEffect(() => {
@@ -88,12 +88,12 @@ const PageExplorer: React.FC<PageExplorerProps> = props => {
   const values = selectedItem ? getItemValues(selectedItem) : undefined
 
   const handleItemSelect = (id: string | null) => {
-    setSelectedItem(id)
+    setSelectedItem(id || props.defaultSelection)
     props.onItemSelect(id)
   }
 
   const handleItemDelete = (id: string) => {
-    setSelectedItem(null)
+    setSelectedItem(props.defaultSelection)
 
     props.onItemDelete(id)
   }
