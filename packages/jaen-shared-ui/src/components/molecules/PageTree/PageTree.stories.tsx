@@ -86,6 +86,7 @@ const Template: Story = args => (
       '1-2-1',
       '1-2-2'
     ]}
+    defaultSelection={'1-1'}
     height={500}
     templates={['HomePage']}
     onItemSelect={() => {}}

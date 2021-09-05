@@ -40,6 +40,7 @@ export type Items = {
 export type PageExplorerProps = {
   items: Items
   rootItemIds: string[]
+  defaultSelection: string
   templates: string[]
   onItemSelect: (id: string | null) => void
   onItemCreate: (
@@ -106,6 +107,7 @@ const PageExplorer: React.FC<PageExplorerProps> = props => {
             <PageTree
               items={items}
               rootItemIds={rootItemIds}
+              defaultSelection={props.defaultSelection}
               templates={props.templates}
               height="100%"
               onItemSelect={handleItemSelect}

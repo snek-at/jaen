@@ -48,6 +48,7 @@ export type Items = {
 type PageTreeProps = {
   items: Items
   rootItemIds: string[]
+  defaultSelection: string
   height: number | string
   templates: string[]
   onItemSelect: (id: string | null) => void
@@ -70,13 +71,17 @@ const PreTextIcon = styled.span`
   margin-right: 5px;
 `
 
-const PageTree: React.FC<PageTreeProps> = ({items, rootItemIds, ...props}) => {
+const PageTree: React.FC<PageTreeProps> = ({
+  items,
+  rootItemIds,
+  defaultSelection,
+  ...props
+}) => {
   const itemBgColor = useColorModeValue('blue.100', 'blue.400')
   // convert items to a set
   const [tree, setTree] = useState(TreeConverter(items))
-  const firstItemId = useMemo(() => Object.keys(items)[0], [items])
 
-  const [selectedItem, selectItem] = useState<string>(firstItemId)
+  const [selectedItem, selectItem] = useState<string>(defaultSelection)
 
   const [contextMenu, setContextMenu] = useState<{
     id: string | null
@@ -148,7 +153,7 @@ const PageTree: React.FC<PageTreeProps> = ({items, rootItemIds, ...props}) => {
   }, [items])
 
   const handleSelectItem = (id?: string | null) => {
-    const finalId = id || firstItemId
+    const finalId = id || defaultSelection
     selectItem(finalId)
     setContextMenu(null)
     props.onItemSelect(finalId)
@@ -164,7 +169,7 @@ const PageTree: React.FC<PageTreeProps> = ({items, rootItemIds, ...props}) => {
     event.preventDefault()
     event.stopPropagation()
 
-    selectItem(id || firstItemId)
+    selectItem(id || defaultSelection)
     setContextMenu({id, spawnX: event.clientX, spawnY: event.clientY})
   }
 

@@ -1,6 +1,7 @@
 import {Button, useDisclosure} from '@chakra-ui/react'
 import SnekFinder from '@containers/SnekFinder'
 import {useAllSitePage, useCMSContext} from '@contexts/cms'
+import {useLocation} from '@reach/router'
 import {PageExplorer, PageExplorerProps} from '@snek-at/jaen-shared-ui'
 import {PageType} from '@src/types'
 import {resolveDynamicPath} from '@src/utils'
@@ -55,6 +56,30 @@ const PagesTab: React.FC<{}> = () => {
   const fileSelector = useDisclosure()
 
   const dynamicPaths = useAppSelector(state => state.site.routing.dynamicPaths)
+
+  // const currentPath = useReactPath()
+
+  const [currentPath, setCurrentPath] = React.useState(window.location.pathname)
+
+  console.log('[currentPath]', currentPath, window.location.pathname)
+
+  const defaultSelection = React.useMemo(() => {
+    console.log('[defaultSelection] pls update')
+    // find the node that matches the current path
+    const dynamicId = currentPath && dynamicPaths[currentPath]
+
+    if (!dynamicId) {
+      for (const [id, node] of Object.entries(allSitePage.nodes)) {
+        if (node.path === currentPath) {
+          return id
+        }
+      }
+    }
+
+    return dynamicId
+  }, [allSitePage.nodes, currentPath, dynamicPaths]) as string
+
+  console.log('[defaultSelection]', defaultSelection)
 
   const templates = React.useMemo(
     () => cmsContext.templates.map(e => e.TemplateName),
@@ -144,7 +169,7 @@ const PagesTab: React.FC<{}> = () => {
     handleNavigate(null)
 
     dispatch(actions.deletePage(id))
-    // updateRouting(id)
+    updateRouting(id)
   }
   const handlePageMove = (pageId: string, parentPageId: string | null) => {
     dispatch(
@@ -177,12 +202,11 @@ const PagesTab: React.FC<{}> = () => {
       }
     }
 
-    const currentPath =
-      typeof window !== 'undefined' && window.location.pathname
+    const newPagePath = pagePath || '/'
+    console.log('[handleNavigate]', currentPath, pagePath)
 
-    if (currentPath !== pagePath) {
-      navigate(pagePath || '/')
-    }
+    setCurrentPath(newPagePath)
+    navigate(newPagePath)
   }
 
   // TODO: move to a loading state in order to improve performence
@@ -197,6 +221,7 @@ const PagesTab: React.FC<{}> = () => {
       <PageExplorer
         items={items}
         rootItemIds={allSitePage.rootNodeIds}
+        defaultSelection={defaultSelection}
         templates={templates}
         onItemCreate={handlePageCreate}
         onItemDelete={handlePageDelete}

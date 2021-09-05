@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import {DynamicPaths, ResolveDynamicPaths, SitePages} from './types'
 
 export const resolvePath = (id: string, nodes: SitePages['nodes']) => {
@@ -45,4 +47,3 @@ export const resolveDynamicPath: ResolveDynamicPaths = (
 
   return {dynamicPaths, affectedIds}
 }
-

@@ -75,6 +75,7 @@ Primary.args = {
       parent: '2-1-1'
     }
   },
+  defaultSelection: '1',
   templates: ['HomePage'],
   onItemCreate: (parentId, name) => null,
   onItemDelete: () => {},
