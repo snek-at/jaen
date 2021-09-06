@@ -237,7 +237,7 @@ const HomePage: JaenTemplate = () => {
   return(
     <fields.TextField 
       fieldName="hometext"
-      initValue="<p>Your text</p>
+      initValue="<p>Your text</p>"
       rtf={true}
     />
   )
