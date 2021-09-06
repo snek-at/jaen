@@ -35,7 +35,7 @@ Read this wiki in a different language: [English](https://github.com/snek-at/jae
     - [Nachricht um Sie zu inspirieren](#nachricht-um-sie-zu-inspirieren)
     - [Warnhinweis](#warnhinweis)
 - [🚀 Beginne in 5 Minuten zu arbeiten](#-beginne-in-5-minuten-zu-arbeiten)
-    - [Vom Template auf Github generieren](#vom-template-auf-github-generieren)
+    - [Vom Template auf GitHub generieren](#vom-template-auf-github-generieren)
     - [Erste Schritte](#erste-schritte)
     - [Optionen fürs Aufsetzen](#optionen-fürs-aufsetzen)
         - [Codespace Setup](#codespace-setup)
@@ -63,7 +63,7 @@ Read this wiki in a different language: [English](https://github.com/snek-at/jae
 
 ## [](#-motivation)💪 Motivation
 
-Ein CMS **sollte nicht** der definierende Teil einer Webapp sein. Auch Ecommerce sollte das nicht sondern nur Ihr Code.
+Ein CMS **sollte nicht** der definierende Teil einer Webapp sein. Auch E-Commerce sollte das nicht, sondern nur Ihr Code.
 ERP Integration **sollte** den Entwickler **nicht** dazu zwingen Kurven zu schneiden.
 
 - Jaen **wird Ihr** Nutzererlebnis **nicht** beeinträchtigen.
@@ -71,16 +71,16 @@ ERP Integration **sollte** den Entwickler **nicht** dazu zwingen Kurven zu schne
 - Jaen gibt **Ihnen** die Kontrolle.
 
 Spezialisiert mit gut und genau geführten Dokumentationen für die Schnittstellen.
-Flexibel, erweiterbar und Opensource.
+Flexibel, erweiterbar und Open-Source.
 
 ### Jaen Features
 
 * Eine schnelle, attraktive "What you see is what you get" Oberfläche für Editoren
 * Die komplette Kontrolle über die Struktur und das Design des Frontends
-* Von Natur aus schnell, Zwischenspeicher freundlich wenn notwendig
+* Von Natur aus schnell, Zwischenspeicher-freundlich wenn notwendig
 * Das StreamField ermutigt flexiblen Inhalt ohne die Struktur zu gefährden
 * Unterstützung für Bilder und eingebettete Inhalte
-* Dezentralisiertes gratis Hosting über ein verteiltes Netzwerk
+* Dezentralisiertes, kostenloses Hosting über ein verteiltes Netzwerk
 
 
 ### Roadmap
@@ -111,18 +111,18 @@ In einem Hamsterrad zu rennen ist nicht inspirierend.
 
 #### Disclaimer
 
-Nichts für schwache Nerven. Wenn Sie sich dazu entscheiden Jaen zu nutzen könnten Sie einige Kratzer abbekommen.
+Nichts für schwache Nerven. Wenn Sie sich dazu entscheiden Jaen zu nutzen, könnten Sie einige Kratzer abbekommen.
 
 ## [](#-beginne-in-5-minuten-zu-arbeiten)🚀 Beginne in 5 Minuten zu arbeiten
 
-### Vom Template auf [Github generieren](https://github.com/snek-at/jaen-template/generate)
+### Vom Template [auf GitHub generieren](https://github.com/snek-at/jaen-template/generate)
 | Vom Template generieren | Wichtig ist, dass das Repository öffentlich ist und, dass Sie nicht alle Branches inkludieren |
 |---|---|
 | ![image](https://user-images.githubusercontent.com/83394650/124399008-16b7d780-dd19-11eb-84bb-769462d5440e.png) | ![image](https://user-images.githubusercontent.com/83394650/124401575-6c48b000-dd2a-11eb-8316-7f583e5e98d7.png) |
 
 ### Erste Schritte
 
-Der `GITHUB_TOKEN`hat Limitierungen für das erste Deployment. Also müssen Sie den Github Pages branch in der Einstellungsseite Ihres Repositorys auswählen. Danach müssen Sie den Anweisungen, die in den Bildern unter diesem Text gezeigt werden, folgen.
+Der `GITHUB_TOKEN`hat Limitierungen für das erste Deployment. Also müssen Sie den GitHub Pages Branch in der Einstellungsseite Ihres Repositorys auswählen. Danach müssen Sie den Anweisungen, die in den Bildern unter diesem Text gezeigt werden, folgen.
 
 | Erstes Aufsetzen fehlgeschlagen | Gehen sie zu Ihrem Pages einstellungs Tab |
 |---|---|
@@ -133,30 +133,30 @@ Der `GITHUB_TOKEN`hat Limitierungen für das erste Deployment. Also müssen Sie 
 | ![image](https://user-images.githubusercontent.com/83394650/124398825-1408b280-dd18-11eb-985f-f28de94b8888.png) | ![image](https://user-images.githubusercontent.com/83394650/124398968-d3f5ff80-dd18-11eb-8f17-ee2d92900014.png) |
 
 ### Optionen fürs Aufsetzen
-Wir empfehlen [VSCode](https://github.com/microsoft/vscode) als Entwickerumgebung entweder Lokal oder in einem Codespace.
+Wir empfehlen [Visual Studio Code](https://github.com/microsoft/vscode) als Entwickerumgebung, entweder Lokal oder in einem Codespace.
 
 #### Codespace Setup
 
-Der einfachste Weg ist die Nutzung eines GitHub [Codespace](https://github.com/features/codespaces) (in der Beta). Erstellen Sie einfach einen Codespace vom Code Menü. Warten Sie bis der Codespace fertig Aufgesetzt ist und öffnen Sie ein Konsolenfenster (Strg-\`, Steuerung-Backquote) und:
+Der einfachste Weg ist die Nutzung eines GitHub [Codespace](https://github.com/features/codespaces) (in der Beta). Erstellen Sie einfach einen Codespace vom Code Menü. Warten Sie bis der Codespace fertig aufgesetzt ist und öffnen Sie ein Konsolenfenster (Strg-\`, Steuerung-Backquote) und:
 
-- Erstellen sie eine .env und setzen Sie eine PUBLIC_URL
-- Starten sie die Seite Lokal mit `yarn start`
-- Oder kompilieren sie eine lokale Kopie mit `yarn run build`
+- Erstellen Sie eine .env-Datei und setzen Sie eine PUBLIC_URL
+- Starten Sie die Seite lokal mit `yarn start`
+- Oder kompilieren Sie eine lokale Kopie mit `yarn run build`
 
 #### Lokales Setup
 Wenn Sie sich dazu entscheiden ein lokales Setup zu verwenden, stellen Sie sicher, dass Sie die folgenden Schritte beachten:
 
 - Nutzen Sie `yarn install` um die Abhängigkeiten zu installieren
-- Starten sie die Seite Lokal mit `yarn start`
-- Oder kompilieren sie eine lokale Kopie mit `yarn run build`
+- Starten Sie die Seite lokal mit `yarn start`
+- Oder kompilieren Sie eine lokale Kopie mit `yarn run build`
 
 Die Demoseite ist nun unter <http://localhost:8000/> verfügbar.
 
 #### Fehlerbehebung
 
-- Dieses Repository wird mit yarn getestet. Wenn Sie npm verwenden könnten unerwartete Fehler auftreten.
+- Dieses Repository wird mit yarn getestet. Wenn Sie npm verwenden, könnten unerwartete Fehler auftreten.
 
-Wenn Sie während des Aufsetzen auf andere Probleme stoßen bitten wir Sie darum Ihr Problem [zu melden](https://github.com/snek-at/jaen/issues), sodass wir die Dokumentation verbessern können.
+Wenn Sie während des Aufsetzen auf andere Probleme stoßen, bitten wir Sie darum, Ihr Problem [zu melden](https://github.com/snek-at/jaen/issues), sodass wir die Dokumentation verbessern können.
 
 #### Editieren
 
@@ -223,7 +223,7 @@ plugins: [
 ### Fields
 Felder sind die Datenblöcke, die Sie verwenden können um Ihre React Apps für den Endnutzer bearbeitbar zu gestalten.
 Die Namen der Felder müssen auf der jeweiligen Seite einzigartig sein.
-Es wird empfohlen beschreibende Namen zu nutzen.
+Es wird empfohlen, aussagekräftige Namen zu nutzen.
 
 #### TextField
 
@@ -250,8 +250,8 @@ export default HomePage
 
 #### ImageField
 
-Zum einbetten von Bildern können Sie das ImageField nutzen. <br />
-Es funktioniert indem ein Bild, das auf der IPFS gespeichert wird, auf der Seite eingebettet wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField_ger-at)</div>
+Zum Einbetten von Bildern können Sie das ImageField nutzen. <br />
+Es funktioniert, indem ein Bild, welches auf der IPFS gespeichert wird, auf der Seite eingebettet wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField_ger-at)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -271,7 +271,7 @@ export default HomePage
 
 #### StreamField
 
-Das StreamField ermöglicht es Ihnen editierbare Blocks in Ihre Seite einzubauen und diese sooft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
+Das StreamField ermöglicht es Ihnen, editierbare Blocks in Ihre Seite einzubauen und diese so oft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -317,7 +317,7 @@ export default HomePage
 ```
 #### IndexField
 
-Wenn Sie einen Link auf die Subseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite auf der das IndexField ist dafür genutzt. onRender erlaubt Ihnen die React-Components, die die Daten oder den Link der Subseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField_ger-at)</div>
+Wenn Sie einen Link auf die Unterseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite, auf welcher sich das IndexField befindet, dafür genutzt. onRender erlaubt Ihnen die React-Components, die die Daten oder den Link der Unterseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField_ger-at)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -342,7 +342,7 @@ export default HomePage
 
 
 ### Blöcke
-Der Block ist der Eckstein des StreamFields. Mit seiner Hilfe können Sie React-Componenten bauen, die im StreamField sooft wie gewünscht wiederholt werden können.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks_ger-at)</div>
+Der Block ist der Eckstein des StreamFields. Mit seiner Hilfe können Sie React-Componenten bauen, welche im StreamField so oft wie gewünscht wiederholt werden können.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks_ger-at)</div>
 
 ```javascript
 import {blocks, fields} from '@snek-at/jaen-pages'
@@ -378,8 +378,8 @@ export default CardBlock
 
 ## [](#-wie-man-einen-bug-meldet-oder-eine-neuerung-beantragt)🐞 Wie man einen Bug meldet oder ein Feature beantragt
 
-Haben Sie einen Bug gefunden oder haben Sie eine Idee für ein neues Feature? Bitte sehen Sie zuvor in den offenen und geschlossenen Issues nach, ob Ihr Problem schon behandelt wurde.
-Wenn Sie den Bug oder die Idee darin nicht finden [öffnen Sie bitte ein neues Issue](https://github.com/snek-at/jaen/issues/new/choose).
+Haben Sie einen Bug gefunden oder haben Sie eine Idee für ein neues Feature? Bitte sehen Sie vorher in den offenen und geschlossenen Issues nach, ob Ihr Problem vielleicht bereits behandelt wurde.
+Wenn Sie den Bug oder die Idee darin nicht finden, [öffnen Sie bitte ein neues Issue](https://github.com/snek-at/jaen/issues/new/choose).
 
 ## [](#-selbst-mitwirken)🤝 Selbst mitwirken
 ![GitHub letzter Commit](https://img.shields.io/github/last-commit/snek-at/jaen)
@@ -388,7 +388,7 @@ Wenn Sie den Bug oder die Idee darin nicht finden [öffnen Sie bitte ein neues I
 
 Bitte lesen Sie unsere
 [Contibution Guidlines](https://github.com/snek-at/jaen/blob/master/CONTRIBUTING.md).
-Darin werden Sie die Anleitungen zum öffnen von Issues, die Code Standards und Notizen zur Entwicklung finden.
+Darin werden Sie die Anleitungen zum Öffnen von Issues, die Code Standards und Notizen zur Entwicklung finden.
 
 Der Code sollte unserem [Code Guide](https://github.com/snek-at/tonic/blob/master/STYLE_GUIDE.md) entsprechen, der von
 [snek-at](https://github.com/snek-at) aktuell gehalten wird.
@@ -431,19 +431,19 @@ Wir haben noch keine externen Entwickler. Um Ihren Namen hier zu sehen, [tragen 
 </table>
 
 ## [](#-faqs)🤔 FAQs
-**Q:** Was bedeuten die Roadmap Kategorien?
-* Fertig - Hoffentlich haben Sie Spaß damit. Hinterlassen Sie uns eine Rückmeldung über Ihre Erfahrungen!
-* Fast geschafft - Wir sind dabei die letzten Änderungen vorzunehmen. Die Features in dieser kategorie können in den nächsten 2-4 Wochen erwartet werden.
-* Wir arbeiten daran - Die Entwicklung hat gestartet. Wir arbeiten daran es so schnell und gut wie möglich zu vervollständigen.
-* In Planung - Wir denken darüber nach. Dies kann bedeuten, dass wir schon designen oder das wir noch darüber nachdenken wie es funktionieren könnte. Diese Phase ist ein guter Zeitpunkt um vorzuschlagen, wie Sie gern ein Feature sehen würden und um Design Ideen einzureichen. 
+**Q:** Was bedeuten die Kategorien der Roadmap?
+* Fertig - Hoffentlich gefällt Ihnen das Feature. Gerne können Sie über Feedback oder Verbesserungsvorschläge berichten!
+* Fast geschafft - Wir sind dabei die letzten Änderungen vorzunehmen. Die Features in dieser Kategorie können in den nächsten zwei bis vier Wochen erwartet werden.
+* Wir arbeiten daran - Die Entwicklung hat gestartet. Wir arbeiten daran, es so schnell wie möglich zu vervollständigen.
+* In Planung - Wir evaluieren das Feature. Dies kann bedeuten, dass wir schon Designen oder dass wir noch darüber nachdenken wie es implementiert werden könnte. Diese Phase ist ein guter Zeitpunkt um vorzuschlagen, wie Sie gern ein Feature sehen würden und um Ideen zum Design einzureichen. 
 
 **Q:** Warum sind auf der Roadmap keine Termine?
 
-**A:** Auf der Roadmap sind keine Termine, da wir wissen, dass sich die Umstände ändern können und wir wollen den Spielraum um Sicherheitsprobleme zu lösen oder Nutzer zu untersützen. Manchmal müssen wir daher unsere Prioritäten ändern und wollen es aber gerne vermeiden Nutzer zu enttäuschen.
+**A:** Auf der Roadmap sind keine Termine, da wir wissen, dass sich die Umstände ändern können und wir nehmen uns den Spielraum, Sicherheitsprobleme zu lösen oder Nutzer zu untersützen. Manchmal müssen wir daher unsere Prioritäten ändern, wollen aber gerne Enttäuschungen vermeiden.
 
-**Q:** Wie kann ich eine Rückmeldung hinterlassen oder mehr Information erhalten?
+**Q:** Wie kann ich eine Rückmeldung hinterlassen oder mehr Informationen erhalten?
 
-**A:** Bitte öffnen Sie ein Issue! Wenn das Issue einen Bug oder ein Sicherheitsproblem betrifft beachten Sie bitte die oben stehnden Anleitung.
+**A:** Bitte öffnen Sie ein Issue! Wenn das Issue einen Bug oder ein Sicherheitsproblem betrifft, beachten Sie bitte die oben stehnden Anleitung.
 
 **Q:** Wie kann ich ein Feature für die Roadmap beantragen?
 
@@ -451,11 +451,11 @@ Wir haben noch keine externen Entwickler. Um Ihren Namen hier zu sehen, [tragen 
 
 ## [](#-trivia):exploding_head: Trivia
 #### Name:
-In Österreich ist der erste Monat des Jahres der Jänner. Da wir in diesem Monat mit der Arbeit an Jaen begannen, bekam es seinen Namen.
+In Österreich ist der erste Monat des Jahres der Jänner. Da wir in diesem Monat mit der Arbeit an Jaen begonnen haben, bekam das Projekt seinen Namen.
 #### Aussprache:
-Jaen wird wie (Jän)ner [ˈjɛn] oder (Jan)uary [ˈdʒæn] ausgesprochen.
+Jaen wird entweder wie (Jän)ner [ˈjɛn] oder wie (Jan)uary [ˈdʒæn] ausgesprochen.
 #### Passwort:
-Das Standardpasswort ist **ciscocisco**. Der Ursprung hiervon liegt in unserer Schulzeit. In der Schule für Netzwerktechnik, die der Großteil von uns besuchte, war in den Cisco-Kursen das Passwort stehts ciscocisco.
+Das Standardpasswort ist **ciscocisco**. Der Ursprung hiervon liegt in unserer Schulzeit. In der Schule für Netzwerktechnik, die der Großteil des Gründerteams besuchte, war in den Cisco-Kursen das Passwort stets ciscocisco.
 #### Releases:
 Jeder unserer Releases schmückt sich mit einem Lied. Hoffentlich haben Sie Spaß damit.
 #### Maskottchen:
@@ -467,7 +467,7 @@ Das inoffizielle Maskottchen für Jaen ist eine junge Frau mit einer E-Gitarre.
 
 ![GitHub Repository Lizenz](https://img.shields.io/badge/license-EUPL--1.2-blue)
 
-Das nutzen dieses SourceCodes wird von der EUPL-1.2 Lizenz bestimmt sie ist in der LICENSE Datei unter https://snek.at/license zu finden.
+Das Nutzen dieses Source-Codes wird von der EUPL-1.2 Lizenz bestimmt sie ist in der LICENSE Datei unter https://snek.at/license zu finden.
 
 <!--
   SPDX-FileCopyrightText: Copyright © 2021 snek.at
