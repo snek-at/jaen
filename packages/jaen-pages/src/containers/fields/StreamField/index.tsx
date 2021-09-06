@@ -17,6 +17,7 @@ import {BlockItem, GenericBC, prepareBlocks} from '@containers/blocks'
 import {useTemplate} from '@contexts/template'
 import {SFWrapper} from '@snek-at/jaen-shared-ui'
 import {RevertCSSWrapper} from '@src/../../jaen/src'
+import {BlocksField} from '@src/types'
 import {useAppDispatch, useAppSelector, useAppState} from '@store/index'
 import {pageFieldBlocksSelector} from '@store/selectors/pages'
 import {withRedux} from '@store/withRedux'
@@ -43,11 +44,8 @@ const StreamField: React.FC<StreamFieldProps> = ({
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
 
-  // const [SFBlocks, setSFBlocks] = useState(
-  //   (appState.site.allSitePage?.nodes?.[path]?.fields?.[
-  //     fieldName
-  //   ] as BlocksField)?.blocks
-  // )
+  const contextValue = (jaenPageContext.fields?.[fieldName] as BlocksField)
+    ?.blocks
 
   const SFBlocks = useAppSelector(
     pageFieldBlocksSelector(pageId, fieldName),
@@ -83,12 +81,17 @@ const StreamField: React.FC<StreamFieldProps> = ({
   const isEditing = useAppSelector(state => state.options.isEditing)
 
   const visibleBlocks = useMemo(
-    () => merge(initValue, SFBlocks, value => value.deleted) as typeof SFBlocks,
+    () =>
+      merge(
+        contextValue || initValue,
+        SFBlocks,
+        value => value.deleted
+      ) as typeof SFBlocks,
     [initValue, SFBlocks]
   )
 
   const allBlocks = useMemo(
-    () => merge(initValue, SFBlocks) as typeof SFBlocks,
+    () => merge(contextValue || initValue, SFBlocks) as typeof SFBlocks,
     [initValue, SFBlocks]
   )
 
@@ -138,8 +141,8 @@ const StreamField: React.FC<StreamFieldProps> = ({
         }
       }
     }
-    // check if position is in initValue, if not, unregister it instead of deleting it
-    if (position in initValue) {
+    // check if position is in contextValue or initValue, if not, unregister it instead of deleting it
+    if (position in contextValue || initValue) {
       dispatch(deletePageField(payload))
     } else {
       dispatch(unregisterPageField(payload))

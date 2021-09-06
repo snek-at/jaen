@@ -74,6 +74,7 @@ const JaenImage: React.FC<JaenImage> = ({
           onSelectorClose={fileSelector.onClose}
           onSelectorSelect={i => {
             setIsInitalImage(true)
+
             props.onChange({
               src: i.src,
               title: i.title,

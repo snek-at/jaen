@@ -39,14 +39,14 @@ const TextField: React.FC<TextFieldProps> = ({
 
   const updatedValue = (content as TextBlock | undefined)?.text
 
-  // const contextValue = (getFieldContent(
-  //   jaenPageContext.fields?.[fieldName],
-  //   block
-  // ) as TextBlock | undefined)?.text
+  const contextValue = (getFieldContent(
+    jaenPageContext.fields?.[fieldName],
+    block
+  ) as TextBlock | undefined)?.text
 
   const isRegistered = updatedValue !== undefined
 
-  const value = isRegistered ? updatedValue : initValue || 'dadad'
+  const value = isRegistered ? updatedValue : contextValue || initValue || ''
 
   const handleOnChange = (data: string) => {
     if (!isRegistered && data !== initValue) {
