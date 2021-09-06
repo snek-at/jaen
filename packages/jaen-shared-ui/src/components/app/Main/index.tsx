@@ -39,7 +39,7 @@ const Main: React.FC<MainProps> = props => {
 
   return (
     <>
-      <Box pos="fixed" bottom={5} right={5} ref={btnRef as any}>
+      <Box pos="fixed" bottom={5} right={5} ref={btnRef as any} zIndex="999999">
         <JaenToggleButton ref={btnRef as any} onClick={onOpen} />
       </Box>
       <Drawer

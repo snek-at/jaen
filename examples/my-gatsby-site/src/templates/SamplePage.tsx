@@ -69,7 +69,7 @@ const SamplePage: JaenTemplate = () => {
             alt: 'ta',
             title: 'daa'
           }}
-          style={{width: '50%'}}
+          style={{width: '100%'}}
         />
       </Box>
     </>
