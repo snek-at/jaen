@@ -60,8 +60,8 @@ Read this readme in a different language: [Deutsch](https://github.com/snek-at/j
 
 ## [](#-motivation)💪 Motivation
 
-A CMS **should not** be the defining feature of a webapp. Neither should Ecommerce or anything other than your code. \
-ERP integration **should not** force developer to cut corners.
+A CMS **should not** be the defining feature of a webapp. Neither should E-Commerce or anything other than your code. \
+ERP integration **should not** force developers to cut corners.
 
 - Jaen **does not** interfere with **your** user experience.
 - Jean **does not** challenge **your** application design.
@@ -116,7 +116,7 @@ Not for crybabies. Do not touch if you are affraid to be a bit scratched.
 | ![image](https://user-images.githubusercontent.com/83394650/124399008-16b7d780-dd19-11eb-84bb-769462d5440e.png) | ![image](https://user-images.githubusercontent.com/83394650/124401575-6c48b000-dd2a-11eb-8316-7f583e5e98d7.png) |
 
 ### First Deployment
-The `GITHUB_TOKEN` has limitations for the first deployment so we have to select the GitHub Pages branch on the repository settings tab. After that, do the second deployment like the following pictures.
+The `GITHUB_TOKEN` has limitations for the first deployment so we have to select the GitHub Pages branch on the repository settings tab. After that, follow the instrucions shown in the pictures below to deploy successfully.
 
 | First deployment failed | Go to the [settings tab](https://github.com/snek-at/jaen-template/settings/pages) |
 |---|---|
@@ -127,12 +127,12 @@ The `GITHUB_TOKEN` has limitations for the first deployment so we have to select
 | ![image](https://user-images.githubusercontent.com/83394650/124398825-1408b280-dd18-11eb-985f-f28de94b8888.png) | ![image](https://user-images.githubusercontent.com/83394650/124398968-d3f5ff80-dd18-11eb-8f17-ee2d92900014.png) |
 
 ### Deployment Options
-We recomend to use [vscode](https://github.com/microsoft/vscode) as IDE in either an codespace or local setup.
+We recomend to use [Visual Studio Code](https://github.com/microsoft/vscode) as IDE either in a codespace or using local setup.
 
 #### Codespace Setup
-The easiest method is to use a GitHub [Codespace](https://github.com/features/codespaces) (in beta). Just create a GitHub Codespace from the Code menu. Wait for the Codespace to complete provisioning. When the Codespace has completed provisioning open a terminal window (Ctrl-`, Control-backquote) and:
+The easiest method is to use a GitHub [Codespace](https://github.com/features/codespaces) (in beta). Just create a GitHub Codespace from the Code menu. Wait for the Codespace to complete provisioning. When the Codespace has completed provisioning, open a terminal window (Ctrl-`, Control-backquote) and:
 
-- Create .env and set PUBLIC_URL
+- Create .env file and set PUBLIC_URL
 - Start a local copy of the docs site with `yarn start`
 - Or build a local copy of the library with `yarn run build`
 
@@ -149,7 +149,7 @@ The demo site will now be accessible at <http://localhost:8000/>.
 
 - You have to use yarn instead of npm. If you decide to use npm you might run into errors.
 
-If you encounter any other issues getting this template to work we ask you to [report it](https://github.com/snek-at/jaen/issues) so that we can improve the documentation.
+If you encounter any other issues getting this template to work, we ask you to [report it](https://github.com/snek-at/jaen/issues) so that we can improve the documentation.
 
 #### Editing
 
@@ -215,7 +215,7 @@ plugins: [
 ```
 
 ### Fields
-Fields are data blocks that you can use to build React apps which the enduser is able to maintain. 
+Fields are data blocks that can be used to build React apps which the enduser is able to maintain. 
 Fieldnames have to be unique when they are on the same page.
 It is advisable to give all the fields descriptive names.
 
@@ -247,7 +247,7 @@ export default HomePage
 
 #### ImageField
 
-The ImageField is the Jaen field that allows you to embed images hosted on the ipfs. It requires both a fieldName and an initValue.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
+The ImageField is the Jaen field that allows you to embed images hosted on the IPFS. It requires both a fieldName and an initValue.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField)</div>
 
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
@@ -310,6 +310,9 @@ export default HomePage
 ```
 
 #### IndexField
+
+If you want to link to childpages of a slug, the IndexField is your friend. The fixedSlug property is not required. When none is provided, the children of the current page are used. If you like, it is possible to specify the parentpage and the onRender property allows you to build cards, teasers, buttons and more to your subpages.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
+
 ```javascript
 import {fields} from '@snek-at/jaen-pages'
 import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
@@ -469,3 +472,4 @@ in the LICENSE file at https://snek.at/license
   Use of this source code is governed by an EUPL-1.2 license that can be found
   in the LICENSE file at https://snek.at/license
 -->
+
