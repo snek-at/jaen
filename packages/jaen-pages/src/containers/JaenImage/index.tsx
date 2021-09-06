@@ -1,77 +1,79 @@
-import {Image, useDisclosure} from '@chakra-ui/react'
-import {useTemplate} from '@contexts/template'
+import {Box, Image, useDisclosure} from '@chakra-ui/react'
+import {
+  GatsbyImage,
+  GatsbyImageProps,
+  IGatsbyImageData
+} from 'gatsby-plugin-image'
 import * as React from 'react'
 
 import SnekFinder from '../SnekFinder'
+import {JaenImageContainer} from './style'
 
-export type ImageType = {
+export type InitialImageType = {
   src: string
   title: string
   alt: string
 }
 
-export type ImageProps = {
-  initialImage: ImageType
-  width: number | undefined
-  height: number | undefined
-  editable?: boolean
-  onChange: (image: ImageType) => void
+export interface JaenImageProps
+  extends Omit<
+    GatsbyImageProps,
+    'imgClassName' | 'imgStyle' | 'alt' | 'image'
+  > {
+  alt?: string
 }
 
-const JaenImage: React.FC<ImageProps> = ({editable = false, ...props}) => {
-  const [initialImage, setInitialImage] = React.useState(props.initialImage)
+export type JaenImage = {
+  initialImage: InitialImageType
+  gatsbyImage?: IGatsbyImageData
+  editable?: boolean
+  onChange: (image: InitialImageType) => void
+  imageProps: JaenImageProps
+}
 
+const JaenImage: React.FC<JaenImage> = ({
+  editable = false,
+  initialImage,
+  gatsbyImage,
+  ...props
+}) => {
   const fileSelector = useDisclosure()
+  const [isInitialImage, setIsInitalImage] = React.useState<boolean>(
+    !gatsbyImage
+  )
+
+  console.log('[JaenImage]', isInitialImage)
 
   const handleFileClick = () => {
-    fileSelector.onOpen()
-  }
-
-  React.useEffect(() => {
-    setInitialImage(props.initialImage)
-  }, [props.initialImage])
-
-  let image
-
-  if (editable) {
-    image = (
-      <Image
-        src={initialImage.src}
-        title={initialImage.title}
-        alt={initialImage.alt}
-        width={props.width}
-        height={props.height}
-        transition="0.2s all"
-        objectFit="cover"
-        _hover={
-          editable ? {filter: 'brightness(70%)', cursor: 'pointer'} : undefined
-        }
-        onClick={handleFileClick}
-      />
-    )
-  } else {
-    image = (
-      <Image
-        placeholder="blurred"
-        layout="fixed"
-        objectFit="cover"
-        src={initialImage.src}
-        title={initialImage.title}
-        alt={initialImage.alt}
-        width={props.width}
-        height={JSON.parse(JSON.stringify(props.height))}
-      />
-    )
+    if (editable) {
+      fileSelector.onOpen()
+    }
   }
 
   return (
     <>
-      {image}
+      <JaenImageContainer editable={editable} onClick={handleFileClick}>
+        {isInitialImage ? (
+          <Image {...props.imageProps} {...initialImage} />
+        ) : (
+          <>
+            {gatsbyImage && (
+              <GatsbyImage
+                image={gatsbyImage}
+                title={initialImage.title}
+                alt={initialImage.alt}
+                {...props.imageProps}
+              />
+            )}
+          </>
+        )}
+      </JaenImageContainer>
       {fileSelector.isOpen && (
         <SnekFinder
           mode="selector"
           onSelectorClose={fileSelector.onClose}
           onSelectorSelect={i => {
+            setIsInitalImage(true)
             props.onChange({
               src: i.src,
               title: i.title,

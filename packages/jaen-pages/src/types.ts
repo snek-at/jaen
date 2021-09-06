@@ -1,3 +1,4 @@
+import {IGatsbyImageData} from 'gatsby-plugin-image'
 import React from 'react'
 
 import {InitValueType} from './containers/fields/StreamField/types'
@@ -21,14 +22,14 @@ export type TextBlock = {
   text: string
 }
 
-export type FileBlock = {
-  _type: 'FileBlock'
+export type ImageBlock = {
+  _type: 'ImageBlock'
   src: string
   title: string
   alt: string
 }
 
-export type ContentBlocks = TextBlock | FileBlock
+export type ContentBlocks = TextBlock | ImageBlock
 
 type BlocksFieldDetails = {
   _type: 'BlocksField'
@@ -83,6 +84,19 @@ export type PageMetadata = {
 type BasePageType = {
   slug: string
   pageMetadata?: PageMetadata
+  images: {
+    id: {
+      fieldName: string
+      pageId: string
+      block: {
+        position: number
+        fieldName: string
+      } | null
+    }
+    file: {
+      childImageSharp: {gatsbyImageData: IGatsbyImageData}
+    }
+  }[]
   fields: {
     [fieldName: string]: Field
   }

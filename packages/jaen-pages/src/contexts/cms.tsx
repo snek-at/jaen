@@ -147,6 +147,17 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
                     datePublished
                     isBlogPost
                   }
+                  images {
+                    id {
+                      fieldName
+                      pageId
+                    }
+                    file {
+                      childImageSharp {
+                        gatsbyImageData
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -170,7 +181,8 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
             slug: jaenPageContext?.slug,
             template: jaenPageContext?.template,
             fields: jaenPageContext?.fields,
-            pageMetadata: jaenPageContext?.pageMetadata
+            pageMetadata: jaenPageContext?.pageMetadata,
+            images: jaenPageContext?.images
           }
         }
 

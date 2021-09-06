@@ -2,10 +2,13 @@ const path = require('path')
 
 module.exports = {
   plugins: [
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
     {
       resolve: 'gatsby-plugin-compile-es6-packages',
       options: {
-        modules: ['@snek-at/jaen-pages']
+        modules: ['@snek-at/jaen-pages', 'gatsby-plugin-image']
       }
     },
     {

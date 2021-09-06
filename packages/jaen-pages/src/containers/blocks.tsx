@@ -55,7 +55,7 @@ export function prepareBlocks<T>(
 
       if (value?._type === 'TextBlock') {
         initValue = value.text as any
-      } else if (value?._type === 'FileBlock') {
+      } else if (value?._type === 'ImageBlock') {
         initValue = value as any
       }
 

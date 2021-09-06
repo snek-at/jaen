@@ -3,31 +3,40 @@ import {
   unregisterPageField,
   updatePageField
 } from '@actions/siteActions'
-import JaenImage, {ImageType} from '@containers/JaenImage'
+import JaenImage, {InitialImageType} from '@containers/JaenImage'
 import {useTemplate} from '@contexts/template'
+import {usePage} from '@src/contexts/cms'
 import {
   FieldIdentifier,
   FieldUpdateDetails,
-  FileBlock,
+  ImageBlock,
   TextBlock
 } from '@src/types'
 import {store, useAppDispatch, useAppSelector} from '@store/index'
 import {pageFieldContentSelector} from '@store/selectors/pages'
 import {withRedux} from '@store/withRedux'
+import {GatsbyImage, GatsbyImageProps, getImage} from 'gatsby-plugin-image'
 import React, {useEffect} from 'react'
 import {Provider as ReduxProvider, useSelector} from 'react-redux'
 
-interface ImageFieldProps extends FieldIdentifier {
-  initValue: ImageType
+interface ImageFieldProps extends FieldIdentifier, GatsbyImageProps {
+  initValue: InitialImageType
 }
 
-const ImageField: React.FC<ImageFieldProps> = ({...field}) => {
+const ImageField: React.FC<ImageFieldProps> = ({
+  initValue,
+  fieldName,
+  block,
+  ...props
+}) => {
+  const field = {initValue, fieldName, block}
+
   const dispatch = useAppDispatch()
   const isEditing = useAppSelector(state => state.options.isEditing)
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
 
-  const {initValue, fieldName, block} = field
+  const page = usePage(pageId)
 
   const register = () => dispatch(registerPageField({pageId, field}))
   const unregister = () => dispatch(unregisterPageField({pageId, field}))
@@ -35,12 +44,12 @@ const ImageField: React.FC<ImageFieldProps> = ({...field}) => {
   const content = useSelector(
     pageFieldContentSelector(pageId, fieldName, block)
   )
-  const updatedValue = content as FileBlock
+  const updatedValue = content as ImageBlock
   const isRegistered = updatedValue !== undefined
 
   const value = isRegistered ? updatedValue : initValue
 
-  const handleOnChange = (data: ImageType) => {
+  const handleOnChange = (data: InitialImageType) => {
     if (!isRegistered && data !== initValue) {
       register()
     }
@@ -56,7 +65,7 @@ const ImageField: React.FC<ImageFieldProps> = ({...field}) => {
           blockPosition: block.position,
           fieldName,
           block: {
-            _type: 'FileBlock',
+            _type: 'ImageBlock',
             ...data
           }
         }
@@ -65,7 +74,7 @@ const ImageField: React.FC<ImageFieldProps> = ({...field}) => {
           _type: 'PlainField',
           fieldName,
           block: {
-            _type: 'FileBlock',
+            _type: 'ImageBlock',
             ...data
           }
         }
@@ -80,13 +89,34 @@ const ImageField: React.FC<ImageFieldProps> = ({...field}) => {
     }
   }
 
+  console.log('[ImageField] jaenPageContext', page.images)
+
+  const image = page?.images?.find(({id}) => {
+    if (id.pageId !== pageId || id.fieldName !== fieldName) {
+      return false
+    }
+
+    if (id.block) {
+      if (
+        id.block.fieldName !== block?.blockFieldName ||
+        id.block.position !== block?.position
+      ) {
+        return false
+      }
+    }
+
+    return true
+  })?.file
+
+  console.log('image', image)
+
   return (
     <JaenImage
-      onChange={handleOnChange}
-      editable={isEditing}
       initialImage={{...value}}
-      width={500}
-      height={500}
+      gatsbyImage={image?.childImageSharp.gatsbyImageData}
+      editable={isEditing}
+      onChange={handleOnChange}
+      imageProps={props}
     />
   )
 }

@@ -60,6 +60,18 @@ const SamplePage: JaenTemplate = () => {
           initValue="<p>textfield1</p>"
         />
       </Box>
+      <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
+        <h1>ImageField</h1>
+        <fields.ImageField
+          fieldName="imagefield1"
+          initValue={{
+            src: 'https://placekitten.com/800/600',
+            alt: 'ta',
+            title: 'daa'
+          }}
+          style={{width: '50%'}}
+        />
+      </Box>
     </>
   )
 }
