@@ -7,6 +7,9 @@ import {upload} from './ipfs'
 import {store} from './store'
 import {JaenPagesEntity, JaenPagesPublish} from './types'
 
+export {withRedux} from './store/withRedux'
+export {useOptions} from './store/hooks'
+
 export * as fields from './containers/fields'
 export * as blocks from './containers/blocks'
 
