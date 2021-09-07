@@ -1,3 +1,18 @@
+# [my-gatsby-site-v1.0.0-beta.12](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.11...my-gatsby-site-v1.0.0-beta.12) (2021-09-07)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([35e74c1](https://github.com/snek-at/jaen/commit/35e74c170d136f28676228e8726794aec45cb642))
+* **package.json:** update snekfinder version ([a764f35](https://github.com/snek-at/jaen/commit/a764f354abc83e43bf355c4efee57dc4c7e2b1d4))
+* add high zIndex to MainUI toggle button ([c180d92](https://github.com/snek-at/jaen/commit/c180d92678ce27e499bd9dcb10755de44732b3e1))
+
+
+### Features
+
+* jaenImage uses GatsbyImage now ([a28b99e](https://github.com/snek-at/jaen/commit/a28b99ec0e6bd83cb6359c4ff4783f6847e6a3a4))
+* streamField not includes build data ([b12ff24](https://github.com/snek-at/jaen/commit/b12ff24803c3c7e82971fbe252bb0c333fec469e))
+
 # [my-gatsby-site-v1.0.0-beta.11](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.10...my-gatsby-site-v1.0.0-beta.11) (2021-09-06)
 
 
