@@ -9,7 +9,7 @@ import * as React from 'react'
 import SnekFinder from '../SnekFinder'
 import {JaenImageContainer} from './style'
 
-export type InitialImageType = {
+export type ImageType = {
   src: string
   title: string
   alt: string
@@ -24,25 +24,22 @@ export interface JaenImageProps
 }
 
 export type JaenImage = {
-  initialImage: InitialImageType
-  gatsbyImage?: IGatsbyImageData
+  initialImage: ImageType
+  storeImage?: ImageType
+  contextImage?: IGatsbyImageData
   editable?: boolean
-  onChange: (image: InitialImageType) => void
+  onChange: (image: ImageType) => void
   imageProps: JaenImageProps
 }
 
 const JaenImage: React.FC<JaenImage> = ({
   editable = false,
   initialImage,
-  gatsbyImage,
+  storeImage,
+  contextImage,
   ...props
 }) => {
   const fileSelector = useDisclosure()
-  const [isInitialImage, setIsInitalImage] = React.useState<boolean>(
-    !gatsbyImage
-  )
-
-  console.log('[JaenImage]', isInitialImage)
 
   const handleFileClick = () => {
     if (editable) {
@@ -50,22 +47,20 @@ const JaenImage: React.FC<JaenImage> = ({
     }
   }
 
+  const image = storeImage || initialImage
+
   return (
     <>
       <JaenImageContainer editable={editable} onClick={handleFileClick}>
-        {isInitialImage ? (
-          <Image {...props.imageProps} {...initialImage} />
+        {storeImage || !contextImage ? (
+          <Image {...props.imageProps} {...image} />
         ) : (
-          <>
-            {gatsbyImage && (
-              <GatsbyImage
-                image={gatsbyImage}
-                title={initialImage.title}
-                alt={initialImage.alt}
-                {...props.imageProps}
-              />
-            )}
-          </>
+          <GatsbyImage
+            image={contextImage}
+            title={image.title}
+            alt={image.alt}
+            {...props.imageProps}
+          />
         )}
       </JaenImageContainer>
       {fileSelector.isOpen && (
@@ -73,8 +68,6 @@ const JaenImage: React.FC<JaenImage> = ({
           mode="selector"
           onSelectorClose={fileSelector.onClose}
           onSelectorSelect={i => {
-            setIsInitalImage(true)
-
             props.onChange({
               src: i.src,
               title: i.title,
