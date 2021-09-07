@@ -1,3 +1,18 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.17](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.16...@snek-at/jaen-pages-v2.0.0-beta.17) (2021-09-07)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([35e74c1](https://github.com/snek-at/jaen/commit/35e74c170d136f28676228e8726794aec45cb642))
+* **package.json:** update snekfinder version ([a764f35](https://github.com/snek-at/jaen/commit/a764f354abc83e43bf355c4efee57dc4c7e2b1d4))
+
+
+### Features
+
+* add options hook ([c4d7c20](https://github.com/snek-at/jaen/commit/c4d7c20e0b2bb00b31298a3f8b7eedcb03289ba7))
+* jaenImage uses GatsbyImage now ([a28b99e](https://github.com/snek-at/jaen/commit/a28b99ec0e6bd83cb6359c4ff4783f6847e6a3a4))
+* streamField not includes build data ([b12ff24](https://github.com/snek-at/jaen/commit/b12ff24803c3c7e82971fbe252bb0c333fec469e))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.16](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.15...@snek-at/jaen-pages-v2.0.0-beta.16) (2021-09-06)
 
 
