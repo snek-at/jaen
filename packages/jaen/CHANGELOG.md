@@ -1,3 +1,15 @@
+# [@snek-at/jaen-v2.0.0-beta.13](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.12...@snek-at/jaen-v2.0.0-beta.13) (2021-09-07)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([35e74c1](https://github.com/snek-at/jaen/commit/35e74c170d136f28676228e8726794aec45cb642))
+
+
+### Features
+
+* jaenImage uses GatsbyImage now ([a28b99e](https://github.com/snek-at/jaen/commit/a28b99ec0e6bd83cb6359c4ff4783f6847e6a3a4))
+
 # [@snek-at/jaen-v2.0.0-beta.12](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.11...@snek-at/jaen-v2.0.0-beta.12) (2021-09-05)
 
 
