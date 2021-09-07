@@ -1,3 +1,12 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.7](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.6...@snek-at/jaen-shared-ui-v2.0.0-beta.7) (2021-09-07)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([35e74c1](https://github.com/snek-at/jaen/commit/35e74c170d136f28676228e8726794aec45cb642))
+* **package.json:** update snekfinder version ([a764f35](https://github.com/snek-at/jaen/commit/a764f354abc83e43bf355c4efee57dc4c7e2b1d4))
+* add high zIndex to MainUI toggle button ([c180d92](https://github.com/snek-at/jaen/commit/c180d92678ce27e499bd9dcb10755de44732b3e1))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.6](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.5...@snek-at/jaen-shared-ui-v2.0.0-beta.6) (2021-09-05)
 
 
