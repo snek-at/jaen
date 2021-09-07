@@ -5028,10 +5028,10 @@
   dependencies:
     lottie-web "^5.7.12"
 
-"@snek-at/snek-finder@1.0.0-beta.9", "@snek-at/snek-finder@^1.0.0-beta.9":
-  version "1.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@snek-at/snek-finder/-/snek-finder-1.0.0-beta.9.tgz#b46cee0494eeeb6fd8e5f5a92ce32ea78bca1917"
-  integrity sha512-ANhkTyQT9G7Yc9KCJHjP82AZhRhy81FL9yn+0mrDYJt7GSfUhBCnfEq+5TqATPZp4EIs5PnJxgSxxWlYWxCNdA==
+"@snek-at/snek-finder@1.0.0-beta.11", "@snek-at/snek-finder@^1.0.0-beta.11":
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@snek-at/snek-finder/-/snek-finder-1.0.0-beta.11.tgz#33914343d618322334bea8e7edf457c02612cb4a"
+  integrity sha512-j7pv0zKYSQASitfBdQmjiF99A9/dhQEWqLFDt7WaIBQmT8ZWEvOtdZmGPGl6usKFZDtgatp+YLV4qXMCDja15g==
   dependencies:
     "@chakra-ui/icons" "^1.0.14"
     "@chakra-ui/react" "^1.6.6"

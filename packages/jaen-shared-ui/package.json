@@ -18,7 +18,7 @@
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@react-icons/all-files": "^4.1.0",
     "@snek-at/react-lottie": "1.0.0-beta.3",
-    "@snek-at/snek-finder": "1.0.0-beta.9",
+    "@snek-at/snek-finder": "1.0.0-beta.11",
     "framer-motion": "^4.1.17",
     "react": "^17.0.2",
     "react-analytics-charts": "^1.2.12",

@@ -20,7 +20,7 @@
     "@snek-at/gatsby-plugin-chakra-ui": "1.0.0-beta.4",
     "@snek-at/jaen": "^2.0.0-beta.12",
     "@snek-at/jaen-shared-ui": "2.0.0-beta.6",
-    "@snek-at/snek-finder": "^1.0.0-beta.9",
+    "@snek-at/snek-finder": "^1.0.0-beta.11",
     "deepmerge": "^4.2.2",
     "electron": "^14.0.0",
     "esm": "^3.2.25",
