@@ -15,8 +15,8 @@ import {
 import {merge} from '@common/utils'
 import {BlockItem, GenericBC, prepareBlocks} from '@containers/blocks'
 import {useTemplate} from '@contexts/template'
+import {RevertCSSWrapper} from '@snek-at/jaen'
 import {SFWrapper} from '@snek-at/jaen-shared-ui'
-import {RevertCSSWrapper} from '@src/../../jaen/src'
 import {BlocksField} from '@src/types'
 import {useAppDispatch, useAppSelector, useAppState} from '@store/index'
 import {pageFieldBlocksSelector} from '@store/selectors/pages'
@@ -24,18 +24,14 @@ import {withRedux} from '@store/withRedux'
 import React, {useEffect, useState, useRef, useMemo} from 'react'
 import {useCallback} from 'react'
 
-import {InitValueType} from './types'
-
 type StreamFieldProps = {
   fieldName: string
-  initValue: InitValueType
   blocks: GenericBC[]
   reverseOrder?: boolean
 }
 
 const StreamField: React.FC<StreamFieldProps> = ({
   fieldName,
-  initValue,
   blocks,
   reverseOrder
 }) => {
@@ -82,17 +78,13 @@ const StreamField: React.FC<StreamFieldProps> = ({
 
   const visibleBlocks = useMemo(
     () =>
-      merge(
-        contextValue || initValue,
-        SFBlocks,
-        value => value.deleted
-      ) as typeof SFBlocks,
-    [initValue, SFBlocks]
+      merge(contextValue, SFBlocks, value => value.deleted) as typeof SFBlocks,
+    [contextValue, SFBlocks]
   )
 
   const allBlocks = useMemo(
-    () => merge(contextValue || initValue, SFBlocks) as typeof SFBlocks,
-    [initValue, SFBlocks]
+    () => merge(contextValue, SFBlocks) as typeof SFBlocks,
+    [contextValue, SFBlocks]
   )
 
   const visibleBlocksKeys = Object.keys(visibleBlocks).sort(
@@ -142,7 +134,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
       }
     }
     // check if position is in contextValue or initValue, if not, unregister it instead of deleting it
-    if (position in contextValue || initValue) {
+    if (position in contextValue) {
       dispatch(deletePageField(payload))
     } else {
       dispatch(unregisterPageField(payload))

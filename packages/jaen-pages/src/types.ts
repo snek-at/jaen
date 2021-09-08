@@ -1,12 +1,9 @@
 import {IGatsbyImageData} from 'gatsby-plugin-image'
 import React from 'react'
 
-import {InitValueType} from './containers/fields/StreamField/types'
-
 export type JaenTemplate = React.FC & {TemplateName: string}
 
 export type StreamBlockIdentifier = {
-  initValue: InitValueType['string']
   fieldName: string
   block?: {typeName: string; position: number}
 }

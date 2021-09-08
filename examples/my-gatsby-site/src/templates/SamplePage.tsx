@@ -51,39 +51,7 @@ const SamplePage: JaenTemplate = () => {
       </Box>
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
         <h1>StreamField</h1>
-        <fields.StreamField
-          fieldName="streamfield1"
-          initValue={{
-            0: {
-              typeName: 'TestBlock',
-              fields: {
-                body: {
-                  _type: 'TextBlock',
-                  text:
-                    '<p>This should resolve the window is not defined error and you should be able to build your code successfully. If you need more information regarding this, check the Gatsby documentation on Debugging HTML Builds.</p>'
-                },
-                body2: {
-                  _type: 'TextBlock',
-                  text: '<p>02</p>'
-                }
-              }
-            },
-            1: {
-              typeName: 'TestBlock',
-              fields: {
-                body: {
-                  _type: 'TextBlock',
-                  text: '<p>11</p>'
-                },
-                body2: {
-                  _type: 'TextBlock',
-                  text: '<p>12</p>'
-                }
-              }
-            }
-          }}
-          blocks={[TestBlock]}
-        />
+        <fields.StreamField fieldName="streamfield2" blocks={[TestBlock]} />
       </Box>
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
         <h1>TextField</h1>

@@ -49,15 +49,7 @@ export function prepareBlocks<T>(
       Block.BlockFields[blockFieldName]
 
     if (fieldOptions.block) {
-      const value = fieldOptions.initValue?.fields[blockFieldName as string]
-
       let initValue = Block.defaultValues[blockFieldName]
-
-      if (value?._type === 'TextBlock') {
-        initValue = value.text as any
-      } else if (value?._type === 'ImageBlock') {
-        initValue = value as any
-      }
 
       const ConfiguredField = (
         <Field
@@ -84,7 +76,6 @@ export const BlockItem = React.memo(
     block,
     height,
     width,
-    initValue,
     position,
     onDelete,
     isEditing
@@ -95,7 +86,6 @@ export const BlockItem = React.memo(
         streamFieldWidth={width}
         values={prepareBlocks(Block, {
           fieldName,
-          initValue,
           block
         })}
       />
