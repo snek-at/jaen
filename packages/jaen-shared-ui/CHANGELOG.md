@@ -1,3 +1,10 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.9](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.8...@snek-at/jaen-shared-ui-v2.0.0-beta.9) (2021-09-08)
+
+
+### Bug Fixes
+
+* disable context menu for locked pages ([9f3ae95](https://github.com/snek-at/jaen/commit/9f3ae9596ea7c1d952f7dfdfa22009800a9949fa))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.8](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.7...@snek-at/jaen-shared-ui-v2.0.0-beta.8) (2021-09-08)
 
 
