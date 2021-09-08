@@ -2,13 +2,13 @@
 import {Box} from '@chakra-ui/react'
 import styled from '@emotion/styled'
 import loadable from '@loadable/component'
-import {RevertCSSWrapper} from '@src/../../jaen/src'
-import React, {useRef, useState, useEffect} from 'react'
+import * as React from 'react'
 
 import './style.css'
 
 const EditorWrapper = styled(Box)`
   display: inline-block;
+  width: 100%;
 
   .ck-content > * {
     all: revert;
