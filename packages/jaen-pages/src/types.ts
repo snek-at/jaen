@@ -29,7 +29,12 @@ export type ImageBlock = {
   alt: string
 }
 
-export type ContentBlocks = TextBlock | ImageBlock
+export type ChoiceBlock = {
+  _type: 'ChoiceBlock'
+  option: string
+}
+
+export type ContentBlocks = TextBlock | ImageBlock | ChoiceBlock
 
 type BlocksFieldDetails = {
   _type: 'BlocksField'
