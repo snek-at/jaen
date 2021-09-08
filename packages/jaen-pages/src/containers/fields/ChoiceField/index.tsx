@@ -52,6 +52,8 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
   const register = () => dispatch(registerPageField({pageId, field}))
   const unregister = () => dispatch(unregisterPageField({pageId, field}))
 
+  const isEditing = useAppSelector(state => state.options.isEditing)
+
   const updatedValue = (useAppSelector(
     pageFieldContentSelector(pageId, fieldName, block)
   ) as ChoiceBlock | undefined)?.option
@@ -105,6 +107,10 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
         })
       )
     }
+  }
+
+  if (!isEditing) {
+    return onRender(selection)
   }
 
   return (
