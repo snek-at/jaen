@@ -1,3 +1,16 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.20](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.19...@snek-at/jaen-pages-v2.0.0-beta.20) (2021-09-08)
+
+
+### Bug Fixes
+
+* **textfield:** set to full width in order to fix dissapearing issue ([e5f8a86](https://github.com/snek-at/jaen/commit/e5f8a86f51a10d4afc0debbd4743dd6a623d3634))
+
+
+### Features
+
+* **chakraui:** enfore chakraui through jaen ([bd539de](https://github.com/snek-at/jaen/commit/bd539de1513f7656f5a7a5ce2f30c8c1628f8967))
+* **imagefield:** add build data for blocks ([7777174](https://github.com/snek-at/jaen/commit/7777174f391ed2f222b0ae850fb61b63a560323c))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.19](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.18...@snek-at/jaen-pages-v2.0.0-beta.19) (2021-09-08)
 
 
