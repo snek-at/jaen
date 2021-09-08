@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.14](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.13...@snek-at/jaen-v2.0.0-beta.14) (2021-09-08)
+
+
+### Features
+
+* **chakraui:** enfore chakraui through jaen ([bd539de](https://github.com/snek-at/jaen/commit/bd539de1513f7656f5a7a5ce2f30c8c1628f8967))
+
 # [@snek-at/jaen-v2.0.0-beta.13](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.12...@snek-at/jaen-v2.0.0-beta.13) (2021-09-07)
 
 
