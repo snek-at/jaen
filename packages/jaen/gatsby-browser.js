@@ -1,10 +1,9 @@
 import {ChakraProvider} from '@chakra-ui/react'
 
 import {JaenCoreProvider} from './src'
-import {theme} from './src/chakra-theme'
+import theme from './src/@chakra-ui/theme'
 
 export const wrapRootElement = ({element}, pluginOptions) => {
-  const enableChakraUI = pluginOptions.enableChakraUI
   // @ts-ignore
   const config = require(___JAEN_CONFIG___)
   const plugins = config.plugins || []
@@ -15,15 +14,11 @@ export const wrapRootElement = ({element}, pluginOptions) => {
     return plugin.resolve.default
   })
 
-  const jaenCoreElement = (
-    <JaenCoreProvider plugins={resolvedPlugins} remote={config.remote}>
-      {element}
-    </JaenCoreProvider>
+  return (
+    <ChakraProvider theme={theme}>
+      <JaenCoreProvider plugins={resolvedPlugins} remote={config.remote}>
+        {element}
+      </JaenCoreProvider>
+    </ChakraProvider>
   )
-
-  if (enableChakraUI) {
-    return <ChakraProvider theme={theme}>{jaenCoreElement}</ChakraProvider>
-  }
-
-  return jaenCoreElement
 }

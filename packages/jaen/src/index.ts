@@ -1,6 +1,6 @@
 export * from './context'
 export * from './plugin'
 
-export * from './chakra-theme'
+export * from './wrapper'
 
 export type {Jaen} from '@src/types'

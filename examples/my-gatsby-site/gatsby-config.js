@@ -5,12 +5,7 @@ const siteMetadata = require('./site-metadata')
 module.exports = {
   siteMetadata,
   plugins: [
-    {
-      resolve: '@snek-at/jaen',
-      options: {
-        enableChakraUI: true
-      }
-    },
+    '@snek-at/jaen',
     {
       resolve: '@snek-at/jaen-pages',
       options: {

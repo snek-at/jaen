@@ -15,7 +15,6 @@
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@snek-at/gatsby-plugin-chakra-ui": "^1.0.0-beta.4",
     "babel-preset-gatsby-package": "^1.13.0"
   }
 }

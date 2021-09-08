@@ -47,15 +47,13 @@ const MainUI: React.FC<MainUIProps> = ({ui: {hotbar, tabs}}) => {
   }
 
   return (
-    <ChakraProvider>
-      <LoadableUI
-        hotbar={hotbar}
-        tabs={tabs}
-        header={{onLogout: handleLogout}}
-        authenticated={authenticated}
-        login={{onLogin: handleLogin, onGuestLogin: handleGuestLogin}}
-      />
-    </ChakraProvider>
+    <LoadableUI
+      hotbar={hotbar}
+      tabs={tabs}
+      header={{onLogout: handleLogout}}
+      authenticated={authenticated}
+      login={{onLogin: handleLogin, onGuestLogin: handleGuestLogin}}
+    />
   )
 }
 

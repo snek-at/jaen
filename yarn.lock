@@ -5013,7 +5013,7 @@
     js-cookie "^2.2.1"
     subscriptions-transport-ws "^0.9.18"
 
-"@snek-at/gatsby-plugin-chakra-ui@1.0.0-beta.4", "@snek-at/gatsby-plugin-chakra-ui@^1.0.0-beta.4":
+"@snek-at/gatsby-plugin-chakra-ui@1.0.0-beta.4":
   version "1.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/@snek-at/gatsby-plugin-chakra-ui/-/gatsby-plugin-chakra-ui-1.0.0-beta.4.tgz#6999245712de9fba7c635edbf799877d137feed4"
   integrity sha512-hcAIFH6XkQwuM2kdmBIGCMDJ9YWplbopClz0PYQK9ree/ptk+M4nBZ5mulBiIsA8/apISVVtfctDUnagfBljBw==

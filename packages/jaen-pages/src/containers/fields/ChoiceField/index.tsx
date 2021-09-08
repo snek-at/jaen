@@ -114,19 +114,17 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
   }
 
   return (
-    <ChakraProvider>
-      <Popover trigger="hover">
-        <PopoverTrigger>{onRender(selection)}</PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
-          <PopoverBody>
-            {onRenderPopover(selection, options, onSelect)}
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-    </ChakraProvider>
+    <Popover trigger="hover">
+      <PopoverTrigger>{onRender(selection)}</PopoverTrigger>
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverCloseButton />
+        {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
+        <PopoverBody>
+          {onRenderPopover(selection, options, onSelect)}
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
   )
 }
 
