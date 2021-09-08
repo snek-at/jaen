@@ -29,11 +29,11 @@ interface ChoiceFieldProps extends Omit<FieldIdentifier, 'initValue'> {
   options: Options
   initValue?: Option
   onRenderPopover: (
-    selection: Option,
+    selection: Option | undefined,
     options: Options,
     select: (option: Option) => void
   ) => JSX.Element
-  onRender: (selection: Option) => JSX.Element
+  onRender: (selection: Option | undefined) => JSX.Element
 }
 
 // Component
@@ -63,7 +63,7 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
 
   const isRegistered = updatedValue !== undefined
 
-  const selection = isRegistered
+  const selection: string | undefined = isRegistered
     ? updatedValue
     : contextValue || initValue || options[0]
 
