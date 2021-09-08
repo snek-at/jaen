@@ -1,3 +1,15 @@
+# [my-gatsby-site-v1.0.0-beta.14](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.13...my-gatsby-site-v1.0.0-beta.14) (2021-09-08)
+
+
+### Bug Fixes
+
+* **choicefield:** enable popover only on editing ([4ee9231](https://github.com/snek-at/jaen/commit/4ee923178ab30045d44f0d74ec85c8995bc02c52))
+
+
+### Features
+
+* remove initialValue form StreamField ([1c60e15](https://github.com/snek-at/jaen/commit/1c60e15311338ff2f060269ed81812a4ef2b655a))
+
 # [my-gatsby-site-v1.0.0-beta.13](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.12...my-gatsby-site-v1.0.0-beta.13) (2021-09-08)
 
 

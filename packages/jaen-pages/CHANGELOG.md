@@ -1,3 +1,15 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.19](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.18...@snek-at/jaen-pages-v2.0.0-beta.19) (2021-09-08)
+
+
+### Bug Fixes
+
+* **choicefield:** enable popover only on editing ([4ee9231](https://github.com/snek-at/jaen/commit/4ee923178ab30045d44f0d74ec85c8995bc02c52))
+
+
+### Features
+
+* remove initialValue form StreamField ([1c60e15](https://github.com/snek-at/jaen/commit/1c60e15311338ff2f060269ed81812a4ef2b655a))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.18](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.17...@snek-at/jaen-pages-v2.0.0-beta.18) (2021-09-08)
 
 

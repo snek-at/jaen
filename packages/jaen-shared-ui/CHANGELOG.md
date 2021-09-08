@@ -1,3 +1,10 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.8](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.7...@snek-at/jaen-shared-ui-v2.0.0-beta.8) (2021-09-08)
+
+
+### Bug Fixes
+
+* update zindex of mainui ([2e828fa](https://github.com/snek-at/jaen/commit/2e828fa93dce91b3345e8ca6dce19433079c74b2))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.7](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.6...@snek-at/jaen-shared-ui-v2.0.0-beta.7) (2021-09-07)
 
 
