@@ -1,3 +1,17 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.18](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.17...@snek-at/jaen-pages-v2.0.0-beta.18) (2021-09-08)
+
+
+### Bug Fixes
+
+* change type to fix type error ([c272338](https://github.com/snek-at/jaen/commit/c27233809a2488b7836aa04b1a8109ca06eaab80))
+* **imagefield:** image discard resets to context image now ([651d0a0](https://github.com/snek-at/jaen/commit/651d0a0f0f7fa7436dbaa28b6b37a7190212f041))
+* **imagefield:** switch interface use correct types ([835da4d](https://github.com/snek-at/jaen/commit/835da4d4bf933df79cb20e76d6f2f60c5c834068))
+
+
+### Features
+
+* add ChoiceField ([115417b](https://github.com/snek-at/jaen/commit/115417b7a0fc9aca684df8ee068a87d58ce365bb))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.17](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.16...@snek-at/jaen-pages-v2.0.0-beta.17) (2021-09-07)
 
 
