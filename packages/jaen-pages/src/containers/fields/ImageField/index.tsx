@@ -3,7 +3,7 @@ import {
   unregisterPageField,
   updatePageField
 } from '@actions/siteActions'
-import JaenImage, {ImageType} from '@containers/JaenImage'
+import JaenImage, {ImageType, JaenImageProps} from '@containers/JaenImage'
 import {useTemplate} from '@contexts/template'
 import {usePage} from '@src/contexts/cms'
 import {
@@ -19,7 +19,7 @@ import {GatsbyImage, GatsbyImageProps, getImage} from 'gatsby-plugin-image'
 import React, {useEffect} from 'react'
 import {Provider as ReduxProvider, useSelector} from 'react-redux'
 
-interface ImageFieldProps extends FieldIdentifier, GatsbyImageProps {
+interface ImageFieldProps extends FieldIdentifier, JaenImageProps {
   initValue: ImageType
 }
 
