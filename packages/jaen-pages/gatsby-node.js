@@ -158,6 +158,18 @@ exports.onCreateNode = async ({
   cache,
   createNodeId
 }) => {
+
+  const createFile = (url, parentNodeId) => {
+    return await createRemoteFileNode({
+      url,
+      parentNodeId,
+      createNode,
+      createNodeId,
+      cache,
+      store
+    })
+  }
+
   // For all MarkdownRemark nodes that have a featured image url, call createRemoteFileNode
   if (node.internal.type === 'SitePage') {
     const {jaenPageContext} = node.context
@@ -170,14 +182,7 @@ exports.onCreateNode = async ({
 
         if (field._type === 'PlainField') {
           if (content._type === 'ImageBlock') {
-            let fileNode = await createRemoteFileNode({
-              url: content.src, // string that points to the URL of the image
-              parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
-              createNode, // helper function in gatsby-node to generate the node
-              createNodeId, // helper function in gatsby-node to generate the node id
-              cache, // Gatsby's cache
-              store // Gatsby's Redux store
-            })
+            let fileNode = createFile(content.src, node.id)
 
             if (fileNode) {
               images.push({
@@ -190,6 +195,25 @@ exports.onCreateNode = async ({
             }
           }
         } else if (field._type === 'BlocksField') {
+          for (const [position, block] of Object.entries(content.blocks)) {
+            if (block._type === 'ImageBlock') {
+              let fileNode = createFile(content.src, node.id)
+
+              if (fileNode) {
+                images.push({
+                  id: {
+                    pageId: jaenPageContext.id,
+                    fieldName,
+                    block: {
+                      position: parseInt(position),
+                      fieldName
+                    }
+                  },
+                  file___NODE: fileNode.id
+                })
+              }
+            }
+          }
         }
       }
     }
