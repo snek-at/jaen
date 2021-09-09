@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.23](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.22...@snek-at/jaen-pages-v2.0.0-beta.23) (2021-09-09)
+
+
+### Bug Fixes
+
+* **blockcontainer:** disable SFBWrapper when not editing ([a171b96](https://github.com/snek-at/jaen/commit/a171b9610718864037f2a2fe5b4de44369886e2f))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.22](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.21...@snek-at/jaen-pages-v2.0.0-beta.22) (2021-09-09)
 
 
