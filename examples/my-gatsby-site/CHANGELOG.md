@@ -1,3 +1,11 @@
+# [my-gatsby-site-v1.0.0-beta.16](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.15...my-gatsby-site-v1.0.0-beta.16) (2021-09-09)
+
+
+### Features
+
+* **choicefield:** add disable option for popover ([91a36ac](https://github.com/snek-at/jaen/commit/91a36ac01c4899d5a284b53c55e8e1416a125cbb))
+* introduce BlockContainer (StreamField replacement) ([e89c100](https://github.com/snek-at/jaen/commit/e89c1002b05ed33f69240b128d129ddbea5cb362))
+
 # [my-gatsby-site-v1.0.0-beta.15](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.14...my-gatsby-site-v1.0.0-beta.15) (2021-09-08)
 
 
