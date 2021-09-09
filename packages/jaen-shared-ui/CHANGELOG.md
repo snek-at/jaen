@@ -1,3 +1,15 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.10](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.9...@snek-at/jaen-shared-ui-v2.0.0-beta.10) (2021-09-09)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([3ae446a](https://github.com/snek-at/jaen/commit/3ae446ae64e4d7f7472f1f919aed521734109a3d))
+
+
+### Features
+
+* introduce BlockContainer (StreamField replacement) ([e89c100](https://github.com/snek-at/jaen/commit/e89c1002b05ed33f69240b128d129ddbea5cb362))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.9](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.8...@snek-at/jaen-shared-ui-v2.0.0-beta.9) (2021-09-08)
 
 
