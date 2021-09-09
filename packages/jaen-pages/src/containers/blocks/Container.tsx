@@ -24,6 +24,8 @@ import {withRedux} from '@store/withRedux'
 import React, {useEffect, useState, useRef, useMemo} from 'react'
 import {useCallback} from 'react'
 
+import BlockItem from './BlockItem'
+
 type BlockContainerProps = {
   name: string
   displayName: string
@@ -38,6 +40,8 @@ const BlockContainer: React.FC<BlockContainerProps> = ({
   reverseOrder
 }) => {
   const dispatch = useAppDispatch()
+
+  console.log('RERENDER container')
 
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
@@ -153,7 +157,7 @@ const BlockContainer: React.FC<BlockContainerProps> = ({
     typeName: string
   ): JaenBlock | undefined => blocks.find(b => b.BlockName === typeName)
 
-  const renderedBlocks = visibleBlocksKeys.map(position => {
+  const renderedBlocks = visibleBlocksKeys.map((position, key) => {
     const BlockComponent = getBlockComponentByTypeName(
       allBlocks?.[position].typeName
     )
@@ -161,29 +165,19 @@ const BlockContainer: React.FC<BlockContainerProps> = ({
     const numPosition = parseInt(position)
 
     if (BlockComponent) {
-      const block = (
-        <BlockProvider
-          key={position}
+      return (
+        <BlockItem
+          key={numPosition}
           containerName={name}
           position={numPosition}
-          blockName={BlockComponent.BlockName}>
-          {!isEditing ? <BlockComponent /> : <BlockComponent />}
-        </BlockProvider>
+          blockName={BlockComponent.BlockName}
+          BlockComponent={BlockComponent}
+          isEditing={isEditing}
+          onDelete={deleteBlock}
+        />
       )
-
-      if (isEditing) {
-        return (
-          <SFBWrapper onDeleteClick={() => deleteBlock(numPosition)}>
-            {block}
-          </SFBWrapper>
-        )
-      }
-
-      return block
     }
   })
-
-  console.log('ADJAKDAJKD', React.Children.toArray(renderedBlocks))
 
   if (isEditing) {
     return (
