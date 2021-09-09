@@ -194,7 +194,7 @@ exports.onCreateNode = async ({
             }
           }
         } else if (field._type === 'BlocksField') {
-          for (const [position, block] of Object.entries(content.blocks)) {
+          for (const [position, block] of Object.entries(field.blocks)) {
             if (block._type === 'ImageBlock') {
               let fileNode = createFile(content.src, node.id)
 
