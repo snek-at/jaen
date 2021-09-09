@@ -158,8 +158,7 @@ exports.onCreateNode = async ({
   cache,
   createNodeId
 }) => {
-
-  const createFile = (url, parentNodeId) => {
+  const createFile = async (url, parentNodeId) => {
     return await createRemoteFileNode({
       url,
       parentNodeId,
