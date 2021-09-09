@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.21](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.20...@snek-at/jaen-pages-v2.0.0-beta.21) (2021-09-09)
+
+
+### Bug Fixes
+
+* make createFile function async ([ba94b8b](https://github.com/snek-at/jaen/commit/ba94b8b8d8a7ea86fb7272fdc066846e52ac09cf))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.20](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.19...@snek-at/jaen-pages-v2.0.0-beta.20) (2021-09-08)
 
 
