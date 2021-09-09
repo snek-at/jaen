@@ -5021,6 +5021,27 @@
     "@chakra-ui/react" "^1.6.6"
     gatsby "^3.12.0"
 
+"@snek-at/jaen-shared-ui@2.0.0-beta.7":
+  version "2.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/@snek-at/jaen-shared-ui/-/jaen-shared-ui-2.0.0-beta.7.tgz#be466cb876e5aa22aa65ab1374cbcd8c200c9e0a"
+  integrity sha512-uw4S2kwxjqcq7EaavWFFADeJFSIJt/wPRG9lJpfYbys7F1m+3pliDw+g/AduX8ZbhlUEX8uEPomaqOfvniFFlQ==
+  dependencies:
+    "@atlaskit/tree" "^8.4.0"
+    "@chakra-ui/icons" "^1.0.15"
+    "@chakra-ui/react" "^1.6.6"
+    "@emotion/react" "^11"
+    "@emotion/styled" "^11"
+    "@fortawesome/fontawesome-svg-core" "^1.2.36"
+    "@fortawesome/free-regular-svg-icons" "^5.15.4"
+    "@fortawesome/react-fontawesome" "^0.1.15"
+    "@react-icons/all-files" "^4.1.0"
+    "@snek-at/react-lottie" "1.0.0-beta.3"
+    "@snek-at/snek-finder" "1.0.0-beta.11"
+    framer-motion "^4.1.17"
+    react "^17.0.2"
+    react-analytics-charts "^1.2.12"
+    react-use-analytics-api "^1.4.16"
+
 "@snek-at/react-lottie@1.0.0-beta.3":
   version "1.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/@snek-at/react-lottie/-/react-lottie-1.0.0-beta.3.tgz#e2200b4bee31247cecaa9d8c9170207d8ff8b5ae"
