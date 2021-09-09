@@ -33,6 +33,7 @@ const SamplePage: JaenTemplate = () => {
         <fields.ChoiceField
           fieldName="choiceField"
           initValue="a" // optional
+          header="ChoiceField Test Header"
           options={['a', 'b', 'c', 'd']}
           onRenderPopover={(selection, options, select) => (
             <>

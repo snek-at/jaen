@@ -26,20 +26,25 @@ import React from 'react'
 type Options = string[]
 type Option = Options[number]
 
+type ChoiceRenderFn = (
+  selection: Option | undefined,
+  options: Options,
+  select: (option: Option) => void,
+  isEditing: boolean
+) => JSX.Element
+
 interface ChoiceFieldProps extends Omit<FieldIdentifier, 'initValue'> {
   options: Options
   initValue?: Option
-  onRenderPopover: (
-    selection: Option | undefined,
-    options: Options,
-    select: (option: Option) => void
-  ) => JSX.Element
-  onRender: (selection: Option | undefined) => JSX.Element
+  header?: React.ReactNode
+  onRenderPopover: ChoiceRenderFn | null
+  onRender: ChoiceRenderFn
 }
 
 // Component
 const ChoiceField: React.FC<ChoiceFieldProps> = ({
   options,
+  header,
   onRenderPopover,
   onRender,
   ...field
@@ -114,19 +119,21 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
     }
   }
 
-  if (!isEditing) {
-    return onRender(selection)
+  if (!isEditing || onRenderPopover === null) {
+    return onRender(selection, options, onSelect, isEditing)
   }
 
   return (
     <Popover trigger="hover">
-      <PopoverTrigger>{onRender(selection)}</PopoverTrigger>
+      <PopoverTrigger>
+        {onRender(selection, options, onSelect, isEditing)}
+      </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
-        {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
+        {header && <PopoverHeader>{header}</PopoverHeader>}
         <PopoverBody>
-          {onRenderPopover(selection, options, onSelect)}
+          {onRenderPopover(selection, options, onSelect, isEditing)}
         </PopoverBody>
       </PopoverContent>
     </Popover>
