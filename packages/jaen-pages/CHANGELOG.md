@@ -1,3 +1,22 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.22](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.21...@snek-at/jaen-pages-v2.0.0-beta.22) (2021-09-09)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([3ae446a](https://github.com/snek-at/jaen/commit/3ae446ae64e4d7f7472f1f919aed521734109a3d))
+* blocks are not included into build ([e6b239a](https://github.com/snek-at/jaen/commit/e6b239ac40059f86fa676c78cde5f694d3b8801a))
+
+
+### Features
+
+* **choicefield:** add disable option for popover ([91a36ac](https://github.com/snek-at/jaen/commit/91a36ac01c4899d5a284b53c55e8e1416a125cbb))
+* introduce BlockContainer (StreamField replacement) ([e89c100](https://github.com/snek-at/jaen/commit/e89c1002b05ed33f69240b128d129ddbea5cb362))
+
+
+### Performance Improvements
+
+* **blockcontainer:** memo blocks inside of container to reduce renderings ([db60407](https://github.com/snek-at/jaen/commit/db604079db6e15ea17d361a9e96c5e121b920d9c))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.21](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.20...@snek-at/jaen-pages-v2.0.0-beta.21) (2021-09-09)
 
 
