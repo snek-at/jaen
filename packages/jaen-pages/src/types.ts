@@ -3,6 +3,11 @@ import React from 'react'
 
 export type JaenTemplate = React.FC & {TemplateName: string}
 
+export interface JaenBlock extends React.FC {
+  BlockName: string
+  BlockDisplayName: string
+}
+
 export type StreamBlockIdentifier = {
   fieldName: string
   block?: {typeName: string; position: number}
@@ -11,7 +16,12 @@ export type StreamBlockIdentifier = {
 export type FieldIdentifier = {
   initValue: any
   fieldName: string
-  block?: {typeName: string; position: number; blockFieldName: string}
+}
+
+export type BlockIdentifier = {
+  typeName: string
+  position: number
+  blockFieldName: string
 }
 
 export type TextBlock = {

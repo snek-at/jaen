@@ -7,11 +7,14 @@ import {upload} from './ipfs'
 import {store} from './store'
 import {JaenPagesEntity, JaenPagesPublish} from './types'
 
+export type {JaenTemplate, JaenBlock} from './types'
+
 export {withRedux} from './store/withRedux'
 export {useOptions} from './store/hooks'
 
+export {default as BlockContainer} from './containers/blocks/Container'
+
 export * as fields from './containers/fields'
-export * as blocks from './containers/blocks'
 
 const PagesTab = loadable(() => import('./containers/ui/tabs/PagesTab'))
 const FilesTab = loadable(() => import('./containers/ui/tabs/FilesTab'))

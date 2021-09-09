@@ -1,7 +1,13 @@
 import Editor from '@containers/Editor'
 import {useTemplate} from '@contexts/template'
+import {BlockContextType, useBlock, useBlockContext} from '@src/contexts/block'
 import {getFieldContent} from '@src/tools/fields'
-import {FieldIdentifier, FieldUpdateDetails, TextBlock} from '@src/types'
+import {
+  BlockIdentifier,
+  FieldIdentifier,
+  FieldUpdateDetails,
+  TextBlock
+} from '@src/types'
 import {
   registerPageField,
   unregisterPageField,
@@ -28,7 +34,12 @@ const TextField: React.FC<TextFieldProps> = ({
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
 
-  const {initValue, fieldName, block} = field
+  let {initValue, fieldName} = field
+
+  const {block, updatedFieldName} = useBlock(fieldName)
+  fieldName = updatedFieldName
+
+  console.log('[TextField]', fieldName, block)
 
   const register = () => dispatch(registerPageField({pageId, field}))
   const unregister = () => dispatch(unregisterPageField({pageId, field}))

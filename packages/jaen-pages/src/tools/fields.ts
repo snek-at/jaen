@@ -1,8 +1,8 @@
-import {BlocksField, Field, FieldIdentifier, PlainField} from '../types'
+import {BlockIdentifier, BlocksField, Field, PlainField} from '../types'
 
 export const getFieldContent = (
   field: Field,
-  block: FieldIdentifier['block']
+  block: BlockIdentifier | undefined
 ) => {
   if (block) {
     return (field as BlocksField | undefined)?.blocks?.[block.position]

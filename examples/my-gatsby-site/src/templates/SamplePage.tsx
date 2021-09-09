@@ -11,11 +11,11 @@ import {
   PopoverCloseButton,
   Button
 } from '@chakra-ui/react'
-import {fields} from '@snek-at/jaen-pages'
+import {BlockContainer, fields} from '@snek-at/jaen-pages'
 import type {JaenTemplate} from '@snek-at/jaen-pages/src/types'
 import * as React from 'react'
 
-import TestBlock from '../blocks/TestBlock'
+import SampleBlock from '../blocks/SampleBlock'
 
 const SamplePage: JaenTemplate = () => {
   return (
@@ -50,8 +50,12 @@ const SamplePage: JaenTemplate = () => {
         />
       </Box>
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-        <h1>StreamField</h1>
-        <fields.StreamField fieldName="streamfield2" blocks={[TestBlock]} />
+        <h1>BlockContainer</h1>
+        <BlockContainer
+          name="blockcontainer1"
+          displayName="My Sample Container"
+          blocks={[SampleBlock]}
+        />
       </Box>
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
         <h1>TextField</h1>

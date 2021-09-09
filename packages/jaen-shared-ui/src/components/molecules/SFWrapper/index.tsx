@@ -17,7 +17,7 @@ import React from 'react'
 
 export type SFWrapperProps = {
   ref: React.Ref<HTMLDivElement>
-  fieldName: string
+  displayName: string
   blockTypes: {name: string; onClick: () => void}[]
 }
 
@@ -47,7 +47,7 @@ const SFWrapper: React.FC<SFWrapperProps> = ({children, ...props}) => {
         <PopoverContent>
           <PopoverArrow />
 
-          <PopoverHeader>{`StreamField (${props.fieldName})`} </PopoverHeader>
+          <PopoverHeader>{`${props.displayName}`} </PopoverHeader>
           <PopoverBody>
             <VStack align="stretch">
               {props.blockTypes.map(({name, onClick}, index) => (

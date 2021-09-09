@@ -18,7 +18,7 @@ const Template: Story<SFWrapperProps> = args => (
 export const Primary: Story<SFWrapperProps> = Template.bind({})
 
 Primary.args = {
-  fieldName: 'name',
+  displayName: 'name',
   blockTypes: [
     {
       name: 'TestBlock',

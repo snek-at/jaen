@@ -9,6 +9,7 @@ import {
   PopoverCloseButton,
   ChakraProvider
 } from '@chakra-ui/react'
+import {useBlock} from '@src/contexts/block'
 import {useTemplate} from '@src/contexts/template'
 import {getFieldContent} from '@src/tools/fields'
 import {ChoiceBlock, FieldIdentifier, FieldUpdateDetails} from '@src/types'
@@ -45,7 +46,11 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
 }) => {
   const dispatch = useAppDispatch()
 
-  const {initValue, fieldName, block} = field
+  let {initValue, fieldName} = field
+
+  const {block, updatedFieldName} = useBlock(fieldName)
+  fieldName = updatedFieldName
+
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
 

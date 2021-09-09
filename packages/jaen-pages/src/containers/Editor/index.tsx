@@ -7,7 +7,6 @@ import * as React from 'react'
 import './style.css'
 
 const EditorWrapper = styled(Box)`
-  display: inline-block;
   width: 100%;
 
   .ck-content > * {

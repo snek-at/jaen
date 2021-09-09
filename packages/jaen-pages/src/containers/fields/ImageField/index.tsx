@@ -5,6 +5,7 @@ import {
 } from '@actions/siteActions'
 import JaenImage, {ImageType, JaenImageProps} from '@containers/JaenImage'
 import {useTemplate} from '@contexts/template'
+import {useBlock} from '@src/contexts/block'
 import {usePage} from '@src/contexts/cms'
 import {
   FieldIdentifier,
@@ -26,10 +27,11 @@ interface ImageFieldProps extends FieldIdentifier, JaenImageProps {
 const ImageField: React.FC<ImageFieldProps> = ({
   initValue,
   fieldName,
-  block,
   ...props
 }) => {
-  const field = {initValue, fieldName, block}
+  const field = {initValue, fieldName}
+  const {block, updatedFieldName} = useBlock(fieldName)
+  fieldName = updatedFieldName
 
   const dispatch = useAppDispatch()
   const isEditing = useAppSelector(state => state.options.isEditing)

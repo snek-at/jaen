@@ -13,25 +13,27 @@ import {
   unregisterPageField
 } from '@actions/siteActions'
 import {merge} from '@common/utils'
-import {BlockItem, GenericBC, prepareBlocks} from '@containers/blocks'
 import {useTemplate} from '@contexts/template'
 import {RevertCSSWrapper} from '@snek-at/jaen'
-import {SFWrapper} from '@snek-at/jaen-shared-ui'
-import {BlocksField} from '@src/types'
-import {useAppDispatch, useAppSelector, useAppState} from '@store/index'
+import {SFWrapper, SFBWrapper} from '@snek-at/jaen-shared-ui'
+import BlockProvider from '@src/contexts/block'
+import {BlocksField, JaenBlock} from '@src/types'
+import {useAppDispatch, useAppSelector} from '@store/index'
 import {pageFieldBlocksSelector} from '@store/selectors/pages'
 import {withRedux} from '@store/withRedux'
 import React, {useEffect, useState, useRef, useMemo} from 'react'
 import {useCallback} from 'react'
 
-type StreamFieldProps = {
-  fieldName: string
-  blocks: GenericBC[]
+type BlockContainerProps = {
+  name: string
+  displayName: string
+  blocks: JaenBlock[]
   reverseOrder?: boolean
 }
 
-const StreamField: React.FC<StreamFieldProps> = ({
-  fieldName,
+const BlockContainer: React.FC<BlockContainerProps> = ({
+  name,
+  displayName,
   blocks,
   reverseOrder
 }) => {
@@ -40,11 +42,10 @@ const StreamField: React.FC<StreamFieldProps> = ({
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
 
-  const contextValue = (jaenPageContext.fields?.[fieldName] as BlocksField)
-    ?.blocks
+  const contextValue = (jaenPageContext.fields?.[name] as BlocksField)?.blocks
 
   const SFBlocks = useAppSelector(
-    pageFieldBlocksSelector(pageId, fieldName),
+    pageFieldBlocksSelector(pageId, name),
     (l, r) => {
       const shouldUpdate =
         JSON.stringify(Object.keys(l)) !== JSON.stringify(Object.keys(r))
@@ -113,7 +114,7 @@ const StreamField: React.FC<StreamFieldProps> = ({
       registerPageField({
         pageId,
         field: {
-          fieldName,
+          fieldName: name,
           block: {
             position,
             typeName
@@ -123,18 +124,19 @@ const StreamField: React.FC<StreamFieldProps> = ({
     )
   }
 
-  const deleteBlock = useCallback((position: string) => {
+  const deleteBlock = useCallback((position: number) => {
     const payload = {
       pageId,
       field: {
-        fieldName,
+        fieldName: name,
         block: {
-          position: parseInt(position)
+          position
         }
       }
     }
-    // check if position is in contextValue or initValue, if not, unregister it instead of deleting it
-    if (position in contextValue) {
+
+    // check if position is in contextValue, if not, unregister it instead of deleting it
+    if (contextValue && position in contextValue) {
       dispatch(deletePageField(payload))
     } else {
       dispatch(unregisterPageField(payload))
@@ -142,52 +144,56 @@ const StreamField: React.FC<StreamFieldProps> = ({
   }, [])
 
   const blocksTypes = blocks.map(block => ({
-    id: block.BlockType,
-    name: block.BlockType,
-    onClick: () => addBlock(block.BlockType)
+    id: block.BlockName,
+    name: block.BlockName,
+    onClick: () => addBlock(block.BlockName)
   }))
 
   const getBlockComponentByTypeName = (
     typeName: string
-  ): GenericBC | undefined => blocks.find(b => b.BlockType === typeName)
+  ): JaenBlock | undefined => blocks.find(b => b.BlockName === typeName)
 
   const renderedBlocks = visibleBlocksKeys.map(position => {
     const BlockComponent = getBlockComponentByTypeName(
       allBlocks?.[position].typeName
     )
 
+    const numPosition = parseInt(position)
+
     if (BlockComponent) {
-      const block = {
-        position: parseInt(position),
-        typeName: BlockComponent.BlockType
+      const block = (
+        <BlockProvider
+          key={position}
+          containerName={name}
+          position={numPosition}
+          blockName={BlockComponent.BlockName}>
+          {!isEditing ? <BlockComponent /> : <BlockComponent />}
+        </BlockProvider>
+      )
+
+      if (isEditing) {
+        return (
+          <SFBWrapper onDeleteClick={() => deleteBlock(numPosition)}>
+            {block}
+          </SFBWrapper>
+        )
       }
 
-      return (
-        <BlockItem
-          key={position}
-          position={position}
-          fieldName={fieldName}
-          Block={BlockComponent}
-          block={block}
-          initValue={allBlocks[position]}
-          height={height}
-          width={width}
-          onDelete={deleteBlock}
-          isEditing={isEditing}
-        />
-      )
+      return block
     }
   })
 
+  console.log('ADJAKDAJKD', React.Children.toArray(renderedBlocks))
+
   if (isEditing) {
     return (
-      <SFWrapper ref={ref} fieldName={fieldName} blockTypes={blocksTypes}>
+      <SFWrapper ref={ref} displayName={displayName} blockTypes={blocksTypes}>
         {renderedBlocks}
       </SFWrapper>
     )
   }
 
-  return <RevertCSSWrapper>{renderedBlocks}</RevertCSSWrapper>
+  return <>{renderedBlocks}</>
 }
 
-export default withRedux(StreamField)
+export default withRedux(BlockContainer)
