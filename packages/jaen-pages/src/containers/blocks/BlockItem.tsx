@@ -17,6 +17,14 @@ type BlockItemProps = {
 
 const BlockItem = React.memo<BlockItemProps>(
   ({children, BlockComponent, isEditing, onDelete, ...blockProps}) => {
+    if (!isEditing) {
+      return (
+        <BlockProvider {...blockProps}>
+          <BlockComponent />
+        </BlockProvider>
+      )
+    }
+
     return (
       <BlockProvider {...blockProps}>
         <SFBWrapper onDeleteClick={() => onDelete(blockProps.position)}>
