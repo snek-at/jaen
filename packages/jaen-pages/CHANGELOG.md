@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.25](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.24...@snek-at/jaen-pages-v2.0.0-beta.25) (2021-09-10)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([07a4c3a](https://github.com/snek-at/jaen/commit/07a4c3a1937d9aae57214457d04bc9e2fdf316d3))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.24](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.23...@snek-at/jaen-pages-v2.0.0-beta.24) (2021-09-10)
 
 
