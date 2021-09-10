@@ -1,3 +1,11 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.11](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.10...@snek-at/jaen-shared-ui-v2.0.0-beta.11) (2021-09-10)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([07a4c3a](https://github.com/snek-at/jaen/commit/07a4c3a1937d9aae57214457d04bc9e2fdf316d3))
+* fix jaen toggle zIndex ([b30ac18](https://github.com/snek-at/jaen/commit/b30ac18891c8c6cc033e88031b4c826f6fa7ce53))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.10](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.9...@snek-at/jaen-shared-ui-v2.0.0-beta.10) (2021-09-09)
 
 
