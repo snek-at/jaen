@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.17](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.16...@snek-at/jaen-v2.0.0-beta.17) (2021-09-10)
+
+
+### Bug Fixes
+
+* add portal and zindex to mainui ([12f6aed](https://github.com/snek-at/jaen/commit/12f6aed5d5cbdad208d92a1d6d7d3347e6e0a7a9))
+
 # [@snek-at/jaen-v2.0.0-beta.16](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.15...@snek-at/jaen-v2.0.0-beta.16) (2021-09-10)
 
 
