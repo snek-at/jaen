@@ -4,22 +4,18 @@
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  *
  */
-import {ChakraProvider} from '@chakra-ui/react'
+import {ChakraProvider, ColorModeScript} from '@chakra-ui/react'
 
 import {JaenCoreProvider} from './src'
 import theme from './src/@chakra-ui/theme'
 
 export const onRenderBody = ({setPreBodyComponents}, pluginOptions) => {
-  const enableChakraUI = pluginOptions.enableChakraUI
-
-  if (enableChakraUI) {
-    setPreBodyComponents([
-      <ColorModeScript
-        initialColorMode={theme.config.initialColorMode}
-        key="chakra-ui-no-flash"
-      />
-    ])
-  }
+  setPreBodyComponents([
+    <ColorModeScript
+      initialColorMode={theme.config.initialColorMode}
+      key="chakra-ui-no-flash"
+    />
+  ])
 }
 
 export const wrapRootElement = ({element}, pluginOptions) => {
