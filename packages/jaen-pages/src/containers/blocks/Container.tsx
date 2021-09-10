@@ -12,6 +12,7 @@ import {
   registerPageField,
   unregisterPageField
 } from '@actions/siteActions'
+import {WrapProps} from '@chakra-ui/layout'
 import {merge} from '@common/utils'
 import {useTemplate} from '@contexts/template'
 import {RevertCSSWrapper} from '@snek-at/jaen'
@@ -26,22 +27,29 @@ import {useCallback} from 'react'
 
 import BlockItem from './BlockItem'
 
-type BlockContainerProps = {
+interface BlockContainerProps {
   name: string
   displayName: string
   blocks: JaenBlock[]
   reverseOrder?: boolean
+  wrap?: boolean
+  wrapProps?: WrapProps
 }
 
 const BlockContainer: React.FC<BlockContainerProps> = ({
   name,
   displayName,
   blocks,
-  reverseOrder
+  reverseOrder,
+  wrap = false,
+  wrapProps
 }) => {
-  const dispatch = useAppDispatch()
+  // raise error when wrapProps are defined but wrap is false
+  if (wrapProps && !wrap) {
+    throw new Error('BlockContainer: wrapProps are defined but wrap is false')
+  }
 
-  console.log('RERENDER container')
+  const dispatch = useAppDispatch()
 
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
@@ -179,15 +187,19 @@ const BlockContainer: React.FC<BlockContainerProps> = ({
     }
   })
 
-  if (isEditing) {
-    return (
-      <SFWrapper ref={ref} displayName={displayName} blockTypes={blocksTypes}>
-        {renderedBlocks}
-      </SFWrapper>
-    )
-  }
+  // SBWrapper cannot be inside Wrap and Wrap cannot be inside SFWrapper !!! FIXME by
 
-  return <>{renderedBlocks}</>
+  return (
+    <SFWrapper
+      ref={ref}
+      displayName={displayName}
+      blockTypes={blocksTypes}
+      isEditing={isEditing}
+      wrap={wrap}
+      {...wrapProps}>
+      {renderedBlocks}
+    </SFWrapper>
+  )
 }
 
 export default withRedux(BlockContainer)

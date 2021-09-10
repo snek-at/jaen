@@ -1,3 +1,5 @@
+import {WrapItem} from '@chakra-ui/layout'
+import {Wrap} from '@chakra-ui/layout'
 import {Box} from '@chakra-ui/layout'
 import {RevertCSSWrapper} from '@snek-at/jaen'
 import {BlockContainer, fields} from '@snek-at/jaen-pages'
@@ -140,7 +142,10 @@ const IndexPage = () => {
         name="blockcontainer1"
         displayName="My Sample Container"
         blocks={[SampleBlock]}
+        wrap={true}
+        wrapProps={{}}
       />
+
       <RevertCSSWrapper>
         <title>Home Page</title>
         <h1>FUUUUCK</h1> <h1>pls dont fuck </h1>

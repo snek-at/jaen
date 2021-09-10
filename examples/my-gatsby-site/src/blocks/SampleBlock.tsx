@@ -7,12 +7,7 @@ const SampleBlock: JaenBlock = () => {
   //   return <fields.TextField fieldName="sample" initValue="<p>test</p>" />
 
   return (
-    <Box
-      w="100%"
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      bg="whitesmoke">
+    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" bg="whitesmoke">
       {/* <Image src={property.imageUrl} alt={property.imageAlt} /> */}
       <fields.ImageField
         fieldName="image1"
