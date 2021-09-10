@@ -138,6 +138,15 @@ const links = [
 const IndexPage = () => {
   return (
     <main style={pageStyles}>
+      <fields.ImageField
+        fieldName="imagefield1"
+        initValue={{
+          src: 'https://placekitten.com/800/600',
+          alt: 'ta',
+          title: 'daa'
+        }}
+        style={{width: '5000px'}}
+      />
       <BlockContainer
         name="blockcontainer1"
         displayName="My Sample Container"
@@ -232,14 +241,6 @@ const IndexPage = () => {
           onRender={page => (
             <div>tsetsiasihfasjhfjkshs {Object.keys(page.children)}</div>
           )}
-        />
-        <fields.ImageField
-          fieldName="imagefield1"
-          initValue={{
-            src: 'https://placekitten.com/800/600',
-            alt: 'ta',
-            title: 'daa'
-          }}
         />
         {/* <fields.TextField fieldName="testfield" initValue={'<ul><li>4242424424243423</li></ul><figure class="media"><div data-oembed-url="https://www.youtube.com/watch?v=00cizszd4z0"><div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/00cizszd4z0" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div></div></figure>'}/> */}
         <img
