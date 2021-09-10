@@ -38,8 +38,8 @@ const Main: React.FC<MainProps> = props => {
   const btnRef = useRef<HTMLButtonElement | null>()
 
   return (
-    <Box zIndex="999999">
-      <Box pos="fixed" bottom={5} right={5} ref={btnRef as any}>
+    <Box>
+      <Box pos="fixed" bottom={5} right={5} zIndex="999999" ref={btnRef as any}>
         <JaenToggleButton ref={btnRef as any} onClick={onOpen} />
       </Box>
       <Drawer
