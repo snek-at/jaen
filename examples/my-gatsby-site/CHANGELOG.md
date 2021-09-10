@@ -1,3 +1,16 @@
+# [my-gatsby-site-v1.0.0-beta.20](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.19...my-gatsby-site-v1.0.0-beta.20) (2021-09-10)
+
+
+### Bug Fixes
+
+* add portal and zindex to mainui ([12f6aed](https://github.com/snek-at/jaen/commit/12f6aed5d5cbdad208d92a1d6d7d3347e6e0a7a9))
+
+
+### Features
+
+* **blockcontainer:** enable wrap for container ([504dd50](https://github.com/snek-at/jaen/commit/504dd508ac13f83ccafca3764eb6144a294b1299))
+* enable childpages for static pages ([c8f442e](https://github.com/snek-at/jaen/commit/c8f442e58f0d83367abd821c29ec822837a10e45))
+
 # [my-gatsby-site-v1.0.0-beta.19](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.18...my-gatsby-site-v1.0.0-beta.19) (2021-09-10)
 
 
