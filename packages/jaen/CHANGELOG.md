@@ -1,3 +1,11 @@
+# [@snek-at/jaen-v2.0.0-beta.16](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.15...@snek-at/jaen-v2.0.0-beta.16) (2021-09-10)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([07a4c3a](https://github.com/snek-at/jaen/commit/07a4c3a1937d9aae57214457d04bc9e2fdf316d3))
+* add missing import and remove if ([856333e](https://github.com/snek-at/jaen/commit/856333ed13fad3d141780e4761db761e203437e0))
+
 # [@snek-at/jaen-v2.0.0-beta.15](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.14...@snek-at/jaen-v2.0.0-beta.15) (2021-09-09)
 
 
