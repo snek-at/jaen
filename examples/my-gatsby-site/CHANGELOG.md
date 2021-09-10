@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.18](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.17...my-gatsby-site-v1.0.0-beta.18) (2021-09-10)
+
+
+### Bug Fixes
+
+* **jaen-pages cli:** fix cli typescript error ([780c4af](https://github.com/snek-at/jaen/commit/780c4af97387254f24d01580486badbc3fa8efd2))
+
 # [my-gatsby-site-v1.0.0-beta.17](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.16...my-gatsby-site-v1.0.0-beta.17) (2021-09-09)
 
 
