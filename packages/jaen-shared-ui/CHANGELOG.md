@@ -1,3 +1,16 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.12](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.11...@snek-at/jaen-shared-ui-v2.0.0-beta.12) (2021-09-10)
+
+
+### Bug Fixes
+
+* add portal and zindex to mainui ([12f6aed](https://github.com/snek-at/jaen/commit/12f6aed5d5cbdad208d92a1d6d7d3347e6e0a7a9))
+
+
+### Features
+
+* **blockcontainer:** enable wrap for container ([504dd50](https://github.com/snek-at/jaen/commit/504dd508ac13f83ccafca3764eb6144a294b1299))
+* enable childpages for static pages ([c8f442e](https://github.com/snek-at/jaen/commit/c8f442e58f0d83367abd821c29ec822837a10e45))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.11](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.10...@snek-at/jaen-shared-ui-v2.0.0-beta.11) (2021-09-10)
 
 
