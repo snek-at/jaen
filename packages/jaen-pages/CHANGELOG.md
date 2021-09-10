@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.24](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.23...@snek-at/jaen-pages-v2.0.0-beta.24) (2021-09-10)
+
+
+### Bug Fixes
+
+* **jaen-pages cli:** fix cli typescript error ([780c4af](https://github.com/snek-at/jaen/commit/780c4af97387254f24d01580486badbc3fa8efd2))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.23](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.22...@snek-at/jaen-pages-v2.0.0-beta.23) (2021-09-09)
 
 
