@@ -1,9 +1,11 @@
+import {Box} from '@chakra-ui/layout'
 import {RevertCSSWrapper} from '@snek-at/jaen'
-import {fields} from '@snek-at/jaen-pages'
+import {BlockContainer, fields} from '@snek-at/jaen-pages'
 import * as React from 'react'
 
 // import TestBlock from "../blocks/TestBlock"
-// import AirbnbBlock from "../blocks/AirbmbBlock"
+import SampleBlock from '../blocks/SampleBlock'
+
 // import {Button} from "@chakra-ui/react"
 // styles
 const pageStyles = {
@@ -134,6 +136,11 @@ const links = [
 const IndexPage = () => {
   return (
     <main style={pageStyles}>
+      <BlockContainer
+        name="blockcontainer1"
+        displayName="My Sample Container"
+        blocks={[SampleBlock]}
+      />
       <RevertCSSWrapper>
         <title>Home Page</title>
         <h1>FUUUUCK</h1> <h1>pls dont fuck </h1>

@@ -170,9 +170,7 @@ const PageTree: React.FC<PageTreeProps> = ({
 
     selectItem(id || defaultSelection)
 
-    if (id && !items[id]?.data?.locked) {
-      setContextMenu({id, spawnX: event.clientX, spawnY: event.clientY})
-    }
+    setContextMenu({id, spawnX: event.clientX, spawnY: event.clientY})
   }
 
   const getIcon = (

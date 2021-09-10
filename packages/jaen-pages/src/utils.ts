@@ -9,12 +9,14 @@ export const resolvePath = (id: string, nodes: SitePages['nodes']) => {
     const parentId = node.parent?.id
     const parent = parentId && nodes[parentId]
 
-    const newPath = node.slug + '/' + path
+    if (node.slug) {
+      path = `${node.slug}/${path}`
+    }
 
     if (parentId && parent) {
-      return resolve(parentId, newPath)
+      return resolve(parentId, path)
     } else {
-      return newPath
+      return path
     }
   }
 

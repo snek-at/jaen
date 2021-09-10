@@ -82,10 +82,12 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
         }
       })
     } else {
-      await cache.set(`jaen-static-page-context-${id}`, {
+      await cache.set(`jaen-static-page-${id}`, {
         id,
         slug: page.slug,
         template: page.template,
+        parent: page.parent ? page.parent.id : null,
+        children: page.children.map(child => child.id),
         pageMetadata: {
           datePublished: createdAt,
           ...page.pageMetadata
@@ -101,23 +103,34 @@ exports.onCreatePage = async ({cache, page, actions, store}) => {
   const {jaenPageContext} = page.context
 
   const id = `SitePage ${page.path}`
-  const cachedjaenPageContext = await cache.get(
-    `jaen-static-page-context-${id}`
-  )
+  const cachedJaenPage = await cache.get(`jaen-static-page-${id}`)
 
   if (!jaenPageContext?.template) {
+    console.log('page', cachedJaenPage)
+
+    let _restCache = undefined
+
+    if (cachedJaenPage) {
+      const {parent, children, ...restCache} = cachedJaenPage
+
+      page.parent = parent
+      page.children = children
+      _restCache = restCache
+    }
+
     deletePage(page)
+
     createPage({
       ...page,
       context: {
         ...page.context,
         jaenPageContext: {
           id,
-          ...cachedjaenPageContext,
+          ..._restCache,
           pageMetadata: {
             title: page.internalComponentName,
             datePublished: new Date().toISOString(),
-            ...cachedjaenPageContext?.pageMetadata
+            ..._restCache?.pageMetadata
           }
         }
       }
