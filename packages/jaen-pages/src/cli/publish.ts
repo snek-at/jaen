@@ -1,16 +1,15 @@
-import * as fs from 'fs'
-import update from 'immutability-helper'
-import 'isomorphic-fetch'
-import * as path from 'path'
-
-import {merge} from '../src/common/utils'
-import {upload} from '../src/ipfs'
+import {merge} from '@src/common/utils'
+import {upload} from '@src/ipfs'
 import {
   JaenPages,
   JaenPagesEntity,
   JaenPagesEntityWithMigrations,
   JaenPagesPublish
-} from '../src/types'
+} from '@src/types'
+import * as fs from 'fs'
+import update from 'immutability-helper'
+import 'isomorphic-fetch'
+import * as path from 'path'
 
 export const mergeBaseWithMigration = async (
   baseData: JaenPages,

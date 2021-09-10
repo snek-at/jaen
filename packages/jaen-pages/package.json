@@ -1,12 +1,16 @@
 {
   "name": "@snek-at/jaen-pages",
-  "version": "2.0.0-beta.23",
+  "version": "2.0.0-beta.24",
   "main": "src/index.js",
   "types": "src/index.tsx",
   "license": "EUPL-1.2",
   "bin": {
-    "jaen-pages": "bin/run"
+    "jaen-pages": "./dist/bin/run"
   },
+  "include": [
+    "src",
+    "dist"
+  ],
   "dependencies": {
     "@chakra-ui/icons": "^1.0.15",
     "@chakra-ui/react": "^1.6.6",
@@ -43,6 +47,7 @@
   "devDependencies": {
     "@types/loadable__component": "^5.13.4",
     "@types/uuid": "^8.3.1",
+    "babel-plugin-relative-path-import": "^2.0.1",
     "babel-preset-gatsby-package": "^1.13.0",
     "gatsby-plugin-emotion": "^6.11.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.24"

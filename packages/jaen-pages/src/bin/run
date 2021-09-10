@@ -3,10 +3,6 @@
 const {Command} = require('commander')
 const program = new Command()
 
-require = require('esm')(module)
-require('source-map-support').install()
-require('ts-node').register({compilerOptions: {esModuleInterop: true}})
-
 const {runMigration} = require('../cli/publish')
 
 program.version('2.0.0')
@@ -23,7 +19,9 @@ program
     const JAEN_PAGES_MIGRATION_URL = options.migration
 
     if (!JAEN_PAGES_MIGRATION_URL) {
-      console.error('[jaen-pages] Failed to run migration -> Please specify a migration URL')
+      console.error(
+        '[jaen-pages] Failed to run migration -> Please specify a migration URL'
+      )
       process.exit(1)
     }
 
