@@ -7,6 +7,7 @@ import SettingsTab from './src/containers/ui/tabs/SettingsTab'
 import {upload} from './src/ipfs'
 import {store} from './src/store'
 import {JaenPagesEntity, JaenPagesPublish} from './src/types'
+import {resolvePath} from './src/utils'
 
 export default {
   name: 'jaen-pages',
@@ -47,7 +48,8 @@ export default {
 
       if (nodes) {
         for (const [id, node] of Object.entries(nodes)) {
-          const paylaod = JSON.stringify(node)
+          const path = resolvePath(id, nodes as any)
+          const paylaod = JSON.stringify({...node, path})
 
           const url = await upload(paylaod)
           newPages[id] = {context: {fileUrl: url, createdAt}}
