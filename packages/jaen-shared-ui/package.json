@@ -4,6 +4,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "EUPL-1.2",
+  "scripts": {
+    "start": "start-storybook -p 6006"
+  },
   "files": [
     "dist"
   ],
@@ -22,7 +25,15 @@
     "framer-motion": "^4.1.17",
     "react": "^17.0.2",
     "react-analytics-charts": "^1.2.12",
-    "react-use-analytics-api": "^1.4.16"
+    "react-use-analytics-api": "^1.4.16",
+    "@snek-at/storybook-addon-chakra-ui": "^1.0.0-beta.2",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/builder-webpack5": "^6.4.0-alpha.30",
+    "@storybook/manager-webpack5": "^6.4.0-alpha.30",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.3.7"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",
