@@ -1,8 +1,9 @@
 require('isomorphic-fetch')
-const {createRemoteFileNode} = require('gatsby-source-filesystem')
 
 const path = require('path')
 const fs = require('fs')
+
+const {createImages} = require('./dist/create-images')
 
 const jaenPagesPath = path.resolve('./jaen-pages.json')
 
@@ -60,12 +61,13 @@ exports.createSchemaCustomization = ({actions}) => {
       datePublished: String
       isBlogPost: Boolean
     }
-
-  
   `)
 }
 
-exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
+exports.createPages = async (
+  {actions: {createPage, createNode}, createNodeId, cache, store, reporter},
+  pluginOptions
+) => {
   const templates = pluginOptions.templates
   const fileContent = JSON.parse(fs.readFileSync(jaenPagesPath, 'utf8'))
 
@@ -74,7 +76,22 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
     const page = await (await fetch(fileUrl)).json()
 
     if (page.template) {
-      actions.createPage({
+      let images = []
+      const fields = page.fields
+
+      if (fields) {
+        images = await createImages({
+          createNode,
+          createNodeId,
+          cache,
+          store,
+          reporter,
+          fields,
+          pageId: id
+        })
+      }
+
+      createPage({
         path: page.path || `${id}/`,
         component: path.resolve(templates[page.template]),
         context: {
@@ -88,7 +105,8 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
               datePublished: createdAt,
               ...page.pageMetadata
             },
-            fields: page.fields
+            fields: page.fields,
+            images
           }
         }
       })
@@ -109,9 +127,14 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
   }
 }
 
-exports.onCreatePage = async ({cache, page, actions, store}) => {
-  const {createPage, deletePage} = actions
-
+exports.onCreatePage = async ({
+  page,
+  actions: {createPage, deletePage, createNode},
+  createNodeId,
+  cache,
+  store,
+  reporter
+}) => {
   const {jaenPageContext} = page.context
 
   const id = `SitePage ${page.path}`
@@ -119,6 +142,22 @@ exports.onCreatePage = async ({cache, page, actions, store}) => {
 
   if (!jaenPageContext?.template) {
     deletePage(page)
+
+    let images = []
+
+    const fields = cachedJaenPage?.fields
+
+    if (fields) {
+      images = await createImages({
+        createNode,
+        createNodeId,
+        cache,
+        store,
+        reporter,
+        fields,
+        pageId: id
+      })
+    }
 
     const newPage = {
       ...page,
@@ -131,110 +170,12 @@ exports.onCreatePage = async ({cache, page, actions, store}) => {
             title: page.internalComponentName,
             datePublished: new Date().toISOString(),
             ...cachedJaenPage?.pageMetadata
-          }
+          },
+          images
         }
       }
     }
 
     createPage(newPage)
-  }
-
-  // console.log('[onCreatePage] ', jaenPageContext)
-
-  // const fields = jaenPageContext.fields
-
-  // if (fields) {
-  //   for (const [fieldName, field] of Object.entries(fields)) {
-  //     const content = field.content
-
-  //     if (field._type === 'PlainField') {
-  //       if (content._type === 'ImageBlock') {
-  //         const url = content.src
-
-  //         let fileNode = await createRemoteFileNode({
-  //           url: content.src, // string that points to the URL of the image
-  //           parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
-  //           createNode, // helper function in gatsby-node to generate the node
-  //           createNodeId, // helper function in gatsby-node to generate the node id
-  //           cache, // Gatsby's cache
-  //           store // Gatsby's Redux store
-  //         })
-  //       }
-  //     } else if (field._type === 'BlocksField') {
-  //     }
-  //   }
-  // }
-}
-
-exports.onCreateNode = async ({
-  node,
-  actions: {createNode, deleteNode, createPage},
-  store,
-  cache,
-  createNodeId
-}) => {
-  const createFile = async (url, parentNodeId) => {
-    console.log('should create', url, parentNodeId)
-    return await createRemoteFileNode({
-      url,
-      parentNodeId,
-      createNode,
-      createNodeId,
-      cache,
-      store
-    })
-  }
-
-  // For all MarkdownRemark nodes that have a featured image url, call createRemoteFileNode
-  if (node.internal.type === 'SitePage') {
-    const {jaenPageContext} = node.context
-    const fields = jaenPageContext?.fields
-    const images = []
-
-    if (fields) {
-      for (const [fieldName, field] of Object.entries(fields)) {
-        const content = field.content
-
-        if (field._type === 'PlainField') {
-          if (content._type === 'ImageBlock') {
-            let fileNode = await createFile(content.src, node.id)
-
-            if (fileNode) {
-              images.push({
-                id: {
-                  pageId: jaenPageContext.id,
-                  fieldName
-                },
-                file___NODE: fileNode.id
-              })
-            }
-          }
-        } else if (field._type === 'BlocksField') {
-          for (const [position, block] of Object.entries(field.blocks)) {
-            if (block._type === 'ImageBlock') {
-              let fileNode = await createFile(content.src, node.id)
-
-              if (fileNode) {
-                images.push({
-                  id: {
-                    pageId: jaenPageContext.id,
-                    fieldName,
-                    block: {
-                      position: parseInt(position),
-                      fieldName
-                    }
-                  },
-                  file___NODE: fileNode.id
-                })
-              }
-            }
-          }
-        }
-      }
-    }
-
-    if (images.length > 0) {
-      node.context.jaenPageContext.images = images
-    }
   }
 }
