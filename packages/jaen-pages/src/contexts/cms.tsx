@@ -128,17 +128,17 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
             nodes {
               id
               path
-              parent {
-                id
-              }
-              children {
-                id
-              }
               context {
                 jaenPageContext {
                   id
                   slug
                   template
+                  parent {
+                    id
+                  }
+                  children {
+                    id
+                  }
                   pageMetadata {
                     title
                     description
@@ -175,8 +175,8 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
           const id = jaenPageContext?.id || node.id
 
           site.allSitePage.nodes[id] = {
-            parent: node.parent,
-            children: node.children,
+            parent: jaenPageContext?.parent || null,
+            children: jaenPageContext?.children || [],
             path: node.path,
             slug: jaenPageContext?.slug,
             template: jaenPageContext?.template,
@@ -185,33 +185,6 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
             images: jaenPageContext?.images
           }
         }
-
-        // const structure: =  {
-        //   allPaths: string[]
-        //   nodes: (PageType & {id: string})[]
-        // }
-
-        // const staticNodes = allSitePage.nodes.filter(
-        //   (node: any) => !structure.allPaths.includes(node.path)
-        // ) as (PageType & {id: string})[]
-
-        // const site: SiteType = {
-        //   siteMetadata,
-        //   allSitePage: {
-        //     rootNodeIds: jaenPageRootIds.distinct.concat(
-        //       sitePageRootIds.distinct
-        //     ),
-        //     nodes: {}
-        //   }
-        // }
-
-        // site.allSitePage.rootNodeIds = []
-
-        // for (const {id, ...node} of structure.nodes.concat(staticNodes)) {
-        //   site.allSitePage.nodes[id] = node
-        // }
-
-        // console.log(allSitePage)
 
         return (
           <CMSContext.Provider

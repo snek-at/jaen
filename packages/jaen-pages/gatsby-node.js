@@ -22,7 +22,13 @@ exports.createSchemaCustomization = ({actions}) => {
       slug: String
       template: String
       pageMetadata: JaenPageMetadata!
-      images: [JaenPagesFile] 
+      images: [JaenPagesFile]
+      parent: JaenPageId
+      children: [JaenPageId]
+    }
+
+    type JaenPageId {
+      id: String!
     }
 
     type JaenPagesFile {
@@ -65,12 +71,12 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
     if (page.template) {
       actions.createPage({
         path: page.path || `${id}/`,
-        parent: page.parent ? page.parent.id : null,
-        children: page.children.map(child => child.id),
         component: path.resolve(templates[page.template]),
         context: {
           jaenPageContext: {
             id,
+            parent: page.parent,
+            children: page.children,
             slug: page.slug,
             template: page.template,
             pageMetadata: {
@@ -86,8 +92,8 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
         id,
         slug: page.slug,
         template: page.template,
-        parent: page.parent ? page.parent.id : null,
-        children: page.children.map(child => child.id),
+        parent: page.parent,
+        children: page.children,
         pageMetadata: {
           datePublished: createdAt,
           ...page.pageMetadata
@@ -108,16 +114,6 @@ exports.onCreatePage = async ({cache, page, actions, store}) => {
   if (!jaenPageContext?.template) {
     console.log('page', cachedJaenPage)
 
-    let _restCache = undefined
-
-    if (cachedJaenPage) {
-      const {parent, children, ...restCache} = cachedJaenPage
-
-      page.parent = parent
-      page.children = children
-      _restCache = restCache
-    }
-
     deletePage(page)
 
     createPage({
@@ -126,11 +122,11 @@ exports.onCreatePage = async ({cache, page, actions, store}) => {
         ...page.context,
         jaenPageContext: {
           id,
-          ..._restCache,
+          ...cachedJaenPage,
           pageMetadata: {
             title: page.internalComponentName,
             datePublished: new Date().toISOString(),
-            ..._restCache?.pageMetadata
+            ...cachedJaenPage?.pageMetadata
           }
         }
       }
