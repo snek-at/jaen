@@ -1,9 +1,7 @@
 import {createContext, useContext} from 'react'
 import * as React from 'react'
-import {useSelector} from 'react-redux'
 
-import {useAppSelector} from '../store'
-import {withRedux} from '../store/withRedux'
+import {store} from '../store'
 import {PageType, ResolvedPageType} from '../types'
 import {useCMSContext, useResolvedPage} from './cms'
 
@@ -38,7 +36,7 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
 }) => {
   const pathName = typeof window !== 'undefined' && window.location.pathname
 
-  const dynamicPaths = useAppSelector(({site}) => site.routing.dynamicPaths)
+  const dynamicPaths = store.getState().site.routing.dynamicPaths
 
   const page = useResolvedPage(
     (pathName && dynamicPaths[pathName]) || jaenPageContext.id
@@ -74,4 +72,4 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
   )
 }
 
-export default withRedux(TemplateProvider)
+export default TemplateProvider
