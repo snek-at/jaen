@@ -33,7 +33,7 @@ export const login = createAsyncThunk(
       }
 
       return {session, isGuest}
-    } catch (err) {
+    } catch (err: any) {
       // Use `err.response.data` as `action.payload` for a `rejected` action,
       // by explicitly returning it using the `rejectWithValue()` utility
       return thunkAPI.rejectWithValue(err.response.data)
@@ -50,7 +50,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     const session = Bridge.session.begin()
 
     return session
-  } catch (err) {
+  } catch (err: any) {
     // Use `err.response.data` as `action.payload` for a `rejected` action,
     // by explicitly returning it using the `rejectWithValue()` utility
     return thunkAPI.rejectWithValue(err.response.data)
