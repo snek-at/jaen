@@ -14,7 +14,7 @@
       "@common/*": ["common/*"]
     }
   },
-  "include": ["src", "gatsby-browser.js"],
+  "include": ["src", "gatsby-browser.js", "register.tsx"],
   "typeRoots": ["./@types"],
   "references": [{"path": "../jaen"}]
 }

@@ -124,6 +124,12 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
           sitePageRootIds: allSitePage(filter: {parent: {id: {eq: null}}}) {
             distinct(field: id)
           }
+          allFile {
+            nodes {
+              name
+              id
+            }
+          }
           allSitePage {
             nodes {
               id
@@ -147,6 +153,9 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
                     datePublished
                     isBlogPost
                   }
+                  fields {
+                    _type
+                  }
                   images {
                     id {
                       fieldName
@@ -164,11 +173,18 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
           }
         }
       `}
-      render={({site: {siteMetadata}, sitePageRootIds, allSitePage}) => {
+      render={({
+        site: {siteMetadata},
+        sitePageRootIds,
+        allSitePage,
+        allFile
+      }) => {
         const site: SiteType = {
           allSitePage: {rootNodeIds: sitePageRootIds.distinct, nodes: {}},
           siteMetadata
         }
+
+        console.log('allfile', allFile)
 
         for (const node of allSitePage.nodes) {
           const jaenPageContext = node.context?.jaenPageContext

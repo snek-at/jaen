@@ -25,7 +25,12 @@ exports.createSchemaCustomization = ({actions}) => {
       images: [JaenPagesFile]
       parent: JaenPageId
       children: [JaenPageId]
+      fields: FieldType
     }
+
+    type FieldType {
+      _type: String
+    }  
 
     type JaenPageId {
       id: String!
@@ -97,7 +102,8 @@ exports.createPages = async ({actions, graphql, cache}, pluginOptions) => {
         pageMetadata: {
           datePublished: createdAt,
           ...page.pageMetadata
-        }
+        },
+        fields: page.fields
       })
     }
   }
@@ -112,11 +118,9 @@ exports.onCreatePage = async ({cache, page, actions, store}) => {
   const cachedJaenPage = await cache.get(`jaen-static-page-${id}`)
 
   if (!jaenPageContext?.template) {
-    console.log('page', cachedJaenPage)
-
     deletePage(page)
 
-    createPage({
+    const newPage = {
       ...page,
       context: {
         ...page.context,
@@ -130,7 +134,9 @@ exports.onCreatePage = async ({cache, page, actions, store}) => {
           }
         }
       }
-    })
+    }
+
+    createPage(newPage)
   }
 
   // console.log('[onCreatePage] ', jaenPageContext)
@@ -162,12 +168,13 @@ exports.onCreatePage = async ({cache, page, actions, store}) => {
 
 exports.onCreateNode = async ({
   node,
-  actions: {createNode},
+  actions: {createNode, deleteNode, createPage},
   store,
   cache,
   createNodeId
 }) => {
   const createFile = async (url, parentNodeId) => {
+    console.log('should create', url, parentNodeId)
     return await createRemoteFileNode({
       url,
       parentNodeId,
@@ -190,7 +197,7 @@ exports.onCreateNode = async ({
 
         if (field._type === 'PlainField') {
           if (content._type === 'ImageBlock') {
-            let fileNode = createFile(content.src, node.id)
+            let fileNode = await createFile(content.src, node.id)
 
             if (fileNode) {
               images.push({
@@ -205,7 +212,7 @@ exports.onCreateNode = async ({
         } else if (field._type === 'BlocksField') {
           for (const [position, block] of Object.entries(field.blocks)) {
             if (block._type === 'ImageBlock') {
-              let fileNode = createFile(content.src, node.id)
+              let fileNode = await createFile(content.src, node.id)
 
               if (fileNode) {
                 images.push({

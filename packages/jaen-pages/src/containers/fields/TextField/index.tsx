@@ -39,8 +39,6 @@ const TextField: React.FC<TextFieldProps> = ({
   const {block, updatedFieldName} = useBlock(fieldName)
   fieldName = updatedFieldName
 
-  console.log('[TextField]', fieldName, block)
-
   const register = () => dispatch(registerPageField({pageId, field}))
   const unregister = () => dispatch(unregisterPageField({pageId, field}))
 

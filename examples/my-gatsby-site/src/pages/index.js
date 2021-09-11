@@ -145,7 +145,7 @@ const IndexPage = () => {
           alt: 'ta',
           title: 'daa'
         }}
-        style={{width: '5000px'}}
+        style={{width: '100%'}}
       />
       <BlockContainer
         name="blockcontainer1"
