@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.22](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.21...my-gatsby-site-v1.0.0-beta.22) (2021-09-12)
+
+
+### Bug Fixes
+
+* **theme:** update jaen themes ([3d7921f](https://github.com/snek-at/jaen/commit/3d7921f836e587844c12a59f398c106e39015c36))
+
 # [my-gatsby-site-v1.0.0-beta.21](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.20...my-gatsby-site-v1.0.0-beta.21) (2021-09-12)
 
 
