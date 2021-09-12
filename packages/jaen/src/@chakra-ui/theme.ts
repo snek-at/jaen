@@ -1,3 +1,4 @@
-import {extendTheme} from '@chakra-ui/react'
+//@ts-ignore
+import {theme as baseTheme, extendTheme} from '@chakra-ui/react'
 
-export default extendTheme({})
+export default extendTheme({}, baseTheme)

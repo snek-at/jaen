@@ -7,7 +7,7 @@
 import {ChakraProvider, ColorModeScript} from '@chakra-ui/react'
 
 import {JaenCoreProvider} from './src'
-import theme from './src/@chakra-ui/theme'
+import theme from './src/@chakra-ui/baseTheme'
 
 export const onRenderBody = ({setPreBodyComponents}, pluginOptions) => {
   setPreBodyComponents([
