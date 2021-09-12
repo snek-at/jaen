@@ -1,3 +1,17 @@
+# [@snek-at/jaen-v2.0.0-beta.18](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.17...@snek-at/jaen-v2.0.0-beta.18) (2021-09-12)
+
+
+### Bug Fixes
+
+* remove build alerts ([b1153fe](https://github.com/snek-at/jaen/commit/b1153fe633d650fb937c9f41684cb301b1c06671))
+* update err type ([685bc9e](https://github.com/snek-at/jaen/commit/685bc9e918cf4f09afbd2ad1beebdd327b485d1b))
+
+
+### Features
+
+* **theme:** add jaenTheme and userTheme including new drawersize (6xl) ([f96ac1f](https://github.com/snek-at/jaen/commit/f96ac1fdde1c979b17f2502ea450c5c12f371b9f))
+* move exit button from header to footer ([d9d82a2](https://github.com/snek-at/jaen/commit/d9d82a29b41355f227172cd78d3593084210e26c))
+
 # [@snek-at/jaen-v2.0.0-beta.17](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.16...@snek-at/jaen-v2.0.0-beta.17) (2021-09-10)
 
 
