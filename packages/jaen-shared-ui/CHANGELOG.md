@@ -1,3 +1,18 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.13](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.12...@snek-at/jaen-shared-ui-v2.0.0-beta.13) (2021-09-12)
+
+
+### Bug Fixes
+
+* **sfwrapper:** show popover only on editing ([450ebe8](https://github.com/snek-at/jaen/commit/450ebe8e9bab631322aec6df00a586033efce931))
+* fix versions ([fb37799](https://github.com/snek-at/jaen/commit/fb37799fb95fa47dbf2adee3a3ab462c636e9fe9))
+* update PageTree context menu ([c912186](https://github.com/snek-at/jaen/commit/c912186cf279a2bc7b485eb8e3e208d5a0e62aa4))
+
+
+### Features
+
+* **pagecontent:** update placeholder image ([de6e0a0](https://github.com/snek-at/jaen/commit/de6e0a0d02bd966775f9d8c5c6d23eaf43f37839))
+* move exit button from header to footer ([d9d82a2](https://github.com/snek-at/jaen/commit/d9d82a29b41355f227172cd78d3593084210e26c))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.12](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.11...@snek-at/jaen-shared-ui-v2.0.0-beta.12) (2021-09-10)
 
 
