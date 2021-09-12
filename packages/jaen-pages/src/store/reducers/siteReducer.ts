@@ -77,13 +77,11 @@ const siteReducer = createReducer(initialState, {
     state,
     action: PayloadAction<actions.MovePageActionPayload>
   ) => {
-    const {pageId, parentPageId} = action.payload
+    const {sourceId, destinationId, nodes} = action.payload
 
-    const oldParent = state.allSitePage?.nodes?.[pageId]?.parent?.id as
-      | string
-      | null
+    const oldDestinationId = nodes[sourceId].parent?.id
 
-    if (oldParent === parentPageId) {
+    if (oldDestinationId === destinationId) {
       return
     }
 
@@ -91,52 +89,45 @@ const siteReducer = createReducer(initialState, {
       ...state.allSitePage,
       nodes: {
         ...state.allSitePage?.nodes,
-        [pageId]: {
-          ...state.allSitePage?.nodes?.[pageId],
-          parent: parentPageId
+        [sourceId]: {
+          ...state.allSitePage?.nodes?.[sourceId],
+          parent: destinationId
             ? {
-                ...state.allSitePage?.nodes?.[pageId]?.parent,
-                id: parentPageId
+                ...state.allSitePage?.nodes?.[sourceId]?.parent,
+                id: destinationId
               }
             : null
         }
       }
     }
 
-    if (parentPageId) {
+    if (destinationId) {
       state.allSitePage = {
         ...state.allSitePage,
         nodes: {
           ...state.allSitePage?.nodes,
-          [parentPageId]: {
-            ...state.allSitePage?.nodes?.[parentPageId],
-            children: (
-              state.allSitePage?.nodes?.[parentPageId]?.children || []
-            ).concat([{id: pageId}])
+          [destinationId]: {
+            ...state.allSitePage?.nodes?.[destinationId],
+            children: (nodes[destinationId].children || []).concat([
+              {id: sourceId}
+            ])
           }
         }
       }
-      // const parentChildren = state.allSitePage?.nodes?.[parentPageId]?.children
-      // if (parentChildren) {
-      //   const index = parentChildren.findIndex(child => child?.id === pageId)
-      //   if (index > -1) {
-      //     parentChildren.splice(index, 1)
-      //   }
-      // }
     }
 
     //remove pageId node from oldParent node children newAllSitePage
-    if (oldParent) {
-      const children = state.allSitePage?.nodes?.[oldParent]?.children
+    if (oldDestinationId) {
+      const children = nodes[oldDestinationId].children
 
       if (children) {
         state.allSitePage = {
           ...state.allSitePage,
           nodes: {
             ...state.allSitePage?.nodes,
-            [oldParent]: {
-              ...state.allSitePage?.nodes?.[oldParent],
-              children: children.filter(child => child?.id !== pageId)
+            [oldDestinationId]: {
+              ...state.allSitePage?.nodes?.[oldDestinationId],
+              children: children.filter(child => child?.id !== sourceId)
             }
           }
         }

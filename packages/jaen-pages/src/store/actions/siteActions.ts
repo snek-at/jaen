@@ -5,6 +5,7 @@ import {
   FieldUpdateDetails,
   PageType,
   ReturnResolveDynamicPaths,
+  SitePages,
   SiteType
 } from '@src/types'
 
@@ -29,8 +30,9 @@ export const addPage = createAction<AddPageActionPayload>('site/addPage')
 export const deletePage = createAction<string>('site/deletePage')
 
 export type MovePageActionPayload = {
-  pageId: string
-  parentPageId: string | null
+  sourceId: string
+  destinationId: string | null
+  nodes: SitePages['nodes']
 }
 export const movePage = createAction<MovePageActionPayload>('site/movePage')
 

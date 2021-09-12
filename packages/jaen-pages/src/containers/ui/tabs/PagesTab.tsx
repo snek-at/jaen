@@ -163,16 +163,17 @@ const PagesTab: React.FC<{}> = () => {
     dispatch(actions.deletePage(id))
     updateRouting(id)
   }
-  const handlePageMove = (pageId: string, parentPageId: string | null) => {
+  const handlePageMove = (sourceId: string, destinationId: string | null) => {
     dispatch(
       actions.movePage({
-        pageId,
-        parentPageId
+        sourceId,
+        destinationId,
+        nodes: allSitePage.nodes
       })
     )
 
-    updateRouting(pageId)
-    handleNavigate(pageId)
+    updateRouting(sourceId)
+    handleNavigate(sourceId)
   }
 
   const handleItemImageClick = (pageId: string) => {
