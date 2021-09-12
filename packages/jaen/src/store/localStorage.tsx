@@ -48,8 +48,6 @@ export const withStorageManager = <P extends object>(
     const storageBuildTime = localStorage.getItem(btKey)
 
     if (storageBuildTime !== buildTime) {
-      alert(`buildTime: ${buildTime}; storageBuildTime: ${storageBuildTime}`)
-
       if (storageBuildTime) {
         clearState()
       }
