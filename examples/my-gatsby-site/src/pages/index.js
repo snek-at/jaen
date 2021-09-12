@@ -1,6 +1,7 @@
 import {WrapItem} from '@chakra-ui/layout'
 import {Wrap} from '@chakra-ui/layout'
 import {Box} from '@chakra-ui/layout'
+import {Button} from '@chakra-ui/react'
 import {RevertCSSWrapper} from '@snek-at/jaen'
 import {BlockContainer, fields} from '@snek-at/jaen-pages'
 import * as React from 'react'
@@ -138,6 +139,7 @@ const links = [
 const IndexPage = () => {
   return (
     <main style={pageStyles}>
+      <Button>test</Button>
       <fields.ImageField
         fieldName="imagefield1"
         initValue={{

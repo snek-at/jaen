@@ -1,7 +1,7 @@
 import {ChakraProvider} from '@chakra-ui/react'
 
 import {JaenCoreProvider} from './src'
-import theme from './src/@chakra-ui/baseTheme'
+import theme from './src/@chakra-ui/theme'
 
 export const wrapRootElement = ({element}, pluginOptions) => {
   // @ts-ignore

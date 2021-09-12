@@ -2,7 +2,7 @@ import {ChakraProvider} from '@chakra-ui/react'
 import loadable from '@loadable/component'
 import {PluginUI} from '@src/plugin'
 
-import jaenTheme from '../@chakra-ui/baseTheme'
+import jaenTheme from '../@chakra-ui/jaenTheme'
 import {useAppDispatch, useAppSelector} from '../store'
 import * as authActions from '../store/actions/authActions'
 import {withRedux} from '../store/withRedux'
