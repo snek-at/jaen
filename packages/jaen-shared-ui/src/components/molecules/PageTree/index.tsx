@@ -112,23 +112,28 @@ const PageTree: React.FC<PageTreeProps> = ({
                         </HStack>
                       ),
                       onItemClick: () => addPageDisclousure.onOpen()
-                    },
-                    {_type: 'DIVIDER'},
-                    {
-                      _type: 'ITEM',
-                      content: (
-                        <HStack spacing={2}>
-                          <DeleteIcon />
-                          <Text>Delete</Text>
-                        </HStack>
-                      ),
-                      onItemClick: () => {
-                        setContextMenu(null)
-                        props.onItemDelete(selectedItem)
-                      }
                     }
-                  ]
-                : [
+                  ].concat(
+                    items[contextMenu.id].data.locked
+                      ? []
+                      : [
+                          {_type: 'DIVIDER'} as any,
+                          {
+                            _type: 'ITEM',
+                            content: (
+                              <HStack spacing={2}>
+                                <DeleteIcon />
+                                <Text>Delete</Text>
+                              </HStack>
+                            ),
+                            onItemClick: () => {
+                              setContextMenu(null)
+                              props.onItemDelete(selectedItem)
+                            }
+                          }
+                        ]
+                  )
+                : ([
                     {
                       _type: 'ITEM',
                       content: (
@@ -139,7 +144,7 @@ const PageTree: React.FC<PageTreeProps> = ({
                       ),
                       onItemClick: () => addPageDisclousure.onOpen()
                     }
-                  ]
+                  ] as any)
             }
           />
         </Box>
@@ -257,7 +262,7 @@ const PageTree: React.FC<PageTreeProps> = ({
     source: TreeSourcePosition,
     destination?: TreeDestinationPosition
   ) => {
-    if (!destination || items[destination.parentId]?.data?.locked) {
+    if (!destination) {
       return
     }
 
