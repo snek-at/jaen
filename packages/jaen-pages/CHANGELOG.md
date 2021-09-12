@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.28](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.27...@snek-at/jaen-pages-v2.0.0-beta.28) (2021-09-12)
+
+
+### Bug Fixes
+
+* **blockcontainer:** remove ref ([de6aca1](https://github.com/snek-at/jaen/commit/de6aca182a83f0f2ce6ade7b938ecb8e3aaa18bd))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.27](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.26...@snek-at/jaen-pages-v2.0.0-beta.27) (2021-09-12)
 
 
