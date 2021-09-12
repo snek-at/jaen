@@ -1,3 +1,11 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.14](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.13...@snek-at/jaen-shared-ui-v2.0.0-beta.14) (2021-09-12)
+
+
+### Bug Fixes
+
+* **blockcontainer:** remove ref ([de6aca1](https://github.com/snek-at/jaen/commit/de6aca182a83f0f2ce6ade7b938ecb8e3aaa18bd))
+* **colormode:** switching the colormode works when using jaen-shared-ui (WA!) ([409d094](https://github.com/snek-at/jaen/commit/409d094072623d546e7c974e2707db451f1ad8f7))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.13](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.12...@snek-at/jaen-shared-ui-v2.0.0-beta.13) (2021-09-12)
 
 
