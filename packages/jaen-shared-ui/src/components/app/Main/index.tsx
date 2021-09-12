@@ -9,7 +9,8 @@ import {
   Divider,
   Box,
   useDisclosure,
-  Portal
+  Portal,
+  ChakraProvider
 } from '@chakra-ui/react'
 import {JaenToggleButton, SnekButton} from '@components/molecules/buttons'
 import {
@@ -33,7 +34,7 @@ export type MainProps = {
   footer: FooterMainProps
 }
 
-const Main: React.FC<MainProps> = props => {
+export const Main: React.FC<MainProps> = props => {
   const {isOpen, onOpen, onClose} = useDisclosure()
   const btnRef = useRef<HTMLButtonElement | null>()
 
@@ -85,4 +86,20 @@ const Main: React.FC<MainProps> = props => {
   )
 }
 
-export default Main
+// Wrap with ChakraProvider because the useColorMode hook is not compatible when
+// using it inside a component library.
+
+interface ChakraMainProps extends MainProps {
+  chakraWorkaroundTheme: any
+}
+
+const ChakraMain: React.FC<ChakraMainProps> = ({
+  chakraWorkaroundTheme,
+  ...props
+}) => (
+  <ChakraProvider theme={chakraWorkaroundTheme}>
+    <Main {...props} />
+  </ChakraProvider>
+)
+
+export default ChakraMain

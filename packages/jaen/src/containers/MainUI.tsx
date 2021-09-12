@@ -2,6 +2,7 @@ import {ChakraProvider} from '@chakra-ui/react'
 import loadable from '@loadable/component'
 import {PluginUI} from '@src/plugin'
 
+import jaenTheme from '../@chakra-ui/baseTheme'
 import {useAppDispatch, useAppSelector} from '../store'
 import * as authActions from '../store/actions/authActions'
 import {withRedux} from '../store/withRedux'
@@ -47,13 +48,16 @@ const MainUI: React.FC<MainUIProps> = ({ui: {hotbar, tabs}}) => {
   }
 
   return (
-    <LoadableUI
-      hotbar={hotbar}
-      tabs={tabs}
-      footer={{onLogout: handleLogout}}
-      authenticated={authenticated}
-      login={{onLogin: handleLogin, onGuestLogin: handleGuestLogin}}
-    />
+    <ChakraProvider>
+      <LoadableUI
+        hotbar={hotbar}
+        tabs={tabs}
+        footer={{onLogout: handleLogout}}
+        authenticated={authenticated}
+        login={{onLogin: handleLogin, onGuestLogin: handleGuestLogin}}
+        chakraWorkaroundTheme={jaenTheme}
+      />
+    </ChakraProvider>
   )
 }
 
