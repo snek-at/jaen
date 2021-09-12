@@ -1,3 +1,13 @@
+# [my-gatsby-site-v1.0.0-beta.21](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.20...my-gatsby-site-v1.0.0-beta.21) (2021-09-12)
+
+
+### Bug Fixes
+
+* enable image creation for none jaen pages ([5a4d4d4](https://github.com/snek-at/jaen/commit/5a4d4d4c6162bfd181d2eec895fea6e3ef986578))
+* fix versions ([fb37799](https://github.com/snek-at/jaen/commit/fb37799fb95fa47dbf2adee3a3ab462c636e9fe9))
+* improve file creating and jaen plugin register ([6a32003](https://github.com/snek-at/jaen/commit/6a3200390217a21eb57d962022681d05e5acff84))
+* resolve paths for publish pages ([4fea93f](https://github.com/snek-at/jaen/commit/4fea93fdb5b8a47e3b6d03488178b87d61e89016))
+
 # [my-gatsby-site-v1.0.0-beta.20](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.19...my-gatsby-site-v1.0.0-beta.20) (2021-09-10)
 
 
