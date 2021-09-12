@@ -1,3 +1,11 @@
+# [@snek-at/jaen-v2.0.0-beta.19](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.18...@snek-at/jaen-v2.0.0-beta.19) (2021-09-12)
+
+
+### Bug Fixes
+
+* **colormode:** switching the colormode works when using jaen-shared-ui (WA!) ([409d094](https://github.com/snek-at/jaen/commit/409d094072623d546e7c974e2707db451f1ad8f7))
+* **theme:** update jaen themes ([3d7921f](https://github.com/snek-at/jaen/commit/3d7921f836e587844c12a59f398c106e39015c36))
+
 # [@snek-at/jaen-v2.0.0-beta.18](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.17...@snek-at/jaen-v2.0.0-beta.18) (2021-09-12)
 
 
