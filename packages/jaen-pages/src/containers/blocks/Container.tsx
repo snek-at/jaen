@@ -22,7 +22,7 @@ import {BlocksField, JaenBlock} from '@src/types'
 import {useAppDispatch, useAppSelector} from '@store/index'
 import {pageFieldBlocksSelector} from '@store/selectors/pages'
 import {withRedux} from '@store/withRedux'
-import React, {useEffect, useState, useRef, useMemo} from 'react'
+import React, {useMemo} from 'react'
 import {useCallback} from 'react'
 
 import BlockItem from './BlockItem'
@@ -75,17 +75,6 @@ const BlockContainer: React.FC<BlockContainerProps> = ({
       return true
     }
   )
-
-  const [height, setHeight] = useState(0)
-  const [width, setWidth] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (ref && ref.current) {
-      setHeight(ref.current.clientHeight)
-      setWidth(ref.current.clientWidth)
-    }
-  }, [ref.current?.clientHeight, ref.current?.clientWidth])
 
   const isEditing = useAppSelector(state => state.options.isEditing)
 
@@ -191,7 +180,6 @@ const BlockContainer: React.FC<BlockContainerProps> = ({
 
   return (
     <SFWrapper
-      ref={ref}
       displayName={displayName}
       blockTypes={blocksTypes}
       isEditing={isEditing}

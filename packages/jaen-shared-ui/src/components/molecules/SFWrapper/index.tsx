@@ -18,7 +18,6 @@ import {FaCube} from '@react-icons/all-files/fa/FaCube'
 import React from 'react'
 
 export interface SFWrapperProps extends WrapProps {
-  ref: React.Ref<HTMLDivElement>
   displayName: string
   blockTypes: {name: string; onClick: () => void}[]
   isEditing: boolean
@@ -27,7 +26,6 @@ export interface SFWrapperProps extends WrapProps {
 
 const SFWrapper: React.FC<SFWrapperProps> = ({
   children,
-  ref,
   displayName,
   blockTypes,
   isEditing,
@@ -57,7 +55,6 @@ const SFWrapper: React.FC<SFWrapperProps> = ({
       <PopoverTrigger>
         <Wrapper
           {...wrapProps}
-          ref={ref}
           boxShadow={popover.isOpen ? 'outline' : 'none'}
           rounded="md">
           {shouldRenderSkeleton ? <Skeleton h={20} /> : children}
