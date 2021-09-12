@@ -1,3 +1,17 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.27](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.26...@snek-at/jaen-pages-v2.0.0-beta.27) (2021-09-12)
+
+
+### Bug Fixes
+
+* enable image creation for none jaen pages ([5a4d4d4](https://github.com/snek-at/jaen/commit/5a4d4d4c6162bfd181d2eec895fea6e3ef986578))
+* enable page movement for non dynamic pages ([26c83d3](https://github.com/snek-at/jaen/commit/26c83d39b8a0eba550735c6bea8398d2abb186b9))
+* fix versions ([fb37799](https://github.com/snek-at/jaen/commit/fb37799fb95fa47dbf2adee3a3ab462c636e9fe9))
+* improve file creating and jaen plugin register ([6a32003](https://github.com/snek-at/jaen/commit/6a3200390217a21eb57d962022681d05e5acff84))
+* page relations now work via jaenPageContext ([202d691](https://github.com/snek-at/jaen/commit/202d6919779e5bdde3178bc7afa1dcc14fa67f44))
+* remove build alerts ([b1153fe](https://github.com/snek-at/jaen/commit/b1153fe633d650fb937c9f41684cb301b1c06671))
+* remove withRedux from TemplateProvider ([11bfc1e](https://github.com/snek-at/jaen/commit/11bfc1e71bae13e5b4b58d05ef5791b2b0c7d9fb))
+* resolve paths for publish pages ([4fea93f](https://github.com/snek-at/jaen/commit/4fea93fdb5b8a47e3b6d03488178b87d61e89016))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.26](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.25...@snek-at/jaen-pages-v2.0.0-beta.26) (2021-09-10)
 
 
