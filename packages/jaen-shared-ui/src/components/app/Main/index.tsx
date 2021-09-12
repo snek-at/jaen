@@ -21,7 +21,7 @@ import {
   TabsMain,
   LoginMain,
   LoginMainProps,
-  HeaderMainProps
+  FooterMainProps
 } from '@components/organisms/main'
 import React, {useRef} from 'react'
 
@@ -30,7 +30,7 @@ export type MainProps = {
   tabs: TabsMainProps
   authenticated: boolean
   login: LoginMainProps
-  header: HeaderMainProps
+  footer: FooterMainProps
 }
 
 const Main: React.FC<MainProps> = props => {
@@ -56,7 +56,7 @@ const Main: React.FC<MainProps> = props => {
             {props.authenticated ? (
               <>
                 <DrawerHeader>
-                  <HeaderMain {...props.header} />
+                  <HeaderMain />
                 </DrawerHeader>
                 <Divider />
                 <DrawerBody pd={0} mt={2}>
@@ -65,7 +65,7 @@ const Main: React.FC<MainProps> = props => {
                 </DrawerBody>
                 <Divider />
                 <DrawerFooter py={2}>
-                  <FooterMain />
+                  <FooterMain {...props.footer} />
                 </DrawerFooter>
               </>
             ) : (

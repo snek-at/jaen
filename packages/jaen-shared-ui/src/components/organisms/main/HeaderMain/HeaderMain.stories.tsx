@@ -11,6 +11,4 @@ const Template: Story<HeaderMainProps> = args => <MainHeader {...args} />
 
 export const Primary = Template.bind({})
 
-Primary.args = {
-  onLogout: () => {}
-}
+Primary.args = {}

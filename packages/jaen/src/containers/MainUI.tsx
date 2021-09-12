@@ -50,7 +50,7 @@ const MainUI: React.FC<MainUIProps> = ({ui: {hotbar, tabs}}) => {
     <LoadableUI
       hotbar={hotbar}
       tabs={tabs}
-      header={{onLogout: handleLogout}}
+      footer={{onLogout: handleLogout}}
       authenticated={authenticated}
       login={{onLogin: handleLogin, onGuestLogin: handleGuestLogin}}
     />

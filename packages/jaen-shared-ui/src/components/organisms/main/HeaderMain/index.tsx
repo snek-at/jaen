@@ -12,11 +12,8 @@ import {
   QuestionButton,
   GithubButton
 } from '@components/molecules/buttons'
-import ExitButton from '@components/molecules/buttons/ExitButton'
 
-export type HeaderMainProps = {
-  onLogout: () => void
-}
+export type HeaderMainProps = {}
 
 const HeaderMain: React.FC<HeaderMainProps> = props => {
   return (
@@ -33,8 +30,6 @@ const HeaderMain: React.FC<HeaderMainProps> = props => {
         <GithubButton />
         <QuestionButton />
         <DmToggleButton onDmToggleChange={() => null} />
-        <Divider orientation="vertical" />
-        <ExitButton onClick={props.onLogout} />
       </HStack>
     </>
   )
