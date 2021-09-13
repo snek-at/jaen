@@ -224,7 +224,7 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
                 h="sm"
                 w="sm"
                 src={values.image}
-                fallbackSrc="https://via.placeholder.com/150"
+                fallbackSrc="https://i.ibb.co/J2jzkBx/placeholder.jpg"
                 transition="0.2s all"
                 objectFit="cover"
                 _hover={{filter: 'brightness(70%)', cursor: 'pointer'}}
