@@ -1,6 +1,7 @@
 import {Button, Badge, useColorMode, Tooltip} from '@chakra-ui/react'
 import {APublishLottie} from '@components/atoms/icons/APublishIcon'
 import {Lottie} from '@snek-at/react-lottie'
+import {useLanguageModeValue} from '@src/language-mode'
 
 import translations from './translations.json'
 
@@ -13,22 +14,6 @@ const PublishButton: React.FC<PublishButtonProps> = props => {
   const {colorMode} = useColorMode()
 
   const lottie = APublishLottie(colorMode === 'dark')
-
-  const LM = 'en'
-
-  type Translations = {[name: string]: {en: string; de: string}}
-
-  type Trs<T> = {[name in keyof T]: string}
-
-  function useLanguageModeValue<T extends Translations>(value: T) {
-    const translation: Trs<T> = {} as Trs<T>
-
-    for (const [key, element] of Object.entries(value)) {
-      translation[key as keyof T] = element[LM]
-    }
-
-    return translation
-  }
 
   const CONTENT = useLanguageModeValue(translations)
 

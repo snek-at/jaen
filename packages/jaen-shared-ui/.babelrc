@@ -12,11 +12,15 @@
           },
           {
             "rootPathPrefix": "@assets",
-            "rootPathSuffix": "src/common/assets" // since we support relative paths you can also go into a parent directory
+            "rootPathSuffix": "src/common/assets"
           },
           {
             "rootPathPrefix": "@components",
-            "rootPathSuffix": "src/components" // since we support relative paths you can also go into a parent directory
+            "rootPathSuffix": "src/components"
+          },
+          {
+            "rootPathPrefix": "@language-mode",
+            "rootPathSuffix": "src/language-mode"
           }
         ]
       }

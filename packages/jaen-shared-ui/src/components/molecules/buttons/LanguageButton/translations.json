@@ -1,6 +1,18 @@
 {
+  "button": {
+    "en": "Language",
+    "de": "Sprache"
+  },
   "tooltip": {
     "en": "Click on this button to open the language switching menu",
     "de": "Drücken sie auf diesen Knopf um das Sprachwechselmenü zu öffnen"
+  },
+  "language_de": {
+    "en": "German",
+    "de": "Deutsch"
+  },
+  "language_en": {
+    "en": "English",
+    "de": "Englisch"
   }
 }

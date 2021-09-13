@@ -2,6 +2,7 @@ import {Tooltip, IconButton, useColorMode} from '@chakra-ui/react'
 // import {DmToggle} from '@components/atoms/icons'
 import {ADmToggleLottie} from '@components/atoms/icons/ADmToggle'
 import {Lottie} from '@snek-at/react-lottie'
+import {useLanguageModeValue} from '@src/language-mode'
 import {useState} from 'react'
 
 import translations from './translations.json'
@@ -21,22 +22,6 @@ const ADmToggleButton: React.FC<DmToggleButtonProps> = props => {
   const dm: boolean = colorMode === 'dark'
 
   const lottie = ADmToggleLottie(colorMode === 'dark')
-
-  const LM = 'en'
-
-  type Translations = {[name: string]: {en: string; de: string}}
-
-  type Trs<T> = {[name in keyof T]: string}
-
-  function useLanguageModeValue<T extends Translations>(value: T) {
-    const translation: Trs<T> = {} as Trs<T>
-
-    for (const [key, element] of Object.entries(value)) {
-      translation[key as keyof T] = element[LM]
-    }
-
-    return translation
-  }
 
   const CONTENT = useLanguageModeValue(translations)
 

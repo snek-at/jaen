@@ -29,6 +29,7 @@ import {
   Icon,
   Tooltip
 } from '@chakra-ui/react'
+import {useLanguageModeValue} from '@src/language-mode'
 import {ChangeEvent, useEffect, useState} from 'react'
 
 import translations from './translations.json'
@@ -78,22 +79,6 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
     if (JSON.stringify(values) !== JSON.stringify(props.values)) {
       props.onValuesChange(values)
     }
-  }
-
-  const LM = 'en'
-
-  type Translations = {[name: string]: {en: string; de: string}}
-
-  type Trs<T> = {[name in keyof T]: string}
-
-  function useLanguageModeValue<T extends Translations>(value: T) {
-    const translation: Trs<T> = {} as Trs<T>
-
-    for (const [key, element] of Object.entries(value)) {
-      translation[key as keyof T] = element[LM]
-    }
-
-    return translation
   }
 
   const CONTENT = useLanguageModeValue(translations)
