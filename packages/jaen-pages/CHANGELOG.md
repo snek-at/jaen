@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.30](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.29...@snek-at/jaen-pages-v2.0.0-beta.30) (2021-09-13)
+
+
+### Features
+
+* **seo:** add SEO to TemplateProvider ([38fc053](https://github.com/snek-at/jaen/commit/38fc0531adfbb7f58d96f6cbc3d86b7b94dbe18d))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.29](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.28...@snek-at/jaen-pages-v2.0.0-beta.29) (2021-09-13)
 
 
