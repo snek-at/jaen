@@ -1,6 +1,6 @@
 {
   "name": "@snek-at/jaen-pages",
-  "version": "2.0.0-beta.28",
+  "version": "2.0.0-beta.29",
   "main": "src/index.js",
   "types": "src/index.tsx",
   "license": "EUPL-1.2",
@@ -21,8 +21,8 @@
     "@loadable/component": "^5.15.0",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.6.1",
-    "@snek-at/jaen": "^2.0.0-beta.19",
-    "@snek-at/jaen-shared-ui": "2.0.0-beta.14",
+    "@snek-at/jaen": "^2.0.0-beta.20",
+    "@snek-at/jaen-shared-ui": "2.0.0-beta.15",
     "@snek-at/snek-finder": "^1.0.0-beta.11",
     "deepmerge": "^4.2.2",
     "electron": "^14.0.0",
