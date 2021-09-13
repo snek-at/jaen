@@ -1,3 +1,4 @@
+import SEO from '@src/SEO'
 import {createContext, useContext} from 'react'
 import * as React from 'react'
 
@@ -67,6 +68,7 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
 
   return (
     <TemplateContext.Provider value={{jaenPageContext, page}}>
+      <SEO pageMeta={page.pageMetadata} pagePath={page.path} />
       {isDynamic && Template ? <Template /> : children}
     </TemplateContext.Provider>
   )
