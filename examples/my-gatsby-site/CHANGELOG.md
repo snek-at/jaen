@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.24](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.23...my-gatsby-site-v1.0.0-beta.24) (2021-09-13)
+
+
+### Features
+
+* **seo:** add SEO to TemplateProvider ([38fc053](https://github.com/snek-at/jaen/commit/38fc0531adfbb7f58d96f6cbc3d86b7b94dbe18d))
+
 # [my-gatsby-site-v1.0.0-beta.23](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.22...my-gatsby-site-v1.0.0-beta.23) (2021-09-13)
 
 
