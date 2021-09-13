@@ -1,3 +1,19 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.15](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.14...@snek-at/jaen-shared-ui-v2.0.0-beta.15) (2021-09-13)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([a7b59a3](https://github.com/snek-at/jaen/commit/a7b59a3ac9f7d81bb6efcb5a2a866e138f7969cc))
+* **sitesettings:** update placeholder image ([fc7df64](https://github.com/snek-at/jaen/commit/fc7df64e8cc33dc2ff6e70ecb4c20ced5820993d))
+* **storybook:** add LanguageModeProvider as decorator ([c41fb52](https://github.com/snek-at/jaen/commit/c41fb521075ba5436934a311b04e3d3538fcfbef))
+* **translation:** update page content translations ([ff64052](https://github.com/snek-at/jaen/commit/ff6405224720e11c380684b24fdbd75f6799248a))
+
+
+### Features
+
+* **languagemode:** add language mode and replace internal workarounds ([f0e6e03](https://github.com/snek-at/jaen/commit/f0e6e035c038ad7c7b850143726da32fff77b18f))
+* **tooltip:** disable tooltips for PageContent and SiteSettings ([1f83fd4](https://github.com/snek-at/jaen/commit/1f83fd49fceb249f28531af6c5e47d58908b3636))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.14](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.13...@snek-at/jaen-shared-ui-v2.0.0-beta.14) (2021-09-12)
 
 
