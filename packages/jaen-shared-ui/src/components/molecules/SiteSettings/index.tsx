@@ -106,13 +106,13 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
               <Box py={2}>
                 <Flex>
                   <Heading size="md">{CONTENT.title}</Heading>
-                  <Tooltip
+                  {/* <Tooltip
                     hasArrow
                     label={CONTENT.titletooltip}
                     placement="top-start"
                     fontSize="md">
                     <InfoOutlineIcon w={3.5} h={3.5} ml="1" mt="1" />
-                  </Tooltip>
+                  </Tooltip> */}
                 </Flex>
                 <Input
                   placeholder="My title"
@@ -124,13 +124,13 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
               <Box py={2}>
                 <Flex>
                   <Heading size="md">URL</Heading>
-                  <Tooltip
+                  {/* <Tooltip
                     hasArrow
                     label={CONTENT.urltooltip}
                     placement="top-start"
                     fontSize="md">
                     <InfoOutlineIcon w={3.5} h={3.5} ml="1" mt="1" />
-                  </Tooltip>
+                  </Tooltip> */}
                 </Flex>
                 <Input
                   placeholder="My slug"
@@ -142,13 +142,13 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
               <Box py={2}>
                 <Flex>
                   <Heading size="md">{CONTENT.description}</Heading>
-                  <Tooltip
+                  {/* <Tooltip
                     hasArrow
                     label={CONTENT.descriptiontooltip}
                     placement="top-start"
                     fontSize="md">
                     <InfoOutlineIcon w={3.5} h={3.5} ml="1" mt="1" />
-                  </Tooltip>
+                  </Tooltip> */}
                 </Flex>
                 <Textarea
                   placeholder="Description"
@@ -161,13 +161,13 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
               <Box py={2}>
                 <Flex>
                   <Heading size="md">{CONTENT.author}</Heading>
-                  <Tooltip
+                  {/* <Tooltip
                     hasArrow
                     label={CONTENT.authortooltip}
                     placement="top-start"
                     fontSize="md">
                     <InfoOutlineIcon w={3.5} h={3.5} ml="1" mt="1" />
-                  </Tooltip>
+                  </Tooltip> */}
                 </Flex>
                 <Box p={2}>
                   <Heading size="sm">Name</Heading>
@@ -182,13 +182,13 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
               <Box py={2}>
                 <Flex>
                   <Heading size="md">{CONTENT.organization}</Heading>
-                  <Tooltip
+                  {/* <Tooltip
                     hasArrow
                     label={CONTENT.organizationtooltip}
                     placement="top-start"
                     fontSize="md">
                     <InfoOutlineIcon w={3.5} h={3.5} ml="1" mt="1" />
-                  </Tooltip>
+                  </Tooltip> */}
                 </Flex>
                 <Box p={2}>
                   <Heading size="sm">Name</Heading>

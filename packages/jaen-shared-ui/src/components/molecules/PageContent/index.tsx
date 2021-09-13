@@ -89,13 +89,13 @@ const PageContent: React.FC<PageContentType> = props => {
               <Box py={2}>
                 <Flex>
                   <Heading size="md">{CONTENT.title}</Heading>
-                  <Tooltip
+                  {/* <Tooltip
                     hasArrow
                     label={CONTENT.titletooltip}
                     placement="top-start"
                     fontSize="md">
                     <InfoOutlineIcon w={3.5} h={3.5} ml="1" mt="1" />
-                  </Tooltip>
+                  </Tooltip> */}
                 </Flex>
                 <Input
                   placeholder="My title"
@@ -107,13 +107,13 @@ const PageContent: React.FC<PageContentType> = props => {
               <Box py={2}>
                 <Flex>
                   <Heading size="md">{CONTENT.slug}</Heading>
-                  <Tooltip
+                  {/* <Tooltip
                     hasArrow
                     label={CONTENT.slugtooltip}
                     placement="top-start"
                     fontSize="md">
                     <InfoOutlineIcon w={3.5} h={3.5} ml="1" mt="1" />
-                  </Tooltip>
+                  </Tooltip> */}
                 </Flex>
                 <Input
                   placeholder="My slug"
@@ -126,13 +126,13 @@ const PageContent: React.FC<PageContentType> = props => {
               <Box py={2}>
                 <Flex>
                   <Heading size="md">{CONTENT.description}</Heading>
-                  <Tooltip
+                  {/* <Tooltip
                     hasArrow
                     label={CONTENT.descriptiontooltip}
                     placement="top-start"
                     fontSize="md">
                     <InfoOutlineIcon w={3.5} h={3.5} ml="1" mt="1" />
-                  </Tooltip>
+                  </Tooltip> */}
                 </Flex>
                 <Textarea
                   placeholder="Description"
