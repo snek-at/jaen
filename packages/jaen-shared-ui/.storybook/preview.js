@@ -1,3 +1,5 @@
+import {LanguageModeProvider} from '../src/language-mode'
+
 export const parameters = {
   actions: {argTypesRegex: '^on[A-Z].*'},
   layout: 'fullscreen',
@@ -8,3 +10,11 @@ export const parameters = {
     }
   }
 }
+
+export const decorators = [
+  Story => (
+    <LanguageModeProvider options={{initialLanguageMode: 'en'}}>
+      <Story />
+    </LanguageModeProvider>
+  )
+]
