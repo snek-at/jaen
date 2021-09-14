@@ -1,3 +1,16 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.32](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.31...@snek-at/jaen-pages-v2.0.0-beta.32) (2021-09-14)
+
+
+### Bug Fixes
+
+* **blockcontainer:** add workaround to bypass field registration inside a block container ([2e55edf](https://github.com/snek-at/jaen/commit/2e55edfe0a168b2cc91fa9bf8ac3be13fcda35d1))
+* **package.json:** align versions ([5f0e61a](https://github.com/snek-at/jaen/commit/5f0e61a2425e43b7a38d58bf2e29be2802f639e1))
+* **package.json:** update incorrect version ([d32fa1a](https://github.com/snek-at/jaen/commit/d32fa1a5c8961aefc19f98489932e0fc03867ed7))
+* **publish:** include cms data in path generation ([6ca1cf8](https://github.com/snek-at/jaen/commit/6ca1cf8dc731c36f0922808a261ee97f798936de))
+* **snekfinder:** update version to fix some bugs ([63ba0c1](https://github.com/snek-at/jaen/commit/63ba0c1abb762a8da6d283db6c0ef71b3115e491))
+* adjust dynamic path generation ([8cc1f5b](https://github.com/snek-at/jaen/commit/8cc1f5b472b534708bf59d07a6f5d3e8efe893a2))
+* adjust slug and title for static page generation ([d901568](https://github.com/snek-at/jaen/commit/d90156893605e84077bb50f7609bbbf1e7c6a344))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.31](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.30...@snek-at/jaen-pages-v2.0.0-beta.31) (2021-09-14)
 
 
