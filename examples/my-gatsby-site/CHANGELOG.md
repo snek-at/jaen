@@ -1,3 +1,11 @@
+# [my-gatsby-site-v1.0.0-beta.27](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.26...my-gatsby-site-v1.0.0-beta.27) (2021-09-14)
+
+
+### Bug Fixes
+
+* **fields:** remove WA, add block registration and fix missing block data ([fb4c2df](https://github.com/snek-at/jaen/commit/fb4c2df08b8129b48245238736bd6d767d69f47b))
+* **package.json:** align versions ([e28c4c9](https://github.com/snek-at/jaen/commit/e28c4c93e5294e44d446d80b311826d577813163))
+
 # [my-gatsby-site-v1.0.0-beta.26](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.25...my-gatsby-site-v1.0.0-beta.26) (2021-09-14)
 
 
