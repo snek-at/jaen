@@ -160,12 +160,18 @@ exports.onCreatePage = async ({
     }
 
     // replace 'Component' from page.internalComponentName with ''
-    const internalComponentName = page.internalComponentName.replace(
-      'Component',
-      ''
-    )
+    // replace all '/' with ''
+    // capitalize first letter
+    let internalComponentName = page.internalComponentName
+      .replace('Component', '')
+      .replace(/\//g, '')
 
-    const slug = page.path.replace('SitePage /', '')
+    internalComponentName =
+      internalComponentName.charAt(0).toUpperCase() +
+      internalComponentName.slice(1)
+
+    const parts = page.path.split('/')
+    const slug = parts[parts.length - 1] || parts[parts.length - 2] || undefined
 
     const newPage = {
       ...page,
