@@ -27,7 +27,7 @@ const siteReducer = createReducer(initialState, {
     state,
     action: PayloadAction<actions.AddPageActionPayload>
   ) => {
-    const {pageId, page} = action.payload
+    const {pageId, page, nodes} = action.payload
     const parentId = page.parent?.id
 
     state.allSitePage = {
@@ -39,22 +39,18 @@ const siteReducer = createReducer(initialState, {
     }
 
     if (parentId) {
-      const parentChildren = state.allSitePage?.nodes?.[parentId]?.children
+      const parentChildren = nodes?.[parentId]?.children || []
 
-      if (!parentChildren) {
-        state.allSitePage = {
-          ...state.allSitePage,
-          nodes: {
-            ...state.allSitePage?.nodes,
-            [parentId]: {
-              ...state.allSitePage?.nodes?.[parentId],
-              children: [{id: pageId}]
-            }
+      console.log('CHILDREN', parentChildren)
+
+      state.allSitePage = {
+        ...state.allSitePage,
+        nodes: {
+          ...state.allSitePage?.nodes,
+          [parentId]: {
+            ...state.allSitePage?.nodes?.[parentId],
+            children: parentChildren.concat([{id: pageId}])
           }
-        }
-      } else {
-        if (!parentChildren.includes({id: pageId})) {
-          parentChildren.push({id: pageId})
         }
       }
     }

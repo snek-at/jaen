@@ -24,6 +24,7 @@ export type AddPageActionPayload = {
   //   }
   // }
   page: DeepPartial<PageType>
+  nodes: SitePages['nodes']
 }
 export const addPage = createAction<AddPageActionPayload>('site/addPage')
 

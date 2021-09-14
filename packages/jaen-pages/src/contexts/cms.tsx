@@ -1,4 +1,5 @@
 import {ChakraProvider, extendTheme} from '@chakra-ui/react'
+import {withRedux} from '@store/withRedux'
 import * as buffer from 'buffer'
 // import {PageTree} from '@snek-at/jaen-shared-ui'
 import {StaticQuery, graphql} from 'gatsby'
@@ -8,7 +9,13 @@ import * as ts from 'typescript'
 
 import {merge} from '../common/utils'
 import {store, useAppSelector} from '../store'
-import {JaenTemplate, PageMetadata, PageType, ResolvedPageType} from '../types'
+import {
+  JaenTemplate,
+  PageMetadata,
+  PageType,
+  ResolvedPageType,
+  SiteMetadata
+} from '../types'
 import {SiteType} from '../types'
 
 export const WA_KEY = 'jaen-pages-site-wa'
@@ -85,11 +92,14 @@ export const useResolvedPage = (id: string): ResolvedPageType | null => {
   return resolvedPage
 }
 
-export const useSiteMetadata = () => {
+export const useSiteMetadata = (): SiteMetadata => {
   const context = useCMSContext()
   const storeSiteMetadata = useAppSelector(state => state.site.siteMetadata)
 
-  return merge(context.site.siteMetadata, storeSiteMetadata || {})
+  return merge(
+    context.site.siteMetadata,
+    storeSiteMetadata || {}
+  ) as SiteMetadata
 }
 
 export const usePages = () => {
@@ -101,6 +111,22 @@ export const usePages = () => {
     storePages || {}
   ) as typeof context.site.allSitePage
 }
+
+const WAStorage = withRedux(() => {
+  const context = useCMSContext()
+  const storePages = useAppSelector(state => state.site.allSitePage)
+
+  const pages = merge(
+    context.site.allSitePage,
+    storePages || {}
+  ) as typeof context.site.allSitePage
+
+  const siteMetadata = useSiteMetadata() as SiteMetadata
+
+  storageSet({allSitePage: pages, siteMetadata})
+
+  return null
+})
 
 type CMSProviderType = {
   templates: JaenTemplate[]
@@ -201,8 +227,6 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
           siteMetadata
         }
 
-        console.log('allfile', allFile)
-
         for (const node of allSitePage.nodes) {
           const jaenPageContext = node.context?.jaenPageContext
           const id = jaenPageContext?.id || node.id
@@ -219,14 +243,13 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
           }
         }
 
-        storageSet(site)
-
         return (
           <CMSContext.Provider
             value={{
               site: site,
               templates: props.templates
             }}>
+            <WAStorage />
             {children}
           </CMSContext.Provider>
         )

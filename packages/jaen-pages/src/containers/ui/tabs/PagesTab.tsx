@@ -123,7 +123,8 @@ const PagesTab: React.FC<{}> = () => {
             canonical: '',
             isBlogPost: false
           }
-        }
+        },
+        nodes: allSitePage.nodes
       })
     )
 
