@@ -4,6 +4,7 @@ import PublishButton from './src/containers/ui/hotbar/PublishButton'
 import FilesTab from './src/containers/ui/tabs/FilesTab'
 import PagesTab from './src/containers/ui/tabs/PagesTab'
 import SettingsTab from './src/containers/ui/tabs/SettingsTab'
+import {storageGet, usePages, useSiteMetadata} from './src/contexts/cms'
 import {upload} from './src/ipfs'
 import {store} from './src/store'
 import {JaenPagesEntity, JaenPagesPublish} from './src/types'
@@ -37,6 +38,10 @@ export default {
   },
   registerCallbacks: {
     onPublish: async () => {
+      const {allSitePage} = storageGet()
+
+      const allNodes = allSitePage.nodes
+
       const state = store.getState()
 
       const createdAt = new Date().toISOString()
@@ -44,11 +49,11 @@ export default {
       const newPages: {[id: string]: JaenPagesEntity} = {}
 
       // upload nodes to ipfs
-      const nodes = state.site.allSitePage?.nodes
+      const nodes = state.site.allSitePage.nodes
 
       if (nodes) {
         for (const [id, node] of Object.entries(nodes)) {
-          const path = resolvePath(id, nodes as any)
+          const path = resolvePath(id, allNodes as any)
           const paylaod = JSON.stringify({...node, path})
 
           const url = await upload(paylaod)
@@ -58,16 +63,16 @@ export default {
 
       const siteMetadataPayload = JSON.stringify(state.site.siteMetadata)
 
-      const siteMetadata = siteMetadataPayload
+      const newSiteMetadata = siteMetadataPayload
         ? await upload(siteMetadataPayload)
         : undefined
 
       const publishData: JaenPagesPublish = {
-        site: siteMetadata
+        site: newSiteMetadata
           ? {
               context: {
                 createdAt,
-                fileUrl: siteMetadata
+                fileUrl: newSiteMetadata
               }
             }
           : undefined,
