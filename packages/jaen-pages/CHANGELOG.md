@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.33](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.32...@snek-at/jaen-pages-v2.0.0-beta.33) (2021-09-14)
+
+
+### Bug Fixes
+
+* adjust title and slug for static page generation ([469fb4e](https://github.com/snek-at/jaen/commit/469fb4e9e7699268dd36243dabdc64871c48d921))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.32](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.31...@snek-at/jaen-pages-v2.0.0-beta.32) (2021-09-14)
 
 
