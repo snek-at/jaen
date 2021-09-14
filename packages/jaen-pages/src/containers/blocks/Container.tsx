@@ -59,6 +59,10 @@ const BlockContainer: React.FC<BlockContainerProps> = ({
   const SFBlocks = useAppSelector(
     pageFieldBlocksSelector(pageId, name),
     (l, r) => {
+      if (!l || !r) {
+        return false
+      }
+
       const shouldUpdate =
         JSON.stringify(Object.keys(l)) !== JSON.stringify(Object.keys(r))
 
