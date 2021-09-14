@@ -17,7 +17,8 @@ import {
   Flex,
   Spacer,
   HStack,
-  useDisclosure
+  useDisclosure,
+  Portal
 } from '@chakra-ui/react'
 import {ContextMenu} from '@components/atoms'
 import {
@@ -92,13 +93,14 @@ const PageTree: React.FC<PageTreeProps> = ({
   const addPageDisclousure = useDisclosure()
 
   const renderedContextMenu = (
-    <>
+    <Portal>
       {contextMenu && (
         <Box
           pos="absolute"
           top={contextMenu.spawnY}
           left={contextMenu.spawnX}
-          w="3xs">
+          w="3xs"
+          zIndex="popover">
           <ContextMenu
             items={
               contextMenu.id !== null
@@ -155,7 +157,7 @@ const PageTree: React.FC<PageTreeProps> = ({
           />
         </Box>
       )}
-    </>
+    </Portal>
   )
 
   useEffect(() => {
