@@ -1,3 +1,11 @@
+# [my-gatsby-site-v1.0.0-beta.26](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.25...my-gatsby-site-v1.0.0-beta.26) (2021-09-14)
+
+
+### Bug Fixes
+
+* **blockcontainer:** add workaround to bypass field registration inside a block container ([2e55edf](https://github.com/snek-at/jaen/commit/2e55edfe0a168b2cc91fa9bf8ac3be13fcda35d1))
+* **package.json:** align versions ([5f0e61a](https://github.com/snek-at/jaen/commit/5f0e61a2425e43b7a38d58bf2e29be2802f639e1))
+
 # [my-gatsby-site-v1.0.0-beta.25](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.24...my-gatsby-site-v1.0.0-beta.25) (2021-09-14)
 
 
