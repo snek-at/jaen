@@ -60,5 +60,17 @@
         }
       ]
     }
+  },
+  "site": {
+    "context": {
+      "createdAt": "2021-09-14T21:06:26.349Z",
+      "fileUrl": "https://cloudflare-ipfs.com/ipfs/QmXNmfbdvURoSrGFCffEDTcPbB2Q4tHxUHA11mMX11xtNq"
+    },
+    "migrations": [
+      {
+        "createdAt": "2021-09-14T21:06:26.349Z",
+        "fileUrl": "https://cloudflare-ipfs.com/ipfs/QmXNmfbdvURoSrGFCffEDTcPbB2Q4tHxUHA11mMX11xtNq"
+      }
+    ]
   }
 }

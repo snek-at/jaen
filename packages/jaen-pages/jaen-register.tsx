@@ -84,7 +84,7 @@ export default {
       const newPages: {[id: string]: JaenPagesEntity} = {}
 
       // upload nodes to ipfs
-      const nodes = state.site.allSitePage.nodes
+      const nodes = state.site.allSitePage?.nodes
 
       if (nodes) {
         for (const [id, node] of Object.entries(nodes)) {
