@@ -41,8 +41,6 @@ const siteReducer = createReducer(initialState, {
     if (parentId) {
       const parentChildren = nodes?.[parentId]?.children || []
 
-      console.log('CHILDREN', parentChildren)
-
       state.allSitePage = {
         ...state.allSitePage,
         nodes: {
@@ -298,11 +296,11 @@ const siteReducer = createReducer(initialState, {
 
     if (field.block) {
       if (field.block.blockFieldName) {
-        delete (nodeFields?.[field.fieldName] as BlocksField).blocks?.[
+        delete (nodeFields?.[field.fieldName] as BlocksField)?.blocks?.[
           field.block.position
         ]?.fields?.[field.block.blockFieldName]
       } else {
-        delete (nodeFields?.[field.fieldName] as BlocksField).blocks?.[
+        delete (nodeFields?.[field.fieldName] as BlocksField)?.blocks?.[
           field.block.position
         ]
       }
