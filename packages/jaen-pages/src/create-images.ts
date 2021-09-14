@@ -50,7 +50,9 @@ export const createImages = async ({
         }
       } else if (field._type === 'BlocksField') {
         for (const [position, block] of Object.entries(field.blocks)) {
-          for (const contentBlock of Object.values(block.fields)) {
+          for (const [blockFieldName, contentBlock] of Object.entries(
+            block.fields
+          )) {
             if (contentBlock._type === 'ImageBlock') {
               // check if content.src is a url
               const url = contentBlock.src
@@ -68,7 +70,7 @@ export const createImages = async ({
                       fieldName,
                       block: {
                         position: parseInt(position),
-                        fieldName
+                        fieldName: blockFieldName
                       }
                     },
                     file___NODE: fileNode.id
