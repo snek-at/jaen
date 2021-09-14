@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.37](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.36...@snek-at/jaen-pages-v2.0.0-beta.37) (2021-09-14)
+
+
+### Features
+
+* add fields data support ([2fd31f9](https://github.com/snek-at/jaen/commit/2fd31f9b9463f2b6986c46dd53e7d7256703fc99))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.36](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.35...@snek-at/jaen-pages-v2.0.0-beta.36) (2021-09-14)
 
 
