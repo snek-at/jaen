@@ -1,3 +1,13 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.35](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.34...@snek-at/jaen-pages-v2.0.0-beta.35) (2021-09-14)
+
+
+### Bug Fixes
+
+* **blockcontainer:** add pageFieldBlocksSelector equality check ([63e1fdc](https://github.com/snek-at/jaen/commit/63e1fdc0d5bd7fa75e0ed62271a9aefe0fcf34c6))
+* **create-images:** set blockFieldName instead of fieldName for block ([174b676](https://github.com/snek-at/jaen/commit/174b676a4cde40f2ef673b51756c686e2be181ac))
+* **fields:** remove WA, add block registration and fix missing block data ([fb4c2df](https://github.com/snek-at/jaen/commit/fb4c2df08b8129b48245238736bd6d767d69f47b))
+* **package.json:** align versions ([e28c4c9](https://github.com/snek-at/jaen/commit/e28c4c93e5294e44d446d80b311826d577813163))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.34](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.33...@snek-at/jaen-pages-v2.0.0-beta.34) (2021-09-14)
 
 
