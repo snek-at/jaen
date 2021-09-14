@@ -21,7 +21,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@snek-at/jaen": "^2.0.0-beta.23",
-    "@snek-at/jaen-pages": "^2.0.0-beta.33",
+    "@snek-at/jaen-pages": "^2.0.0-beta.34",
     "framer-motion": "^4",
     "gatsby": "^3.11.1",
     "gatsby-plugin-emotion": "^6.11.0",
