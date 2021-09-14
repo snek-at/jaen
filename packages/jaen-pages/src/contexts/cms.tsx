@@ -196,9 +196,7 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
                     datePublished
                     isBlogPost
                   }
-                  fields {
-                    _type
-                  }
+                  fields
                   images {
                     id {
                       fieldName
@@ -241,7 +239,7 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
             path: node.path,
             slug: jaenPageContext?.slug,
             template: jaenPageContext?.template,
-            fields: jaenPageContext?.fields,
+            fields: JSON.parse(jaenPageContext?.fields || '{}'),
             pageMetadata: jaenPageContext?.pageMetadata,
             images: jaenPageContext?.images
           }

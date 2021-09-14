@@ -26,12 +26,8 @@ exports.createSchemaCustomization = ({actions}) => {
       images: [JaenPagesFile]
       parent: JaenPageId
       children: [JaenPageId]
-      fields: FieldType
+      fields: JSON
     }
-
-    type FieldType {
-      _type: String
-    }  
 
     type JaenPageId {
       id: String!
@@ -105,7 +101,7 @@ exports.createPages = async (
               datePublished: createdAt,
               ...page.pageMetadata
             },
-            fields: page.fields,
+            fields: JSON.stringify(fields),
             images
           }
         }
@@ -121,7 +117,7 @@ exports.createPages = async (
           datePublished: createdAt,
           ...page.pageMetadata
         },
-        fields: page.fields
+        fields
       })
     }
   }
@@ -186,7 +182,8 @@ exports.onCreatePage = async ({
             datePublished: new Date().toISOString(),
             ...cachedJaenPage?.pageMetadata
           },
-          images
+          images,
+          fields: JSON.stringify(fields)
         }
       }
     }
