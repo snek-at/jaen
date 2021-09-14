@@ -1,3 +1,15 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.36](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.35...@snek-at/jaen-pages-v2.0.0-beta.36) (2021-09-14)
+
+
+### Bug Fixes
+
+* **publish:** publishing works also without page changes now ([a091153](https://github.com/snek-at/jaen/commit/a0911534a067e417849ba70e4c3d0407bfc447fc))
+
+
+### Performance Improvements
+
+* use dynamic imports to reduce the bundle size ([712dfe3](https://github.com/snek-at/jaen/commit/712dfe3f8fb970ffc1ce7fbd9e3cf34f5b183985))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.35](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.34...@snek-at/jaen-pages-v2.0.0-beta.35) (2021-09-14)
 
 
