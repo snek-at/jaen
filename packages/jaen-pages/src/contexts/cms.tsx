@@ -203,6 +203,10 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
                     id {
                       fieldName
                       pageId
+                      block {
+                        fieldName
+                        position
+                      }
                     }
                     file {
                       childImageSharp {

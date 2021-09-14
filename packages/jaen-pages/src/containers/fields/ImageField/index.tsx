@@ -29,9 +29,9 @@ const ImageField: React.FC<ImageFieldProps> = ({
   fieldName,
   ...props
 }) => {
-  const field = {initValue, fieldName}
   const {block, updatedFieldName} = useBlock(fieldName)
   fieldName = updatedFieldName
+  const field = {initValue, fieldName, block}
 
   const dispatch = useAppDispatch()
   const isEditing = useAppSelector(state => state.options.isEditing)
@@ -50,11 +50,10 @@ const ImageField: React.FC<ImageFieldProps> = ({
   const isRegistered = updatedValue !== undefined
 
   const handleOnChange = (data: ImageType) => {
-    // TODO: !block is a hack to get around the fact that we don't have a block register
-    if (!block && !isRegistered && data !== initValue) {
+    if (!isRegistered && data !== initValue) {
       register()
     }
-    if (!block && data === initValue) {
+    if (data === initValue) {
       unregister()
     } else {
       let fieldDetails: FieldUpdateDetails

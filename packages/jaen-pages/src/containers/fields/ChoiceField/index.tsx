@@ -47,14 +47,15 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
   header,
   onRenderPopover,
   onRender,
-  ...field
+  initValue,
+  fieldName
 }) => {
   const dispatch = useAppDispatch()
 
-  let {initValue, fieldName} = field
-
   const {block, updatedFieldName} = useBlock(fieldName)
   fieldName = updatedFieldName
+
+  const field = {initValue, fieldName, block}
 
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
@@ -80,11 +81,10 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
     : contextValue || initValue || options[0]
 
   const onSelect = (option: Option) => {
-    // TODO: !block is a hack to get around the fact that we don't have a block register
-    if (!block && !isRegistered && option !== initValue) {
+    if (!isRegistered && option !== initValue) {
       register()
     }
-    if (!block && option === initValue) {
+    if (option === initValue) {
       unregister()
     } else {
       let fieldDetails: FieldUpdateDetails

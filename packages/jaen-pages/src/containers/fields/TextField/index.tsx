@@ -27,17 +27,18 @@ interface TextFieldProps extends FieldIdentifier {
 const TextField: React.FC<TextFieldProps> = ({
   rtf = true,
   toolbar = 'balloon',
-  ...field
+  fieldName,
+  initValue
 }) => {
   const dispatch = useAppDispatch()
   const isEditing = useAppSelector(state => state.options.isEditing)
   const {jaenPageContext} = useTemplate()
   const pageId = jaenPageContext.id
 
-  let {initValue, fieldName} = field
-
   const {block, updatedFieldName} = useBlock(fieldName)
   fieldName = updatedFieldName
+
+  const field = {initValue, fieldName, block}
 
   const register = () => dispatch(registerPageField({pageId, field}))
   const unregister = () => dispatch(unregisterPageField({pageId, field}))
@@ -58,11 +59,10 @@ const TextField: React.FC<TextFieldProps> = ({
   const value = isRegistered ? updatedValue : contextValue || initValue || ''
 
   const handleOnChange = (data: string) => {
-    // TODO: !block is a hack to get around the fact that we don't have a block register
-    if (!block && !isRegistered && data !== initValue) {
+    if (!isRegistered && data !== initValue) {
       register()
     }
-    if (!block && data === initValue) {
+    if (data === initValue) {
       unregister()
     } else {
       let fieldDetails: FieldUpdateDetails

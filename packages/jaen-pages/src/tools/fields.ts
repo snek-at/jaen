@@ -5,7 +5,7 @@ export const getFieldContent = (
   block: BlockIdentifier | undefined
 ) => {
   if (block) {
-    return (field as BlocksField | undefined)?.blocks?.[block.position]
+    return (field as BlocksField | undefined)?.blocks?.[block.position]?.fields?.[block.blockFieldName]
   }
 
   return (field as PlainField | undefined)?.content
