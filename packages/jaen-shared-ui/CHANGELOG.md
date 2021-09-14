@@ -1,3 +1,12 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.18](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.17...@snek-at/jaen-shared-ui-v2.0.0-beta.18) (2021-09-14)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([5f0e61a](https://github.com/snek-at/jaen/commit/5f0e61a2425e43b7a38d58bf2e29be2802f639e1))
+* **snekfinder:** update version to fix some bugs ([63ba0c1](https://github.com/snek-at/jaen/commit/63ba0c1abb762a8da6d283db6c0ef71b3115e491))
+* re-enable nested page adding ([c77843d](https://github.com/snek-at/jaen/commit/c77843dc51272f48ee171a4865b30241ff99d174))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.17](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.16...@snek-at/jaen-shared-ui-v2.0.0-beta.17) (2021-09-14)
 
 
