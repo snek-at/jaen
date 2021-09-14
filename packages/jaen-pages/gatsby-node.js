@@ -159,15 +159,24 @@ exports.onCreatePage = async ({
       })
     }
 
+    // replace 'Component' from page.internalComponentName with ''
+    const internalComponentName = page.internalComponentName.replace(
+      'Component',
+      ''
+    )
+
+    const slug = page.path.replace('SitePage /', '')
+
     const newPage = {
       ...page,
       context: {
         ...page.context,
         jaenPageContext: {
           id,
+          slug,
           ...cachedJaenPage,
           pageMetadata: {
-            title: page.internalComponentName,
+            title: internalComponentName,
             datePublished: new Date().toISOString(),
             ...cachedJaenPage?.pageMetadata
           },
