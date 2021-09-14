@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.34](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.33...@snek-at/jaen-pages-v2.0.0-beta.34) (2021-09-14)
+
+
+### Bug Fixes
+
+* **pages:** updated page creating and publishing ([ac2e630](https://github.com/snek-at/jaen/commit/ac2e630dbbc6f0c916ae3d87dcf921c851eb6435))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.33](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.32...@snek-at/jaen-pages-v2.0.0-beta.33) (2021-09-14)
 
 
