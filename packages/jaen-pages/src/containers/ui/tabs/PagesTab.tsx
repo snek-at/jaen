@@ -31,7 +31,7 @@ const transformToItems = (pages: {
         id,
         {
           data: {
-            slug: slug || page?.path?.split('/')[1] || 'root',
+            slug: slug || page?.path?.split('/')[1],
             title: pageMetadata?.title || (title as string),
             description: pageMetadata?.description || '',
             image: pageMetadata?.image || '',

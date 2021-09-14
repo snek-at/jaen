@@ -39,7 +39,7 @@ export const resolveDynamicPath: ResolveDynamicPaths = (
     const children = nodes[id].children
 
     for (const child of children) {
-      const path = `${prevPath}${nodes[child.id].slug}`
+      const path = `${prevPath}${nodes[child.id].slug}/`
 
       resolveNode(child.id, path)
     }
