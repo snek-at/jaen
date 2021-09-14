@@ -1,3 +1,13 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.17](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.16...@snek-at/jaen-shared-ui-v2.0.0-beta.17) (2021-09-14)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([0bedf29](https://github.com/snek-at/jaen/commit/0bedf29c917a4d755ac48c3220725ac6f22fe7ac))
+* **pagetree:** close context menu on add page ([ef71da0](https://github.com/snek-at/jaen/commit/ef71da04661da5c678b94056f9149c184b210afa))
+* **pagetree:** set correct spawn position for context menu ([ddc9232](https://github.com/snek-at/jaen/commit/ddc92328cea2bd25c52a51158b73919219622b4b))
+* **snekfinder:** bump to new version to fix context menu spawn issue ([08b6947](https://github.com/snek-at/jaen/commit/08b6947e68706681fd62013778f1fb44b7d70f7d))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.16](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.15...@snek-at/jaen-shared-ui-v2.0.0-beta.16) (2021-09-13)
 
 
