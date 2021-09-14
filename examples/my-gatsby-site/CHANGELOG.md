@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.25](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.24...my-gatsby-site-v1.0.0-beta.25) (2021-09-14)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([0bedf29](https://github.com/snek-at/jaen/commit/0bedf29c917a4d755ac48c3220725ac6f22fe7ac))
+
 # [my-gatsby-site-v1.0.0-beta.24](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.23...my-gatsby-site-v1.0.0-beta.24) (2021-09-13)
 
 
