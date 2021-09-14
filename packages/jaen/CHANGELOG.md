@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.25](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.24...@snek-at/jaen-v2.0.0-beta.25) (2021-09-14)
+
+
+### Performance Improvements
+
+* use dynamic imports to reduce the bundle size ([712dfe3](https://github.com/snek-at/jaen/commit/712dfe3f8fb970ffc1ce7fbd9e3cf34f5b183985))
+
 # [@snek-at/jaen-v2.0.0-beta.24](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.23...@snek-at/jaen-v2.0.0-beta.24) (2021-09-14)
 
 
