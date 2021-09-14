@@ -1,6 +1,6 @@
 {
   "name": "@snek-at/jaen-pages",
-  "version": "2.0.0-beta.36",
+  "version": "2.0.0-beta.37",
   "main": "src/index.js",
   "types": "src/index.tsx",
   "license": "EUPL-1.2",
