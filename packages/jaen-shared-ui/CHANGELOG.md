@@ -1,3 +1,10 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.19](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.18...@snek-at/jaen-shared-ui-v2.0.0-beta.19) (2021-09-14)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([e28c4c9](https://github.com/snek-at/jaen/commit/e28c4c93e5294e44d446d80b311826d577813163))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.18](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.17...@snek-at/jaen-shared-ui-v2.0.0-beta.18) (2021-09-14)
 
 
