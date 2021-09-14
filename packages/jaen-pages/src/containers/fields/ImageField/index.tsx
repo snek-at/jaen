@@ -50,10 +50,11 @@ const ImageField: React.FC<ImageFieldProps> = ({
   const isRegistered = updatedValue !== undefined
 
   const handleOnChange = (data: ImageType) => {
-    if (!isRegistered && data !== initValue) {
+    // TODO: !block is a hack to get around the fact that we don't have a block register
+    if (!block && !isRegistered && data !== initValue) {
       register()
     }
-    if (data === initValue) {
+    if (!block && data === initValue) {
       unregister()
     } else {
       let fieldDetails: FieldUpdateDetails

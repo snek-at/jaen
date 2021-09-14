@@ -58,10 +58,11 @@ const TextField: React.FC<TextFieldProps> = ({
   const value = isRegistered ? updatedValue : contextValue || initValue || ''
 
   const handleOnChange = (data: string) => {
-    if (!isRegistered && data !== initValue) {
+    // TODO: !block is a hack to get around the fact that we don't have a block register
+    if (!block && !isRegistered && data !== initValue) {
       register()
     }
-    if (data === initValue) {
+    if (!block && data === initValue) {
       unregister()
     } else {
       let fieldDetails: FieldUpdateDetails

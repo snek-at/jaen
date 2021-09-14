@@ -80,10 +80,11 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
     : contextValue || initValue || options[0]
 
   const onSelect = (option: Option) => {
-    if (!isRegistered && option !== initValue) {
+    // TODO: !block is a hack to get around the fact that we don't have a block register
+    if (!block && !isRegistered && option !== initValue) {
       register()
     }
-    if (option === initValue) {
+    if (!block && option === initValue) {
       unregister()
     } else {
       let fieldDetails: FieldUpdateDetails

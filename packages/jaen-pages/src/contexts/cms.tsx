@@ -8,9 +8,26 @@ import * as ts from 'typescript'
 
 import {merge} from '../common/utils'
 import {store, useAppSelector} from '../store'
-import {withStorageManager} from '../store/localStorage'
 import {JaenTemplate, PageMetadata, PageType, ResolvedPageType} from '../types'
 import {SiteType} from '../types'
+
+export const WA_KEY = 'jaen-pages-site-wa'
+
+//> Workaround for accessing the cms context outside of the component
+export const storageGet = (): SiteType => {
+  try {
+    return JSON.parse(localStorage.getItem(WA_KEY) as string)
+  } catch {
+    return {} as SiteType
+  }
+}
+
+export const storageSet = (site: SiteType) => {
+  if (typeof window !== 'undefined') {
+    return localStorage.setItem(WA_KEY, JSON.stringify(site))
+  }
+}
+//
 
 type CMSContextType = {
   site: SiteType
@@ -201,6 +218,8 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
             images: jaenPageContext?.images
           }
         }
+
+        storageSet(site)
 
         return (
           <CMSContext.Provider
