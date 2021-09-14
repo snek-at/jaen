@@ -8,11 +8,6 @@
  * in the LICENSE file at https://snek.at/license
  */
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import {BifrostBridge} from '@snek-at/bridge'
-
-const Bridge = new BifrostBridge({
-  httpUrl: 'https://origin.snek.at/graphql'
-})
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -24,6 +19,11 @@ export const login = createAsyncThunk(
     thunkAPI
   ) => {
     const {creds, isGuest} = args
+
+    const {BifrostBridge} = await import('@snek-at/bridge')
+    const Bridge = new BifrostBridge({
+      httpUrl: 'https://origin.snek.at/graphql'
+    })
 
     try {
       const session = await Bridge.session.begin(creds || undefined)
@@ -42,6 +42,11 @@ export const login = createAsyncThunk(
 )
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  const {BifrostBridge} = await import('@snek-at/bridge')
+  const Bridge = new BifrostBridge({
+    httpUrl: 'https://origin.snek.at/graphql'
+  })
+
   try {
     if (!(await Bridge.session.end())) {
       throw new Error('Resetting session failed')

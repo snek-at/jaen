@@ -1,6 +1,6 @@
 import {Button, useDisclosure} from '@chakra-ui/react'
-import SnekFinder from '@containers/SnekFinder'
 import {usePages, useCMSContext} from '@contexts/cms'
+import loadable from '@loadable/component'
 import {useLocation} from '@reach/router'
 import {PageExplorer, PageExplorerProps} from '@snek-at/jaen-shared-ui'
 import {PageType} from '@src/types'
@@ -11,6 +11,8 @@ import {withRedux} from '@store/withRedux'
 import {navigate} from 'gatsby'
 import * as React from 'react'
 import {v4 as uuidv4} from 'uuid'
+
+const SnekFinder = loadable(() => import('@containers/SnekFinder'))
 
 const transformToItems = (pages: {
   [id: string]: PageType

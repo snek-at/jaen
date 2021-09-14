@@ -1,14 +1,47 @@
-import DiscardButton from './src/containers/ui/hotbar/DiscardButton'
-import EditButton from './src/containers/ui/hotbar/EditButton'
-import PublishButton from './src/containers/ui/hotbar/PublishButton'
-import FilesTab from './src/containers/ui/tabs/FilesTab'
-import PagesTab from './src/containers/ui/tabs/PagesTab'
-import SettingsTab from './src/containers/ui/tabs/SettingsTab'
+import loadable from '@loadable/component'
+
 import {storageGet, usePages, useSiteMetadata} from './src/contexts/cms'
-import {upload} from './src/ipfs'
 import {store} from './src/store'
 import {JaenPagesEntity, JaenPagesPublish} from './src/types'
 import {resolvePath} from './src/utils'
+
+const DiscardButton = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "jaenuichunk" */ './src/containers/ui/hotbar/DiscardButton'
+    )
+)
+const EditButton = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "jaenuichunk" */ './src/containers/ui/hotbar/EditButton'
+    )
+)
+const PublishButton = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "jaenuichunk" */ './src/containers/ui/hotbar/PublishButton'
+    )
+)
+
+const FilesTab = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "jaenuichunk" */ './src/containers/ui/tabs/FilesTab'
+    )
+)
+const PagesTab = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "jaenuichunk" */ './src/containers/ui/tabs/PagesTab'
+    )
+)
+const SettingsTab = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "jaenuichunk" */ './src/containers/ui/tabs/SettingsTab'
+    )
+)
 
 export default {
   name: 'jaen-pages',
@@ -38,6 +71,8 @@ export default {
   },
   registerCallbacks: {
     onPublish: async () => {
+      const {upload} = await import('./src/ipfs')
+
       const {allSitePage} = storageGet()
 
       const allNodes = allSitePage.nodes

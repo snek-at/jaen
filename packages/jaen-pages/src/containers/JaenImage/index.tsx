@@ -1,4 +1,5 @@
 import {Box, Image, useDisclosure} from '@chakra-ui/react'
+import loadable from '@loadable/component'
 import {
   GatsbyImage,
   GatsbyImageProps,
@@ -6,8 +7,9 @@ import {
 } from 'gatsby-plugin-image'
 import * as React from 'react'
 
-import SnekFinder from '../SnekFinder'
 import {JaenImageContainer} from './style'
+
+const SnekFinder = loadable(() => import('@containers/SnekFinder'))
 
 export type ImageType = {
   src: string

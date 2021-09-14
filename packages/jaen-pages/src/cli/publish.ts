@@ -1,5 +1,4 @@
 import {merge} from '@src/common/utils'
-import {upload} from '@src/ipfs'
 import {
   JaenPages,
   JaenPagesEntity,
@@ -19,6 +18,7 @@ export const mergeBaseWithMigration = async (
     baseEntity: JaenPagesEntityWithMigrations | undefined,
     migrationEntity: JaenPagesEntity
   ) => {
+    const {upload} = await import('@src/ipfs')
     const migrationContext = migrationEntity.context
 
     if (!baseEntity) {

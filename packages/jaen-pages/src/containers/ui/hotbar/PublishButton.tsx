@@ -2,8 +2,6 @@ import {useToast} from '@chakra-ui/react'
 import {BifrostBridge} from '@snek-at/bridge'
 import {useJaenCoreContext} from '@snek-at/jaen'
 import {PublishButton} from '@snek-at/jaen-shared-ui/dist/components/molecules/buttons'
-import {useAppDispatch} from '@snek-at/jaen/src/store'
-import {upload} from '@src/ipfs'
 import {withRedux} from '@store/withRedux'
 import gql from 'graphql-tag'
 import React from 'react'
@@ -19,6 +17,7 @@ const Button: React.FC = () => {
   const isDisabled = core.getAuthState().isGuest
 
   const publish = async () => {
+    const {upload} = await import('@src/ipfs')
     const res = (await core.onPublish()) as {'jaen-pages': object}
 
     const url = await upload(JSON.stringify(res['jaen-pages']))

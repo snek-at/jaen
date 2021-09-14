@@ -1,10 +1,8 @@
-import {ChakraProvider} from '@chakra-ui/react'
 import loadable from '@loadable/component'
 import {PluginUI} from '@src/plugin'
 
 import jaenTheme from '../@chakra-ui/jaenTheme'
 import {useAppDispatch, useAppSelector} from '../store'
-import * as authActions from '../store/actions/authActions'
 import {withRedux} from '../store/withRedux'
 
 const LoadableUI = loadable(
@@ -24,8 +22,10 @@ const MainUI: React.FC<MainUIProps> = ({ui: {hotbar, tabs}}) => {
     password: string,
     isGuest: boolean
   ) => {
+    const {login} = await import('../store/actions/authActions')
+
     const res = (await dispatch(
-      authActions.login({creds: {username, password}, isGuest})
+      login({creds: {username, password}, isGuest})
     )) as any
 
     if (res.error) {
@@ -43,21 +43,21 @@ const MainUI: React.FC<MainUIProps> = ({ui: {hotbar, tabs}}) => {
     return login('snekman', 'ciscocisco', true)
   }
 
-  const handleLogout = () => {
-    dispatch(authActions.logout())
+  const handleLogout = async () => {
+    const {logout} = await import('../store/actions/authActions')
+
+    dispatch(logout())
   }
 
   return (
-    <ChakraProvider>
-      <LoadableUI
-        hotbar={hotbar}
-        tabs={tabs}
-        footer={{onLogout: handleLogout}}
-        authenticated={authenticated}
-        login={{onLogin: handleLogin, onGuestLogin: handleGuestLogin}}
-        chakraWorkaroundTheme={jaenTheme}
-      />
-    </ChakraProvider>
+    <LoadableUI
+      hotbar={hotbar}
+      tabs={tabs}
+      footer={{onLogout: handleLogout}}
+      authenticated={authenticated}
+      login={{onLogin: handleLogin, onGuestLogin: handleGuestLogin}}
+      chakraWorkaroundTheme={jaenTheme}
+    />
   )
 }
 

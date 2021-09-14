@@ -1,11 +1,10 @@
 import loadable from '@loadable/component'
+import SnekFinder from '@snek-at/snek-finder'
 import IPFSBackend from '@snek-at/snek-finder/lib/backends/IPFSBackend'
 import * as actions from '@store/actions/sfActions'
 import {useAppDispatch, useAppSelector} from '@store/index'
 import {withRedux} from '@store/withRedux'
 import * as React from 'react'
-
-const SnekFinder = loadable(() => import('@snek-at/snek-finder'))
 
 type FinderProps = {
   mode?: 'browser' | 'selector'
