@@ -94,7 +94,7 @@ const PageTree: React.FC<PageTreeProps> = ({
 
   const renderedContextMenu = (
     <Portal>
-      {contextMenu && (
+      {contextMenu && !addPageDisclousure.isOpen && (
         <Box
           pos="absolute"
           top={contextMenu.spawnY}
@@ -113,10 +113,7 @@ const PageTree: React.FC<PageTreeProps> = ({
                           <Text>Add page</Text>
                         </HStack>
                       ),
-                      onItemClick: () => {
-                        addPageDisclousure.onOpen()
-                        setContextMenu(null)
-                      }
+                      onItemClick: () => addPageDisclousure.onOpen()
                     }
                   ].concat(
                     items[contextMenu.id].data.locked
@@ -147,10 +144,7 @@ const PageTree: React.FC<PageTreeProps> = ({
                           <Text>Add page</Text>
                         </HStack>
                       ),
-                      onItemClick: () => {
-                        addPageDisclousure.onOpen()
-                        setContextMenu(null)
-                      }
+                      onItemClick: () => addPageDisclousure.onOpen()
                     }
                   ] as any)
             }
@@ -326,6 +320,7 @@ const PageTree: React.FC<PageTreeProps> = ({
             titleToSlug(name),
             template
           )
+          setContextMenu(null)
         }}
         onValidate={name => {
           const slug = titleToSlug(name)
