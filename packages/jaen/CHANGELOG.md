@@ -1,3 +1,11 @@
+# [@snek-at/jaen-v2.0.0-beta.24](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.23...@snek-at/jaen-v2.0.0-beta.24) (2021-09-14)
+
+
+### Bug Fixes
+
+* **drawer:** reduce minW of 6xl size ([a43fa63](https://github.com/snek-at/jaen/commit/a43fa63dfb986b64e30a29274b331a992c43dd0a))
+* **package.json:** align versions ([e28c4c9](https://github.com/snek-at/jaen/commit/e28c4c93e5294e44d446d80b311826d577813163))
+
 # [@snek-at/jaen-v2.0.0-beta.23](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.22...@snek-at/jaen-v2.0.0-beta.23) (2021-09-14)
 
 
