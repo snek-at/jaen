@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.42](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.41...@snek-at/jaen-pages-v2.0.0-beta.42) (2021-09-15)
+
+
+### Bug Fixes
+
+* **ckeditor:** update memo equal check and editor import ([0ac3c34](https://github.com/snek-at/jaen/commit/0ac3c340073fcfa85c598474f999e0648c1eb346))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.41](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.40...@snek-at/jaen-pages-v2.0.0-beta.41) (2021-09-15)
 
 
