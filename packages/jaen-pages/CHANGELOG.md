@@ -1,3 +1,11 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.41](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.40...@snek-at/jaen-pages-v2.0.0-beta.41) (2021-09-15)
+
+
+### Bug Fixes
+
+* **imagefield:** blinking on hover when using position absolut fixed ([d45c6f9](https://github.com/snek-at/jaen/commit/d45c6f92906bcb2acb271056fb94a6a9a832cda2))
+* **jaenpagecontext:** parse fields string to object ([23036ac](https://github.com/snek-at/jaen/commit/23036acc6ac993125ec598c8b01994b3abe890a8))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.40](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.39...@snek-at/jaen-pages-v2.0.0-beta.40) (2021-09-15)
 
 
