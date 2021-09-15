@@ -70,10 +70,10 @@ exports.createPages = async (
   for (const [id, pageEntity] of Object.entries(fileContent.pages)) {
     const {createdAt, fileUrl} = pageEntity.context
     const page = await (await fetch(fileUrl)).json()
+    const fields = page.fields
 
     if (page.template) {
       let images = []
-      const fields = page.fields
 
       if (fields) {
         images = await createImages({
