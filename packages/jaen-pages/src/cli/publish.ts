@@ -18,7 +18,7 @@ export const mergeBaseWithMigration = async (
     baseEntity: JaenPagesEntityWithMigrations | undefined,
     migrationEntity: JaenPagesEntity
   ) => {
-    const {upload} = await import('@src/ipfs')
+    const {upload} = await import('../ipfs') // do not change the import path
     const migrationContext = migrationEntity.context
 
     if (!baseEntity) {
