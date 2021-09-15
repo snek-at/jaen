@@ -1,4 +1,3 @@
-// import {CKEditor} from '@ckeditor/ckeditor5-react'
 import {Box} from '@chakra-ui/react'
 import styled from '@emotion/styled'
 import loadable from '@loadable/component'
@@ -26,6 +25,8 @@ type EditorProps = {
   onChange: (data: string) => void
 }
 
+let BalloonEditor: any
+
 const Editor: React.FC<EditorProps> = props => {
   const raw = (
     <Box
@@ -35,7 +36,6 @@ const Editor: React.FC<EditorProps> = props => {
   )
 
   const editorConfig: {[key: string]: any} = {
-    editorClass: 'dasjdaioshdiashdiu',
     mediaEmbed: {
       previewsInData: true
     }
@@ -45,26 +45,38 @@ const Editor: React.FC<EditorProps> = props => {
     editorConfig['toolbar'] = []
   }
 
+  const [editor, setEditor] = React.useState(undefined)
+
+  React.useEffect(() => {
+    async function load() {
+      console.log('call', !BalloonEditor, props.editing)
+
+      if (!BalloonEditor && props.editing) {
+        BalloonEditor = await import('@ckeditor/ckeditor5-build-balloon')
+
+        setEditor(BalloonEditor)
+      }
+    }
+
+    load()
+  }, [props.editing])
+
   return (
-    <EditorWrapper className="testestest">
-      {props.editing ? (
+    <EditorWrapper>
+      {props.editing && editor ? (
         <LoadableCKEditor
           fallback={raw}
           //@ts-ignore
-          editor={
-            props.toolbarType === 'balloon' &&
-            typeof window !== 'undefined' &&
-            require('@ckeditor/ckeditor5-build-balloon')
-          }
+          editor={editor?.default}
           config={editorConfig}
           data={props.data}
-          onLoad={(editor: any) => {
-            editor.writer.addClass('revert-css')
-          }}
           //@ts-ignore
           onChange={(event, editor) => {
             const data = editor.getData()
             props.onChange(data)
+          }}
+          onLoad={(editor: any) => {
+            editor.writer.addClass('revert-css')
           }}
         />
       ) : (
