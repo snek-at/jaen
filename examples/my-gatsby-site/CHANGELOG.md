@@ -1,3 +1,11 @@
+# [my-gatsby-site-v1.0.0-beta.30](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.29...my-gatsby-site-v1.0.0-beta.30) (2021-09-15)
+
+
+### Performance Improvements
+
+* **ckeditor:** load bundle only if editing is true (prevents from loading it to SSR) ([acabb30](https://github.com/snek-at/jaen/commit/acabb308285769a7d2beb666b2097a82822f273e))
+* **ckeditor:** only render if `defaultData.shouldOverrideRand` changes ([61361dc](https://github.com/snek-at/jaen/commit/61361dc785f21ec38b1df25d321cf4c3fcd8e1a5))
+
 # [my-gatsby-site-v1.0.0-beta.29](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.28...my-gatsby-site-v1.0.0-beta.29) (2021-09-15)
 
 
