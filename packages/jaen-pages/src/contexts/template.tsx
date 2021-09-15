@@ -62,6 +62,10 @@ export const TemplateProvider: React.FC<TemplateProviderProps> = ({
     jaenPageContext.id = dynamicPaths[pathName]
   }
 
+  if ((typeof jaenPageContext.fields as any) === 'string') {
+    jaenPageContext.fields = JSON.parse(jaenPageContext.fields as any)
+  }
+
   if (!page || page.deleted) {
     return <>{'JaenPages 404'}</>
   }
