@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.38](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.37...@snek-at/jaen-pages-v2.0.0-beta.38) (2021-09-15)
+
+
+### Bug Fixes
+
+* **gatsby-node:** fix variable not defined error ([0013d08](https://github.com/snek-at/jaen/commit/0013d08882d6c3188508c70caee85d1272e60bbe))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.37](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.36...@snek-at/jaen-pages-v2.0.0-beta.37) (2021-09-14)
 
 
