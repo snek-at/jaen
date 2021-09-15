@@ -24,7 +24,7 @@ type EditorProps = {
   onChange: (data: string) => void
 }
 
-let BalloonEditor: any
+let BalloonEditor: any = undefined
 
 const Editor: React.FC<EditorProps> = props => {
   const raw = (
@@ -44,7 +44,7 @@ const Editor: React.FC<EditorProps> = props => {
     editorConfig['toolbar'] = []
   }
 
-  const [editor, setEditor] = React.useState(undefined)
+  const [editor, setEditor] = React.useState(BalloonEditor)
 
   React.useEffect(() => {
     async function load() {
@@ -84,8 +84,9 @@ const Editor: React.FC<EditorProps> = props => {
   )
 }
 
-export default React.memo(
-  Editor,
-  (prev, next) =>
-    prev.defaultData.shouldOverrideRand === next.defaultData.shouldOverrideRand
-)
+export default React.memo(Editor, (prev, next) => {
+  return (
+    prev.defaultData.shouldOverrideRand ===
+      next.defaultData.shouldOverrideRand || prev.editing === next.editing
+  )
+})
