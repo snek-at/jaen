@@ -1,3 +1,16 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.40](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.39...@snek-at/jaen-pages-v2.0.0-beta.40) (2021-09-15)
+
+
+### Bug Fixes
+
+* **types:** add ts ignore to module without type declarations ([e979a0f](https://github.com/snek-at/jaen/commit/e979a0fba1a5f12726322be63eb811910593270f))
+
+
+### Performance Improvements
+
+* **ckeditor:** load bundle only if editing is true (prevents from loading it to SSR) ([acabb30](https://github.com/snek-at/jaen/commit/acabb308285769a7d2beb666b2097a82822f273e))
+* **ckeditor:** only render if `defaultData.shouldOverrideRand` changes ([61361dc](https://github.com/snek-at/jaen/commit/61361dc785f21ec38b1df25d321cf4c3fcd8e1a5))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.39](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.38...@snek-at/jaen-pages-v2.0.0-beta.39) (2021-09-15)
 
 
