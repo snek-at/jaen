@@ -7,8 +7,6 @@ import {
 } from 'gatsby-plugin-image'
 import * as React from 'react'
 
-import {JaenImageContainer} from './style'
-
 const SnekFinder = loadable(() => import('@containers/SnekFinder'))
 
 export type ImageType = {
@@ -51,20 +49,33 @@ const JaenImage: React.FC<JaenImage> = ({
 
   const image = storeImage || initialImage
 
+  const editingStyle = editable
+    ? {
+        cursor: 'pointer',
+        boxShadow: '0 0 0 2.5px #48BB78',
+        transition: 'box-shadow 0.1s ease-in-out'
+      }
+    : {}
+
+  const imageProps = {
+    ...props.imageProps,
+    style: {...props.imageProps.style, ...editingStyle}
+  }
+
   return (
     <>
-      <JaenImageContainer editable={editable} onClick={handleFileClick}>
+      <div onClick={handleFileClick}>
         {storeImage || !contextImage ? (
-          <Image {...props.imageProps} {...image} />
+          <Image {...imageProps} {...image} />
         ) : (
           <GatsbyImage
             image={contextImage}
             title={image.title}
             alt={image.alt}
-            {...props.imageProps}
+            {...imageProps}
           />
         )}
-      </JaenImageContainer>
+      </div>
       {fileSelector.isOpen && (
         <SnekFinder
           mode="selector"
