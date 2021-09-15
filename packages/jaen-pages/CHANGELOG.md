@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.39](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.38...@snek-at/jaen-pages-v2.0.0-beta.39) (2021-09-15)
+
+
+### Bug Fixes
+
+* update import path (remove path alias) ([05cb5d7](https://github.com/snek-at/jaen/commit/05cb5d701b882490a23e6e5bcd2122cb4a365403))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.38](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.37...@snek-at/jaen-pages-v2.0.0-beta.38) (2021-09-15)
 
 
