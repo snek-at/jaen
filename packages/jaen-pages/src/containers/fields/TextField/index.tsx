@@ -98,16 +98,17 @@ const TextField: React.FC<TextFieldProps> = ({
     }
   }
 
+  // random Id
+  const resetEditorReset =
+    ((contextValue || initValue) === value && Math.random()) || undefined
+
   return (
-    <>
-      <Editor
-        data={value}
-        editing={isEditing}
-        onChange={handleOnChange}
-        disableToolbar={!rtf}
-        toolbarType={toolbar}
-      />
-    </>
+    <Editor
+      defaultData={{value, shouldOverrideRand: resetEditorReset}}
+      editing={isEditing}
+      onChange={handleOnChange}
+      disableToolbar={!rtf}
+    />
   )
 }
 

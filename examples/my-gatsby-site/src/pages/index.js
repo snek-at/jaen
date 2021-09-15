@@ -203,7 +203,7 @@ const IndexPage = () => {
                 <div style={descriptionStyle}>
                   <fields.TextField
                     fieldName={`linkfield${index}`}
-                    initValue={link.description}
+                    initValue={`<p>${link.description}</p>`}
                   />
                 </div>
               </span>
@@ -212,35 +212,6 @@ const IndexPage = () => {
         </ul>
       </RevertCSSWrapper>
 
-      {/* <Button>test</Button> */}
-      {/* <fields.StreamField fieldName="streamfield1" initValue={{
-        0: {
-          typeName: "TestBlock",
-          fields: {
-            body: {
-              _type: "TextBlock",
-              text: "<p>This should resolve the window is not defined error and you should be able to build your code successfully. If you need more information regarding this, check the Gatsby documentation on Debugging HTML Builds.</p>"
-            },
-            body2: {
-              _type: "TextBlock",
-              text: "<p>02</p>"
-            }
-          }
-        },
-        1: {
-          typeName: "TestBlock",
-          fields: {
-            body: {
-              _type: "TextBlock",
-              text: "<p>11</p>"
-            },
-            body2: {
-              _type: "TextBlock",
-              text: "<p>12</p>"
-            }
-          }
-        }
-      }} blocks={[TestBlock, AirbnbBlock]}/> */}
       <fields.IndexField
         onRender={page => (
           <div>tsetsiasihfasjhfjkshs {Object.keys(page.children)}</div>

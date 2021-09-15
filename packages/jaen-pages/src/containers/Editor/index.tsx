@@ -18,10 +18,9 @@ const LoadableCKEditor = loadable(() => import('@ckeditor/ckeditor5-react'), {
 })
 
 type EditorProps = {
-  data: string
+  defaultData: {value: string; shouldOverrideRand?: number}
   editing: boolean
   disableToolbar: boolean
-  toolbarType: 'inline' | 'balloon'
   onChange: (data: string) => void
 }
 
@@ -31,7 +30,7 @@ const Editor: React.FC<EditorProps> = props => {
   const raw = (
     <Box
       className="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline"
-      dangerouslySetInnerHTML={{__html: props.data}}
+      dangerouslySetInnerHTML={{__html: props.defaultData.value}}
     />
   )
 
@@ -49,8 +48,6 @@ const Editor: React.FC<EditorProps> = props => {
 
   React.useEffect(() => {
     async function load() {
-      console.log('call', !BalloonEditor, props.editing)
-
       if (!BalloonEditor && props.editing) {
         BalloonEditor = await import('@ckeditor/ckeditor5-build-balloon')
 
@@ -59,7 +56,7 @@ const Editor: React.FC<EditorProps> = props => {
     }
 
     load()
-  }, [props.editing])
+  })
 
   return (
     <EditorWrapper>
@@ -69,7 +66,7 @@ const Editor: React.FC<EditorProps> = props => {
           //@ts-ignore
           editor={editor?.default}
           config={editorConfig}
-          data={props.data}
+          data={props.defaultData.value}
           //@ts-ignore
           onChange={(event, editor) => {
             const data = editor.getData()
@@ -86,29 +83,8 @@ const Editor: React.FC<EditorProps> = props => {
   )
 }
 
-// // A custom React Hook for using CKEditor with SSR
-// // particularly with NextJS.
-// // https://ckeditor.com | https://nextjs.org
-
-// export function useCKEditor() {
-//   const editorRef = useRef()
-//   const [isEditorLoaded, setIsEditorLoaded] = useState(false)
-//   const {CKEditor, InlineEditor} = editorRef.current || {}
-
-//   useEffect(() => {
-//     editorRef.current = {
-//       // CKEditor: require('@ckeditor/ckeditor5-react'), // depricated in v3
-//       CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, // v3+
-//       InlineEditor: require('@ckeditor/ckeditor5-build-inline')
-//     }
-//     setIsEditorLoaded(true)
-//   }, [])
-
-//   return Object.freeze({
-//     isEditorLoaded,
-//     CKEditor,
-//     InlineEditor
-//   })
-// }
-
-export default Editor
+export default React.memo(
+  Editor,
+  (prev, next) =>
+    prev.defaultData.shouldOverrideRand === next.defaultData.shouldOverrideRand
+)
