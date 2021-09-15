@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.29](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.28...my-gatsby-site-v1.0.0-beta.29) (2021-09-15)
+
+
+### Bug Fixes
+
+* **gatsby-node:** fix variable not defined error ([0013d08](https://github.com/snek-at/jaen/commit/0013d08882d6c3188508c70caee85d1272e60bbe))
+
 # [my-gatsby-site-v1.0.0-beta.28](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.27...my-gatsby-site-v1.0.0-beta.28) (2021-09-14)
 
 
