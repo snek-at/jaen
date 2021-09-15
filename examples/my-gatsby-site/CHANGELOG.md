@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.31](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.30...my-gatsby-site-v1.0.0-beta.31) (2021-09-15)
+
+
+### Bug Fixes
+
+* **imagefield:** blinking on hover when using position absolut fixed ([d45c6f9](https://github.com/snek-at/jaen/commit/d45c6f92906bcb2acb271056fb94a6a9a832cda2))
+
 # [my-gatsby-site-v1.0.0-beta.30](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.29...my-gatsby-site-v1.0.0-beta.30) (2021-09-15)
 
 
