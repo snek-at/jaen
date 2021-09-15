@@ -49,6 +49,7 @@ const Editor: React.FC<EditorProps> = props => {
   React.useEffect(() => {
     async function load() {
       if (!BalloonEditor && props.editing) {
+        //@ts-ignore
         BalloonEditor = await import('@ckeditor/ckeditor5-build-balloon')
 
         setEditor(BalloonEditor)
