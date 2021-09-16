@@ -1,3 +1,11 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.43](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.42...@snek-at/jaen-pages-v2.0.0-beta.43) (2021-09-16)
+
+
+### Bug Fixes
+
+* **gatsby-node:** add missing slug on fixed pages that are not the index ([81eb4c5](https://github.com/snek-at/jaen/commit/81eb4c5bce7dc0f27ca2fed500d7336ed65de6df))
+* **settingstab:** fix state updates ([0535ee5](https://github.com/snek-at/jaen/commit/0535ee54619392c51912631973b799b1115d73ae))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.42](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.41...@snek-at/jaen-pages-v2.0.0-beta.42) (2021-09-15)
 
 
