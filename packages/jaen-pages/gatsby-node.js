@@ -175,8 +175,8 @@ exports.onCreatePage = async ({
         ...page.context,
         jaenPageContext: {
           id,
-          slug,
           ...cachedJaenPage,
+          slug: cachedJaenPage?.slug || slug,
           pageMetadata: {
             title: internalComponentName,
             datePublished: new Date().toISOString(),
@@ -187,6 +187,8 @@ exports.onCreatePage = async ({
         }
       }
     }
+
+    console.log(newPage)
 
     createPage(newPage)
   }
