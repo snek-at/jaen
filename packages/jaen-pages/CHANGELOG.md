@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.44](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.43...@snek-at/jaen-pages-v2.0.0-beta.44) (2021-09-16)
+
+
+### Features
+
+* **seo:** add react helmet gatsby plugin to ssr meta tags ([5490aa7](https://github.com/snek-at/jaen/commit/5490aa72fc071c256b11ee4f6c26bb19a339203c))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.43](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.42...@snek-at/jaen-pages-v2.0.0-beta.43) (2021-09-16)
 
 
