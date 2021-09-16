@@ -1,3 +1,10 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.45](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.44...@snek-at/jaen-pages-v2.0.0-beta.45) (2021-09-16)
+
+
+### Bug Fixes
+
+* **seo:** fix page image url ([5e55706](https://github.com/snek-at/jaen/commit/5e55706837336e541c8243360e18ce8890de7dbc))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.44](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.43...@snek-at/jaen-pages-v2.0.0-beta.44) (2021-09-16)
 
 
