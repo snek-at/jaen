@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.26](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.25...@snek-at/jaen-v2.0.0-beta.26) (2021-09-16)
+
+
+### Bug Fixes
+
+* **mainui:** make toggle responsive and add unsupported device alert ([78c46f7](https://github.com/snek-at/jaen/commit/78c46f746d9d94bb85a88d6ffdf41b354a799c29))
+
 # [@snek-at/jaen-v2.0.0-beta.25](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.24...@snek-at/jaen-v2.0.0-beta.25) (2021-09-14)
 
 
