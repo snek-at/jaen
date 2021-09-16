@@ -6,7 +6,7 @@ const jaenTheme = extendTheme({
     Drawer: {
       sizes: {
         ...baseTheme.components.Drawer.sizes,
-        '6xl': {dialog: {minW: '4xl', maxW: '8xl'}}
+        '6xl': {dialog: {maxW: '8xl'}}
       }
     }
   }

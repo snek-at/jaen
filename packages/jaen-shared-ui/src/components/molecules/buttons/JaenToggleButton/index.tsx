@@ -20,9 +20,8 @@ const JaenToggleButton: React.FC<JaenToggleButtonProps> = props => {
       fontSize="md">
       <IconButton
         aria-label="Toggle snek jaen"
-        w={[50, 60, 70]}
-        h={[50, 60, 70]}
-        icon={<SnekIcon h={[30, 40, 50]} />}
+        boxSize="20"
+        icon={<SnekIcon boxSize="14" />}
         onClick={props.onClick}
         ref={props.ref}
       />

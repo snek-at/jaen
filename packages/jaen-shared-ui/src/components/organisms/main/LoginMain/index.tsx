@@ -19,7 +19,12 @@ import {
   PopoverBody,
   PopoverHeader,
   PopoverCloseButton,
-  useToast
+  useToast,
+  useMediaQuery,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription
 } from '@chakra-ui/react'
 import * as React from 'react'
 
@@ -72,6 +77,7 @@ const LoginMain: React.FC<LoginMainProps> = props => {
   const [password, setPassword] = React.useState('')
 
   const toast = useToast()
+  const [isLargerThan992] = useMediaQuery('(min-width: 992px)')
 
   React.useEffect(() => {
     if (toastMessage) {
@@ -141,6 +147,16 @@ const LoginMain: React.FC<LoginMainProps> = props => {
 
   return (
     <Box position={'relative'}>
+      {!isLargerThan992 && (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle mr={2}>Unsupported device!</AlertTitle>
+          <AlertDescription>
+            Your Jaen experience may be degraded, please use a desktop or laptop
+            computer {<code>(above 992px)</code>}.
+          </AlertDescription>
+        </Alert>
+      )}
       <Container
         as={SimpleGrid}
         maxW={'7xl'}
@@ -170,6 +186,7 @@ const LoginMain: React.FC<LoginMainProps> = props => {
           {/* <Heading as="h6" size="xs">
             powered by Snek.
           </Heading> */}
+
           <Stack direction={'row'} spacing={4} align={'center'}>
             <AvatarGroup>
               {avatars.map(avatar => (
