@@ -76,6 +76,8 @@ const LoginMain: React.FC<LoginMainProps> = props => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
 
+  const loginButtonRef = React.useRef()
+
   const toast = useToast()
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)')
 
@@ -93,7 +95,8 @@ const LoginMain: React.FC<LoginMainProps> = props => {
     }
   }, [toastMessage, toast])
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: any) => {
+    e.preventDefault()
     const success = await props.onLogin(username, password)
 
     if (success) {
@@ -266,7 +269,7 @@ const LoginMain: React.FC<LoginMainProps> = props => {
               {guestLoginPopover}.
             </Text>
           </Stack>
-          <Box as={'form'} mt={10}>
+          <Box as={'form'} mt={10} onSubmit={handleLogin}>
             <Stack spacing={4}>
               <Input
                 placeholder="snekman"
@@ -302,7 +305,7 @@ const LoginMain: React.FC<LoginMainProps> = props => {
                 bgGradient: 'linear(to-r, green.500,green.400)',
                 boxShadow: 'xl'
               }}
-              onClick={handleLogin}>
+              type="submit">
               Login
             </Button>
           </Box>
