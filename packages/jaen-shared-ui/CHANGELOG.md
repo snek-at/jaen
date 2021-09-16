@@ -1,3 +1,16 @@
+# [@snek-at/jaen-shared-ui-v2.0.0-beta.20](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.19...@snek-at/jaen-shared-ui-v2.0.0-beta.20) (2021-09-16)
+
+
+### Bug Fixes
+
+* **mainui:** make toggle responsive and add unsupported device alert ([78c46f7](https://github.com/snek-at/jaen/commit/78c46f746d9d94bb85a88d6ffdf41b354a799c29))
+* **settingstab:** fix state updates ([0535ee5](https://github.com/snek-at/jaen/commit/0535ee54619392c51912631973b799b1115d73ae))
+
+
+### Features
+
+* **login:** enable login by enter ([8c6dba2](https://github.com/snek-at/jaen/commit/8c6dba2a853e7641c804f1c46b7c843ee30a4cfa))
+
 # [@snek-at/jaen-shared-ui-v2.0.0-beta.19](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0-beta.18...@snek-at/jaen-shared-ui-v2.0.0-beta.19) (2021-09-14)
 
 
