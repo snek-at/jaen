@@ -188,8 +188,6 @@ exports.onCreatePage = async ({
       }
     }
 
-    console.log(newPage)
-
     createPage(newPage)
   }
 }
