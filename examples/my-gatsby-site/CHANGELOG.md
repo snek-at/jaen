@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.34](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.33...my-gatsby-site-v1.0.0-beta.34) (2021-09-16)
+
+
+### Bug Fixes
+
+* **seo:** fix page image url ([5e55706](https://github.com/snek-at/jaen/commit/5e55706837336e541c8243360e18ce8890de7dbc))
+
 # [my-gatsby-site-v1.0.0-beta.33](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.32...my-gatsby-site-v1.0.0-beta.33) (2021-09-16)
 
 
