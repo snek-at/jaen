@@ -43,9 +43,7 @@ const SEO: React.FC<SEOProps> = ({pagePath, pageMeta}) => (
     }) => {
       const title = pageMeta?.title || seo.title
       const description = pageMeta?.description || seo.description
-      const image = pageMeta?.image
-        ? `${seo.siteUrl}${pageMeta.image}`
-        : seo.image
+      const image = pageMeta?.image || seo.image
       const url = pagePath ? `${seo.siteUrl}${pagePath}` : seo.siteUrl
       const datePublished = pageMeta?.isBlogPost
         ? pageMeta.datePublished || false
