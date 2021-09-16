@@ -1,6 +1,6 @@
 {
   "name": "@snek-at/jaen-pages",
-  "version": "2.0.0-beta.43",
+  "version": "2.0.0-beta.44",
   "main": "src/index.js",
   "types": "src/index.tsx",
   "license": "EUPL-1.2",
@@ -31,6 +31,7 @@
     "gatsby-alias-imports": "^1.0.6",
     "gatsby-plugin-compile-es6-packages": "^2.1.1",
     "gatsby-plugin-image": "^1.13.0",
+    "gatsby-plugin-react-helmet": "^4.13.0",
     "gatsby-plugin-sharp": "^3.13.0",
     "gatsby-source-filesystem": "^3.13.0",
     "gatsby-transformer-sharp": "^3.13.0",
