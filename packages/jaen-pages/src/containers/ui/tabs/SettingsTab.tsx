@@ -36,7 +36,7 @@ const SettingsTab: React.FC<{}> = () => {
           mode="selector"
           onSelectorClose={fileSelector.onClose}
           onSelectorSelect={i => {
-            handleValuesChange({image: i.src})
+            handleValuesChange({...siteMetadata, image: i.src})
 
             fileSelector.onClose()
           }}

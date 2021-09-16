@@ -172,9 +172,16 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
                 <Box p={2}>
                   <Heading size="sm">Name</Heading>
                   <Input
-                    placeholder="Description"
+                    placeholder="John Doe"
                     value={values.author?.name || ''}
-                    onChange={e => handleValuesChange('description', e)}
+                    onChange={e =>
+                      setValues({
+                        ...values,
+                        author: {
+                          name: e.target.value
+                        }
+                      })
+                    }
                     onBlur={handleValuesCb}
                   />
                 </Box>
@@ -193,27 +200,54 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
                 <Box p={2}>
                   <Heading size="sm">Name</Heading>
                   <Input
-                    placeholder="Description"
+                    placeholder="Example, Inc."
                     value={values.organization?.name || ''}
-                    onChange={e => handleValuesChange('description', e)}
+                    onChange={e =>
+                      setValues({
+                        ...values,
+                        organization: {
+                          name: e.target.value,
+                          url: values.organization?.url || '',
+                          logo: values.organization?.logo || ''
+                        }
+                      })
+                    }
                     onBlur={handleValuesCb}
                   />
                 </Box>
                 <Box p={2}>
                   <Heading size="sm">URL</Heading>
                   <Input
-                    placeholder="Description"
+                    placeholder="https://example.com"
                     value={values.organization?.url || ''}
-                    onChange={e => handleValuesChange('description', e)}
+                    onChange={e =>
+                      setValues({
+                        ...values,
+                        organization: {
+                          name: values.organization?.name || '',
+                          url: e.target.value,
+                          logo: values.organization?.logo || ''
+                        }
+                      })
+                    }
                     onBlur={handleValuesCb}
                   />
                 </Box>
                 <Box p={2}>
                   <Heading size="sm">Logo</Heading>
                   <Input
-                    placeholder="Description"
+                    placeholder="https://example.com"
                     value={values.organization?.logo || ''}
-                    onChange={e => handleValuesChange('description', e)}
+                    onChange={e =>
+                      setValues({
+                        ...values,
+                        organization: {
+                          name: values.organization?.name || '',
+                          url: values.organization?.url || '',
+                          logo: e.target.value
+                        }
+                      })
+                    }
                     onBlur={handleValuesCb}
                   />
                 </Box>
@@ -228,7 +262,10 @@ const SiteSettings: React.FC<SiteSettingsType> = props => {
                 transition="0.2s all"
                 objectFit="cover"
                 _hover={{filter: 'brightness(70%)', cursor: 'pointer'}}
-                onClick={props.onImageClick}
+                onClick={() => {
+                  handleValuesCb()
+                  props.onImageClick()
+                }}
               />
             </Box>
           </Flex>
