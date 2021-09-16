@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.33](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.32...my-gatsby-site-v1.0.0-beta.33) (2021-09-16)
+
+
+### Features
+
+* **seo:** add react helmet gatsby plugin to ssr meta tags ([5490aa7](https://github.com/snek-at/jaen/commit/5490aa72fc071c256b11ee4f6c26bb19a339203c))
+
 # [my-gatsby-site-v1.0.0-beta.32](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.31...my-gatsby-site-v1.0.0-beta.32) (2021-09-16)
 
 
