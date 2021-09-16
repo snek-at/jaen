@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.32](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.31...my-gatsby-site-v1.0.0-beta.32) (2021-09-16)
+
+
+### Bug Fixes
+
+* **gatsby-node:** add missing slug on fixed pages that are not the index ([81eb4c5](https://github.com/snek-at/jaen/commit/81eb4c5bce7dc0f27ca2fed500d7336ed65de6df))
+
 # [my-gatsby-site-v1.0.0-beta.31](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.30...my-gatsby-site-v1.0.0-beta.31) (2021-09-15)
 
 
