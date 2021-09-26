@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.36](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.35...my-gatsby-site-v1.0.0-beta.36) (2021-09-26)
+
+
+### Features
+
+* **mainui:** provide hideUI status through core provider ([2288635](https://github.com/snek-at/jaen/commit/228863568f75c68e127e143b47c0bc90ed5c2bf1))
+
 # [my-gatsby-site-v1.0.0-beta.35](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.34...my-gatsby-site-v1.0.0-beta.35) (2021-09-26)
 
 
