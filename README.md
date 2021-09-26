@@ -4,10 +4,10 @@
   </a>
 </p>
 
-<h3 align="center">Snek Jaen Template</h3>
+<h3 align="center">Snek Jaen</h3>
 
 <p align="center">
-  This is the official jaen project of snek-at.
+  This is the official jaen project provided by snek-at.
   Free, sexy and cutting edge CMS framework for ReactJS.
   <br>
   <br>
@@ -18,7 +18,7 @@
   ·
   <a href="https://github.com/snek-at/jaen/issues/new?template=feature_request.md">Request feature</a>
   ·
-  <a href="https://www.overleaf.com/read/bcxwhwbhrmps">Documentation</a>
+  <a href="https://github.com/snek-at/jaen/wiki">Documentation</a>
   <br>
   <br>
   <a href="https://www.codacy.com/gh/snek-at/jaen/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=snek-at/jaen&amp;utm_campaign=Badge_Grade">
@@ -40,6 +40,8 @@ Read this readme in a different language: [Deutsch](https://github.com/snek-at/j
     - [Deployment Options](#deployment-options)
         - [Codespace Setup](#codespace-setup)
         - [Local Setup](#local-setup)
+            - [Troubleshooting](#troubleshooting)
+    - [Editing](#editing)
 - [💻 How to Code](#-how-to-code)
     - [Overview](#overview)
         - [Page Settings](#page-settings)
@@ -78,8 +80,8 @@ Customizable, extensible and open-source.
 * Fast out of the box, cache-friendly when you need it
 * StreamField encourages flexible content without compromising structure
 * Excellent support for images and embedded content
-* Multi-site and multi-language ready
-* Powerd by blockchain and can be run for free
+* Powered by blockchain and can be run for free
+* Simple, intuitive "What you see is what you get" editing mode
 
 ### Roadmap
 | Feature                       | Shipped | Almost There | We're Writing the Code | Investigating |
@@ -108,7 +110,7 @@ Customizable, extensible and open-source.
 Chasing ones own tail is not inspiring.
 
 #### Disclaimer
-Not for crybabies. Do not touch if you are affraid to be a bit scratched.
+Not for crybabies. Do not touch if you are afraid of being scratched a little.
 
 ## [](#-get-up-and-running-in-5-minutes)🚀 Get Up and Running in 5 Minutes
 
@@ -139,7 +141,7 @@ The easiest method is to use a GitHub [Codespace](https://github.com/features/co
 - Or build a local copy of the library with `yarn run build`
 
 #### Local Setup
-If you set this up locally, make sure you have the following pre-requisites:
+If you decide to set up locally, make sure you have the following prerequisites:
 
 - Use `yarn install` to install all dependencies
 - Start a local copy of the docs site with `yarn start`
@@ -189,32 +191,36 @@ export default HomePage
 
 jaen-config.js
 ```javascript
-[...]
-
-pages: {
-      resolve: require('@snek-at/jaen-pages'),
-      templates: [require('./src/templates/yourpage/index.tsx')]
+module.exports = {
+  remote: 'snek-at/jaen-template',
+  plugins: {
+    pages: {
+      resolve: require('@snek-at/jaen-pages/jaen-register'),
+      templates: [require('./src/templates/SamplePage.tsx')]
     }
-    
-[...]
+  }
+}
 ```
 gatsby-config.js
 ```javascript
-[...]
+const path = require('path')
 
-plugins: [
+const siteMetadata = require('./site-metadata')
+
+module.exports = {
+  siteMetadata,
+  plugins: [
     '@snek-at/jaen',
     {
       resolve: '@snek-at/jaen-pages',
       options: {
         templates: {
-          HomePage: path.resolve('src/templates/home/index.tsx')
+          SamplePage: path.resolve('src/templates/SamplePage.tsx')
         }
       }
     }
   ]
-  
-[...]
+}
 ```
 
 ### Fields
@@ -272,7 +278,7 @@ export default HomePage
 
 #### BlockContainer
 
-Jaen BlockContainers enable you to integrate editable blocks and to use as many of them as you like. You can put them into a Chakra UI wrap and pass props to the wrap. In order to use this field you are required to build a block. You can find an example of a block below.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField)</div>
+Jaen BlockContainers enable you to integrate editable blocks and to use as many of them as you like. You can put them into a [Chakra UI wrap](https://chakra-ui.com/docs/layout/wrap) and pass props to the wrap. In order to use this field you are required to build a block. You can find an example of a block below.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField)</div>
 
 ```javascript
 import {BlockContainer, JaenTemplate} from '@snek-at/jaen-pages'
@@ -297,9 +303,31 @@ HomePage.TemplateName = 'HomePage'
 export default HomePage
 ```
 
+##### Chakra UI Wrap Example
+
+This example displays five boxes of varying colors with a 1 rem space between them in a flex that goes into the next row if the content is too wide. It also centers the boxes. 
+
+```
+import {Wrap, Box} from '@chakra-ui/react'
+import {fields} from '@snek-at/jaen-pages'
+
+
+const Component = () => {
+  return(
+    <Wrap spacing="1rem" justify="center">
+      <Box boxSize="300px" bg="red"/>
+      <Box boxSize="300px" bg="teal"/>
+      <Box boxSize="300px" bg="orange"/>
+      <Box boxSize="300px" bg="blue"/>
+      <Box boxSize="300px" bg="green"/>
+    </Wrap>
+  )
+}
+
+```
 #### IndexField
 
-If you want to link to childpages of a slug, the IndexField is your friend. The fixedSlug property is not required. When none is provided, the children of the current page are used. If you like, it is possible to specify the parentpage and the onRender property allows you to build cards, teasers, buttons and more to your subpages.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
+If you want to link to childpages of a slug, the IndexField is your friend. The fixedSlug property is not required. When none is provided, the children of the  page the IndexField is on are used. If you like, it is possible to specify the parentpage and the onRender property allows you to build cards, teasers, buttons and more to your subpages.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField)</div>
 
 ```javascript
 import {fields, JaenTemplate} from '@snek-at/jaen-pages'
@@ -324,7 +352,7 @@ export default HomePage
 
 #### ChoiceField
 
-The ChoiceField allows you to build React-Components and let the adimistrator of the page decide which of the components to display. You can achieve this by either providing a popover in which the options can be decided or you can return null in the popover and add an onClick to your component for usecases in which all the choices are always displayed or for a boolean like behaviour.
+The ChoiceField allows you to build React-Components and let the administrator of the page decide which of the components to display. You can achieve this by either providing a popover in which the options can be decided or you can return null in the popover and add an onClick to your component for use-cases in which all the choices are always displayed or for a boolean like behaviour.
 
 ```javascript
 import {fields, JaenTemplate} from '@snek-at/jaen-pages'
@@ -353,7 +381,7 @@ export default HomePage
 
 
 ### Blocks
-The Block is the keystone of the BlockContainer. With the help of blocks you can build complex React-Components with editable content.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks)</div>
+The Block is the keystone of the BlockContainer. With the help of blocks you can build complex React-Components with editable content. All available fields can be used inside a block. <div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks)</div>
 
 ```javascript
 import {JaenBlock, fields} from '@snek-at/jaen-pages'
