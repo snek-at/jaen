@@ -1,3 +1,15 @@
+# [my-gatsby-site-v1.0.0-beta.35](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.34...my-gatsby-site-v1.0.0-beta.35) (2021-09-26)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([cfd6201](https://github.com/snek-at/jaen/commit/cfd6201a2212063a65b7d17d9d1d0097a0cd7b62))
+
+
+### Features
+
+* **mainui:** add option to initially hide ui ([0d4a063](https://github.com/snek-at/jaen/commit/0d4a0630880f2d4cb53ec4637b784ae1a6496f6e))
+
 # [my-gatsby-site-v1.0.0-beta.34](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.33...my-gatsby-site-v1.0.0-beta.34) (2021-09-16)
 
 
