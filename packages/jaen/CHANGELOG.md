@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.28](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.27...@snek-at/jaen-v2.0.0-beta.28) (2021-09-26)
+
+
+### Features
+
+* **mainui:** provide hideUI status through core provider ([2288635](https://github.com/snek-at/jaen/commit/228863568f75c68e127e143b47c0bc90ed5c2bf1))
+
 # [@snek-at/jaen-v2.0.0-beta.27](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.26...@snek-at/jaen-v2.0.0-beta.27) (2021-09-26)
 
 
