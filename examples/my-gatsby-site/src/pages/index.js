@@ -2,7 +2,7 @@ import {WrapItem} from '@chakra-ui/layout'
 import {Wrap} from '@chakra-ui/layout'
 import {Box} from '@chakra-ui/layout'
 import {Button} from '@chakra-ui/react'
-import {RevertCSSWrapper} from '@snek-at/jaen'
+import {RevertCSSWrapper, useJaenCoreContext} from '@snek-at/jaen'
 import {BlockContainer, fields} from '@snek-at/jaen-pages'
 import * as React from 'react'
 
@@ -137,10 +137,12 @@ const links = [
 
 // markup
 const IndexPage = () => {
+  const {toggleUI} = useJaenCoreContext()
+
   return (
     <main style={pageStyles}>
-      <Button>test</Button>
-      <fields.ImageField
+      <Button onClick={toggleUI}>Bye bye snek</Button>
+      {/* <fields.ImageField
         fieldName="imagefield1"
         initValue={{
           src: 'https://placekitten.com/800/600',
@@ -154,7 +156,7 @@ const IndexPage = () => {
           top: 0,
           left: 0
         }}
-      />
+      /> */}
       <BlockContainer
         name="blockcontainer1"
         displayName="My Sample Container"

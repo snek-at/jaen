@@ -16,7 +16,10 @@ export const wrapRootElement = ({element}, pluginOptions) => {
 
   return (
     <ChakraProvider theme={theme}>
-      <JaenCoreProvider plugins={resolvedPlugins} remote={config.remote}>
+      <JaenCoreProvider
+        plugins={resolvedPlugins}
+        remote={config.remote}
+        initialHideUI={config.initialHideUI}>
         {element}
       </JaenCoreProvider>
     </ChakraProvider>
