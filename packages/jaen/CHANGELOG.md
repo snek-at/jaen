@@ -1,3 +1,15 @@
+# [@snek-at/jaen-v2.0.0-beta.27](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.26...@snek-at/jaen-v2.0.0-beta.27) (2021-09-26)
+
+
+### Bug Fixes
+
+* **package.json:** align versions ([cfd6201](https://github.com/snek-at/jaen/commit/cfd6201a2212063a65b7d17d9d1d0097a0cd7b62))
+
+
+### Features
+
+* **mainui:** add option to initially hide ui ([0d4a063](https://github.com/snek-at/jaen/commit/0d4a0630880f2d4cb53ec4637b784ae1a6496f6e))
+
 # [@snek-at/jaen-v2.0.0-beta.26](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.25...@snek-at/jaen-v2.0.0-beta.26) (2021-09-16)
 
 
