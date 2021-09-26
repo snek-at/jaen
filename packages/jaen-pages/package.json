@@ -21,7 +21,7 @@
     "@loadable/component": "^5.15.0",
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^1.6.1",
-    "@snek-at/jaen": "^2.0.0-beta.27",
+    "@snek-at/jaen": "^2.0.0-beta.28",
     "@snek-at/jaen-shared-ui": "2.0.0-beta.20",
     "@snek-at/snek-finder": "^1.0.0-beta.15",
     "deepmerge": "^4.2.2",

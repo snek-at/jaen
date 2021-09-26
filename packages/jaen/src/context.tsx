@@ -5,7 +5,8 @@ import {PluginCallbacks, getPublishValue, getUI, Plugin} from './plugin'
 import {store} from './store/index'
 
 export type JaenCoreContextType = {
-  toggleUI: () => void
+  toggleHideUI: () => void
+  hideUI: boolean
   remote: string
 } & PluginCallbacks
 export const JaenCoreContext = React.createContext<
@@ -63,7 +64,7 @@ export const JaenCoreProvider: React.FC<JaenCoreProviderProps> = ({
     }
   }, [hideUI])
 
-  const toggleUI = () => {
+  const toggleHideUI = () => {
     if (typeof window !== 'undefined') {
       // check current main ui status in local storage and reverse it
 
@@ -77,7 +78,7 @@ export const JaenCoreProvider: React.FC<JaenCoreProviderProps> = ({
 
   return (
     <JaenCoreContext.Provider
-      value={{onPublish, getAuthState, toggleUI, remote}}>
+      value={{onPublish, getAuthState, toggleHideUI, hideUI, remote}}>
       {!hideUI && <MainUI ui={ui} />}
       {children}
     </JaenCoreContext.Provider>

@@ -137,11 +137,13 @@ const links = [
 
 // markup
 const IndexPage = () => {
-  const {toggleUI} = useJaenCoreContext()
+  const {toggleHideUI, hideUI} = useJaenCoreContext()
 
   return (
     <main style={pageStyles}>
-      <Button onClick={toggleUI}>Bye bye snek</Button>
+      <Button onClick={toggleHideUI}>
+        {hideUI ? 'Hi Hi - ' : 'Bye bye - '}snek
+      </Button>
       {/* <fields.ImageField
         fieldName="imagefield1"
         initValue={{
