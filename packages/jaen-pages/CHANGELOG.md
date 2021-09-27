@@ -1,3 +1,15 @@
+# [@snek-at/jaen-pages-v2.0.0-beta.48](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.47...@snek-at/jaen-pages-v2.0.0-beta.48) (2021-09-27)
+
+
+### Bug Fixes
+
+* **snekfinder:** fix imageviewer bug on scrolling ([7ae24ff](https://github.com/snek-at/jaen/commit/7ae24ff0a8441dbaac0528fc3082ce1e3db26147))
+
+
+### Features
+
+* **snekfinder:** sync files on publish ([b67a68c](https://github.com/snek-at/jaen/commit/b67a68c3a18debee9ba91f97ed4ebe512ee6b75d))
+
 # [@snek-at/jaen-pages-v2.0.0-beta.47](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0-beta.46...@snek-at/jaen-pages-v2.0.0-beta.47) (2021-09-26)
 
 
