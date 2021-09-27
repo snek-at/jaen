@@ -124,5 +124,17 @@
         "fileUrl": "https://cloudflare-ipfs.com/ipfs/QmXNmfbdvURoSrGFCffEDTcPbB2Q4tHxUHA11mMX11xtNq"
       }
     ]
+  },
+  "snekFinder": {
+    "context": {
+      "createdAt": "2021-09-27T00:17:50.286Z",
+      "fileUrl": "https://cloudflare-ipfs.com/ipfs/QmQhRzSuengWU9m1qaQTzKY4STK3TxZoaJTw7GWpPArmdP"
+    },
+    "migrations": [
+      {
+        "createdAt": "2021-09-27T00:17:50.286Z",
+        "fileUrl": "https://cloudflare-ipfs.com/ipfs/QmQhRzSuengWU9m1qaQTzKY4STK3TxZoaJTw7GWpPArmdP"
+      }
+    ]
   }
 }

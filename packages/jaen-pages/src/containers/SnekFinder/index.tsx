@@ -1,9 +1,9 @@
-import loadable from '@loadable/component'
 import SnekFinder from '@snek-at/snek-finder'
 import IPFSBackend from '@snek-at/snek-finder/lib/backends/IPFSBackend'
 import * as actions from '@store/actions/sfActions'
-import {useAppDispatch, useAppSelector} from '@store/index'
+import {store, useAppDispatch} from '@store/index'
 import {withRedux} from '@store/withRedux'
+import {useStaticQuery, graphql} from 'gatsby'
 import * as React from 'react'
 
 type FinderProps = {
@@ -14,12 +14,25 @@ type FinderProps = {
 
 const Finder: React.FC<FinderProps> = ({mode = 'browser', ...props}) => {
   const dispatch = useAppDispatch()
-  const initBackendLink = useAppSelector(state => state.sf.initBackendLink)
+  const data = useStaticQuery(graphql`
+    {
+      jaenPagesInitials {
+        snekFinder {
+          initBackendLink
+        }
+      }
+    }
+  `)
+
+  const initBackendLink =
+    data.jaenPagesInitials.snekFinder.initBackendLink ||
+    store.getState().sf.initBackendLink
+
+  IPFSBackend.onBackendLinkChange = (link: string) => {
+    dispatch(actions.setBackendLink(link))
+  }
 
   React.useEffect(() => {
-    IPFSBackend.onBackendLinkChange = (link: string) => {
-      dispatch(actions.setBackendLink(link))
-    }
     if (initBackendLink) {
       IPFSBackend.initBackendLink = initBackendLink
     }

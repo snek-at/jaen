@@ -7,6 +7,8 @@ const {createImages} = require('./dist/create-images')
 
 const jaenPagesPath = path.resolve('./jaen-pages.json')
 
+const jaenPagesFileObj = JSON.parse(fs.readFileSync(jaenPagesPath, 'utf8'))
+
 exports.createSchemaCustomization = ({actions}) => {
   const {createTypes} = actions
   createTypes(`
@@ -57,6 +59,14 @@ exports.createSchemaCustomization = ({actions}) => {
       datePublished: String
       isBlogPost: Boolean
     }
+
+    type JaenPagesInitials implements Node {
+      snekFinder: JaenPagesSnekFinder!
+    }
+
+    type JaenPagesSnekFinder {
+      initBackendLink: String
+    }
   `)
 }
 
@@ -65,9 +75,8 @@ exports.createPages = async (
   pluginOptions
 ) => {
   const templates = pluginOptions.templates
-  const fileContent = JSON.parse(fs.readFileSync(jaenPagesPath, 'utf8'))
 
-  for (const [id, pageEntity] of Object.entries(fileContent.pages)) {
+  for (const [id, pageEntity] of Object.entries(jaenPagesFileObj.pages)) {
     const {createdAt, fileUrl} = pageEntity.context
     const page = await (await fetch(fileUrl)).json()
     const fields = page.fields
@@ -190,4 +199,31 @@ exports.onCreatePage = async ({
 
     createPage(newPage)
   }
+}
+
+exports.sourceNodes = ({actions, createNodeId, createContentDigest}) => {
+  const {createNode} = actions
+
+  // Data can come from anywhere, but for now create it manually
+  const myData = {
+    snekFinder: {
+      initBackendLink: jaenPagesFileObj?.snekFinder?.context?.fileUrl
+    }
+  }
+
+  const nodeContent = JSON.stringify(myData)
+
+  const nodeMeta = {
+    id: createNodeId('jaen-pages-snek-finder'),
+    parent: null,
+    children: [],
+    internal: {
+      type: `JaenPagesInitials`,
+      content: nodeContent,
+      contentDigest: createContentDigest(myData)
+    }
+  }
+
+  const node = Object.assign({}, myData, nodeMeta)
+  createNode(node)
 }
