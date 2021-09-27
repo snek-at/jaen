@@ -1,6 +1,7 @@
 {
   "name": "root",
   "private": true,
+  "license": "EUPL-1.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/snek-at/snek-tools.git"
