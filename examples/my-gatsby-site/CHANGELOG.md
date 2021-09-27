@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.0.0-beta.37](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.36...my-gatsby-site-v1.0.0-beta.37) (2021-09-27)
+
+
+### Features
+
+* **snekfinder:** sync files on publish ([b67a68c](https://github.com/snek-at/jaen/commit/b67a68c3a18debee9ba91f97ed4ebe512ee6b75d))
+
 # [my-gatsby-site-v1.0.0-beta.36](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0-beta.35...my-gatsby-site-v1.0.0-beta.36) (2021-09-26)
 
 
