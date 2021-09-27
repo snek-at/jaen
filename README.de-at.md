@@ -468,7 +468,7 @@ Wir haben noch keine externen Entwickler. Um Ihren Namen hier zu sehen, [tragen 
 * Fertig - Hoffentlich gefällt Ihnen das Feature. Gerne können Sie über Feedback oder Verbesserungsvorschläge berichten!
 * Fast geschafft - Wir sind dabei die letzten Änderungen vorzunehmen. Die Features in dieser Kategorie können in den nächsten zwei bis vier Wochen erwartet werden.
 * Wir arbeiten daran - Die Entwicklung hat gestartet. Wir arbeiten daran, es so schnell wie möglich zu vervollständigen.
-* In Planung - Wir evaluieren das Feature. Dies kann bedeuten, dass wir schon Designen oder dass wir noch darüber nachdenken wie es implementiert werden könnte. Diese Phase ist ein guter Zeitpunkt um vorzuschlagen, wie Sie gern ein Feature sehen würden und um Ideen zum Design einzureichen. 
+* In Planung - Wir evaluieren das Feature. Dies kann bedeuten, dass wir schon Designen oder dass wir noch darüber nachdenken wie es implementiert werden könnte. Diese Phase ist ein guter Zeitpunkt zum Einbringen von Ihren Ideen. 
 
 **Q:** Warum sind auf der Roadmap keine Termine?
 
