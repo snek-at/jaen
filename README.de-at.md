@@ -180,7 +180,7 @@ Der Standardnutzer hierfür ist **snekman** und das Passwort **ciscocisco**.
 | `ImageField`                  | fieldName <br/> initValue | Das ImageField muss genutzt werden, wenn Sie Bilder auf Ihrer Seite brauchen. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField_ger-at) |  |
 | `BlockContainer`                 | name <br/> reverseOrder <br/> blocks <br/> wrap <br/> wrapProps | Ein StreamField bietet Ihnen die Möglichkeit mehrere React-Components sooft wie Ihnen beliebt zu wiederholen. | [✅️](https://github.com/snek-at/jaen/wiki/BlockContainer_ger-at) |  |
 | `IndexField`                  | fieldName <br/> fixedSlug <br/> onRender | Das IndexField ist dafür da Links und Blöcke zu bauen, die Daten von Subseiten benötigen. <br /> Mit dem fixedSlug Parameter können Sie entscheiden von welcher Seite Sie die Subseiten verwenden wollen. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField_ger-at) |  |
-| `ChoiceField` | fieldName <br/> options <br/> initValue <br/> onRender <br/> onRenderPopover | Mithilfe des ChoiceFields können Sie React-Components bauen und den Administrator der Webseite entscheiden lassen, welchen davon er gerade braucht. Dafür haben Sie zwei Möglichkeiten. Wenn Sie alle Ihre Komponenten immer anzeigen wollen und z.B. nur die Farbe des aktiven ändern wollen oder Sie ein Boolean Verhalten benötigen, können Sie dem onRenderPopover ein null als Wert geben und die Auswahl im onRender definieren. Wenn aber nur einer Ihrer Komponenten angezeigt werden sollte können Sie ein selbst definiertes Popover in onRenderPopover dafür schreben. |  [✅️](https://github.com/snek-at/jaen/wiki/ChoiceField) |  |
+| `ChoiceField` | fieldName <br/> options <br/> initValue <br/> onRender <br/> onRenderPopover | Mithilfe des ChoiceFields können Sie React-Components bauen und den Administrator der Webseite entscheiden lassen, welchen davon er gerade braucht. Dafür haben Sie zwei Möglichkeiten. Wenn Sie alle Ihre Komponenten immer anzeigen wollen und z.B. nur die Farbe des aktiven ändern wollen oder Sie ein Boolean Verhalten benötigen, können Sie dem onRenderPopover ein null als Wert geben und die Auswahl im onRender definieren. Wenn aber nur einer Ihrer Komponenten angezeigt werden sollte können Sie ein selbst definiertes Popover in onRenderPopover dafür schreben. |  [✅️](https://github.com/snek-at/jaen/wiki/ChoiceField_ger-at) |  |
 
 
 ### Page Settings
@@ -277,7 +277,7 @@ export default HomePage
 
 #### BlockContainer
 
-Der BlockContainer ermöglicht es Ihnen, editierbare Blocks in Ihre Seite einzubauen und diese so oft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
+Der BlockContainer ermöglicht es Ihnen, editierbare Blocks in Ihre Seite einzubauen und diese so oft wie gewünscht wiederzuverwenden. Mit dem Wrap Parameter ist es Ihnen ermöglicht einen Chakra UI Wrap um die Blöcke zu setzen und wrapProps erlaubt das bestimmen der Parameter des Wraps. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
 
 ```javascript
 import {BlockContainer, JaenTemplate} from '@snek-at/jaen-pages'
@@ -350,7 +350,8 @@ export default HomePage
 
 #### ChoiceField
 
-Mithilfe des ChoiceFields können Sie React-Components bauen und den Administrator der Webseite entscheiden lassen, welchen davon er gerade braucht. Dafür haben Sie zwei Möglichkeiten. Wenn Sie alle Ihre Komponenten immer anzeigen wollen und z.B. nur die Farbe des aktiven ändern wollen oder Sie ein Boolean Verhalten benötigen, können Sie dem onRenderPopover ein null als Wert geben und die Auswahl im onRender definieren. Wenn aber nur einer Ihrer Komponenten angezeigt werden sollte können Sie ein selbst definiertes Popover in onRenderPopover dafür schreben.
+Mithilfe des ChoiceFields können Sie React-Components bauen und den Administrator der Webseite entscheiden lassen, welchen davon er gerade braucht. Dafür haben Sie zwei Möglichkeiten. Wenn Sie alle Ihre Komponenten immer anzeigen wollen und z.B. nur die Farbe des aktiven ändern wollen oder Sie ein Boolean Verhalten benötigen, können Sie dem onRenderPopover ein null als Wert geben und die Auswahl im onRender definieren. Wenn aber nur einer Ihrer Komponenten angezeigt werden sollte können Sie ein selbst definiertes Popover in onRenderPopover dafür schreben.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ChoiceField_ger-at)</div>
+
 
 ```javascript
 import {fields, JaenTemplate} from '@snek-at/jaen-pages'
