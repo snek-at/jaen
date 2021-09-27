@@ -50,8 +50,9 @@ Read this wiki in a different language: [English](https://github.com/snek-at/jae
     - [Felder](#felder)
         - [TextField](textfield)
         - [ImageField](#imagefield)
-        - [StreamField](#streamfield)
+        - [BlockContainer](#blockcontainer)
         - [IndexField](#indexfield)
+        - [ChoiceField](#choicefield)
     - [Blöcke](#blöcke)
 - [🐞 Wie man einen Bug meldet oder ein Feature beantragt](#-wie-man-einen-bug-meldet-oder-ein-feature-beantragt)
 - [🤝 Selbst mitwirken](#-selbst-mitwirken)
@@ -87,13 +88,13 @@ Flexibel, erweiterbar und Open-Source.
 | Feature                       | Fertig | Fast geschafft | Wir arbeiten daran | In Planung |
 |-------------------------------|:---:|:---:|:---:|:---:|
 | `IndexField`                  | ✅️ |  |  |  |
-| `RichTextField`               | ✅️ |  |  |  |
 | `Email Support`               | ✅️ |  |  |  |
 | `Fixed parent for IndexField` | ✅️ |  |  |  |
 | `TextField`                   | ✅️ |  |  |  |
 | `Dynamic Routes`              | ✅️ |  |  |  |
 | `ImageField`                  | ✅️ |  |  |  |
-| `StreamField`                 | ✅️ |  |  |  |
+| `BlockContainer`              | ✅️ |  |  |  |
+| `ChoiceField`                 | ✅️ |  |  |  |
 | `Gatsby`                      | ✅️ |  |  |  |
 | `PdfField`                    |  | ✅️ |  |  |
 | `LinkField`                   |  | ✅️ |  |  |
@@ -168,17 +169,19 @@ Der Standardnutzer hierfür ist **snekman** und das Passwort **ciscocisco**.
 ### Übersicht
 
 #### Seiten Einstellungen
-| Feld                         | Typ       | Beschreibung | Wiki | Tutorial |
+| Parameter                     | Typ       | Beschreibung | Wiki | Tutorial |
 |-------------------------------|:----------:|-------------|:----:|:--------:|
 | `TemplateName`             	| string     | Der TemplateName definiert den Namen Ihrer Seite im CMS. |  |  |
 
 #### Felder
 | Feld                         | Parameter | Beschreibung | Wiki | Tutorial |
 |-------------------------------|------------|-------------|:----:|:--------:|
-| `TextField`             | fieldName <br/> initValue <br/> rtf | Ein TextField wird genutzt um editierbare Texte auf Ihre Seite hinzuzufügen. | [✅️](https://github.com/snek-at/jaen/wiki/TextField) |  |
-| `ImageField`                  | fieldName <br/> initValue | Das ImageField muss genutzt werden, wenn Sie Bilder auf Ihrer Seite brauchen. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField) |  |
-| `StreamField`                 | fieldName <br/> reverseOrder <br/> blocks <br/> initValue | Ein StreamField bietet Ihnen die Möglichkeit mehrere React-Components sooft wie Ihnen beliebt zu wiederholen. | [✅️](https://github.com/snek-at/jaen/wiki/StreamField) |  |
-| `IndexField`                  | fixedSlug <br/> onRender | Das IndexField ist dafür da Links und Blöcke zu bauen, die Daten von Subseiten benötigen. <br /> Mit dem fixedSlug Parameter können Sie entscheiden von welcher Seite Sie die Subseiten verwenden wollen. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
+| `TextField`             | fieldName <br/> initValue <br/> rtf | Ein TextField wird genutzt um editierbare Texte auf Ihre Seite hinzuzufügen. | [✅️](https://github.com/snek-at/jaen/wiki/TextField_ger-at) |  |
+| `ImageField`                  | fieldName <br/> initValue | Das ImageField muss genutzt werden, wenn Sie Bilder auf Ihrer Seite brauchen. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField_ger-at) |  |
+| `BlockContainer`                 | name <br/> reverseOrder <br/> blocks <br/> wrap <br/> wrapProps | Ein StreamField bietet Ihnen die Möglichkeit mehrere React-Components sooft wie Ihnen beliebt zu wiederholen. | [✅️](https://github.com/snek-at/jaen/wiki/BlockContainer_ger-at) |  |
+| `IndexField`                  | fieldName <br/> fixedSlug <br/> onRender | Das IndexField ist dafür da Links und Blöcke zu bauen, die Daten von Subseiten benötigen. <br /> Mit dem fixedSlug Parameter können Sie entscheiden von welcher Seite Sie die Subseiten verwenden wollen. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField_ger-at) |  |
+| `ChoiceField` | fieldName <br/> options <br/> initValue <br/> onRender <br/> onRenderPopover | Mithilfe des ChoiceFields können Sie React-Components bauen und den Administrator der Webseite entscheiden lassen, welchen davon er gerade braucht. Dafür haben Sie zwei Möglichkeiten. Wenn Sie alle Ihre Komponenten immer anzeigen wollen und z.B. nur die Farbe des aktiven ändern wollen oder Sie ein Boolean Verhalten benötigen, können Sie dem onRenderPopover ein null als Wert geben und die Auswahl im onRender definieren. Wenn aber nur einer Ihrer Komponenten angezeigt werden sollte können Sie ein selbst definiertes Popover in onRenderPopover dafür schreben. |  [✅️](https://github.com/snek-at/jaen/wiki/ChoiceField) |  |
+
 
 ### Page Settings
 ```javascript
@@ -193,32 +196,36 @@ export default HomePage
 
 jaen-config.js
 ```javascript
-[...]
-
-pages: {
-      resolve: require('@snek-at/jaen-pages'),
-      templates: [require('./src/templates/yourpage/index.tsx')]
+module.exports = {
+  remote: 'snek-at/jaen-template',
+  plugins: {
+    pages: {
+      resolve: require('@snek-at/jaen-pages/jaen-register'),
+      templates: [require('./src/templates/SamplePage.tsx')]
     }
-    
-[...]
+  }
+}
 ```
 gatsby-config.js
 ```javascript
-[...]
+const path = require('path')
 
-plugins: [
+const siteMetadata = require('./site-metadata')
+
+module.exports = {
+  siteMetadata,
+  plugins: [
     '@snek-at/jaen',
     {
       resolve: '@snek-at/jaen-pages',
       options: {
         templates: {
-          HomePage: path.resolve('src/templates/home/index.tsx')
+          SamplePage: path.resolve('src/templates/SamplePage.tsx')
         }
       }
     }
   ]
-  
-[...]
+}
 ```
 ### Fields
 Felder sind die Datenblöcke, die Sie verwenden können um Ihre React Apps für den Endnutzer bearbeitbar zu gestalten.
@@ -230,8 +237,7 @@ Es wird empfohlen, aussagekräftige Namen zu nutzen.
 Mithilfe des TextFields können Sie editierbare RichTextFields (`rtf={true}`) oder ebenfalls editierbare SimpleTextFields (`rtf={false}`) auf Ihre Webseite bringen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/TextField_ger-at)</div>
 
 ```javascript
-import {fields} from '@snek-at/jaen-pages'
-import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
+import {fields, JaenTemplate} from '@snek-at/jaen-pages'
 
 const HomePage: JaenTemplate = () => {
   return(
@@ -254,14 +260,13 @@ Zum Einbetten von Bildern können Sie das ImageField nutzen. <br />
 Es funktioniert, indem ein Bild, welches auf der IPFS gespeichert wird, auf der Seite eingebettet wird.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ImageField_ger-at)</div>
 
 ```javascript
-import {fields} from '@snek-at/jaen-pages'
-import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
+import {fields, JaenTemplate} from '@snek-at/jaen-pages'
 
 const HomePage: JaenTemplate = () => {
   return(
     <fields.ImageField 
       fieldName="homeimage"
-      initValue={{src: "../../images/yourimage.imagetype", alt: "homeimage", title: "homeimage"}}
+      initValue={{src: 'https://your.source', alt: 'homeimage', title: 'homeimage'}}
     />
   )
 }
@@ -269,43 +274,23 @@ const HomePage: JaenTemplate = () => {
 export default HomePage
 ```
 
-#### StreamField
+#### BlockContainer
 
-Das StreamField ermöglicht es Ihnen, editierbare Blocks in Ihre Seite einzubauen und diese so oft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
+Der BlockContainer ermöglicht es Ihnen, editierbare Blocks in Ihre Seite einzubauen und diese so oft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
 
 ```javascript
-import {fields} from '@snek-at/jaen-pages'
-import {JaenTemplate} from '@snek-at/jaen/src/types'
+import {BlockContainer, JaenTemplate} from '@snek-at/jaen-pages'
 import {CardBlock} from '...'
 
 const HomePage: JaenTemplate = () => {
   return (
     <div style={{width: '50%'}}>
-      <fields.StreamField
+      <BlockContainer
         reverseOrder={false}
-        fieldName={'timeline'}
+        name="home-blockcontainer"
         blocks={[CardBlock]}
-	initValue={{
-	  
-	  0: {
-	    typeName: 'CardBlock',
-	    fields: {
-	      cardtitle: {
-	        _type: 'TextBlock',
-		text: '<p>This is a title</p>'
-	      },
-	      cardimg: {
-	        _type: 'FileBlock',
-		src: 'path/to/your/image',
-		alt: 'yourAlt',
-		title: 'yourTitle'
-	      }
-	    }
-	  },
-	  1: {
-	    [...]
-	  }
-	}}
+	wrap={true}
+	wrapProps={{justify: 'center', spacing: '5'}}
       />
     </div>
   )
@@ -315,62 +300,85 @@ HomePage.TemplateName = 'HomePage'
 
 export default HomePage
 ```
-#### IndexField
 
-Wenn Sie einen Link auf die Unterseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite, auf welcher sich das IndexField befindet, dafür genutzt. onRender erlaubt Ihnen die React-Components, die die Daten oder den Link der Unterseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField_ger-at)</div>
+#### ChoiceField
+
+Mithilfe des ChoiceFields können Sie React-Components bauen und den Administrator der Webseite entscheiden lassen, welchen davon er gerade braucht. Dafür haben Sie zwei Möglichkeiten. Wenn Sie alle Ihre Komponenten immer anzeigen wollen und z.B. nur die Farbe des aktiven ändern wollen oder Sie ein Boolean Verhalten benötigen, können Sie dem onRenderPopover ein null als Wert geben und die Auswahl im onRender definieren. Wenn aber nur einer Ihrer Komponenten angezeigt werden sollte können Sie ein selbst definiertes Popover in onRenderPopover dafür schreben.
 
 ```javascript
-import {fields} from '@snek-at/jaen-pages'
-import {JaenTemplate} from '@snek-at/jaen-pages/src/types'
+import {fields, JaenTemplate} from '@snek-at/jaen-pages'
 
 const HomePage: JaenTemplate = () => {
-  return (
-    <fields.IndexField
-      fixedSlug={'pageId'}
-      onRender={(page) => (
-        return(
-	  [...]
-	)
+  return(
+    <fields.ChoiceField 
+      fieldName="home-choice"
+      options={[...]}
+      onRenderPopover={(selection, options, select) => {
+        return [...]
+      }}
+      onRender={(selection, options, onSelect, isEditing) => {
+        return [...]
+      }}
     />
   )
 }
 
-HomePage.TemplateName = "HomePage"
+HomePage.TemplateName = 'HomePage'
 
 export default HomePage
+
 ```
 
+##### Chakra UI Wrap Beispiel
 
-### Blöcke
-Der Block ist der Eckstein des StreamFields. Mit seiner Hilfe können Sie React-Componenten bauen, welche im StreamField so oft wie gewünscht wiederholt werden können.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks_ger-at)</div>
+Dieses Beispiel zeigt fünf farbige Quadrate an, die untereinander einen Abstand von 1 rem haben, die in einem Flex sind, das in eine neue Zeile geht, wenn die Quadrate mehr Platz benötigen als das Browserfenster hat und die zentriert sind.
 
-```javascript
-import {blocks, fields} from '@snek-at/jaen-pages'
-import {ImageType} from '@snek-at/jaen-pages/src/containers/JaenImage'
+```
+import {Wrap, Box} from '@chakra-ui/react'
+import {fields} from '@snek-at/jaen-pages'
 
-type BlockType = {
-  cardtitle: string,
-  cardimg: ImageType
+
+const Component = () => {
+  return(
+    <Wrap spacing="1rem" justify="center">
+      <Box boxSize="300px" bg="red"/>
+      <Box boxSize="300px" bg="teal"/>
+      <Box boxSize="300px" bg="orange"/>
+      <Box boxSize="300px" bg="blue"/>
+      <Box boxSize="300px" bg="green"/>
+    </Wrap>
+  )
 }
 
-const CardBlock: blocks.BC<BlockType> = ({values}) => {
+```
+
+### Blöcke
+Der Block ist der Eckstein des StreamFields. Mit seiner Hilfe können Sie React-Componenten bauen, welche im StreamField so oft wie gewünscht wiederholt werden können. In Blöcken können Sie alle verfügbaren Jaen Felder verwenden.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/Blocks_ger-at)</div>
+
+```javascript
+import {JaenBlock, fields} from '@snek-at/jaen-pages'
+
+const CardBlock: JaenBlock = () => {
   return (
     <div className="card">
-      <h1>{values.cardtitle}</h1>
-      {values.cardimg}
+      <h1>
+      	<fields.TextField 
+      	  fieldName="blocktext"
+	  initValue="<p>this is your heading</p>"
+	  rtf={false}
+	/>
+      </h1>
+      <fields.ImageField 
+        fieldName="blockimage"
+	initValue={{src: 'https://your.source', alt: 'yourAlt'}}
+	style={{width: '300px', heigth: '180px'}}
+      />
     </div>
   )
 }
 
-CardBlock.BlockType = 'CardBlock'
-CardBlock.BlockFields = {
-  image: fields.ImageField,
-  title: fields.TextField
-}
-CardBlock.defaultValues = {
-  cardtitle: 'This is your title.',
-  cardimg: {src: 'path/to/img', alt: 'yourAlt', title: 'yourTitle'}
-}
+CardBlock.BlockName = 'CardBlock'
+CardBlock.BlockDisplayName = 'Card'
 
 export default CardBlock
 ```
