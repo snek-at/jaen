@@ -1,0 +1,21 @@
+// Baseline config for all tsc-built packages
+// Your package tsconfig should extend from this one
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "composite": true,
+    "lib": ["esnext", "dom"],
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "plugins": [{"name": "typescript-tslint-plugin"}],
+    "resolveJsonModule": true,
+    "preserveWatchOutput": true,
+    "jsx": "react-jsx"
+  }
+}

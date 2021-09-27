@@ -1,0 +1,34 @@
+{
+  "name": "my-gatsby-site",
+  "version": "1.0.0-beta.37",
+  "private": true,
+  "description": "My Gatsby Site",
+  "author": "Nico Schett",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@chakra-ui/gatsby-plugin": "^2.0.1",
+    "@chakra-ui/icons": "^1.0.15",
+    "@chakra-ui/react": "^1.6.7",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@snek-at/jaen": "^2.0.0-beta.29",
+    "@snek-at/jaen-pages": "^2.0.0-beta.48",
+    "framer-motion": "^4",
+    "gatsby": "^3.11.1",
+    "gatsby-plugin-emotion": "^6.11.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.24"
+  }
+}
