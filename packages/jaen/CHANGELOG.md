@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.0-beta.29](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.28...@snek-at/jaen-v2.0.0-beta.29) (2021-09-27)
+
+
+### Features
+
+* **snekfinder:** sync files on publish ([b67a68c](https://github.com/snek-at/jaen/commit/b67a68c3a18debee9ba91f97ed4ebe512ee6b75d))
+
 # [@snek-at/jaen-v2.0.0-beta.28](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0-beta.27...@snek-at/jaen-v2.0.0-beta.28) (2021-09-26)
 
 
