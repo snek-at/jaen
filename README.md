@@ -352,7 +352,7 @@ export default HomePage
 
 #### ChoiceField
 
-The ChoiceField allows you to build React-Components and let the administrator of the page decide which of the components to display. You can achieve this by either providing a popover in which the options can be decided or you can return null in the popover and add an onClick to your component for use-cases in which all the choices are always displayed or for a boolean like behaviour.
+The ChoiceField allows you to build React-Components and let the administrator of the page decide which of the components to display. You can achieve this by either providing a popover in which the options can be decided or you can return null in the popover and add an onClick to your component for use-cases in which all the choices are always displayed or for a boolean like behaviour.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/ChoiceField)</div>
 
 ```javascript
 import {fields, JaenTemplate} from '@snek-at/jaen-pages'
