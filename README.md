@@ -176,7 +176,7 @@ The standard user for this is **snekman** and the password for the account is **
 | `ImageField`                  | fieldName <br/> initValue | The ImageField is used to provide editable images that are hosted on the ipfs. | [✅️](https://github.com/snek-at/jaen/wiki/ImageField) |  |
 | `BlockContainer`                 | name <br/> reverseOrder <br/> blocks <br/> wrap <br/> wrapProps | With a BlockContainer you can build your own React-Components with editable content and repeat them as often as you like. | [✅️](https://github.com/snek-at/jaen/wiki/BlockContainer) |  |
 | `IndexField`                  | fieldName <br/> fixedSlug <br/> onRender | The IndexField provides you with the oppertunity to easily build links, buttons and more pointing to your subpages. It is also useful for building cards that rely on content from childpages.  <br /> With the fixedSlug property you can decide which page the childpages are pulled from. | [✅️](https://github.com/snek-at/jaen/wiki/IndexField) |  |
-| `ChoiceField` | fieldName <br/> options <br/> initValue <br/> onRender <br/> onRenderPopover | The ChoiceField allows you to build React-Components and let the adimistrator of the page decide which of the components to display. You can achieve this by either providing a popover in which the options can be decided or you can return null in the popover and add an onClick to your component for usecases in which all the choices are always displayed or for a boolean like behaviour. |  [✅️](https://github.com/snek-at/jaen/wiki/ChoiceField) |  |
+| `ChoiceField` | fieldName <br/> options <br/> initValue <br/> onRender <br/> onRenderPopover | The ChoiceField allows you to build React-Components and let the administrator of the page decide which of the components to display. You can achieve this by either providing a popover in which the options can be decided or you can return null in the popover and add an onClick to your component for use-cases in which all the choices are always displayed or for a boolean like behaviour. |  [✅️](https://github.com/snek-at/jaen/wiki/ChoiceField) |  |
 
 ### Page Settings
 ```javascript
@@ -278,7 +278,7 @@ export default HomePage
 
 #### BlockContainer
 
-Jaen BlockContainers enable you to integrate editable blocks and to use as many of them as you like. You can put them into a [Chakra UI wrap](https://chakra-ui.com/docs/layout/wrap) and pass props to the wrap. In order to use this field you are required to build a block. You can find an example of a block below.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField)</div>
+Jaen BlockContainers enable you to integrate editable blocks and to use as many of them as you like. You can put them into a [Chakra UI wrap](https://chakra-ui.com/docs/layout/wrap) and pass props to the wrap. In order to use this field you are required to build a block. You can find an example of a block below.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/BlockContainer)</div>
 
 ```javascript
 import {BlockContainer, JaenTemplate} from '@snek-at/jaen-pages'
