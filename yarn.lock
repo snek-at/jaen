@@ -4686,10 +4686,10 @@
   dependencies:
     lottie-web "^5.7.12"
 
-"@snek-at/snek-finder@1.0.0-beta.15", "@snek-at/snek-finder@^1.0.0-beta.15":
-  version "1.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@snek-at/snek-finder/-/snek-finder-1.0.0-beta.15.tgz#0339209676794827251c964aaedf34208519853b"
-  integrity sha512-x4DtIO899BQc9/E24x7iHObSuYGpW9R2MWHDydb6UNt2iK8DWlzf/ZNBeo4nphCFlq/pyFIVMmAM8+ddHuPsMw==
+"@snek-at/snek-finder@1.0.0-beta.16", "@snek-at/snek-finder@^1.0.0-beta.16":
+  version "1.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/@snek-at/snek-finder/-/snek-finder-1.0.0-beta.16.tgz#aea560a4b530633a7e34ca94cc4a86e8622f8bed"
+  integrity sha512-BVUFcxMmmZ2HAm+gs5EFhv0AaO7Bix8x8uhcchh8PNnxX/EnilCn6EBDiygj7KVDRqZMec2I5nqL9pcP0Gvo+Q==
   dependencies:
     "@chakra-ui/icons" "^1.0.14"
     "@chakra-ui/react" "^1.6.6"
