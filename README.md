@@ -307,7 +307,7 @@ export default HomePage
 
 This example displays five boxes of varying colors with a 1 rem space between them in a flex that goes into the next row if the content is too wide. It also centers the boxes. 
 
-```
+```javascript
 import {Wrap, Box} from '@chakra-ui/react'
 import {fields} from '@snek-at/jaen-pages'
 
