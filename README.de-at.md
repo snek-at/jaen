@@ -277,7 +277,7 @@ export default HomePage
 
 #### BlockContainer
 
-Der BlockContainer ermöglicht es Ihnen, editierbare Blocks in Ihre Seite einzubauen und diese so oft wie gewünscht wiederzuverwenden. Mit dem Wrap Parameter ist es Ihnen ermöglicht einen Chakra UI Wrap um die Blöcke zu setzen und wrapProps erlaubt das bestimmen der Parameter des Wraps. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
+Der BlockContainer ermöglicht es Ihnen, editierbare Blocks in Ihre Seite einzubauen und diese so oft wie gewünscht wiederzuverwenden. Mit dem Wrap Parameter ist es Ihnen ermöglicht einen Chakra UI Wrap um die Blöcke zu setzen und wrapProps erlaubt das bestimmen der Parameter des Wraps. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/BlockContainer_ger-at)</div>
 
 ```javascript
 import {BlockContainer, JaenTemplate} from '@snek-at/jaen-pages'
