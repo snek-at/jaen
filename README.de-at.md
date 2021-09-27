@@ -33,7 +33,7 @@ Read this wiki in a different language: [English](https://github.com/snek-at/jae
     - [Jaen Features](#jaen-features)
     - [Roadmap](#roadmap)
     - [Nachricht um Sie zu inspirieren](#nachricht-um-sie-zu-inspirieren)
-    - [Warnhinweis](#warnhinweis)
+    - [Disclaimer](#disclaimer)
 - [🚀 Beginne in 5 Minuten zu arbeiten](#-beginne-in-5-minuten-zu-arbeiten)
     - [Vom Template auf GitHub generieren](#vom-template-auf-github-generieren)
     - [Erste Schritte](#erste-schritte)
@@ -274,6 +274,7 @@ const HomePage: JaenTemplate = () => {
 export default HomePage
 ```
 
+
 #### BlockContainer
 
 Der BlockContainer ermöglicht es Ihnen, editierbare Blocks in Ihre Seite einzubauen und diese so oft wie gewünscht wiederzuverwenden. Um dieses Feld zu nutzen müssen Sie einen Block bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/StreamField_ger-at)</div>
@@ -293,6 +294,52 @@ const HomePage: JaenTemplate = () => {
 	wrapProps={{justify: 'center', spacing: '5'}}
       />
     </div>
+  )
+}
+
+HomePage.TemplateName = 'HomePage'
+
+export default HomePage
+```
+##### Chakra UI Wrap Beispiel
+
+Dieses Beispiel zeigt fünf farbige Quadrate an, die untereinander einen Abstand von 1 rem haben, die in einem Flex sind, das in eine neue Zeile geht, wenn die Quadrate mehr Platz benötigen als das Browserfenster hat und die zentriert sind.
+
+```javascript
+import {Wrap, Box} from '@chakra-ui/react'
+import {fields} from '@snek-at/jaen-pages'
+
+
+const Component = () => {
+  return(
+    <Wrap spacing="1rem" justify="center">
+      <Box boxSize="300px" bg="red"/>
+      <Box boxSize="300px" bg="teal"/>
+      <Box boxSize="300px" bg="orange"/>
+      <Box boxSize="300px" bg="blue"/>
+      <Box boxSize="300px" bg="green"/>
+    </Wrap>
+  )
+}
+
+```
+
+#### IndexField
+Wenn Sie einen Link auf die Unterseiten Ihrer Seite brauchen können Sie das IndexField verwenden. Der fixedSlug Parameter wird nicht gefordert. Standardmäßig wird die Seite, auf welcher sich das IndexField befindet, dafür genutzt. onRender erlaubt Ihnen die React-Components, die die Daten oder den Link der Unterseiten enthalten, zu bauen.<div align=right>[Wiki 📖](https://github.com/snek-at/jaen/wiki/IndexField_ger-at)</div>
+
+```javascript
+import {fields, JaenTemplate} from '@snek-at/jaen-pages'
+
+const HomePage: JaenTemplate = () => {
+  return (
+    <fields.IndexField
+      fieldName="home-indexfield"
+      fixedSlug={'pageId'}
+      onRender={(page) => {
+        return(
+	  [...]
+	}}
+    />
   )
 }
 
@@ -326,29 +373,6 @@ const HomePage: JaenTemplate = () => {
 HomePage.TemplateName = 'HomePage'
 
 export default HomePage
-
-```
-
-##### Chakra UI Wrap Beispiel
-
-Dieses Beispiel zeigt fünf farbige Quadrate an, die untereinander einen Abstand von 1 rem haben, die in einem Flex sind, das in eine neue Zeile geht, wenn die Quadrate mehr Platz benötigen als das Browserfenster hat und die zentriert sind.
-
-```
-import {Wrap, Box} from '@chakra-ui/react'
-import {fields} from '@snek-at/jaen-pages'
-
-
-const Component = () => {
-  return(
-    <Wrap spacing="1rem" justify="center">
-      <Box boxSize="300px" bg="red"/>
-      <Box boxSize="300px" bg="teal"/>
-      <Box boxSize="300px" bg="orange"/>
-      <Box boxSize="300px" bg="blue"/>
-      <Box boxSize="300px" bg="green"/>
-    </Wrap>
-  )
-}
 
 ```
 
