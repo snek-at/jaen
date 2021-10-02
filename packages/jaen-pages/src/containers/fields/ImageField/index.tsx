@@ -36,7 +36,7 @@ const ImageField: React.FC<ImageFieldProps> = ({
   const dispatch = useAppDispatch()
   const isEditing = useAppSelector(state => state.options.isEditing)
   const {jaenPageContext} = useTemplate()
-  const pageId = jaenPageContext.id
+  const pageId = props.pageId || jaenPageContext.id
 
   const page = usePage(pageId)
 

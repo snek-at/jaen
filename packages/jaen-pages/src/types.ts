@@ -16,6 +16,10 @@ export type StreamBlockIdentifier = {
 export type FieldIdentifier = {
   initValue: any
   fieldName: string
+  /**
+   * Override the default pageId for the field.
+   */
+  pageId?: string
 }
 
 export type BlockIdentifier = {

@@ -48,7 +48,8 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
   onRenderPopover,
   onRender,
   initValue,
-  fieldName
+  fieldName,
+  ...props
 }) => {
   const dispatch = useAppDispatch()
 
@@ -58,7 +59,7 @@ const ChoiceField: React.FC<ChoiceFieldProps> = ({
   const field = {initValue, fieldName, block}
 
   const {jaenPageContext} = useTemplate()
-  const pageId = jaenPageContext.id
+  const pageId = props.pageId || jaenPageContext.id
 
   const register = () => dispatch(registerPageField({pageId, field}))
   const unregister = () => dispatch(unregisterPageField({pageId, field}))

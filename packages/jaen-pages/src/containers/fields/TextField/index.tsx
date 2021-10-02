@@ -28,12 +28,13 @@ const TextField: React.FC<TextFieldProps> = ({
   rtf = true,
   toolbar = 'balloon',
   fieldName,
-  initValue
+  initValue,
+  ...props
 }) => {
   const dispatch = useAppDispatch()
   const isEditing = useAppSelector(state => state.options.isEditing)
   const {jaenPageContext} = useTemplate()
-  const pageId = jaenPageContext.id
+  const pageId = props.pageId || jaenPageContext.id
 
   const {block, updatedFieldName} = useBlock(fieldName)
   fieldName = updatedFieldName
