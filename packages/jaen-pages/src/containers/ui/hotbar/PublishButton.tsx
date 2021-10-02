@@ -44,7 +44,7 @@ const Button: React.FC = () => {
 
     if (publishRes.data?.jaenPublishFormPage?.result === 'OK') {
       toast({
-        title: 'Sucessfully published.',
+        title: 'Successfully published.',
         status: 'success',
         duration: 9000,
         isClosable: true
