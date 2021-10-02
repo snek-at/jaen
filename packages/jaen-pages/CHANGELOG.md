@@ -1,3 +1,11 @@
+# [@snek-at/jaen-pages-v2.0.1](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0...@snek-at/jaen-pages-v2.0.1) (2021-10-02)
+
+
+### Bug Fixes
+
+* **fields:** add optional pageId to fields ([c536ba6](https://github.com/snek-at/jaen/commit/c536ba64184d9ab564b350d3dfdd1e13378ee2ac))
+* resolve typo ([8beb602](https://github.com/snek-at/jaen/commit/8beb602049bb4c6422e5f43ac3233e2539530ed1))
+
 # [@snek-at/jaen-pages-v2.0.0](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v1.0.0...@snek-at/jaen-pages-v2.0.0) (2021-09-27)
 
 
