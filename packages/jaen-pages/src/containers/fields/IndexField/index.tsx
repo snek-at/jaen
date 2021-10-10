@@ -5,18 +5,19 @@ import {withRedux} from '@store/withRedux'
 
 interface IndexFieldProps {
   fixedSlug?: string
-  onRender: (page: ResolvedPageType) => JSX.Element
+  onRender: (page: ResolvedPageType, pageId: string) => JSX.Element
 }
 
 const IndexField: React.FC<IndexFieldProps> = props => {
   const {jaenPageContext} = useTemplate()
-  const page = useResolvedPage(props.fixedSlug || jaenPageContext.id)
+  const pageId = props.fixedSlug || jaenPageContext.id
+  const page = useResolvedPage(pageId)
 
   if (!page) {
-    throw new Error(`Page not found: ${props.fixedSlug || jaenPageContext.id}`)
+    throw new Error(`Page not found!: ${pageId}`)
   }
 
-  return props.onRender(page)
+  return props.onRender(page, pageId)
 }
 
 export default withRedux(IndexField)

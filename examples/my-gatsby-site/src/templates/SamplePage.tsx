@@ -25,7 +25,7 @@ const SamplePage: JaenTemplate = () => {
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
         <h1>IndexField</h1>
         <fields.IndexField
-          onRender={page => <div> {Object.keys(page.children)}</div>}
+          onRender={(page, pageId) => <div> {Object.keys(page.children)}</div>}
         />
       </Box>
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">

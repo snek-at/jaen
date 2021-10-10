@@ -98,6 +98,7 @@ export type PageMetadata = {
 }
 
 type BasePageType = {
+  id: string
   slug: string
   pageMetadata?: PageMetadata
   images: {

@@ -234,6 +234,7 @@ export const CMSProvider: React.FC<CMSProviderType> = ({
           const id = jaenPageContext?.id || node.id
 
           site.allSitePage.nodes[id] = {
+            id,
             parent: jaenPageContext?.parent || null,
             children: jaenPageContext?.children || [],
             path: node.path,
