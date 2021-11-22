@@ -21,7 +21,9 @@ export const mergeBaseWithMigration = async (
     const {upload} = await import('../ipfs') // do not change the import path
     const migrationContext = migrationEntity.context
 
-    if (!baseEntity) {
+    // check if baseEntity is not a empty object
+
+    if (!baseEntity?.context) {
       return {context: migrationContext, migrations: [migrationContext]}
     } else {
       const baseData = await (await fetch(baseEntity.context.fileUrl)).json()
