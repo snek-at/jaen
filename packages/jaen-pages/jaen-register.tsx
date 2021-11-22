@@ -71,7 +71,7 @@ export default {
   },
   registerCallbacks: {
     onPublish: async () => {
-      const {upload} = await import('./src/ipfs')
+      const {upload} = await import('./src/storage')
 
       const {allSitePage} = storageGet()
 
@@ -89,14 +89,14 @@ export default {
       if (nodes) {
         for (const [id, node] of Object.entries(nodes)) {
           const path = resolvePath(id, allNodes as any)
-          const paylaod = JSON.stringify({...node, path})
+          const paylaod = {...node, path}
 
           const url = await upload(paylaod)
           newPages[id] = {context: {fileUrl: url, createdAt}}
         }
       }
 
-      const siteMetadataPayload = JSON.stringify(state.site.siteMetadata)
+      const siteMetadataPayload = state.site.siteMetadata
 
       const newSiteMetadata = siteMetadataPayload
         ? await upload(siteMetadataPayload)

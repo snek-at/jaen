@@ -17,10 +17,9 @@ const Button: React.FC = () => {
   const isDisabled = core.getAuthState().isGuest
 
   const publish = async () => {
-    const {upload} = await import('@src/ipfs')
+    const {upload} = await import('@src/storage')
     const res = (await core.onPublish()) as {'jaen-pages': object}
-
-    const url = await upload(JSON.stringify(res['jaen-pages']))
+    const url = await upload(res['jaen-pages'])
 
     const publishRes = await Bridge.session.mutate<{
       jaenPublishFormPage: {result: string}

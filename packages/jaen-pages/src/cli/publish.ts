@@ -18,7 +18,7 @@ export const mergeBaseWithMigration = async (
     baseEntity: JaenPagesEntityWithMigrations | undefined,
     migrationEntity: JaenPagesEntity
   ) => {
-    const {upload} = await import('../ipfs') // do not change the import path
+    const {upload} = await import('../storage') // do not change the import path
     const migrationContext = migrationEntity.context
 
     // check if baseEntity is not a empty object
@@ -31,8 +31,8 @@ export const mergeBaseWithMigration = async (
 
       //   console.log('fetch done', typeof baseData, typeof migrationData)
 
-      const mergedData = merge(baseData, migrationData)
-      const fileUrl = await upload(JSON.stringify(mergedData))
+      const mergedData = merge(baseData, migrationData) as object
+      const fileUrl = await upload(mergedData)
 
       const context = {
         createdAt: migrationContext.createdAt,

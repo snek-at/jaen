@@ -1,5 +1,5 @@
 import SnekFinder from '@snek-at/snek-finder'
-import IPFSBackend from '@snek-at/snek-finder/lib/backends/IPFSBackend'
+import OSGBackend from '@snek-at/snek-finder/lib/backends/OSGBackend'
 import * as actions from '@store/actions/sfActions'
 import {store, useAppDispatch} from '@store/index'
 import {withRedux} from '@store/withRedux'
@@ -24,21 +24,38 @@ const Finder: React.FC<FinderProps> = ({mode = 'browser', ...props}) => {
     }
   `)
 
-  const initBackendLink =
-    data.jaenPagesInitials.snekFinder.initBackendLink ||
-    store.getState().sf.initBackendLink
+  const [loading, setLoading] = React.useState(true)
 
-  IPFSBackend.onBackendLinkChange = (link: string) => {
+  const initBackendLink =
+    store.getState().sf.initBackendLink ||
+    data.jaenPagesInitials.snekFinder.initBackendLink
+
+  OSGBackend.onBackendLinkChange = (link: string) => {
     dispatch(actions.setBackendLink(link))
   }
 
   React.useEffect(() => {
     if (initBackendLink) {
-      IPFSBackend.initBackendLink = initBackendLink
+      OSGBackend.initBackendLink = initBackendLink
+
+      const run = async () => {
+        const response = await (await fetch(initBackendLink)).json()
+
+        localStorage.setItem(
+          'snek-finder-osg-backend-root',
+          JSON.stringify(response)
+        )
+
+        setLoading(false)
+      }
+
+      run()
     }
   })
 
-  return <SnekFinder backend={IPFSBackend} mode={mode} {...props} />
+  return loading ? null : (
+    <SnekFinder backend={OSGBackend} mode={mode} {...props} />
+  )
 }
 
 export default withRedux(Finder)
