@@ -1,3 +1,15 @@
+# [@snek-at/jaen-pages-v2.1.0](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.1...@snek-at/jaen-pages-v2.1.0) (2021-11-22)
+
+
+### Bug Fixes
+
+* **jaen-pages cli:** update empty baseEntity check ([8c7d908](https://github.com/snek-at/jaen/commit/8c7d9088b1dfc061e3259b7b3a1147fc4ac80415))
+
+
+### Features
+
+* **jaen-pages:** switch from ipfs to osg ([3e9df13](https://github.com/snek-at/jaen/commit/3e9df13598944ad546aa36b2a52594c4d900478f))
+
 # [@snek-at/jaen-pages-v2.0.1](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.0...@snek-at/jaen-pages-v2.0.1) (2021-10-02)
 
 
