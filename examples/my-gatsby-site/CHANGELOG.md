@@ -1,3 +1,10 @@
+# [my-gatsby-site-v1.1.0](https://github.com/snek-at/jaen/compare/my-gatsby-site-v1.0.0...my-gatsby-site-v1.1.0) (2021-11-22)
+
+
+### Features
+
+* **jaen-pages:** switch from ipfs to osg ([3e9df13](https://github.com/snek-at/jaen/commit/3e9df13598944ad546aa36b2a52594c4d900478f))
+
 # my-gatsby-site-v1.0.0 (2021-09-27)
 
 
