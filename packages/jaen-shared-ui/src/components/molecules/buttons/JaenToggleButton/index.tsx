@@ -1,15 +1,18 @@
 import {Tooltip, IconButton, Text} from '@chakra-ui/react'
 import {SnekIcon} from '@components/atoms/icons'
 import {useLanguageModeValue} from '@src/language-mode'
+import React from 'react'
 
 import translations from './translations.json'
 
 export type JaenToggleButtonProps = {
-  ref: React.Ref<HTMLButtonElement>
   onClick: () => void
 }
 
-const JaenToggleButton: React.FC<JaenToggleButtonProps> = props => {
+const JaenToggleButton = React.forwardRef<
+  HTMLButtonElement,
+  JaenToggleButtonProps
+>((props, ref) => {
   const CONTENT = useLanguageModeValue(translations)
 
   return (
@@ -23,10 +26,10 @@ const JaenToggleButton: React.FC<JaenToggleButtonProps> = props => {
         boxSize="20"
         icon={<SnekIcon boxSize="14" />}
         onClick={props.onClick}
-        ref={props.ref}
+        ref={ref}
       />
     </Tooltip>
   )
-}
+})
 
 export default JaenToggleButton
