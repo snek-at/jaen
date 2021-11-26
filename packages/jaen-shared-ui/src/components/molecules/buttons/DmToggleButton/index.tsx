@@ -11,11 +11,14 @@ export type DmToggleButtonProps = {
   onDmToggleChange: (editing: boolean) => void
 }
 
-const ADmToggleButton: React.FC<DmToggleButtonProps> = props => {
+const ADmToggleButton: React.FC<DmToggleButtonProps> = ({
+  onDmToggleChange,
+  ...rest
+}) => {
   const [active, setActive] = useState(false)
   const toggleActive = () => {
     setActive(!active)
-    props.onDmToggleChange(!active)
+    onDmToggleChange(!active)
   }
 
   const {colorMode, toggleColorMode} = useColorMode()
@@ -42,7 +45,7 @@ const ADmToggleButton: React.FC<DmToggleButtonProps> = props => {
               toggleColorMode()
               toggleActive()
             }}
-            {...(props as any)}>
+            {...(rest as any)}>
             <IconButton
               aria-label="darkmode toggle"
               variant="ghost"

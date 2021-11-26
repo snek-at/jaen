@@ -264,7 +264,7 @@ const LoginMain: React.FC<LoginMainProps> = props => {
                 !
               </Text>
             </Heading>
-            <Text color={'gray.500'} fontSize={{base: 'sm', sm: 'md'}}>
+            <Text color={'gray.500'} fontSize={{base: 'sm', sm: 'md'}} as="div">
               Manage this site by entering your login credentials or using our{' '}
               {guestLoginPopover}.
             </Text>

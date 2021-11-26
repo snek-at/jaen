@@ -10,7 +10,11 @@ export type PublishButtonProps = {
   onPublishClick: () => void
 }
 
-const PublishButton: React.FC<PublishButtonProps> = props => {
+const PublishButton: React.FC<PublishButtonProps> = ({
+  disabled,
+  onPublishClick,
+  ...rest
+}) => {
   const {colorMode} = useColorMode()
 
   const lottie = APublishLottie(colorMode === 'dark')
@@ -26,15 +30,15 @@ const PublishButton: React.FC<PublishButtonProps> = props => {
           placement="bottom-start"
           fontSize="md">
           <Button
-            disabled={props.disabled}
+            disabled={disabled}
             size="sm"
             variant="outline"
             leftIcon={container}
             onClick={() => {
               animation.playSegments([0, animation.totalFrames], true)
-              props.onPublishClick()
+              onPublishClick()
             }}
-            {...(props as any)}>
+            {...(rest as any)}>
             {CONTENT.button}
           </Button>
         </Tooltip>

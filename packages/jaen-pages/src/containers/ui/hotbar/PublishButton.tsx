@@ -58,9 +58,7 @@ const Button: React.FC = () => {
     }
   }
 
-  return (
-    <PublishButton disabled={isDisabled} onPublishClick={() => publish()} />
-  )
+  return <PublishButton disabled={isDisabled} onPublishClick={publish} />
 }
 
 export default withRedux(Button)

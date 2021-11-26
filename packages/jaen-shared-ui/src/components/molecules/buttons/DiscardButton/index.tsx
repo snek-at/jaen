@@ -1,7 +1,7 @@
 import {Button, Badge, useColorMode, Tooltip} from '@chakra-ui/react'
 import {ADiscardLottie} from '@components/atoms/icons/ADiscardIcon'
 import {Lottie} from '@snek-at/react-lottie'
-import { useLanguageModeValue } from '@src/language-mode'
+import {useLanguageModeValue} from '@src/language-mode'
 
 import translations from './translations.json'
 
@@ -9,7 +9,10 @@ export type DiscardButtonProps = {
   onDiscardClick: () => void
 }
 
-const DiscardButton: React.FC<DiscardButtonProps> = props => {
+const DiscardButton: React.FC<DiscardButtonProps> = ({
+  onDiscardClick,
+  ...rest
+}) => {
   const {colorMode} = useColorMode()
 
   const lottie = ADiscardLottie(colorMode === 'dark')
@@ -35,9 +38,9 @@ const DiscardButton: React.FC<DiscardButtonProps> = props => {
             // }
             onClick={() => {
               animation.playSegments([0, animation.totalFrames], true)
-              props.onDiscardClick()
+              onDiscardClick()
             }}
-            {...(props as any)}>
+            {...(rest as any)}>
             {CONTENT.button}
           </Button>
         </Tooltip>

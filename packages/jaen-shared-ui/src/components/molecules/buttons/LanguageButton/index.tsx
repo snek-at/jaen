@@ -17,12 +17,12 @@ const LanguageButton: React.FC = props => {
   const CONTENT = useLanguageModeValue(translations)
 
   return (
-    <Tooltip
-      hasArrow
-      label={CONTENT.tooltip}
-      placement="bottom-start"
-      fontSize="md">
-      <Menu isLazy>
+    <Menu isLazy>
+      <Tooltip
+        hasArrow
+        label={CONTENT.tooltip}
+        placement="bottom-start"
+        fontSize="md">
         <MenuButton
           size="sm"
           as={Button}
@@ -35,20 +35,9 @@ const LanguageButton: React.FC = props => {
           variant="ghost">
           {CONTENT.button}
         </MenuButton>
-        <MenuList>
-          {languageMode !== 'en' && (
-            <MenuItem onClick={() => setLanguageMode('en')}>
-              {CONTENT.language_en}
-            </MenuItem>
-          )}
-          {languageMode !== 'de' && (
-            <MenuItem onClick={() => setLanguageMode('de')}>
-              {CONTENT.language_de}
-            </MenuItem>
-          )}
-        </MenuList>
-      </Menu>
-    </Tooltip>
+      </Tooltip>
+      <MenuList></MenuList>
+    </Menu>
   )
 }
 

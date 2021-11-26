@@ -11,11 +11,15 @@ export type EditButtonProps = {
   onEditChange: (editing: boolean) => void
 }
 
-const EditButton: React.FC<EditButtonProps> = props => {
-  const [active, setActive] = useState(props.isEditing)
+const EditButton: React.FC<EditButtonProps> = ({
+  isEditing,
+  onEditChange,
+  ...rest
+}) => {
+  const [active, setActive] = useState(isEditing)
   const toggleActive = () => {
     setActive(!active)
-    props.onEditChange(!active)
+    onEditChange(!active)
   }
 
   const {colorMode} = useColorMode()
@@ -47,7 +51,7 @@ const EditButton: React.FC<EditButtonProps> = props => {
               animation.playSegments([0, animation.totalFrames], true)
               toggleActive()
             }}
-            {...(props as any)}>
+            {...(rest as any)}>
             {CONTENT.button}
           </Button>
         </Tooltip>
