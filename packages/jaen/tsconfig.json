@@ -12,5 +12,6 @@
       "@containers/*": ["containers/*"]
     }
   },
-  "include": ["src", "src/gatsby"]
+  "include": ["src", "src/gatsby"],
+  "references": [{"path": "../jaen-shared-ui"}]
 }

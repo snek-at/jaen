@@ -16,5 +16,5 @@
   },
   "include": ["src", "gatsby-browser.js", "register.tsx"],
   "typeRoots": ["./@types"],
-  "references": [{"path": "../jaen"}]
+  "references": [{"path": "../jaen"}, {"path": "../jaen-shared-ui"}]
 }
