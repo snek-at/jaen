@@ -1,3 +1,11 @@
+# [@snek-at/jaen-pages-v2.1.1](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.1.0...@snek-at/jaen-pages-v2.1.1) (2021-11-28)
+
+
+### Bug Fixes
+
+* **tsconfig:** update references ([932df90](https://github.com/snek-at/jaen/commit/932df9076a08476beb2d76396b2e4b259f62b212))
+* **ui:** seperate props form rest api ([e77f04e](https://github.com/snek-at/jaen/commit/e77f04efd74d237b2f5cd668bb554db0a8f6fcbc))
+
 # [@snek-at/jaen-pages-v2.1.0](https://github.com/snek-at/jaen/compare/@snek-at/jaen-pages-v2.0.1...@snek-at/jaen-pages-v2.1.0) (2021-11-22)
 
 
