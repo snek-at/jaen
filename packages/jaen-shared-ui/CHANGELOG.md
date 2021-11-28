@@ -1,3 +1,12 @@
+# [@snek-at/jaen-shared-ui-v2.0.1](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v2.0.0...@snek-at/jaen-shared-ui-v2.0.1) (2021-11-28)
+
+
+### Bug Fixes
+
+* **ui:** forward JaenToggleButton ref ([443ab53](https://github.com/snek-at/jaen/commit/443ab537d3e8041a5ba9634511898c87e690cd5b))
+* **ui:** remove data-name from svg ([fda2070](https://github.com/snek-at/jaen/commit/fda2070395bedc272dcca2bdee504e00755085e0))
+* **ui:** seperate props form rest api ([e77f04e](https://github.com/snek-at/jaen/commit/e77f04efd74d237b2f5cd668bb554db0a8f6fcbc))
+
 # [@snek-at/jaen-shared-ui-v2.0.0](https://github.com/snek-at/jaen/compare/@snek-at/jaen-shared-ui-v1.0.0...@snek-at/jaen-shared-ui-v2.0.0) (2021-09-27)
 
 
