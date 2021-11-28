@@ -1,3 +1,10 @@
+# [@snek-at/jaen-v2.0.1](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v2.0.0...@snek-at/jaen-v2.0.1) (2021-11-28)
+
+
+### Bug Fixes
+
+* **tsconfig:** update references ([932df90](https://github.com/snek-at/jaen/commit/932df9076a08476beb2d76396b2e4b259f62b212))
+
 # [@snek-at/jaen-v2.0.0](https://github.com/snek-at/jaen/compare/@snek-at/jaen-v1.0.0...@snek-at/jaen-v2.0.0) (2021-09-27)
 
 
