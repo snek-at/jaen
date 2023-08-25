@@ -1,7 +1,13 @@
 {
   "name": "gatsby-source-jaen",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "Source plugin for pulling data into Gatsby from Jaen",
+  "files": [
+    "dist",
+    "src",
+    "gatsby-*",
+    "index.js"
+  ],
   "dependencies": {
     "@babel/parser": "^7.22.11",
     "@babel/traverse": "^7.22.11",
