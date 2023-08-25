@@ -3,6 +3,8 @@ public
 node_modules
 .npmrc
 
+.DS_Store
+
 **/dist
 
 **/tsconfig.tsbuildinfo
