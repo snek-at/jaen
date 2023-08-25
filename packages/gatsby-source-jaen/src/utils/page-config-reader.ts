@@ -46,7 +46,7 @@ function extractDataFromConfig(
     ) {
       return value.value
     } else if (t.isArrayExpression(value)) {
-      return value.elements.map(element => processValue(element))
+      return value.elements.map(element => processValue(element as any))
     } else if (t.isObjectExpression(value)) {
       return extractDataFromConfig(value)
     } else {
@@ -59,7 +59,7 @@ function extractDataFromConfig(
     if (t.isObjectProperty(property) && t.isIdentifier(property.key)) {
       const key = property.key.name
       const value = property.value
-      data[key] = processValue(value)
+      data[key] = processValue(value as any)
     }
   })
 

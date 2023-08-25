@@ -45,6 +45,6 @@ export const createPages: GatsbyNode['createPages'] = async ({actions}) => {
 
   actions.createSlice({
     id: `jaen-frame`,
-    component: path.resolve(__dirname, '../src/slices/jaen-frame.tsx')
+    component: path.resolve(__dirname, '../../src/slices/jaen-frame.tsx')
   })
 }
