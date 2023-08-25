@@ -1,0 +1,26 @@
+{
+  "name": "gatsby-source-jaen",
+  "version": "1.0.0-rc.1",
+  "description": "Source plugin for pulling data into Gatsby from Jaen",
+  "dependencies": {
+    "deepmerge": "^4.2.2"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@atsnek/jaen": "^1.0.0-rc.1"
+  },
+  "peerDependencies": {
+    "@atsnek/jaen": "^1.0.0-rc.1"
+  },
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "clean": "gatsby clean"
+  },
+  "keywords": [
+    "gatsby",
+    "source",
+    "plugin",
+    "@atsnek/jaen"
+  ]
+}

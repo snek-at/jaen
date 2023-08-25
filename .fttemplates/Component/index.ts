@@ -1,0 +1,1 @@
+export {[FTName], type [FTName]Props} from './[FTName]'

@@ -1,0 +1,8 @@
+.cache
+public
+node_modules
+.npmrc
+
+**/dist
+
+**/tsconfig.tsbuildinfo

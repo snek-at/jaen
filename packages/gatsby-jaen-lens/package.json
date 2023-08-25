@@ -1,0 +1,19 @@
+{
+  "name": "gatsby-jaen-lens",
+  "version": "0.0.1",
+  "description": "Snek lens plugin for Jaen to render proxied views of internal services behind a firewall.",
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "@atsnek/jaen",
+    "snek-lens",
+    "proxy"
+  ],
+  "dependencies": {
+    "snek-query": "^0.0.82"
+  },
+  "peerDependencies": {
+    "@chakra-ui/react": "^2.8.0",
+    "react": "^18.2.0"
+  }
+}

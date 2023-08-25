@@ -1,0 +1,1 @@
+export {JaenLogo} from './JaenLogo'
