@@ -2,6 +2,7 @@ import {
   Button,
   Heading,
   HStack,
+  IconButton,
   Input,
   Link,
   Stack,
@@ -14,27 +15,39 @@ import {
 } from '@chakra-ui/react'
 import {LensService} from 'clients/lens/src/schema.generated'
 import {graphql, Link as GatsbyLink} from 'gatsby'
-import {PageConfig} from '@atsnek/jaen'
+import {PageConfig, useNotificationsContext} from '@atsnek/jaen'
 import {useEffect, useState} from 'react'
 import {FaEdit} from 'react-icons/fa'
 
 import {sq} from '../../clients/lens/src'
 
 const Page: React.FC = () => {
+  const {toast} = useNotificationsContext()
+
   const [isLoading, setIsLoading] = useState(true)
   const [services, setServices] = useState<LensService[]>([])
 
   useEffect(() => {
     const fetchServices = async () => {
-      setIsLoading(true)
-      const [data, errors] = await sq.query(q => q.allService)
-      if (errors) {
-        throw new Error(errors[0]?.message)
-      }
+      try {
+        setIsLoading(true)
 
-      setServices(data)
-      setIsLoading(false)
+        const [data, errors] = await sq.query(q => q.allService)
+        if (errors) {
+          throw new Error(errors[0]?.message)
+        }
+
+        setServices(data)
+        setIsLoading(false)
+      } catch (e) {
+        toast({
+          title: 'Error',
+          description: e.message,
+          status: 'error'
+        })
+      }
     }
+
     fetchServices()
   }, [])
 
@@ -92,11 +105,7 @@ const Page: React.FC = () => {
                     }}
                   />
                 ) : (
-                  <Link
-                    as={GatsbyLink}
-                    to={`/lens/service/#${service.fqdn}${
-                      service.defaultPath || ''
-                    }`}>
+                  <Link isExternal href={`https://${service.fqdn}`}>
                     {service.label || service.id}
                   </Link>
                 )}
