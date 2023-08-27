@@ -61,7 +61,7 @@ export const defaultData = {
           children: [
             {
               type: 'text',
-              value: '@atsnek/jaen',
+              value: 'jaen',
               position: {
                 start: {
                   line: 3,

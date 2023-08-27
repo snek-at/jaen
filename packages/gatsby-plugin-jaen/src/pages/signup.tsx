@@ -35,7 +35,7 @@ export const pageConfig: PageConfig = {
   label: 'Signup',
   withoutJaenFrame: true,
   layout: {
-    name: '@atsnek/jaen',
+    name: 'jaen',
     type: 'form'
   }
 }

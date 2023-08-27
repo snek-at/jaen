@@ -33,7 +33,7 @@ const Page: React.FC<PageProps> = ({data, location}) => {
 export const pageConfig: PageConfig = {
   label: 'Lens Service',
   layout: {
-    name: '@atsnek/jaen',
+    name: 'jaen',
     type: 'full'
   },
   auth: {

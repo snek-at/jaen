@@ -321,7 +321,7 @@ export const pageConfig: PageConfig = {
     isAdminRequired: true
   },
   layout: {
-    name: '@atsnek/jaen'
+    name: 'jaen'
   }
 }
 

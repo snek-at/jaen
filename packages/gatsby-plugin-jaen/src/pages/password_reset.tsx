@@ -94,7 +94,7 @@ export const pageConfig: PageConfig = {
   label: 'Forgot your password?',
   withoutJaenFrame: true,
   layout: {
-    name: '@atsnek/jaen',
+    name: 'jaen',
     type: 'form'
   }
 }

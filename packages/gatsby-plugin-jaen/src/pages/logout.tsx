@@ -36,7 +36,7 @@ export const pageConfig: PageConfig = {
     isRequired: true
   },
   layout: {
-    name: '@atsnek/jaen',
+    name: 'jaen',
     type: 'form'
   }
 }

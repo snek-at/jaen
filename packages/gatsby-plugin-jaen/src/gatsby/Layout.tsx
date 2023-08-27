@@ -1,4 +1,4 @@
-import {Box, GlobalStyle, ThemeProvider} from '@chakra-ui/react'
+import {Box, GlobalStyle, ChakraProvider} from '@chakra-ui/react'
 import {LayoutProps} from '@atsnek/jaen'
 
 import {JaenPageLayout} from '../components/JaenPageLayout'
@@ -11,16 +11,16 @@ const Layout: React.FC<LayoutProps> = ({children, pageProps}) => {
   // check if jaen theme is set
   const layout = pageConfig?.layout
 
-  return layout?.name === '@atsnek/jaen' ? (
+  return layout?.name === 'jaen' ? (
     <JaenPageLayout layout={layout.type}>{children}</JaenPageLayout>
   ) : (
     <Box zIndex="1">
-      <CustomLayout pageProps={pageProps}>
-        <ThemeProvider theme={userTheme}>
+      <ChakraProvider theme={userTheme}>
+        <CustomLayout pageProps={pageProps}>
           <GlobalStyle />
           {children}
-        </ThemeProvider>
-      </CustomLayout>
+        </CustomLayout>
+      </ChakraProvider>
     </Box>
   )
 }

@@ -34,7 +34,7 @@ export interface PageConfig {
   }
 
   layout?: {
-    name: '@atsnek/jaen'
+    name: 'jaen'
     // default: 'content'
     type?: 'content' | 'form' | 'full'
   }

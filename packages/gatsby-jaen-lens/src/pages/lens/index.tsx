@@ -228,7 +228,7 @@ export const pageConfig: PageConfig = {
     order: 500
   },
   layout: {
-    name: '@atsnek/jaen'
+    name: 'jaen'
   },
   auth: {
     isRequired: true,
