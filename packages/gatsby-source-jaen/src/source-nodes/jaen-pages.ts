@@ -1,6 +1,7 @@
 import {MediaNode} from '@atsnek/jaen'
 import {Node, SourceNodesArgs} from 'gatsby'
 import {createRemoteFileNode} from 'gatsby-source-filesystem'
+import {onCreatePage} from '../on-create-page/jaen-page'
 
 import {JaenData} from './jaen-data'
 
@@ -79,7 +80,12 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
       ...page,
       slug,
       parentPage: page.parentPage?.id,
-      childPages: page.childPages?.map(child => child.id) || undefined
+      childPages: page.childPages?.map(child => child.id) || [],
+      childTemplates: page.childTemplates || [],
+      jaenPageMetadata: {
+        ...page.jaenPageMetadata,
+        title: page.jaenPageMetadata?.title || slug
+      }
     }
 
     const pageNode = {

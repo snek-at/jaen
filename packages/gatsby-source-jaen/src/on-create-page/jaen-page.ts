@@ -50,9 +50,10 @@ export const onCreatePage = async ({
     jaenFields: null,
     sections: [],
     template: null,
-    childTemplates: pageConfig?.childTemplates || [],
     ...jaenPageNode,
     childPages: [],
+    childTemplates:
+      jaenPageNode?.childTemplates || pageConfig?.childTemplates || [],
     pageConfig
   }
 
