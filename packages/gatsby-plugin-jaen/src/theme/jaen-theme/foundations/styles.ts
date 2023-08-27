@@ -24,7 +24,7 @@ export default {
     '.jaen-highlight-frame': {
       borderRadius: '11px',
       pointerEvents: 'none',
-      zIndex: 2147483647
+      zIndex: 1
     },
     [`.jaen-highlight-frame:before`]: {
       content: '""',
