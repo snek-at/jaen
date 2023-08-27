@@ -2,6 +2,8 @@ import {Box, HStack, Icon} from '@chakra-ui/react'
 import React, {useEffect} from 'react'
 import {FaPlus} from 'react-icons/fa'
 
+import {Toolbar} from '../Toolbar'
+
 import {Link} from '../../components/shared/Link'
 import {JaenLogo} from '../shared/JaenLogo/JaenLogo'
 import {MenuButton, MenuButtonProps} from '../shared/MenuButton/MenuButton'
@@ -167,19 +169,17 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
           }}
           h="full"
           justifyContent="end">
-          <HStack
-            h="full"
-            spacing={4}
+          <Toolbar />
+
+          <MenuButton
             display={{
               base: 'none',
               md: 'flex'
-            }}>
-            <MenuButton
-              leftIcon={<Icon as={FaPlus} color="brand.500" />}
-              variant="outline"
-              items={props.navigation.addMenu.items}
-            />
-          </HStack>
+            }}
+            leftIcon={<Icon as={FaPlus} color="brand.500" />}
+            variant="outline"
+            items={props.navigation.addMenu.items}
+          />
 
           <DrawerRight
             user={props.navigation.user.user}
