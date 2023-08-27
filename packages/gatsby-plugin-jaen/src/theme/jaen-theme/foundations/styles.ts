@@ -23,7 +23,8 @@ export default {
     },
     '.jaen-highlight-frame': {
       borderRadius: '11px',
-      pointerEvents: 'none'
+      pointerEvents: 'none',
+      zIndex: 2147483647
     },
     [`.jaen-highlight-frame:before`]: {
       content: '""',
