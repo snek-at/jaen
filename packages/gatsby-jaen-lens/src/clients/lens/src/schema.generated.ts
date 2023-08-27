@@ -1,6 +1,6 @@
 import {proxy, arrayProxy, fnProxy, fnArrayProxy, t} from 'snek-query'
 
-export type MetaInput = {
+export type LensServiceMetaInput = {
   label?: t.String
   icon?: t.String
 }
@@ -18,7 +18,7 @@ export class Query {
 export class LensService {
   __typename: t.String
   id: t.String
-  meta: t.Nullable<Meta>
+  meta: t.Nullable<LensServiceMeta>
   fqdn: t.String
   host: t.String
   port: t.NotSupportedYet
@@ -26,14 +26,14 @@ export class LensService {
   constructor() {
     this.__typename = ''
     this.id = ''
-    this.meta = proxy(Meta)
+    this.meta = proxy(LensServiceMeta)
     this.fqdn = ''
     this.host = ''
     this.port = null
     this.isSecure = false
   }
 }
-export class Meta {
+export class LensServiceMeta {
   __typename: t.String
   label: t.Nullable<t.String>
   icon: t.Nullable<t.String>
@@ -45,9 +45,12 @@ export class Meta {
 }
 export class Mutation {
   __typename: t.String
-  serviceMetaUpdate: (args: {id: t.String; meta?: MetaInput}) => LensService[]
+  serviceUpdate: (args: {
+    id: t.String
+    meta: LensServiceMetaInput
+  }) => t.Nullable<LensService>
   constructor() {
     this.__typename = ''
-    this.serviceMetaUpdate = fnArrayProxy(LensService)
+    this.serviceUpdate = fnProxy(LensService)
   }
 }

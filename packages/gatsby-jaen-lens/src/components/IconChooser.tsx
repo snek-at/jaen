@@ -44,7 +44,7 @@ export const IconChooser: React.FC<IconChooserProps> = props => {
         variant="ghost"
         aria-label="Icon"
         icon={
-          <Icon as={icon === 'FaGlobe' ? FaGlobe : SIIcons[icon]} boxSize="5" />
+          <Icon as={icon === 'FaGlobe' ? FaGlobe : SIIcons[icon]} boxSize="6" />
         }
       />
     )

@@ -1,6 +1,10 @@
 import {PageConfig, useNotificationsContext} from '@atsnek/jaen'
 import {
   Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Heading,
   HStack,
   Input,
@@ -9,9 +13,12 @@ import {
   Table,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
-  Tr
+  Tr,
+  Wrap,
+  WrapItem
 } from '@chakra-ui/react'
 import {graphql} from 'gatsby'
 import {useEffect, useState} from 'react'
@@ -19,7 +26,10 @@ import {FaEdit} from 'react-icons/fa'
 import * as SIIcons from 'react-icons/si'
 
 import {sq} from '../../clients/lens/src'
-import {LensService, MetaInput} from '../../clients/lens/src/schema.generated'
+import {
+  LensService,
+  LensServiceMetaInput
+} from '../../clients/lens/src/schema.generated'
 import {IconChooser} from '../../components/IconChooser'
 
 const Page: React.FC = () => {
@@ -64,36 +74,57 @@ const Page: React.FC = () => {
     fetchServices()
   }, [])
 
-  const updateServiceMeta = async (
+  const updateService = async (
     id: string,
-    meta: MetaInput
+    inputData: {
+      meta: LensServiceMetaInput
+    }
   ): Promise<void> => {
     try {
-      const [data, errors] = await sq.mutate(m =>
-        m
-          .serviceMetaUpdate({
-            id,
-            meta
-          })
-          .map(m => {
-            return {
-              id: m.id,
-              fqdn: m.fqdn,
-              host: m.host,
-              port: m.port,
-              meta: m.meta,
-              isSecure: m.isSecure,
-              __typename: m.__typename
-            }
-          })
-      )
+      const [data, errors] = await sq.mutate(m => {
+        const service = m.serviceUpdate({
+          id,
+          meta: inputData.meta
+        })
+
+        return {
+          id: service?.id,
+          fqdn: service?.fqdn,
+          host: service?.host,
+          port: service?.port,
+          meta: service?.meta,
+          isSecure: service?.isSecure,
+          __typename: service?.__typename
+        }
+      })
       if (errors) {
         throw new Error(errors[0]?.message)
       }
 
-      setServices(data)
+      setServices(services => {
+        const service = services.find(s => s.id === data?.id)
 
-      const service = data.find(s => s.id === id)
+        if (!service) {
+          throw new Error('Service not found')
+        }
+
+        return services.map(s => {
+          if (s.id === service.id) {
+            return {
+              ...s,
+              ...(data as LensService)
+            }
+          }
+
+          return s
+        })
+      })
+
+      const service = services.find(s => s.id === data?.id)
+
+      if (!service) {
+        throw new Error('Service not found')
+      }
 
       const label = service?.meta?.label || service?.id
 
@@ -151,8 +182,10 @@ const Page: React.FC = () => {
                     icon={service.meta?.icon as keyof typeof SIIcons}
                     isEditing={isEditing}
                     setIcon={(icon: string) => {
-                      updateServiceMeta(service.id, {
-                        icon
+                      updateService(service.id, {
+                        meta: {
+                          icon
+                        }
                       })
                     }}
                   />
@@ -161,8 +194,10 @@ const Page: React.FC = () => {
                     <Input
                       defaultValue={service.meta?.label || service.id}
                       onBlur={e => {
-                        updateServiceMeta(service.id, {
-                          label: e.target.value
+                        updateService(service.id, {
+                          meta: {
+                            label: e.target.value
+                          }
                         })
                       }}
                     />
