@@ -11,7 +11,7 @@ import {fromImage} from 'imtool'
 import {setTokenPair, getTokenPair, sq} from '@snek-functions/origin'
 import {PageConfig} from '../types'
 
-interface SnekUser {
+export interface SnekUser {
   id: string
   primaryEmail: string
   username: string

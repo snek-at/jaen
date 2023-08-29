@@ -2,7 +2,8 @@ export * from './connectors'
 export {
   AuthenticationProvider,
   useAuthenticationContext,
-  withAuthentication
+  withAuthentication,
+  SnekUser
 } from './contexts/authentication'
 export {
   CMSManagementProvider,
