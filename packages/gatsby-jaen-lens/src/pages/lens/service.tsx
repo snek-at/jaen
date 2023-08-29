@@ -36,10 +36,7 @@ export const pageConfig: PageConfig = {
     name: 'jaen',
     type: 'full'
   },
-  auth: {
-    isRequired: true,
-    isAdminRequired: true
-  },
+
   breadcrumbs: [
     {
       label: 'Lens',

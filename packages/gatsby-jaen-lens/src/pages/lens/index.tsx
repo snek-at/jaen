@@ -230,10 +230,7 @@ export const pageConfig: PageConfig = {
   layout: {
     name: 'jaen'
   },
-  auth: {
-    isRequired: true,
-    isAdminRequired: true
-  },
+
   breadcrumbs: [
     {
       label: 'Lens',
