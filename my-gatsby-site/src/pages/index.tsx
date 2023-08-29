@@ -1,4 +1,5 @@
 import {
+  connectBlock,
   Field,
   PageConfig,
   PageProps,
@@ -160,6 +161,20 @@ const links = [
   }
 ]
 
+const TestBlock = connectBlock(
+  () => {
+    return (
+      <Box boxSize="lg">
+        <Field.Image name="image" />
+      </Box>
+    )
+  },
+  {
+    name: 'TestBlock',
+    label: 'Test Block'
+  }
+)
+
 const IndexPage: React.FC<PageProps> = () => {
   const authentication = useAuthenticationContext()
 
@@ -217,6 +232,8 @@ const IndexPage: React.FC<PageProps> = () => {
           <Box boxSize="xs">
             <Field.Image name="image3" />
           </Box>
+
+          <Field.Section name="section" blocks={[TestBlock]} />
 
           <Field.Text
             style={paragraphStyles}

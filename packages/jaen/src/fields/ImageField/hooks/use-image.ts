@@ -21,7 +21,10 @@ export const useImage = (
   // Get the dynamic image data from the 'media_nodes' field of the page context.
   const field = useField<{[id: string]: MediaNode}>(
     'media_nodes',
-    'IMA:MEDIA_NODES'
+    'IMA:MEDIA_NODES',
+    {
+      isPageField: true
+    }
   )
 
   const [image, setImage] = useState<UsePageImageReturn | undefined>(

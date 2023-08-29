@@ -14,9 +14,12 @@ import {useContentManagement} from './use-content-management'
 export function useField<IValue>(
   name: string,
   type: string,
-  block?: {
-    path: SectionBlockContextType['path']
-    id: SectionBlockContextType['id']
+  options?: {
+    block?: {
+      path: SectionBlockContextType['path']
+      id: SectionBlockContextType['id']
+    }
+    isPageField?: boolean
   }
 ) {
   const {jaenPage} = usePageContext()
@@ -39,10 +42,10 @@ export function useField<IValue>(
     if (page) {
       let fields
 
-      const path = block?.path || SectionBlockContext?.path
-      const blockId = block?.id || SectionBlockContext?.id
+      const path = options?.block?.path || SectionBlockContext?.path
+      const blockId = options?.block?.id || SectionBlockContext?.id
 
-      if (path) {
+      if (path && !options?.isPageField) {
         fields = findSection(page.sections || [], path)?.items.find(
           ({id}) => id === blockId
         )?.jaenFields
