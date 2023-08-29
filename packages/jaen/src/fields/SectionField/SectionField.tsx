@@ -70,16 +70,18 @@ export const SectionField = withRedux(
 
     const Wrapper = rest.as || Stack
 
-    let tooltipButtons = [
-      <Button
-        key="section-field-tooltip-button-add"
-        variant="jaenHighlightTooltipText"
-        size="xs">
-        <Text as="span" noOfLines={1}>
-          {label}
-        </Text>
-      </Button>
-    ]
+    let tooltipButtons = label
+      ? [
+          <Button
+            key="section-field-tooltip-button-add"
+            variant="field-highlighter-tooltip-text"
+            size="xs">
+            <Text as="span" noOfLines={1}>
+              {label}
+            </Text>
+          </Button>
+        ]
+      : []
 
     const blocksForSelector: SelectorBlockType[] = blocks.map(({options}) => ({
       slug: options.name,
@@ -191,7 +193,7 @@ export const SectionField = withRedux(
               isEditing={isEditing}
               actions={[
                 <Button
-                  variant="jaenHighlightTooltipText"
+                  variant="field-highlighter-tooltip-text"
                   key={`section-field-tooltip-button-${item.id}`}>
                   <Text as="span" noOfLines={1}>
                     {s.Component.options.label}

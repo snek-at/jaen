@@ -51,7 +51,7 @@ export const SectionBlockSelectorButton: React.FC<
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
       <IconButton
-        variant="jaenHighlightTooltip"
+        variant="field-highlighter-tooltip"
         ml={0.5}
         icon={<Icon as={FaPlus} />}
         aria-label="Add"

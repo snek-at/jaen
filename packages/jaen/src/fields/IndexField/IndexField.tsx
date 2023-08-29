@@ -42,7 +42,7 @@ export const IndexField: React.FC<IndexFieldProps> = withRedux(
         id={name}
         actions={[
           <Button
-            variant="jaenHighlightTooltipText"
+            variant="jaen-highlight-tooltip-text"
             key="jaen-highlight-tooltip-text-index">
             <Text as="span" noOfLines={1}>
               Index
