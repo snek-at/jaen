@@ -20,8 +20,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "gatsby-plugin-jaen": "^1.0.0-rc.1",
-    "gatsby-jaen-lens": "^0.0.1",
-    "@atsnek/jaen": "^1.0.0-rc.1"
+    "@atsnek/jaen": "^1.0.0-rc.1",
+    "@atsnek/jaen-fields-mdx": "^1.0.0-rc.1"
   },
   "devDependencies": {
     "@types/node": "^20.3.3",

@@ -1,5 +1,9 @@
 import type {GatsbyConfig} from 'gatsby'
 
+require('dotenv').config()
+
+console.log('ENV', process.env.GATSBY_LENS_API_URL)
+
 const config: GatsbyConfig = {
   siteMetadata: {
     siteUrl: `https://www.yourdomain.tld`
