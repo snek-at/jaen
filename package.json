@@ -15,8 +15,8 @@
     "packages/gatsby-plugin-jaen",
     "packages/gatsby-jaen-lens",
     "packages/gatsby-source-jaen",
-    "my-gatsby-site",
-    "photonq"
+    "packages/jaen-fields-mdx",
+    "my-gatsby-site"
   ],
   "dependencies": {
     "eslint-config-prettier": "^8.6.0",

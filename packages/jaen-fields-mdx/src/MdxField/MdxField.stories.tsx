@@ -14,14 +14,14 @@ export default {
         jaenPage: {
           id: `JaenPage jaen-page-1`,
           slug: 'jaen-page-1',
-          parentPage: null,
+          parent: null,
           children: [],
           jaenPageMetadata: {
             title: 'Jaen Page 1',
             description: 'Jaen Page 1 description',
             image: 'https://via.placeholder.com/300x200',
             canonical: 'https://jaen.com/jaen-page-1',
-            publishedAt: '2020-01-01',
+            datePublished: '2020-01-01',
             isBlogPost: false
           },
           jaenFields: {

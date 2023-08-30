@@ -1,0 +1,66 @@
+{
+  "name": "@atsnek/jaen-fields-mdx",
+  "version": "1.0.0-rc.1",
+  "description": "Markdown field for Jaen",
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.module.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.module.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rimraf dist && microbundle src/index.ts --format cjs,esm",
+    "dev": "yarn build --watch"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.1.0",
+    "@chakra-ui/react": "^2.8.0",
+    "@codemirror/lang-markdown": "^6.2.0",
+    "@codemirror/language-data": "^6.3.1",
+    "@mdx-js/mdx": "^2.3.0",
+    "@uiw/react-codemirror": "^4.21.12",
+    "ahooks": "^3.7.8",
+    "mdast-util-directive": "^3.0.0",
+    "mdast-util-frontmatter": "^2.0.0",
+    "mdast-util-gfm": "^3.0.0",
+    "mdast-util-mdx": "^3.0.0",
+    "mdast-util-to-markdown": "^2.1.0",
+    "react": "^18.2.0",
+    "react-error-boundary": "^4.0.11",
+    "react-syntax-highlighter": "^15.5.0",
+    "rehype": "^13.0.1",
+    "rehype-mdx-code-props": "^1.0.0",
+    "rehype-slug-custom-id": "^1.1.0",
+    "remark-directive": "^2.0.1",
+    "remark-frontmatter": "^4.0.1",
+    "remark-gfm": "^3.0.1",
+    "remark-math": "^5.1.1",
+    "unified": "^11.0.2",
+    "vfile": "^6.0.1",
+    "vfile-message": "^4.0.2",
+    "vfile-statistics": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@atsnek/jaen": "^1.0.0-rc.4",
+    "gatsby": "^5.12.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-syntax-highlighter": "^15.5.7",
+    "@types/uuid": "^9.0.2",
+    "microbundle": "^0.15.1",
+    "rimraf": "^5.0.1"
+  }
+}

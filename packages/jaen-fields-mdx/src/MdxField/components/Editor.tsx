@@ -1,18 +1,21 @@
-import {Badge, Box, HStack, Icon} from '@chakra-ui/react'
+import {EditIcon, ViewIcon} from '@chakra-ui/icons'
+import {Badge, Box, HStack} from '@chakra-ui/react'
 import {markdown, markdownLanguage} from '@codemirror/lang-markdown'
 import {languages} from '@codemirror/language-data'
+
 import CodeMirror, {ReactCodeMirrorProps} from '@uiw/react-codemirror'
 import type {EditorView} from 'codemirror'
+
 import React, {useCallback, useEffect, useState} from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
 import {statistics, Statistics} from 'vfile-statistics'
 
-import {ErrorFallback} from './ErrorFallback'
-import {PreviewComponent} from './PreviewComponent'
-import TabsTemplate from './TabsTemplate'
-import {useMdx} from '../use-mdx'
-import {BaseEditorProps} from './types'
-import {FaEdit, FaEye} from 'react-icons/fa'
+import {ErrorFallback} from './ErrorFallback.js'
+import {PreviewComponent} from './PreviewComponent.js'
+import TabsTemplate from './TabsTemplate.js'
+
+import {useMdx} from '../use-mdx.js'
+import {BaseEditorProps} from './types.js'
 
 const MemoizedCodeMirror = React.memo<ReactCodeMirrorProps>(props => {
   return (
@@ -130,7 +133,7 @@ export const Editor: React.FC<EditorProps> = props => {
         {
           label: (
             <HStack spacing={2}>
-              <Icon as={FaEye} />
+              <ViewIcon />
               <Box>Preview</Box>
               {stats.fatal ? (
                 <Badge colorScheme="red">Error</Badge>
@@ -150,7 +153,7 @@ export const Editor: React.FC<EditorProps> = props => {
         {
           label: (
             <HStack spacing={2}>
-              <Icon as={FaEdit} />
+              <EditIcon />
               <Box>Editor</Box>
             </HStack>
           ),

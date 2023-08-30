@@ -6,6 +6,7 @@ import {mdxToMarkdown} from 'mdast-util-mdx'
 import {useEffect, useState} from 'react'
 import * as runtime from 'react/jsx-runtime'
 import rehypeSlug from 'rehype-slug-custom-id'
+
 import {directiveToMarkdown} from 'mdast-util-directive'
 import remarkDirective from 'remark-directive'
 import remarkFrontmatter from 'remark-frontmatter'
@@ -13,21 +14,22 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import {VFile} from 'vfile'
 import {VFileMessage} from 'vfile-message'
+
 import {toMarkdown} from 'mdast-util-to-markdown'
 import rehypeMdxCodeProps from 'rehype-mdx-code-props'
 
-import {MdastRoot} from './components/types'
+import {MdastRoot} from './components/types.js'
 
 import {rehypeUnwrapImages} from './rehype-unwrap-images'
 
 const parseMdast = (tree: MdastRoot) => {
-  const out = toMarkdown(tree, {
+  const out = toMarkdown(tree as any, {
     extensions: [
       mdxToMarkdown(),
       gfmToMarkdown(),
       directiveToMarkdown,
       frontmatterToMarkdown()
-    ]
+    ] as any
   })
 
   return out
@@ -43,7 +45,7 @@ function evaluateFile(file: VFile) {
   }
 
   try {
-    file.result = evaluateSync(file, {
+    file.result = evaluateSync(file as any, {
       ...(runtime as any),
       development: false,
 

@@ -1,4 +1,4 @@
-import {MdastRoot} from './components/types'
+import {MdastRoot} from './components/types.js'
 
 export const defaultData = {
   type: 'root',

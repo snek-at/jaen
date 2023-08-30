@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxFactory": "",
+    "jsxFragmentFactory": "",
+    "outDir": "dist",
+    "typeRoots": ["node_modules/@types", "src/@types"],
+    "target": "ES2020", // Target environment. Most modern browsers support ES6, but you may want to set it to newer or older. (defaults to ES3)
+    "module": "CommonJS", // Specifies what module code is generated. (defaults to "CommonJS")
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.stories.tsx"]
+}

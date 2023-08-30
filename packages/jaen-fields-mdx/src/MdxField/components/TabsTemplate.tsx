@@ -1,3 +1,4 @@
+import {AddIcon} from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -10,14 +11,9 @@ import {
   TabList,
   TabPanel,
   TabPanels,
-  Tabs,
-  useTheme,
-  Icon
+  Tabs
 } from '@chakra-ui/react'
-import {ChakraProvider} from '@chakra-ui/provider'
-
 import React, {useState} from 'react'
-import {FaPlus} from 'react-icons/fa'
 
 interface ComponentInfoProps {
   items: Array<{
@@ -30,7 +26,7 @@ export const ComponentInfo: React.FC<ComponentInfoProps> = ({items}) => (
   <Menu>
     <MenuButton
       as={Button}
-      leftIcon={<Icon as={FaPlus} />}
+      leftIcon={<AddIcon />}
       size="sm"
       variant="link"
       mx="2">
@@ -63,34 +59,28 @@ const TabsTemplate: React.FC<TabsProps> = props => {
     setSelectedTab(index)
   }
 
-  const currentTheme = useTheme()
-
   return (
     <Box position="relative">
-      <Tabs index={selectedTab} onChange={handleTabChange} pos="relative">
-        <ChakraProvider disableEnvironment disableGlobalStyle>
-          <TabList pos="sticky" top="0" zIndex="1" bg="gray.100">
-            {props.tabs.map((tab, i) => (
-              <Tab key={i}>{tab.label}</Tab>
-            ))}
-            <Spacer />
-            <ComponentInfo items={props.componentsInfo || []} />
-          </TabList>
-        </ChakraProvider>
+      <Tabs
+        index={selectedTab}
+        onChange={handleTabChange}
+        pos="relative"
+        size="sm">
+        <TabList pos="sticky" top="0" zIndex="1">
+          {props.tabs.map((tab, i) => (
+            <Tab key={i}>{tab.label}</Tab>
+          ))}
+          <Spacer />
+          <ComponentInfo items={props.componentsInfo || []} />
+        </TabList>
 
-        <ChakraProvider
-          disableEnvironment
-          disableGlobalStyle
-          theme={currentTheme}
-          cssVarsRoot=":root">
-          <TabPanels>
-            {props.tabs.map((tab, i) => (
-              <TabPanel key={i} p="0">
-                {tab.content}
-              </TabPanel>
-            ))}
-          </TabPanels>
-        </ChakraProvider>
+        <TabPanels>
+          {props.tabs.map((tab, i) => (
+            <TabPanel key={i} p="0">
+              {tab.content}
+            </TabPanel>
+          ))}
+        </TabPanels>
       </Tabs>
     </Box>
   )

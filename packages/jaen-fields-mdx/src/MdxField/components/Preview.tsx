@@ -1,9 +1,9 @@
+import {BaseEditorProps, MdastRoot} from './types.js'
 // @ts-nocheck
 import React, {useMemo} from 'react'
 import {Statistics, statistics} from 'vfile-statistics'
 
-import {BaseEditorProps, MdastRoot} from './types'
-import {useMdx} from '../use-mdx'
+import {useMdx} from '../use-mdx.js'
 import {PreviewComponent} from './PreviewComponent'
 
 export interface BuildEditorProps {

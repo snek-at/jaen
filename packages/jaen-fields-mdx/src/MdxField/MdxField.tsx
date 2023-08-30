@@ -1,11 +1,11 @@
+import {connectField} from '@atsnek/jaen'
 import React, {useEffect} from 'react'
-import {connectField} from '../../connectors/connect-field'
 
-import {Preview} from './components/Preview'
-import {BaseEditorProps, MdastRoot} from './components/types'
+import {Preview} from './components/Preview.js'
+import {BaseEditorProps, MdastRoot} from './components/types.js'
 
-import {Image, Link} from './default-components'
-import {defaultData} from './default-data'
+import {Image, Link} from './default-components.js'
+import {defaultData} from './default-data.js'
 
 type MdxFieldValue = MdastRoot
 
@@ -65,7 +65,7 @@ const LayzEditor: React.FC<{
   onUpdateValue: (value: MdastRoot) => void
   rawValue?: MdastRoot
 }> = ({components, onUpdateValue, rawValue}) => {
-  const Editor = React.lazy(async () => await import('./components/Editor'))
+  const Editor = React.lazy(async () => await import('./components/Editor.js'))
 
   const MemoedEditor = React.useMemo(() => Editor, [])
 
