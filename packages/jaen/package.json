@@ -1,6 +1,6 @@
 {
   "name": "@atsnek/jaen",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
   "description": "The Webapps framework for creating scalable and dynamic applications with ease.",
   "type": "module",
   "source": "src/index.ts",
