@@ -1,7 +1,8 @@
 import {defineStyle} from '@chakra-ui/styled-system'
+import {transparentize} from '@chakra-ui/theme-tools'
 
 export default {
-  global: defineStyle({
+  global: defineStyle(({theme}) => ({
     body: {
       color: 'fg.default',
       bg: 'bg.canvas'
@@ -33,9 +34,9 @@ export default {
       right: ' -6px', // border: 2px + offset: 4px
       bottom: '-6px', // border: 2px + offset: 4px
       left: '-6px', // border: 2px + offset: 4px
-      border: ' 2px solid red',
+      border: `2px solid ${transparentize('brand.400', 0.5)(theme)}`,
       borderRadius: '15px', // border—radius: 11px + offset: 4px
       pointerEvents: 'none'
     }
-  })
+  }))
 }

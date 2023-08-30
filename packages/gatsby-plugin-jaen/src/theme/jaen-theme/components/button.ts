@@ -4,6 +4,7 @@ import {
   defineStyle,
   defineStyleConfig
 } from '@chakra-ui/styled-system'
+import {transparentize} from '@chakra-ui/theme-tools'
 
 const sizes = {
   '2xs': defineStyle({
@@ -372,11 +373,11 @@ const variants = {
   }),
 
   'field-highlighter-tooltip': defineStyle({
-    bg: 'rgba(254, 215, 226, 0.9)',
+    bg: transparentize('brand.400', 0.5),
     backdropBlur: 8,
-    color: 'pink.900',
+    color: 'fg.emphasized',
     _hover: {
-      bg: 'pink.200'
+      bg: transparentize('brand.200', 0.7)
     },
     borderRadius: '0.5em',
     fontWeight: 'normal',
@@ -387,9 +388,9 @@ const variants = {
   }),
 
   'field-highlighter-tooltip-text': defineStyle({
-    bg: 'rgba(254, 215, 226, 0.9)',
+    bg: transparentize('brand.500', 0.7),
     backdropBlur: 8,
-    color: 'pink.900',
+    color: 'fg.emphasized',
     borderRadius: 'full',
     fontWeight: 'normal',
     cursor: 'default',
