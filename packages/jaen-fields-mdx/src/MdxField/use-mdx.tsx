@@ -73,8 +73,8 @@ function evaluateFile(file: VFile) {
     const message =
       error instanceof VFileMessage ? error : new VFileMessage(error)
 
-    if (!file.messages.includes(message)) {
-      file.messages.push(message)
+    if (!file.messages.includes(message as any)) {
+      file.messages.push(message as any)
     }
 
     message.fatal = true
