@@ -211,64 +211,71 @@ const Page: React.FC = () => {
             </Tr>
           )}
 
-          {services.map(service => (
-            <Tr key={service.id}>
-              <Td>
-                <HStack>
-                  <IconChooser
-                    icon={service.meta?.icon as keyof typeof SIIcons}
-                    isEditing={isEditing}
-                    setIcon={(icon: string) => {
-                      updateService(service.id, {
-                        meta: {
-                          icon
-                        }
-                      })
-                    }}
-                  />
+          {services
+            .sort((a, b) => {
+              const aOrder = a.meta?.order ?? 0
+              const bOrder = b.meta?.order ?? 0
 
-                  {isEditing ? (
-                    <Input
-                      defaultValue={service.meta?.label || service.id}
-                      onBlur={e => {
+              return aOrder - bOrder
+            })
+            .map(service => (
+              <Tr key={service.id}>
+                <Td>
+                  <HStack>
+                    <IconChooser
+                      icon={service.meta?.icon as keyof typeof SIIcons}
+                      isEditing={isEditing}
+                      setIcon={(icon: string) => {
                         updateService(service.id, {
                           meta: {
-                            label: e.target.value
+                            icon
                           }
                         })
                       }}
                     />
-                  ) : (
-                    <Link isExternal href={`https://${service.fqdn}`}>
-                      {service.meta?.label || service.id}
-                    </Link>
-                  )}
-                </HStack>
-              </Td>
-              <Td>{service.host}</Td>
-              <Td>{service.port}</Td>
 
-              {isEditing && (
-                <Td maxW="24">
-                  <NumberInput
-                    defaultValue={service.meta?.order}
-                    onChange={(value: string) => {
-                      updateService(service.id, {
-                        meta: {
-                          order: parseInt(value)
-                        }
-                      })
-                    }}>
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
+                    {isEditing ? (
+                      <Input
+                        defaultValue={service.meta?.label || service.id}
+                        onBlur={e => {
+                          updateService(service.id, {
+                            meta: {
+                              label: e.target.value
+                            }
+                          })
+                        }}
+                      />
+                    ) : (
+                      <Link isExternal href={`https://${service.fqdn}`}>
+                        {service.meta?.label || service.id}
+                      </Link>
+                    )}
+                  </HStack>
                 </Td>
-              )}
-            </Tr>
-          ))}
+                <Td>{service.host}</Td>
+                <Td>{service.port}</Td>
+
+                {isEditing && (
+                  <Td maxW="24">
+                    <NumberInput
+                      defaultValue={service.meta?.order}
+                      onChange={(value: string) => {
+                        updateService(service.id, {
+                          meta: {
+                            order: parseInt(value)
+                          }
+                        })
+                      }}>
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </Td>
+                )}
+              </Tr>
+            ))}
         </Tbody>
       </Table>
     </Stack>
