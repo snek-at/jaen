@@ -27,6 +27,11 @@ export interface SnekUser {
     isVerified?: boolean
     isPrimary?: boolean
   }>
+
+  resource: {
+    id: string
+    name: string
+  }
 }
 
 export interface AutenticationContext {
@@ -128,7 +133,11 @@ export const AuthenticationProvider: React.FC<{
               emailAddress: e.emailAddress,
               isVerified: e.isVerified,
               isPrimary: e.isPrimary
-            }))
+            })),
+            resource: {
+              id: u.resource.id,
+              name: u.resource.name
+            }
           },
           tokenPair: {
             accessToken: signIn.tokenPair.accessToken,
@@ -184,7 +193,11 @@ export const AuthenticationProvider: React.FC<{
           emailAddress: e.emailAddress,
           isVerified: e.isVerified,
           isPrimary: e.isPrimary
-        }))
+        })),
+        resource: {
+          id: user.resource.id,
+          name: user.resource.name
+        }
       }
     })
 
