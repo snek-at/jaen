@@ -5,6 +5,7 @@ import { proxy, arrayProxy, fnProxy, fnArrayProxy, t } from "snek-query";
 export type LensServiceMetaInput = {
     label?: t.String;
     icon?: t.String;
+    order?: t.NotSupportedYet;
 };
 
 export class Query {
@@ -27,7 +28,8 @@ export class LensServiceMeta {
     __typename: t.String;
     label: t.Nullable<t.String>;
     icon: t.Nullable<t.String>;
-    constructor() { this.__typename = ""; this.label = null; this.icon = null; }
+    order: t.Nullable<t.NotSupportedYet>;
+    constructor() { this.__typename = ""; this.label = null; this.icon = null; this.order = null; }
 }
 export class Mutation {
     __typename: t.String;

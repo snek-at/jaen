@@ -9,6 +9,11 @@ import {
   HStack,
   Input,
   Link,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Stack,
   Table,
   Tbody,
@@ -196,6 +201,7 @@ const Page: React.FC = () => {
             <Th>Service</Th>
             <Th>Host</Th>
             <Th>Port</Th>
+            {isEditing && <Th>Order</Th>}
           </Tr>
         </Thead>
         <Tbody>
@@ -241,6 +247,26 @@ const Page: React.FC = () => {
               </Td>
               <Td>{service.host}</Td>
               <Td>{service.port}</Td>
+
+              {isEditing && (
+                <Td maxW="24">
+                  <NumberInput
+                    defaultValue={service.meta?.order}
+                    onChange={(value: string) => {
+                      updateService(service.id, {
+                        meta: {
+                          order: parseInt(value)
+                        }
+                      })
+                    }}>
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </Td>
+              )}
             </Tr>
           ))}
         </Tbody>
