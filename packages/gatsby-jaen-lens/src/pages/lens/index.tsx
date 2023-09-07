@@ -1,10 +1,10 @@
-import {PageConfig, useNotificationsContext} from '@atsnek/jaen'
+import {
+  PageConfig,
+  useAuthenticationContext,
+  useNotificationsContext
+} from '@atsnek/jaen'
 import {
   Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
   Heading,
   HStack,
   Input,
@@ -13,14 +13,12 @@ import {
   Table,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
-  Tr,
-  Wrap,
-  WrapItem
+  Tr
 } from '@chakra-ui/react'
-import {graphql} from 'gatsby'
+import {getTokenPair, sq as origin} from '@snek-functions/origin'
+import {graphql, Link as GatsbyLink} from 'gatsby'
 import {useEffect, useState} from 'react'
 import {FaEdit} from 'react-icons/fa'
 import * as SIIcons from 'react-icons/si'
@@ -33,10 +31,13 @@ import {
 import {IconChooser} from '../../components/IconChooser'
 
 const Page: React.FC = () => {
+  const {isAuthenticated, user} = useAuthenticationContext()
   const {toast} = useNotificationsContext()
 
   const [isLoading, setIsLoading] = useState(true)
   const [services, setServices] = useState<LensService[]>([])
+
+  const isAdmin = user?.isAdmin
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -80,23 +81,46 @@ const Page: React.FC = () => {
       meta: LensServiceMetaInput
     }
   ): Promise<void> => {
-    try {
-      const [data, errors] = await sq.mutate(m => {
-        const service = m.serviceUpdate({
-          id,
-          meta: inputData.meta
-        })
+    // refresh by calling userMe on origin
+    const [_, errors] = await origin.query(q => q.userMe.id)
 
-        return {
-          id: service?.id,
-          fqdn: service?.fqdn,
-          host: service?.host,
-          port: service?.port,
-          meta: service?.meta,
-          isSecure: service?.isSecure,
-          __typename: service?.__typename
-        }
+    if (errors) {
+      toast({
+        title: 'Error',
+        description:
+          'Failed to refresh token. This is likely a bug or a network issue. Please try again later.',
+        status: 'error'
       })
+      return
+    }
+
+    const {accessToken} = getTokenPair()
+
+    try {
+      const [data, errors] = await sq.mutate(
+        m => {
+          const service = m.serviceUpdate({
+            id,
+            meta: inputData.meta
+          })
+
+          return {
+            id: service?.id,
+            fqdn: service?.fqdn,
+            host: service?.host,
+            port: service?.port,
+            meta: service?.meta,
+            isSecure: service?.isSecure,
+            __typename: service?.__typename
+          }
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
+
       if (errors) {
         throw new Error(errors[0]?.message)
       }
@@ -148,15 +172,22 @@ const Page: React.FC = () => {
     <Stack spacing="4">
       <Heading size="md">Services ({services.length})</Heading>
 
-      <HStack justifyContent="end">
-        <Button
-          variant="outline"
-          leftIcon={<FaEdit />}
-          onClick={() => {
-            setIsEditing(!isEditing)
-          }}>
-          {isEditing ? 'Done' : 'Edit'}
-        </Button>
+      <HStack spacing="4" justifyContent="end">
+        {isAuthenticated && (
+          <Link as={GatsbyLink} to="/lens/password">
+            Change password
+          </Link>
+        )}
+        {isAdmin && (
+          <Button
+            variant="outline"
+            leftIcon={<FaEdit />}
+            onClick={() => {
+              setIsEditing(!isEditing)
+            }}>
+            {isEditing ? 'Done' : 'Edit'}
+          </Button>
+        )}
       </HStack>
 
       <Table>
