@@ -4177,6 +4177,11 @@
   resolved "https://registry.yarnpkg.com/@types/yoga-layout/-/yoga-layout-1.9.2.tgz#efaf9e991a7390dc081a0b679185979a83a9639a"
   integrity sha512-S9q47ByT2pPvD65IvrWp7qppVMpk9WGMbVq9wbWZOHg6tnXSD4vyhao6nOSBwwfDdV2p3Kx9evA9vI+XWTfDvw==
 
+"@types/zxcvbn@^4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@types/zxcvbn/-/zxcvbn-4.4.2.tgz#7b16c35330a15471cd7b9d3576503a40b6bd2416"
+  integrity sha512-T7SEL8b/eN7AEhHQ8oFt7c6Y+l3p8OpH7KwJIe+5oBOPLMMioPeMsUTB3huNgEnXhiittV8Ohdw21Jg8E/f70Q==
+
 "@typescript-eslint/eslint-plugin@^5.0.0", "@typescript-eslint/eslint-plugin@^5.60.1":
   version "5.62.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.62.0.tgz#aeef0328d172b9e37d9bab6dbc13b87ed88977db"
@@ -13090,6 +13095,11 @@ react-hook-form@^7.45.2:
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.45.4.tgz#73d228b704026ae95d7e5f7b207a681b173ec62a"
   integrity sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==
 
+react-hook-form@^7.46.1:
+  version "7.46.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.46.1.tgz#39347dbff19d980cb41087ac32a57abdc6045bb3"
+  integrity sha512-0GfI31LRTBd5tqbXMGXT1Rdsv3rnvy0FjEk8Gn9/4tp6+s77T7DPZuGEpBRXOauL+NhyGT5iaXzdIM2R6F/E+w==
+
 react-icons@^4.10.1:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.10.1.tgz#3f3b5eec1f63c1796f6a26174a1091ca6437a500"
@@ -14176,10 +14186,10 @@ snake-case@^3.0.4:
     dot-case "^3.0.4"
     tslib "^2.0.3"
 
-snek-query@*, snek-query@^0.0.82:
-  version "0.0.82"
-  resolved "https://registry.yarnpkg.com/snek-query/-/snek-query-0.0.82.tgz#54964bdc879b0f4a48c23b9ba56377d8e433dc66"
-  integrity sha512-nhCd774fmXWGOH0a/CIy9cOPmLej6AFKHKVh5dS1Iw+wMUQbTr/90Cly+PSstVnmD5RrprLB50cHBgM2ChGsgA==
+snek-query@*, snek-query@^0.0.83:
+  version "0.0.83"
+  resolved "https://registry.yarnpkg.com/snek-query/-/snek-query-0.0.83.tgz#57fcadb2f63a0c26f1ac05de666ba0e05e841b6a"
+  integrity sha512-fbbwMZ7XUxvmBpIGDQ13lNQGvShs1TgveRDrlKWY5JSbOTKEu+AJUv09mcNb5sgm+na7bMEmcTEky6IfvOfdEg==
   dependencies:
     commander "^9.4.1"
     graphql "^16.6.0"
@@ -15488,7 +15498,7 @@ vfile@^5.0.0:
     unist-util-stringify-position "^3.0.0"
     vfile-message "^3.0.0"
 
-vfile@^6.0.0, vfile@^6.0.1:
+vfile@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/vfile/-/vfile-6.0.1.tgz#1e8327f41eac91947d4fe9d237a2dd9209762536"
   integrity sha512-1bYqc7pt6NIADBJ98UiG0Bn/CHIVOoZ/IyEkqIruLg0mE1BKzkOXY2D6CSqQIcKqgadppE5lrxgWXJmXd7zZJw==
@@ -15952,3 +15962,8 @@ zwitch@^2.0.0, zwitch@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/zwitch/-/zwitch-2.0.4.tgz#c827d4b0acb76fc3e685a4c6ec2902d51070e9d7"
   integrity sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==
+
+zxcvbn@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/zxcvbn/-/zxcvbn-4.4.2.tgz#28ec17cf09743edcab056ddd8b1b06262cc73c30"
+  integrity sha512-Bq0B+ixT/DMyG8kgX2xWcI5jUvCwqrMxSFam7m0lAf78nf04hv6lNCsyLYdyYTrCVMqNDY/206K7eExYCeSyUQ==
