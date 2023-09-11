@@ -1,21 +1,25 @@
-import {PageConfig} from '@atsnek/jaen'
+import {PageConfig, useWidgetContext} from '@atsnek/jaen'
 import {
   Accordion,
-  AccordionItem,
   AccordionButton,
-  AccordionPanel,
   AccordionIcon,
-  Stack,
+  AccordionItem,
+  AccordionPanel,
+  Box,
   Heading,
-  Text,
+  Stack,
+  StackDivider,
   Table,
   Tbody,
-  Tr,
   Td,
-  StackDivider,
-  Box
+  Text,
+  Th,
+  Thead,
+  Tr
 } from '@chakra-ui/react'
 import {graphql, PageProps, useStaticQuery} from 'gatsby'
+
+import {JaenWidgetProvider} from '../../contexts/jaen-widget'
 
 const Page: React.FC<PageProps> = () => {
   const data = useStaticQuery<{
@@ -153,7 +157,52 @@ const Page: React.FC<PageProps> = () => {
           </AccordionItem>
         </Accordion>
       </Stack>
+
+      <Stack spacing="6">
+        <Heading as="h1" size="lg">
+          Widgets
+        </Heading>
+
+        <Text fontSize="md">
+          Below, you'll find a list of widgets and their data. This is a preview
+          feature and will be improved in the future.
+        </Text>
+
+        <JaenWidgetProvider>
+          <WidgetsTable />
+        </JaenWidgetProvider>
+      </Stack>
     </Stack>
+  )
+}
+
+const WidgetsTable: React.FC = () => {
+  const widgets = useWidgetContext()
+
+  return (
+    <Table variant="simple">
+      <Thead>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Created At</Th>
+          <Th>Modified At</Th>
+          <Th>Data</Th>
+        </Tr>
+      </Thead>
+
+      <Tbody>
+        {widgets.map(widget => (
+          <Tr key={widget.id}>
+            <Td>{widget.name}</Td>
+            <Td>{widget.createdAt}</Td>
+            <Td>{widget.modifiedAt}</Td>
+            <Td>
+              <pre>{JSON.stringify(widget.data, null, 2)}</pre>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   )
 }
 

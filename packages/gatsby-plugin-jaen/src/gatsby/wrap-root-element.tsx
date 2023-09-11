@@ -9,6 +9,7 @@ import {
 import {GatsbyBrowser} from 'gatsby'
 import {lazy} from 'react'
 
+import {JaenWidgetProvider} from '../contexts/jaen-widget'
 import {SiteMetadataProvider} from '../connectors/site-metadata'
 import {theme} from '../theme/jaen-theme/index'
 import {JaenFrameMenuProvider} from '../contexts/jaen-frame-menu'
@@ -46,7 +47,7 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
                 JaenLoginComponent={JaenLogin}>
                 <JaenFrameMenuProvider>
                   <MediaModalProvider MediaModalComponent={MediaModalComponent}>
-                    {element}
+                    <JaenWidgetProvider>{element}</JaenWidgetProvider>
                   </MediaModalProvider>
                 </JaenFrameMenuProvider>
               </AuthenticationProvider>

@@ -1,7 +1,11 @@
-import {LayoutProps} from '@atsnek/jaen'
-import {Box, Heading} from '@chakra-ui/react'
+import {LayoutProps, useWidget} from '@atsnek/jaen'
+import {Box, Heading, HStack, Button} from '@chakra-ui/react'
 
 const Layout: React.FC<LayoutProps> = ({children, pageProps}) => {
+  const [widget, setWidget] = useWidget<string>('Header_Title', {
+    defaultData: 'Hello World'
+  })
+
   return (
     <Box>
       <Box
@@ -12,7 +16,16 @@ const Layout: React.FC<LayoutProps> = ({children, pageProps}) => {
         pos="sticky"
         top="0"
         zIndex="sticky">
-        <Heading as="h1">My Site</Heading>
+        <HStack>
+          <Heading as="h1">{widget.data}</Heading>
+
+          <Button
+            onClick={() => {
+              setWidget(`Random Title ${Math.floor(Math.random() * 100)}`)
+            }}>
+            Random Title
+          </Button>
+        </HStack>
       </Box>
 
       {children}

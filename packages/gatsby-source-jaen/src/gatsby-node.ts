@@ -4,6 +4,7 @@ import {sourceNodes as sourceNodesJaenData} from './source-nodes/jaen-data'
 import {sourceNodes as sourceNodesJaenPages} from './source-nodes/jaen-pages'
 import {createPages as createPagesJaenPages} from './create-pages/jaen-pages'
 import {sourceNodes as sourceNodesJaenSite} from './source-nodes/jaen-site'
+import {sourceNodes as sourceNodesJaenWidget} from './source-nodes/jaen-widget'
 
 import {onCreatePage as onCreatePageJaenPage} from './on-create-page/jaen-page'
 import {onCreateNode as onCreateNodeJaenPage} from './on-create-node/jaen-page'
@@ -16,6 +17,7 @@ import {createSchemaCustomization as createSchemaCustomizationJaenPage} from './
 import {createSchemaCustomization as createSchemaCustomizationJaenTemplate} from './create-schema-customization/jaen-template'
 import {createSchemaCustomization as createSchemaCustomizationJaenData} from './create-schema-customization/jaen-data'
 import {createSchemaCustomization as createSchemaCustomizationJaenSite} from './create-schema-customization/jaen-site'
+import {createSchemaCustomization as createSchemaCustomizationJaenWidget} from './create-schema-customization/jaen-widget'
 
 import {onCreateWebpackConfig as onCreateWebpackConfigJaenTemplate} from './on-create-webpack-config/jaen-template'
 
@@ -25,6 +27,7 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async args => {
   // Must be called after sourceJaenNodes
   await sourceNodesJaenPages(args)
   await sourceNodesJaenSite(args)
+  await sourceNodesJaenWidget(args)
 }
 
 export const createPages: GatsbyNode['createPages'] = async args => {
@@ -54,7 +57,8 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
       createSchemaCustomizationJaenPage(args),
       createSchemaCustomizationJaenTemplate(args),
       createSchemaCustomizationJaenData(args),
-      createSchemaCustomizationJaenSite(args)
+      createSchemaCustomizationJaenSite(args),
+      createSchemaCustomizationJaenWidget(args)
     ])
   }
 

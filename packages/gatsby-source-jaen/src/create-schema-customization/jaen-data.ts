@@ -8,6 +8,7 @@ export const createSchemaCustomization = async ({
       patches: [JaenDataPatch!]!
       site: JSON
       pages: JSON
+      widgets: JSON
     }
 
     type JaenDataPatch {

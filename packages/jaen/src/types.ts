@@ -75,11 +75,12 @@ export interface MediaNode {
   jaenPageId?: string
 }
 
-export interface IWidget {
-  nodes: Array<{
-    name: string
-    data: any
-  }>
+export interface Widget<T = object> {
+  id: string
+  createdAt: string
+  modifiedAt: string
+  name: string
+  data?: T
 }
 
 export interface SiteMetadata {

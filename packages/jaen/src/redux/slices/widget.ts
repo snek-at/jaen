@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {Widget} from '../../types'
+import {IWidgetState} from '../types'
 
-import {IWidget} from '../../types'
-
-export const widgetInitialState: IWidget = {
+export const widgetInitialState: IWidgetState = {
   nodes: []
 }
 
@@ -12,26 +12,44 @@ const widgetsSlice = createSlice({
   reducers: {
     writeData: (
       state,
-      action: PayloadAction<{
-        widgetName: string
-        data: object
-      }>
+      action: PayloadAction<
+        Partial<Widget> & {
+          isCreate?: boolean
+        }
+      >
     ) => {
-      const {widgetName, data} = action.payload
+      const {id, isCreate, ...data} = action.payload
 
-      // find or create widget object in state
-      const widget = state.nodes.find(w => w.name === widgetName)
-      if (widget) {
-        widget.data = data
+      if (id) {
+        const node = state.nodes.find(node => node.id === id)
+
+        if (node) {
+          node.modifiedAt = new Date().toISOString()
+          node.data = data.data
+        }
       } else {
-        state.nodes.push({
-          name: widgetName,
-          data
-        })
+        if (!data.name) throw new Error('Widget name is required')
+
+        const node: any = {
+          ...data,
+          modifiedAt: new Date().toISOString()
+        }
+
+        // Temporary id, will be replaced by source plugin
+        if (!node.id) node.id = Math.random().toString(36).substr(2, 9)
+
+        if (isCreate && !data.createdAt) {
+          node.createdAt = new Date().toISOString()
+        }
+
+        state.nodes.push(node)
       }
+    },
+    discardAllChanges: state => {
+      state.nodes = []
     }
   }
 })
 
-export const {writeData} = widgetsSlice.actions
+export const {writeData, discardAllChanges} = widgetsSlice.actions
 export default widgetsSlice.reducer

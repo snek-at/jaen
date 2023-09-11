@@ -1,4 +1,4 @@
-import {JaenPage, IJaenPopup, ISite, IWidget} from '../types'
+import {JaenPage, IJaenPopup, ISite, Widget} from '../types'
 
 export interface IError {
   code: string
@@ -42,13 +42,14 @@ export interface IJaenSiteState {
   siteMetadata: ISite['siteMetadata']
 }
 
-export type IJaenFinderUrl = string | undefined
+export interface IWidgetState {
+  nodes: Array<Widget>
+}
 
 export interface IJaenState {
   site: IJaenSiteState
   page: IPageState
   status: IStatusState
   popup: IPopupState
-  widget: IWidget
-  finderUrl: IJaenFinderUrl
+  widget: IWidgetState
 }

@@ -26,7 +26,8 @@ export {
   MediaNode,
   LayoutProps,
   SiteMetadata,
-  ISite as JaenSite
+  ISite as JaenSite,
+  Widget
 } from './types'
 export {generatePageOriginPath} from './utils/path'
 export * from './utils/open-storage-gateway'
@@ -45,5 +46,9 @@ export {
   JaenUpdateModalProvider,
   useJaenUpdateModalContext
 } from './contexts/jaen-update-modal'
+
+export {WidgetProvider, useWidgetContext} from './contexts/widget'
+
+export {useWidget} from './hooks/use-widget'
 
 export {Head} from './Head'

@@ -13,6 +13,7 @@ import {
 import {actions as pageActions} from '../redux/slices/page'
 import * as statusActions from '../redux/slices/status'
 import {actions as siteActions} from '../redux/slices/site'
+import * as widgetActions from '../redux/slices/widget'
 
 import {JaenPage, JaenTemplate, SiteMetadata} from '../types'
 import {deepmergeArrayIdMerge} from '../utils/deepmerge'
@@ -463,6 +464,7 @@ export const CMSManagementProvider = withRedux(
     const discardDraft = useCallback(() => {
       dispatch(pageActions.discardAllChanges())
       dispatch(siteActions.discardAllChanges())
+      dispatch(widgetActions.discardAllChanges())
 
       // reset status
       setIsEditing(false)
@@ -493,7 +495,8 @@ export const CMSManagementProvider = withRedux(
                 id,
                 ...page
               })),
-              site: state.site
+              site: state.site,
+              widgets: state.widget.nodes
             }
           }
 
