@@ -189,7 +189,7 @@ export const PageContentForm: React.FC<PageContentFormProps> = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.values])
+  }, [JSON.stringify(props.values)])
 
   const [isEditFormLocked, setIsEditFormLocked] = useState<boolean>(true)
 
