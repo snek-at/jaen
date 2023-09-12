@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   Stack,
   Text,
   useToast
@@ -35,6 +36,10 @@ interface OpenerFn {
       icon?: As
       title: string
       message: string
+      options?: Array<{
+        id: string
+        label: string
+      }>
       confirmText?: string
       cancelText?: string
       placeholder?: string
@@ -78,7 +83,7 @@ export const NotificationsProvider = ({children}: {children: ReactNode}) => {
   })
 
   const [modal, setModal] = useState<ReactNode | null>(null)
-  const input = useRef<HTMLInputElement>(null)
+  const input = useRef<HTMLInputElement | HTMLSelectElement>(null)
   const ok = useRef<HTMLButtonElement>(null)
 
   // const jaenTheme = useJaenTheme()
@@ -133,13 +138,30 @@ export const NotificationsProvider = ({children}: {children: ReactNode}) => {
                   <Stack spacing={5}>
                     <Text>{args.message}</Text>
                     {type === ModalType.Prompt && (
-                      <Input
-                        ref={input}
-                        placeholder={args.placeholder}
-                        defaultValue={defaultValue}
-                        onChange={e => setInputValue(e.target.value)}
-                        value={inputValue}
-                      />
+                      <>
+                        {args.options ? (
+                          <Select
+                            ref={input as React.RefObject<HTMLSelectElement>}
+                            placeholder={args.placeholder}
+                            defaultValue={defaultValue}
+                            onChange={e => setInputValue(e.target.value)}
+                            value={inputValue}>
+                            {args.options.map(option => (
+                              <option key={option.id} value={option.id}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </Select>
+                        ) : (
+                          <Input
+                            ref={input as React.RefObject<HTMLInputElement>}
+                            placeholder={args.placeholder}
+                            defaultValue={defaultValue}
+                            onChange={e => setInputValue(e.target.value)}
+                            value={inputValue}
+                          />
+                        )}
+                      </>
                     )}
                   </Stack>
                 </ModalBody>

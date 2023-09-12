@@ -223,7 +223,41 @@ const PagesPage: React.FC = () => {
           description: 'This will move the page and all its subpages.',
           buttonText: 'Move page',
           icon: FaArrowRight,
-          onClick: () => {},
+          onClick: async () => {
+            const options = Object.entries(parentPages).map(
+              ([pageId, page]) => {
+                return {
+                  id: pageId,
+                  label: page.label
+                }
+              }
+            )
+
+            const parentPageId = await prompt(
+              {
+                title: 'Move page',
+                message: 'Please select a new parent page.',
+                confirmText: 'Move',
+                cancelText: 'Cancel',
+                options
+              },
+              currentPage.parentPage?.id
+            )
+
+            if (parentPageId) {
+              manager.updatePage(currentPage.id, {
+                parentPage: {
+                  id: parentPageId
+                }
+              })
+
+              toast({
+                title: 'Page moved',
+                description: `Page ${currentPage.slug} has been moved`,
+                status: 'success'
+              })
+            }
+          },
           isDisabled: !currentPage.template
         },
         {
