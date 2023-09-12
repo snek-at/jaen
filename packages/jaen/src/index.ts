@@ -47,6 +47,11 @@ export {
   useJaenUpdateModalContext
 } from './contexts/jaen-update-modal'
 
+export {
+  CookieConsentProvider,
+  useCookieConsentContext
+} from './contexts/cookie-consent'
+
 export {WidgetProvider, useWidgetContext} from './contexts/widget'
 
 export {useWidget} from './hooks/use-widget'

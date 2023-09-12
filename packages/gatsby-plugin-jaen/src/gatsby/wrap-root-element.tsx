@@ -4,7 +4,8 @@ import {
   FieldHighlighterProvider,
   MediaModalProvider,
   NotificationsProvider,
-  JaenUpdateModalProvider
+  JaenUpdateModalProvider,
+  CookieConsentProvider
 } from '@atsnek/jaen'
 import {GatsbyBrowser} from 'gatsby'
 import {lazy} from 'react'
@@ -38,23 +39,26 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
 
   return (
     <ChakraProvider theme={theme} cssVarsRoot="#coco">
-      <NotificationsProvider>
-        <JaenUpdateModalProvider>
-          <FieldHighlighterProvider theme={theme}>
-            <SiteMetadataProvider>
-              <AuthenticationProvider
-                snekResourceId={snekResourceId}
-                JaenLoginComponent={JaenLogin}>
-                <JaenFrameMenuProvider>
-                  <MediaModalProvider MediaModalComponent={MediaModalComponent}>
-                    <JaenWidgetProvider>{element}</JaenWidgetProvider>
-                  </MediaModalProvider>
-                </JaenFrameMenuProvider>
-              </AuthenticationProvider>
-            </SiteMetadataProvider>
-          </FieldHighlighterProvider>
-        </JaenUpdateModalProvider>
-      </NotificationsProvider>
+      <CookieConsentProvider>
+        <NotificationsProvider>
+          <JaenUpdateModalProvider>
+            <FieldHighlighterProvider theme={theme}>
+              <SiteMetadataProvider>
+                <AuthenticationProvider
+                  snekResourceId={snekResourceId}
+                  JaenLoginComponent={JaenLogin}>
+                  <JaenFrameMenuProvider>
+                    <MediaModalProvider
+                      MediaModalComponent={MediaModalComponent}>
+                      <JaenWidgetProvider>{element}</JaenWidgetProvider>
+                    </MediaModalProvider>
+                  </JaenFrameMenuProvider>
+                </AuthenticationProvider>
+              </SiteMetadataProvider>
+            </FieldHighlighterProvider>
+          </JaenUpdateModalProvider>
+        </NotificationsProvider>
+      </CookieConsentProvider>
     </ChakraProvider>
   )
 }
