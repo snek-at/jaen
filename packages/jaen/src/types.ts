@@ -1,3 +1,9 @@
+// add __SNEK_RESOURCE_ID__ constant to global
+
+declare global {
+  var __SNEK_RESOURCE_ID__: string
+}
+
 import type {PageProps as GatsbyPageProps} from 'gatsby'
 import type {IGatsbyImageData} from 'gatsby-plugin-image'
 import type * as FaIcons from 'react-icons/fa'

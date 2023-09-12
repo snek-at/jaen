@@ -10,12 +10,15 @@ export {
   useCMSManagementContext,
   DuplicateSlugError
 } from './contexts/cms-management'
+export {useContentManagement} from './hooks/use-content-management'
 export {FieldHighlighterProvider} from './contexts/field-highlighter'
 export {
   NotificationsProvider,
   useNotificationsContext
 } from './contexts/notifications'
-export {usePageContext, PageProvider} from './contexts/page'
+export {usePageContext, useJaenPageIndex, PageProvider} from './contexts/page'
+export {useSectionBlockContext, SectionBlockContextType} from './contexts/block'
+export {useSectionField, UseSectionField} from './hooks/use-section-field'
 export {Field} from './fields'
 export {useField} from './hooks/use-field'
 export {
@@ -57,3 +60,7 @@ export {WidgetProvider, useWidgetContext} from './contexts/widget'
 export {useWidget} from './hooks/use-widget'
 
 export {Head} from './Head'
+
+export {PhotoProvider} from 'react-photo-view'
+
+export const snekResourceId = __SNEK_RESOURCE_ID__
