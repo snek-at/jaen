@@ -50,6 +50,18 @@ const Config: GatsbyConfig = {
           }
         }
       }
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Jaen App`,
+        short_name: `Jaen`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/favicon.ico`
+      }
     }
   ]
 }

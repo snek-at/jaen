@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jaen",
-  "version": "1.0.0-rc.12",
+  "version": "1.0.0-rc.13",
   "main": "index.js",
   "types": "./src/index.ts",
   "files": [
@@ -22,6 +22,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "framer-motion": "^10.13.0",
+    "gatsby-plugin-manifest": "^5.12.0",
     "gatsby-plugin-sharp": "^5.11.0",
     "gatsby-plugin-sitemap": "^6.12.0",
     "gatsby-plugin-ts-config": "^2.1.3",
