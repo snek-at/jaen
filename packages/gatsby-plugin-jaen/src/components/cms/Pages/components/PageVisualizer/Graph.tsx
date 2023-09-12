@@ -1,7 +1,13 @@
 import {useColorModeValue, useToken} from '@chakra-ui/react'
 import {useEffect, useRef} from 'react'
 
-import {darkTheme, GraphCanvas, lightTheme, useSelection} from 'reagraph'
+import {
+  darkTheme,
+  GraphCanvas,
+  GraphCanvasRef,
+  lightTheme,
+  useSelection
+} from 'reagraph'
 import {convertTreeToGraph, TreeNode} from './convert-tree-to-graph'
 
 export const Graph: React.FC<{
@@ -11,7 +17,7 @@ export const Graph: React.FC<{
 }> = ({tree, selection, onSelect}) => {
   const data = convertTreeToGraph(tree)
 
-  const graphRef = useRef(null)
+  const graphRef = useRef<GraphCanvasRef>(null)
   const {
     selections,
     actives,
@@ -34,14 +40,14 @@ export const Graph: React.FC<{
         onSelect(selection)
       } else {
         onSelect('')
-        // setSelections(selection ? [selection] : [])
       }
     }
-    // selections: selection ? [selection] : []
   })
 
   useEffect(() => {
     setSelections(selection ? [selection] : [])
+
+    graphRef.current?.centerGraph(selection ? [selection] : [])
   }, [selection])
 
   const [brand500] = useToken(
@@ -121,16 +127,18 @@ export const Graph: React.FC<{
   return (
     <GraphCanvas
       key={theme.canvas.background}
+      selections={selections}
+      actives={actives}
+      onCanvasClick={onCanvasClick}
+      onNodeClick={onNodeClick}
+      onNodePointerOver={onNodePointerOver}
+      onNodePointerOut={onNodePointerOut}
       ref={graphRef}
+      layoutType="hierarchicalTd"
       theme={theme}
       nodes={data.nodes}
       edges={data.edges}
-      selections={selections}
-      actives={actives}
-      onNodePointerOver={onNodePointerOver}
-      onNodePointerOut={onNodePointerOut}
-      onCanvasClick={onCanvasClick}
-      onNodeClick={onNodeClick}
+      sizingType="centrality"
     />
   )
 }

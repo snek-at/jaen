@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {Box} from '@chakra-ui/react'
+import {Box, Progress} from '@chakra-ui/react'
 import {useEffect, useState} from 'react'
 
 import {Graph} from './Graph'
@@ -15,7 +15,7 @@ export const PageVisualizer = props => {
   return (
     <Box
       h="md"
-      p="4"
+      overflow="hidden"
       w="full"
       border="solid 1px"
       borderColor="border.emphasized"
@@ -23,7 +23,7 @@ export const PageVisualizer = props => {
       <Box boxSize="full" pos="relative">
         {isMounted ? (
           <Graph tree={props.tree} selection={props.selection} onSelect={props.onSelect} />
-        ) : null}
+        ) : <Progress isIndeterminate />}
       </Box>
     </Box>
   )

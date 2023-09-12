@@ -13332,7 +13332,7 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-reagraph@^4.10.5:
+reagraph@^4.13.0:
   version "4.13.0"
   resolved "https://registry.yarnpkg.com/reagraph/-/reagraph-4.13.0.tgz#d9ef8d1141801d870955ba9be23d39ea395d3301"
   integrity sha512-qCuvq0F41PNM6TBe0vrO9riqPJcRH4QWwKYHtvRRMDLFYOwLljNGZTljCoe+9OpEfkHVO68TGVlt5eRPkMipxA==
