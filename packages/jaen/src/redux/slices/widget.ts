@@ -26,24 +26,27 @@ const widgetsSlice = createSlice({
         if (node) {
           node.modifiedAt = new Date().toISOString()
           node.data = data.data
+
+          return
         }
-      } else {
-        if (!data.name) throw new Error('Widget name is required')
-
-        const node: any = {
-          ...data,
-          modifiedAt: new Date().toISOString()
-        }
-
-        // Temporary id, will be replaced by source plugin
-        if (!node.id) node.id = Math.random().toString(36).substr(2, 9)
-
-        if (isCreate && !data.createdAt) {
-          node.createdAt = new Date().toISOString()
-        }
-
-        state.nodes.push(node)
       }
+
+      if (!data.name) throw new Error('Widget name is required')
+
+      const node: any = {
+        id,
+        ...data,
+        modifiedAt: new Date().toISOString()
+      }
+
+      // Temporary id, will be replaced by source plugin
+      if (!node.id) node.id = Math.random().toString(36).substr(2, 9)
+
+      if (isCreate && !data.createdAt) {
+        node.createdAt = new Date().toISOString()
+      }
+
+      state.nodes.push(node)
     },
     discardAllChanges: state => {
       state.nodes = []
