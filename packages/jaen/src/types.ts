@@ -44,6 +44,8 @@ export interface PageConfig {
     // default: 'content'
     type?: 'content' | 'form' | 'full'
   }
+
+  showInNodeGraphVisualizer?: boolean
 }
 
 interface PageContext {
@@ -188,6 +190,8 @@ export interface JaenPage {
   component: string | null
   deleted?: boolean
   excludedFromIndex?: boolean
+
+  pageConfig: PageConfig | null
 }
 
 export interface IJaenSection {

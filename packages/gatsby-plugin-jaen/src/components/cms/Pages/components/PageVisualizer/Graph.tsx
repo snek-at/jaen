@@ -45,9 +45,14 @@ export const Graph: React.FC<{
   })
 
   useEffect(() => {
-    setSelections(selection ? [selection] : [])
+    // check if selection is in the graph
+    const selectionExists = data.nodes.find(node => node.id === selection)
 
-    graphRef.current?.centerGraph(selection ? [selection] : [])
+    if (selectionExists) {
+      setSelections(selection ? [selection] : [])
+
+      graphRef.current?.centerGraph(selection ? [selection] : [])
+    }
   }, [selection])
 
   const [brand500] = useToken(

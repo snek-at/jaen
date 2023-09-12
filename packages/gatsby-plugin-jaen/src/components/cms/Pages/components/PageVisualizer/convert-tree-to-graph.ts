@@ -19,6 +19,7 @@ export interface TreeNode {
   id: string
   label: string
   children: TreeNode[]
+  showInNodeGraphVisualizer: boolean
 }
 
 export function convertTreeToGraph(tree: TreeNode[]): GraphData {
@@ -26,11 +27,16 @@ export function convertTreeToGraph(tree: TreeNode[]): GraphData {
   const edges: Edge[] = []
 
   function traverse(node: TreeNode) {
+    console.log(node)
+    if (!node.showInNodeGraphVisualizer) return
+
     // Add the current node to the nodes array
     nodes.push({id: node.id, label: node.label})
 
     // Process children of the current node
     for (const child of node.children) {
+      if (!child.showInNodeGraphVisualizer) continue
+
       // Add an edge from the current node to its child
       edges.push({
         id: `${node.id}->${child.id}`,

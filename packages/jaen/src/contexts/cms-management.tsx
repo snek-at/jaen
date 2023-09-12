@@ -1,6 +1,8 @@
 // CMSManagementContext.tsx
 import deepmerge from 'deepmerge'
 import {createContext, ReactNode, useCallback, useContext, useMemo} from 'react'
+import {FaRocket} from 'react-icons/fa'
+import {sq} from '@snek-functions/origin'
 
 import {
   resetState,
@@ -20,8 +22,6 @@ import {deepmergeArrayIdMerge} from '../utils/deepmerge'
 import {useSiteMetadataContext} from './site-metadata'
 import {uploadFile} from '../utils/open-storage-gateway'
 import {useNotificationsContext} from './notifications'
-import {FaRocket} from 'react-icons/fa'
-import {sq} from '@snek-functions/origin'
 
 // Errors
 
@@ -49,6 +49,7 @@ interface CMSManagementContextData {
     id: string
     label: string
     children: Array<CMSManagementContextData['tree'][0]>
+    showInNodeGraphVisualizer: boolean
   }>
   pagePath: (pageId: string) => string
   addPage: (page: Partial<JaenPage>) => string
@@ -310,6 +311,8 @@ export const CMSManagementProvider = withRedux(
         return children.map(child => ({
           id: child.id,
           label: child.jaenPageMetadata.title || child.slug,
+          showInNodeGraphVisualizer:
+            child.pageConfig?.showInNodeGraphVisualizer ?? true,
           children: buildTree(child.id)
         }))
       }
@@ -319,6 +322,8 @@ export const CMSManagementProvider = withRedux(
       tree.push({
         id: root.id,
         label: root.jaenPageMetadata.title || root.slug,
+        showInNodeGraphVisualizer:
+          root.pageConfig?.showInNodeGraphVisualizer ?? true,
         children: buildTree(root.id)
       })
 
@@ -508,8 +513,7 @@ export const CMSManagementProvider = withRedux(
           if (uploadedMigration) {
             const [_, errors] = await sq.mutate(m =>
               m.jaenPublish({
-                // @ts-expect-error
-                resourceId: __SNEK_RESOURCE_ID__ + 'nop',
+                resourceId: __SNEK_RESOURCE_ID__,
                 migrationURL: uploadedMigration.fileUrl
               })
             )

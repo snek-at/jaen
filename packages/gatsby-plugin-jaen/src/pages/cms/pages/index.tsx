@@ -4,12 +4,12 @@ import {navigate, PageProps} from 'gatsby'
 import {PageConfig, useNotificationsContext} from '@atsnek/jaen'
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {FaArrowRight, FaEdit, FaTrash} from 'react-icons/fa'
+
 import {Pages} from '../../../components/cms/Pages/Pages'
 import {
   CMSManagement,
   useCMSManagement
 } from '../../../connectors/cms-management'
-import {set} from 'react-hook-form'
 
 const PagesPage: React.FC = () => {
   const {toast, prompt, confirm} = useNotificationsContext()

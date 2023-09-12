@@ -24,6 +24,8 @@ export const fragments = graphql`
         category
       }
     }
+
+    pageConfig
   }
 
   fragment JaenPageChildrenData on JaenPage {
@@ -32,6 +34,7 @@ export const fragments = graphql`
   }
 
   fragment JaenPageData on JaenPage {
+    pageConfig
     id
     buildPath
     slug
