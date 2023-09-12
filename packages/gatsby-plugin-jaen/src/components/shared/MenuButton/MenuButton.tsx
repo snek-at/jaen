@@ -44,7 +44,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
             value.icon ? <Icon as={value.icon} color="brand.500" /> : undefined
           }
           onClick={value.onClick}
-          to={value.path}>
+          to={value.path || '#'}>
           {value.label}
         </ChakraMenuItem>
         {value.divider && <MenuDivider borderColor="border.emphasized" />}

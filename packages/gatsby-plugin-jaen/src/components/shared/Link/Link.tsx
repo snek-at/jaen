@@ -12,7 +12,7 @@ export interface LinkProps<T extends As> extends React.ComponentProps<any> {
 }
 
 const Link = <T extends As>(
-  {as, to = '#', ...props}: LinkProps<T>,
+  {as, to, ...props}: LinkProps<T>,
   ref: React.Ref<HTMLAnchorElement | HTMLButtonElement>
 ) => {
   const Wrapper = as || ChakraLink
