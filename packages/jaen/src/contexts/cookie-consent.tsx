@@ -168,10 +168,12 @@ export const CookieConsentProvider: React.FC<CookieConsentProviderProps> = ({
 
 export default CookieConsentProvider
 
-export function useCookieConsentContext() {
+export function useCookieConsentContext(): CookieConsent {
   const context = useContext(CookieContext)
+
   if (context === undefined) {
-    throw new Error('Context must be used within a Provider')
+    // Return a mocked version of the context
+    return {} as CookieConsent
   }
   return context
 }
