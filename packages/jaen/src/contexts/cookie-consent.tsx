@@ -1,5 +1,5 @@
 import {useColorMode} from '@chakra-ui/react'
-import {createContext, useContext, useEffect, useRef} from 'react'
+import {createContext, useContext, useEffect, useState} from 'react'
 import 'vanilla-cookieconsent'
 
 const buildPluginConfig = (settings?: {
@@ -115,7 +115,7 @@ const buildPluginConfig = (settings?: {
   return pluginConfig
 }
 
-const CookieContext = createContext<CookieConsent | undefined>(undefined)
+const CookieContext = createContext<CookieConsent | null>(null)
 
 export interface CookieConsentProviderProps {
   locale?: string
@@ -128,19 +128,21 @@ export const CookieConsentProvider: React.FC<CookieConsentProviderProps> = ({
   useGoogleAnalytics,
   locale
 }) => {
-  const cc = useRef<CookieConsent | undefined>(undefined)
+  const [cc, setCC] = useState<CookieConsent | null>(null)
 
   const {colorMode} = useColorMode()
 
   useEffect(() => {
     if (!document.getElementById('cc--main')) {
-      cc.current = window.initCookieConsent()
+      const _cc = window.initCookieConsent()
+
+      setCC(_cc)
 
       const pluginConfig = buildPluginConfig({
         useGoogleAnalytics
       })
 
-      cc.current.run({
+      _cc.run({
         ...pluginConfig,
         current_lang: locale
       })
@@ -148,7 +150,7 @@ export const CookieConsentProvider: React.FC<CookieConsentProviderProps> = ({
   }, [locale])
 
   useEffect(() => {
-    if (cc.current) {
+    if (cc) {
       const hasDarkMode = document.body.classList.contains('c_darkmode')
 
       if (colorMode === 'dark' && !hasDarkMode) {
@@ -159,21 +161,13 @@ export const CookieConsentProvider: React.FC<CookieConsentProviderProps> = ({
     }
   }, [colorMode, cc])
 
-  return (
-    <CookieContext.Provider value={cc.current}>
-      {children}
-    </CookieContext.Provider>
-  )
+  return <CookieContext.Provider value={cc}>{children}</CookieContext.Provider>
 }
 
 export default CookieConsentProvider
 
-export function useCookieConsentContext(): CookieConsent {
+export function useCookieConsentContext(): CookieConsent | null {
   const context = useContext(CookieContext)
 
-  if (context === undefined) {
-    // Return a mocked version of the context
-    return {} as CookieConsent
-  }
   return context
 }
