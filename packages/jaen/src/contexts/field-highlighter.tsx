@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   useCallback,
   useContext,
+  useEffect,
   useRef
 } from 'react'
 
@@ -15,11 +16,7 @@ export const FIELD_HIGHLIGHTER_CLASSNAMES = {
 }
 
 export interface FieldHighlighterProviderContextValue {
-  ref: (
-    ref: HTMLDivElement | null,
-    id: string,
-    actions: React.ReactNode[]
-  ) => void
+  ref: (ref: HTMLDivElement | null, actions: React.ReactNode[]) => void
 }
 
 export const FieldHighlighterProviderContext =
@@ -28,6 +25,7 @@ export const FieldHighlighterProviderContext =
   })
 
 export interface HighlightProviderProps {
+  path: string
   theme: Record<string, unknown>
   children: React.ReactNode
 }
@@ -63,12 +61,16 @@ const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
 export const FieldHighlighterProvider: React.FC<
   HighlightProviderProps
 > = props => {
-  const itemsRef = useRef<{
-    [id: string]: {
+  const fields = useRef<
+    Array<{
       ref: HTMLDivElement | null
       tooltipButtons: React.ReactNode[]
-    }
-  }>({})
+    }>
+  >([])
+
+  useEffect(() => {
+    fields.current = []
+  }, [props.path])
 
   const tooltipHightRef = useRef<HTMLDivElement | null>(null)
 
@@ -146,11 +148,9 @@ export const FieldHighlighterProvider: React.FC<
 
     resizeObserver.current.observe(element)
 
-    const item = Object.values(itemsRef.current).find(
-      item => item.ref === element
-    )
+    const field = fields.current.find(item => item.ref === element)
 
-    spawnTooltip(item?.tooltipButtons)
+    spawnTooltip(field?.tooltipButtons)
   }
 
   const findClosestParentMatching = (
@@ -183,7 +183,7 @@ export const FieldHighlighterProvider: React.FC<
   const mouseLeaveHandler = useCallback((e: MouseEvent) => {
     const relatedTarget = e.relatedTarget as HTMLElement
 
-    const nextItem = Object.values(itemsRef.current).find(
+    const nextItem = Object.values(fields.current).find(
       item => item.ref === relatedTarget
     )
 
@@ -193,11 +193,11 @@ export const FieldHighlighterProvider: React.FC<
       })
     } else {
       const closestParent = findClosestParentMatching(relatedTarget, element =>
-        Object.values(itemsRef.current).some(item => item.ref === element)
+        fields.current.some(item => item.ref === element)
       )
 
       if (closestParent) {
-        const closestItem = Object.values(itemsRef.current).find(
+        const closestItem = fields.current.find(
           item => item.ref === closestParent.element
         )
 
@@ -257,30 +257,39 @@ export const FieldHighlighterProvider: React.FC<
   }, [])
 
   const ref = useCallback(
-    (
-      ref: HTMLDivElement | null,
-      id: string,
-      tooltipButtons: React.ReactNode[]
-    ) => {
+    (ref: HTMLDivElement | null, tooltipButtons: React.ReactNode[]) => {
       if (ref) {
-        if (itemsRef.current[id]) {
-          const oldRef = itemsRef.current[id]?.ref
+        const fieldIndex = fields.current.findIndex(item =>
+          item.ref?.isEqualNode(ref)
+        )
 
-          if (oldRef) {
-            // remove old event listeners
-            oldRef.removeEventListener('mouseenter', mouseEnterHandler)
-            oldRef.removeEventListener('mouseleave', mouseLeaveHandler)
-            oldRef.removeEventListener('focus', focusHandler)
-            oldRef.removeEventListener('blur', blurHandler)
-          }
+        const field = fields.current[fieldIndex]
+
+        if (field?.ref) {
+          // remove old event listeners
+          field.ref.removeEventListener('mouseenter', mouseEnterHandler)
+          field.ref.removeEventListener('mouseleave', mouseLeaveHandler)
+          field.ref.removeEventListener('focus', focusHandler)
+          field.ref.removeEventListener('blur', blurHandler)
         }
-
-        itemsRef.current[id] = {ref, tooltipButtons}
 
         ref.addEventListener('mouseenter', mouseEnterHandler)
         ref.addEventListener('mouseleave', mouseLeaveHandler)
         ref.addEventListener('focus', focusHandler)
         ref.addEventListener('blur', blurHandler)
+
+        // Push or replace the field
+        if (fieldIndex !== -1) {
+          fields.current[fieldIndex] = {
+            ref,
+            tooltipButtons
+          }
+        } else {
+          fields.current.push({
+            ref,
+            tooltipButtons
+          })
+        }
       }
     },
     [
@@ -329,8 +338,8 @@ export const useHighlight = ({tooltipButtons}: UseHighlightProps) => {
   const {ref} = useContext(FieldHighlighterProviderContext)
 
   const refOnly = useCallback(
-    (theRef: HTMLDivElement | null, id: string) => {
-      ref(theRef, id, tooltipButtons)
+    (theRef: HTMLDivElement | null) => {
+      ref(theRef, tooltipButtons)
     },
     [tooltipButtons, ref]
   )

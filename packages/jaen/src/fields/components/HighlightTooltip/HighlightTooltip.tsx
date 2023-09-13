@@ -33,9 +33,9 @@ export const HighlightTooltip = forwardRef<
         if (ref) ref.current = node
       }
 
-      highlightRef(node, id)
+      highlightRef(node)
     },
-    [ref, highlightRef, id]
+    [ref, highlightRef]
   )
 
   const Wrapper = as || Box

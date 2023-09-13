@@ -27,7 +27,6 @@ export function convertTreeToGraph(tree: TreeNode[]): GraphData {
   const edges: Edge[] = []
 
   function traverse(node: TreeNode) {
-    console.log(node)
     if (!node.showInNodeGraphVisualizer) return
 
     // Add the current node to the nodes array

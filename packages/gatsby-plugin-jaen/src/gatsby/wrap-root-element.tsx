@@ -1,7 +1,6 @@
 import {ChakraProvider} from '@chakra-ui/react'
 import {
   AuthenticationProvider,
-  FieldHighlighterProvider,
   MediaModalProvider,
   NotificationsProvider,
   JaenUpdateModalProvider,
@@ -42,20 +41,17 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
       <CookieConsentProvider>
         <NotificationsProvider>
           <JaenUpdateModalProvider>
-            <FieldHighlighterProvider theme={theme}>
-              <SiteMetadataProvider>
-                <AuthenticationProvider
-                  snekResourceId={snekResourceId}
-                  JaenLoginComponent={JaenLogin}>
-                  <JaenFrameMenuProvider>
-                    <MediaModalProvider
-                      MediaModalComponent={MediaModalComponent}>
-                      <JaenWidgetProvider>{element}</JaenWidgetProvider>
-                    </MediaModalProvider>
-                  </JaenFrameMenuProvider>
-                </AuthenticationProvider>
-              </SiteMetadataProvider>
-            </FieldHighlighterProvider>
+            <SiteMetadataProvider>
+              <AuthenticationProvider
+                snekResourceId={snekResourceId}
+                JaenLoginComponent={JaenLogin}>
+                <JaenFrameMenuProvider>
+                  <MediaModalProvider MediaModalComponent={MediaModalComponent}>
+                    <JaenWidgetProvider>{element}</JaenWidgetProvider>
+                  </MediaModalProvider>
+                </JaenFrameMenuProvider>
+              </AuthenticationProvider>
+            </SiteMetadataProvider>
           </JaenUpdateModalProvider>
         </NotificationsProvider>
       </CookieConsentProvider>

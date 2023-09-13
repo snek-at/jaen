@@ -1,5 +1,6 @@
 import {Flex} from '@chakra-ui/react'
 import {
+  FieldHighlighterProvider,
   JaenPage,
   PageConfig,
   useAuthenticationContext,
@@ -10,6 +11,7 @@ import React, {useMemo} from 'react'
 
 import {DynamicPageRenderer} from './DynamicPageRenderer'
 import Layout from './Layout'
+import {theme} from '../theme/jaen-theme/index'
 
 // Import other necessary components here
 
@@ -126,7 +128,11 @@ export const wrapPageElement: GatsbyBrowser['wrapPageElement'] = ({
   element,
   props
 }) => {
-  return <JaenPageElement pageProps={props}>{element}</JaenPageElement>
+  return (
+    <FieldHighlighterProvider path={props.path} theme={theme}>
+      <JaenPageElement pageProps={props}>{element}</JaenPageElement>
+    </FieldHighlighterProvider>
+  )
 }
 
 export interface UseTemplateReturn {}
