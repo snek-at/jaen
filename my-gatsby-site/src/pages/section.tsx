@@ -41,6 +41,7 @@ const Page: React.FC<PageProps> = ({location, pageContext}) => {
     <>
       <Field.Text name="title" defaultValue="fooo" />
       <Field.Text name="title" defaultValue="baaar" />
+      <Field.Text name="title" defaultValue="baaar" />
 
       <Field.Section
         name="blocks-blocks"

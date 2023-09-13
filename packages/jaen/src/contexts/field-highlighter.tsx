@@ -259,9 +259,7 @@ export const FieldHighlighterProvider: React.FC<
   const ref = useCallback(
     (ref: HTMLDivElement | null, tooltipButtons: React.ReactNode[]) => {
       if (ref) {
-        const fieldIndex = fields.current.findIndex(item =>
-          item.ref?.isEqualNode(ref)
-        )
+        const fieldIndex = fields.current.findIndex(item => item.ref === ref)
 
         const field = fields.current[fieldIndex]
 
