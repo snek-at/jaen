@@ -64,3 +64,5 @@ export {Head} from './Head'
 export {PhotoProvider} from 'react-photo-view'
 
 export const snekResourceId = __SNEK_RESOURCE_ID__
+
+export * as osg from './utils/open-storage-gateway'
