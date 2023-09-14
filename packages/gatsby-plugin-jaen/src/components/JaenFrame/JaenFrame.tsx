@@ -165,7 +165,7 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
           spacing={4}
           w={{
             base: '24',
-            md: 'xs'
+            md: 'full'
           }}
           h="full"
           justifyContent="end">
