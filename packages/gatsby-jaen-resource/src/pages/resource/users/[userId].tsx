@@ -1,11 +1,26 @@
-import { PageConfig, PageProps, useNotificationsContext } from "@atsnek/jaen";
-import { Box, Button, ButtonGroup, Flex, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputRightElement, Skeleton, Stack, Switch, Text } from "@chakra-ui/react";
+import {PageConfig, PageProps, useNotificationsContext} from '@atsnek/jaen'
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  HStack,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Skeleton,
+  Stack,
+  Switch,
+  Text
+} from '@chakra-ui/react'
+import {navigate} from 'gatsby'
+import {forwardRef, useEffect, useState} from 'react'
+import {Controller, useForm} from 'react-hook-form'
 
-
-import { navigate } from "gatsby";
-import { forwardRef, useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useUser, useUsers } from './hooks';
+import {useUser, useUsers} from '../../../hooks'
 
 type FormValues = {
   emailAddress: string
@@ -20,7 +35,7 @@ type FormValues = {
 }
 
 const PasswordInput = forwardRef<HTMLInputElement, any>(
-  ({ register, ...props }, ref) => {
+  ({register, ...props}, ref) => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
 
@@ -43,23 +58,23 @@ const PasswordInput = forwardRef<HTMLInputElement, any>(
   }
 )
 
-const Page: React.FC<PageProps> = (props) => {
+const Page: React.FC<PageProps> = props => {
   const userId = props.params.userId ?? ''
-  const { user, isLoading } = useUser(userId)
-  const { updateUser, deleteUser } = useUsers()
+  const {user, isLoading} = useUser(userId)
+  const {updateUser, deleteUser} = useUsers()
   const [changePasword, setChangePassword] = useState(false)
 
   const defaultValues = user
     ? {
-      emailAddress: user.primaryEmailAddress,
-      details: {
-        firstName: user.details?.firstName,
-        lastName: user.details?.lastName
-      },
-      username: user.username,
-      isActive: user.isActive,
-      isAdmin: user.isAdmin
-    }
+        emailAddress: user.primaryEmailAddress,
+        details: {
+          firstName: user.details?.firstName,
+          lastName: user.details?.lastName
+        },
+        username: user.username,
+        isActive: user.isActive,
+        isAdmin: user.isAdmin
+      }
     : {}
 
   console.log('defaultValues', defaultValues)
@@ -69,17 +84,17 @@ const Page: React.FC<PageProps> = (props) => {
     reset,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting, isDirty, isValid }
+    formState: {errors, isSubmitting, isDirty, isValid}
   } = useForm<FormValues>({
     defaultValues
   })
 
-  const { confirm } = useNotificationsContext()
+  const {confirm} = useNotificationsContext()
 
   const handleDelete = async () => {
     const ok = await confirm({
       title: 'Delete user',
-      message: 'Are you sure? You can\'t undo this action afterwards.',
+      message: "Are you sure? You can't undo this action afterwards.",
       confirmText: 'Delete',
       cancelText: 'Cancel'
     })
@@ -183,7 +198,10 @@ const Page: React.FC<PageProps> = (props) => {
                 <FormLabel>Firstname</FormLabel>
               </Skeleton>
               <Skeleton isLoaded={!isLoading}>
-                <Input placeholder="John" {...register('details.firstName', {})} />
+                <Input
+                  placeholder="John"
+                  {...register('details.firstName', {})}
+                />
               </Skeleton>
               <FormErrorMessage>
                 {errors.details?.lastName?.message}
@@ -244,7 +262,7 @@ const Page: React.FC<PageProps> = (props) => {
               control={control}
               name="isActive"
               defaultValue={user?.isActive}
-              render={({ field: { value, onChange, onBlur, ref } }) => (
+              render={({field: {value, onChange, onBlur, ref}}) => (
                 <Switch
                   ref={ref}
                   onChange={onChange}
@@ -266,7 +284,7 @@ const Page: React.FC<PageProps> = (props) => {
               control={control}
               name="isAdmin"
               defaultValue={user?.isAdmin}
-              render={({ field: { value, onChange, onBlur, ref } }) => (
+              render={({field: {value, onChange, onBlur, ref}}) => (
                 <Switch
                   ref={ref}
                   onChange={onChange}
@@ -312,8 +330,8 @@ const Page: React.FC<PageProps> = (props) => {
             </Skeleton>
           </HStack>
         </Box>
-      </form >
-    </Box >
+      </form>
+    </Box>
   )
 }
 
@@ -324,21 +342,24 @@ export const pageConfig: PageConfig = {
   icon: 'FaUserCog',
   layout: {
     name: 'jaen',
-    type: 'form',
+    type: 'form'
   },
   breadcrumbs: [
     {
-      label: 'CMS',
-      path: '/cms/'
+      label: 'Resource',
+      path: '/resource/'
     },
     {
-      label: 'User',
-      path: '/cms/user/'
+      label: 'Users',
+      path: '/resource/users/'
     },
     {
-      label: 'Update',
-      path: '/cms/user/'
+      label: 'Update user',
+      path: '/resource/users/'
     }
   ],
-
+  auth: {
+    isRequired: true,
+    isAdminRequired: true
+  }
 }

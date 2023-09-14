@@ -8,6 +8,7 @@ const Config: GatsbyConfig = {
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     `gatsby-source-jaen`,
+    `gatsby-jaen-resource`,
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {

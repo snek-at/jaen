@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-jaen-resource",
+  "version": "0.0.1",
+  "description": "Resource management plugin for Jaen",
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "@atsnek/jaen"
+  ],
+  "dependencies": {
+    "react-hook-form": "^7.46.1",
+    "snek-query": "^0.0.83"
+  },
+  "peerDependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.1",
+    "@snek-functions/origin": "^0.8.4",
+    "gatsby": "^5.12.4",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {}
+}

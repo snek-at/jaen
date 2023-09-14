@@ -1,7 +1,5 @@
-import {
-  PageConfig
-} from '@atsnek/jaen'
-import { AddIcon, CheckCircleIcon, EditIcon } from '@chakra-ui/icons'
+import {PageConfig} from '@atsnek/jaen'
+import {AddIcon, CheckCircleIcon, EditIcon} from '@chakra-ui/icons'
 import {
   Button,
   ButtonGroup,
@@ -33,24 +31,23 @@ import {
   Tr,
   useDisclosure
 } from '@chakra-ui/react'
-import { graphql } from 'gatsby'
+import {graphql, Link as GatsbyLink} from 'gatsby'
 import React from 'react'
-import { useForm } from 'react-hook-form'
-import { Link } from '../../../components/shared/Link'
 
-import { Mutation } from '@snek-functions/origin/dist/schema.generated'
-import { useUsers } from './hooks'
+import {Mutation} from '@snek-functions/origin/dist/schema.generated'
+
+import {useForm} from 'react-hook-form'
+
+import {useUsers} from '../../../hooks'
 
 type UserCreate = Parameters<Mutation['userRegister']>[0]
 
 const Page: React.FC = () => {
   //const { isAuthenticated, user } = useAuthenticationContext()
 
-
-  const { users, isLoading } = useUsers()
+  const {users, isLoading} = useUsers()
   return (
     <>
-
       <Stack spacing="4">
         <Heading size="md">User ({users.length})</Heading>
 
@@ -73,55 +70,82 @@ const Page: React.FC = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {isLoading && (
+            {isLoading &&
               // map with 5 rows to show loading
               [...Array(3)].map((_, index) => (
-
                 <Tr>
                   <Td>
-                    <Skeleton key={index} w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      key={index}
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <Text fontSize="sm">{index + 1}</Text>
                     </Skeleton>
                   </Td>
                   <Td>
-                    <Skeleton w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <Text fontSize="sm">john.doe@snek.at</Text>
                     </Skeleton>
                   </Td>
                   <Td>
-                    <Skeleton w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <Text fontSize="sm">john.doe</Text>
                     </Skeleton>
                   </Td>
                   <Td>
-                    <Skeleton w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <Text fontSize="sm">John</Text>
                     </Skeleton>
                   </Td>
                   <Td>
-                    <Skeleton w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <Text fontSize="sm">Doe</Text>
                     </Skeleton>
                   </Td>
                   <Td>
-                    <Skeleton w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <Text fontSize="sm">Tue Jun 27 2023</Text>
                     </Skeleton>
                   </Td>
                   <Td>
-                    <Skeleton w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <CheckCircleIcon />
                     </Skeleton>
                   </Td>
                   <Td>
-                    <Skeleton w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <CheckCircleIcon />
                     </Skeleton>
                   </Td>
                   <Td>
-                    <Skeleton w={'fit-content'} h={'fit-content'} isLoaded={!isLoading}>
+                    <Skeleton
+                      w={'fit-content'}
+                      h={'fit-content'}
+                      isLoaded={!isLoading}>
                       <IconButton
-                        as={Link}
+                        as={GatsbyLink}
                         aria-label="Edit"
                         icon={<EditIcon />}
                         to={`/cms/user/`}
@@ -129,8 +153,7 @@ const Page: React.FC = () => {
                     </Skeleton>
                   </Td>
                 </Tr>
-              ))
-            )}
+              ))}
 
             {users
               .map((user, index) => (
@@ -159,7 +182,7 @@ const Page: React.FC = () => {
                   <Td>{user.isAdmin ? <CheckCircleIcon /> : null}</Td>
                   <Td textAlign={'right'}>
                     <IconButton
-                      as={Link}
+                      as={GatsbyLink}
                       aria-label="Edit"
                       icon={<EditIcon />}
                       to={`/cms/user/${user.id}`}
@@ -170,13 +193,13 @@ const Page: React.FC = () => {
               .reverse()}
           </Tbody>
         </Table>
-      </Stack >
+      </Stack>
     </>
   )
 }
 
 const PasswordInput = React.forwardRef<HTMLInputElement, any>(
-  ({ register, ...props }, ref) => {
+  ({register, ...props}, ref) => {
     const [show, setShow] = React.useState(false)
     const handleClick = () => setShow(!show)
 
@@ -199,14 +222,12 @@ const PasswordInput = React.forwardRef<HTMLInputElement, any>(
   }
 )
 
-
-
 const AddUserControl = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const {isOpen, onOpen, onClose} = useDisclosure()
 
   //const navigate = useNavigate()
 
-  const { addUser } = useUsers()
+  const {addUser} = useUsers()
 
   const initialRef = React.useRef<HTMLInputElement | null>(null)
 
@@ -215,7 +236,7 @@ const AddUserControl = () => {
     reset,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting, isDirty, isValid }
+    formState: {errors, isSubmitting, isDirty, isValid}
   } = useForm<UserCreate['values']>({})
 
   const handleClose = () => {
@@ -340,45 +361,44 @@ export default Page
 
 export const pageConfig: PageConfig = {
   label: 'User',
-  icon: 'FaUser',
+  icon: 'FaUsersCog',
   menu: {
     type: 'app',
-    group: 'cms',
+    group: 'resource',
+    groupLabel: 'Resource',
     order: 500
   },
   layout: {
     name: 'jaen'
   },
-
   breadcrumbs: [
     {
-      label: 'CMS',
-      path: '/cms/'
+      label: 'Resource',
+      path: '/resource/'
     },
     {
-      label: 'User',
-      path: '/cms/users/'
+      label: 'Users',
+      path: '/resource/users/'
     }
   ],
   auth: {
+    isRequired: true,
     isAdminRequired: true
   }
-
 }
 
 export const query = graphql`
-      query ($jaenPageId: String!) {
-        ...JaenPageQuery
+  query ($jaenPageId: String!) {
+    ...JaenPageQuery
     allJaenPage {
-        nodes {
+      nodes {
         ...JaenPageData
         children {
-        ...JaenPageData
-      }
+          ...JaenPageData
+        }
       }
     }
   }
-      `
+`
 
-export { Head } from '@atsnek/jaen'
-
+export {Head} from '@atsnek/jaen'

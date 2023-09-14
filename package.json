@@ -13,6 +13,7 @@
   "workspaces": [
     "packages/jaen",
     "packages/gatsby-plugin-jaen",
+    "packages/gatsby-jaen-resource",
     "packages/gatsby-jaen-lens",
     "packages/gatsby-source-jaen",
     "packages/jaen-fields-mdx",
