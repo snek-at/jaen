@@ -1,8 +1,10 @@
+import deepmerge from 'deepmerge'
 import {createContext, useContext, useEffect, useMemo, useState} from 'react'
 
 import {RootState, store} from '../redux'
 import {IJaenState} from '../redux/types'
 import {JaenPage} from '../types'
+import {deepmergeArrayIdMerge} from '../utils/deepmerge'
 
 export interface PageProviderProps {
   jaenPage: {
@@ -172,9 +174,9 @@ export const useJaenPageIndex = (
   // merge children with staticChildren by id
   const childPages = useMemo(() => {
     // This is a double check for deleted pages just in case
-    let mergedChildren = [...staticChildren, ...dynamicChildren].filter(
-      c => !c.excludedFromIndex && !c.deleted
-    )
+    let mergedChildren = deepmerge(staticChildren, dynamicChildren, {
+      arrayMerge: deepmergeArrayIdMerge
+    }).filter(c => !c.excludedFromIndex && !c.deleted)
 
     if (props) {
       const {filter, sort} = props

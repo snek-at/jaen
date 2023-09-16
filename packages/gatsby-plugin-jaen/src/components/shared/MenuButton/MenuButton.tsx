@@ -52,6 +52,8 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
     )
   })
 
+  if (rendredItems.length === 0) return null
+
   return (
     <Menu placement={menuPlacement} isLazy>
       <ChakraMenuButton

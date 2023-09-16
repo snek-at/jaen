@@ -31,6 +31,19 @@ export const fragments = graphql`
   fragment JaenPageChildrenData on JaenPage {
     ...JaenPageDataStructure
     jaenFields
+    mediaNodes {
+      id
+      description
+      node {
+        childImageSharp {
+          gatsbyImageData(
+            placeholder: BLURRED
+            formats: [AUTO, WEBP, AVIF]
+            layout: FULL_WIDTH
+          )
+        }
+      }
+    }
   }
 
   fragment JaenPageData on JaenPage {

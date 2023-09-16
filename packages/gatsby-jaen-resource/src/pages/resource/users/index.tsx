@@ -185,7 +185,7 @@ const Page: React.FC = () => {
                       as={GatsbyLink}
                       aria-label="Edit"
                       icon={<EditIcon />}
-                      to={`/cms/user/${user.id}`}
+                      to={user.id}
                     />
                   </Td>
                 </Tr>

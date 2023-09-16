@@ -2,6 +2,7 @@ import {JaenPage, JaenSite, Widget} from '@atsnek/jaen'
 import deepmerge from 'deepmerge'
 import fs from 'fs/promises' // Import the fs module for asynchronous file operations
 import {SourceNodesArgs} from 'gatsby'
+import {deepmergeArrayIdMerge} from '../utils/deepmerge'
 
 import {fetchWithCache} from '../utils/fetch-with-cache'
 
@@ -49,7 +50,9 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
       })
 
       if (response) {
-        jaenData = deepmerge(jaenData, response.data)
+        jaenData = deepmerge(jaenData, response.data, {
+          arrayMerge: deepmergeArrayIdMerge
+        })
       }
     }
 
@@ -63,7 +66,33 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
       ...jaenData
     }
 
-    // 4. Create JaenData node using createNode action
+    // 3. Deep remove all objects that contains the key 'deleted' with value true
+
+    const deepRemoveDeleted = (obj: any) => {
+      if (typeof obj === 'object' && obj !== null) {
+        if (obj.deleted === true) {
+          return undefined
+        }
+
+        for (const key in obj) {
+          obj[key] = deepRemoveDeleted(obj[key])
+          if (obj[key] === undefined) {
+            // Remove the key if its value is undefined after recursion
+            delete obj[key]
+          }
+        }
+      }
+
+      if (Array.isArray(obj)) {
+        obj = obj.filter(item => item !== null)
+      }
+
+      return obj
+    }
+
+    deepRemoveDeleted(jaenDataNode)
+
+    // 5. Create JaenData node using createNode action
     await createNode(jaenDataNode)
 
     // Log a success message using the reporter

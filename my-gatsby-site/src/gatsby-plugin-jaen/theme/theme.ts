@@ -15,7 +15,12 @@ export const colors = {
 }
 
 const theme = extendTheme(
-  {colors},
+  {
+    colors,
+    styles: {
+      global: {}
+    }
+  },
   withDefaultColorScheme({
     colorScheme: 'brand'
   })

@@ -1,7 +1,7 @@
 import {MediaNode} from '@atsnek/jaen'
 import {Node, SourceNodesArgs} from 'gatsby'
 import {createRemoteFileNode} from 'gatsby-source-filesystem'
-import {onCreatePage} from '../on-create-page/jaen-page'
+import {getLastPartOfId} from '../utils/get-last-part-of-id'
 
 import {JaenData} from './jaen-data'
 
@@ -67,13 +67,7 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
 
     let slug = page.slug
     if (!slug) {
-      // when no slug is defined, extract the slug form the id (JaenPage /foo/)
-
-      const path = page.id.split('JaenPage ')[1] || ''
-
-      const lastPathElement = path.split('/').pop() || 'root'
-
-      slug = lastPathElement
+      slug = getLastPartOfId(page.id) || 'root'
     }
 
     const pageWithSlug = {

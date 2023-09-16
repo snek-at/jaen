@@ -38,10 +38,7 @@ export const onCreatePage = async ({
   const newJaenPageNode = {
     id: jaenPageId,
     slug: lastPathElement,
-    parentPage: getJaenPageParentId({
-      parentPage: null,
-      id: jaenPageId
-    }),
+
     jaenPageMetadata: {
       title:
         pageConfig?.label ||
@@ -51,7 +48,13 @@ export const onCreatePage = async ({
     sections: [],
     template: null,
     ...jaenPageNode,
-    childPages: [],
+    parentPage: getJaenPageParentId({
+      parentPage: jaenPageNode?.parentPage
+        ? {id: jaenPageNode.parentPage as string}
+        : null,
+      id: jaenPageId
+    }),
+    childPages: jaenPageNode?.childPages || [],
     childTemplates:
       jaenPageNode?.childTemplates || pageConfig?.childTemplates || [],
     pageConfig

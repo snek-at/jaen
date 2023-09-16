@@ -4,6 +4,7 @@ import {
   PageConfig,
   PageProps,
   useAuthenticationContext,
+  useJaenPageIndex,
   useJaenUpdateModalContext,
   useMediaModal,
   useNotificationsContext,
@@ -204,12 +205,25 @@ const IndexPage: React.FC<PageProps> = () => {
     })
   }, [])
 
+  const index = useJaenPageIndex()
+
   return (
     <>
       <Text>{__JAEN_SOURCE_TEMPLATES__}</Text>
       <Text>{JSON.stringify(siteMetadata)}</Text>
       {/* <Text>{cm.colorMode}</Text> */}
       <Button variant="outline">test outside</Button>
+
+      {index?.childPages?.map(child => {
+        return (
+          <Box key={child.id}>
+            <Text>{child.title}</Text>
+            <Text>{child.slug}</Text>
+            <Text>{child.id}</Text>
+            <Text>{child.template}</Text>
+          </Box>
+        )
+      })}
 
       <LightMode>
         <Button variant="outline">test 2</Button>

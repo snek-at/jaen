@@ -87,10 +87,14 @@ export const createSchemaCustomization = async ({
             type: 'SitePage'
           })
 
-          for (const entry of entries) {
-            if (source.id === entry.context.jaenPageId) {
-              return entry.path
-            }
+          const pages = entries.filter(
+            (entry: any) => entry.context.jaenPageId === source.id
+          )
+
+          const pagesArr: any[] = Array.from(pages)
+
+          if (pagesArr.length > 0) {
+            return pagesArr[0].path
           }
         }
       }
