@@ -1,7 +1,8 @@
 import {Box, Button, Center, IconButton, Text} from '@chakra-ui/react'
 import {GatsbyImage, getSrc} from 'gatsby-plugin-image'
 import {CSSProperties, forwardRef, ReactEventHandler} from 'react'
-import {FaImage, FaTrashAlt} from 'react-icons/fa'
+import {FaImage} from '@react-icons/all-files/fa/FaImage'
+import {FaTrashAlt} from '@react-icons/all-files/fa/FaTrashAlt'
 import {PhotoProvider, PhotoView} from 'react-photo-view'
 
 import {connectField} from '../../connectors'

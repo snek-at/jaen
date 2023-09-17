@@ -1,7 +1,7 @@
 import {Icon, useColorModeValue} from '@chakra-ui/react'
 import {ComponentMeta, Story} from '@storybook/react'
 import React from 'react'
-import {FaRocket} from 'react-icons/fa'
+import {FaRocket} from '@react-icons/all-files/fa/FaRocket'
 import {List} from './List.js'
 import {ListItem} from './ListItem.js'
 

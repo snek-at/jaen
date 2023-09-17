@@ -19,14 +19,14 @@ import {
 import {MediaNode} from '@atsnek/jaen'
 import {useEffect} from 'react'
 import FilerobotImageEditor, {TABS} from 'react-filerobot-image-editor'
-import {
-  FaArrowLeft,
-  FaArrowRight,
-  FaClone,
-  FaDownload,
-  FaSlidersH,
-  FaTrash
-} from 'react-icons/fa'
+
+import {FaArrowLeft} from '@react-icons/all-files/fa/FaArrowLeft'
+import {FaArrowRight} from '@react-icons/all-files/fa/FaArrowRight'
+import {FaClone} from '@react-icons/all-files/fa/FaClone'
+import {FaDownload} from '@react-icons/all-files/fa/FaDownload'
+import {FaSlidersH} from '@react-icons/all-files/fa/FaSlidersH'
+import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
+
 import {TransformComponent, TransformWrapper} from 'react-zoom-pan-pinch'
 
 import {MediaPreviewState} from '../../types'

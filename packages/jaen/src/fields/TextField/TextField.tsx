@@ -1,15 +1,15 @@
 import {As, Box, Button, Text, TextProps, Tooltip} from '@chakra-ui/react'
 import DOMPurify from 'isomorphic-dompurify'
 import React, {useCallback, useEffect, useState} from 'react'
-import {
-  FaAlignCenter,
-  FaAlignJustify,
-  FaAlignLeft,
-  FaAlignRight,
-  FaBold,
-  FaItalic,
-  FaUnderline
-} from 'react-icons/fa'
+
+import {FaAlignCenter} from '@react-icons/all-files/fa/FaAlignCenter'
+import {FaAlignJustify} from '@react-icons/all-files/fa/FaAlignJustify'
+import {FaAlignLeft} from '@react-icons/all-files/fa/FaAlignLeft'
+import {FaAlignRight} from '@react-icons/all-files/fa/FaAlignRight'
+import {FaBold} from '@react-icons/all-files/fa/FaBold'
+import {FaItalic} from '@react-icons/all-files/fa/FaItalic'
+import {FaUnderline} from '@react-icons/all-files/fa/FaUnderline'
+
 import {useDebouncedCallback} from 'use-debounce'
 
 import {TuneOption} from '../../components/TuneSelectorButton/components/TuneSelector/TuneSelector'

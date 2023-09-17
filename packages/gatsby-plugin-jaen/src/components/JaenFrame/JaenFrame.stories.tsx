@@ -1,24 +1,23 @@
 import {Button, ButtonGroup, HStack, Icon} from '@chakra-ui/react'
 import {ComponentMeta, Story} from '@storybook/react'
 import React, {useContext, useEffect} from 'react'
-import {
-  FaBook,
-  FaCaretDown,
-  FaCog,
-  FaDownload,
-  FaEdit,
-  FaGlobe,
-  FaHome,
-  FaImage,
-  FaLifeRing,
-  FaPencilAlt,
-  FaQuestion,
-  FaSignOutAlt,
-  FaSitemap,
-  FaTrash,
-  FaUser,
-  FaUsersCog
-} from 'react-icons/fa'
+
+import {FaBook} from '@react-icons/all-files/fa/FaBook'
+import {FaCaretDown} from '@react-icons/all-files/fa/FaCaretDown'
+import {FaCog} from '@react-icons/all-files/fa/FaCog'
+import {FaDownload} from '@react-icons/all-files/fa/FaDownload'
+import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
+import {FaGlobe} from '@react-icons/all-files/fa/FaGlobe'
+import {FaHome} from '@react-icons/all-files/fa/FaHome'
+import {FaImage} from '@react-icons/all-files/fa/FaImage'
+import {FaLifeRing} from '@react-icons/all-files/fa/FaLifeRing'
+import {FaPencilAlt} from '@react-icons/all-files/fa/FaPencilAlt'
+import {FaQuestion} from '@react-icons/all-files/fa/FaQuestion'
+import {FaSignOutAlt} from '@react-icons/all-files/fa/FaSignOutAlt'
+import {FaSitemap} from '@react-icons/all-files/fa/FaSitemap'
+import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
+import {FaUser} from '@react-icons/all-files/fa/FaUser'
+import {FaUsersCog} from '@react-icons/all-files/fa/FaUsersCog'
 
 import {MenuButton} from '../shared/MenuButton/MenuButton'
 import {ToolbarContext} from './contexts/toolbar'

@@ -9,7 +9,7 @@ import {
   Center,
   Skeleton
 } from '@chakra-ui/react'
-import {FaCloudUploadAlt} from 'react-icons/fa'
+import {FaCloudUploadAlt} from '@react-icons/all-files/fa/FaCloudUploadAlt'
 import {useDropzone} from 'react-dropzone'
 
 export interface FormImageChooserProps {

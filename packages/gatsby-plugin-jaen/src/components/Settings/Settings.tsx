@@ -1,26 +1,5 @@
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  HStack,
-  IconButton,
-  Input,
-  ListItem,
-  Stack,
-  StackDivider,
-  Text,
-  UnorderedList
-} from '@chakra-ui/react'
+import {Heading, Stack, StackDivider} from '@chakra-ui/react'
 
-import {Controller, useForm} from 'react-hook-form'
-import {FaTrash} from 'react-icons/fa'
-import {FieldGroup} from '../../components/shared/FieldGroup'
-import FormMediaChooser from '../../containers/form-media-chooser'
 import {AccountForm} from './components/AccountForm'
 import {AccountFormData} from './components/AccountForm/AccountForm'
 import {EmailForm} from './components/EmailForm'

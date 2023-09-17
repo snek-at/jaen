@@ -22,7 +22,7 @@ import {
 } from '@chakra-ui/react'
 import {useState} from 'react'
 import {SubmitHandler, useForm} from 'react-hook-form'
-import {FaArrowLeft} from 'react-icons/fa'
+import {FaArrowLeft} from '@react-icons/all-files/fa/FaArrowLeft'
 
 import Logo from '../Logo'
 import {JaenFullLogo} from '../shared/JaenLogo/JaenLogo'

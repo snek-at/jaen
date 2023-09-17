@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jaen",
-  "version": "1.0.0-rc.31",
+  "version": "1.0.0-rc.32",
   "main": "index.js",
   "types": "./src/index.ts",
   "files": [
@@ -15,13 +15,15 @@
   "peerDependencies": {
     "@atsnek/jaen": "^1.0.0-rc.2",
     "gatsby": "^5.11.0",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v4.11.0/react-icons-all-files-4.11.0.tgz"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "framer-motion": "^10.13.0",
+    "gatsby-jaen-resource": "^0.0.2",
     "gatsby-plugin-manifest": "^5.12.0",
     "gatsby-plugin-sharp": "^5.11.0",
     "gatsby-plugin-sitemap": "^6.12.0",
@@ -34,15 +36,13 @@
     "react-dropzone": "^14.2.3",
     "react-filerobot-image-editor": "^4.5.1",
     "react-hook-form": "^7.45.2",
-    "react-icons": "^4.10.1",
     "react-konva": "^18.2.10",
     "react-photo-view": "^1.2.3",
     "react-zoom-pan-pinch": "^3.1.0",
     "reagraph": "^4.13.0",
     "slugify": "^1.6.6",
     "styled-components": "^6.0.5",
-    "use-debounce": "^9.0.4",
-    "gatsby-jaen-resource": "^0.0.2"
+    "use-debounce": "^9.0.4"
   },
   "devDependencies": {
     "gatsby": "^5.11.0"

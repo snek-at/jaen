@@ -14,7 +14,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import {useRef} from 'react'
-import {FaBars} from 'react-icons/fa'
+import {FaBars} from '@react-icons/all-files/fa/FaBars'
 import {JaenFullLogo} from '../../../shared/JaenLogo/JaenLogo'
 import {
   NavigationGroups,

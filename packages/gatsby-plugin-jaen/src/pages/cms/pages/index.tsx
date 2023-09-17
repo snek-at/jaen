@@ -3,7 +3,9 @@ import {navigate, PageProps} from 'gatsby'
 
 import {PageConfig, useNotificationsContext} from '@atsnek/jaen'
 import {useCallback, useEffect, useMemo, useState} from 'react'
-import {FaArrowRight, FaEdit, FaTrash} from 'react-icons/fa'
+import {FaArrowRight} from '@react-icons/all-files/fa/FaArrowRight'
+import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
+import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
 
 import {Pages} from '../../../components/cms/Pages/Pages'
 import {

@@ -1,5 +1,5 @@
 import {Box, Button, Container, Heading, HStack, Stack} from '@chakra-ui/react'
-import {FaArrowLeft} from 'react-icons/fa'
+import {FaArrowLeft} from '@react-icons/all-files/fa/FaArrowLeft'
 
 import Logo from '../Logo'
 import {JaenFullLogo} from '../shared/JaenLogo/JaenLogo'

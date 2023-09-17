@@ -12,7 +12,7 @@ import {
   Thead,
   Tr
 } from '@chakra-ui/react'
-import {FaPlus} from 'react-icons/fa'
+import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
 import React from 'react'
 
 import {Link} from '../../shared/Link'

@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import {useForm} from 'react-hook-form'
-import {FaTrash} from 'react-icons/fa'
+import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
 
 import {Link} from '../../../../components/shared/Link'
 import {FieldGroup} from '../../../../components/shared/FieldGroup'

@@ -1,7 +1,7 @@
 // CMSManagementContext.tsx
 import deepmerge from 'deepmerge'
 import {createContext, ReactNode, useCallback, useContext, useMemo} from 'react'
-import {FaRocket} from 'react-icons/fa'
+import {FaRocket} from '@react-icons/all-files/fa/FaRocket'
 import {sq} from '@snek-functions/origin'
 
 import {

@@ -1,19 +1,8 @@
-import {
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  IconButton,
-  Stack,
-  Tag,
-  TagCloseButton,
-  Text
-} from '@chakra-ui/react'
 import {MediaNode} from '@atsnek/jaen'
+import {Flex, Heading, HStack, IconButton, Stack} from '@chakra-ui/react'
 import React, {useEffect, useMemo, useState} from 'react'
 
-import {BsLayoutSidebarInset} from 'react-icons/bs'
-import {FaX} from 'react-icons/fa6'
+import {BsLayoutSidebarInset} from '@react-icons/all-files/bs/BsLayoutSidebarInset'
 
 import {PageTree} from '../../shared/PageTree/PageTree'
 import {TreeNode} from '../Pages/components/PageVisualizer'

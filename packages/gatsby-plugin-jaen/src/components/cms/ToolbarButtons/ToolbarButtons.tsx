@@ -1,6 +1,10 @@
 import {ButtonGroup, Icon} from '@chakra-ui/react'
 
-import {FaDownload, FaEdit, FaGlobe, FaTrash, FaUpload} from 'react-icons/fa'
+import {FaDownload} from '@react-icons/all-files/fa/FaDownload'
+import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
+import {FaGlobe} from '@react-icons/all-files/fa/FaGlobe'
+import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
+import {FaUpload} from '@react-icons/all-files/fa/FaUpload'
 
 import {JaenLogo} from '../../../components/shared/JaenLogo'
 import {MenuButton} from '../../shared/MenuButton'

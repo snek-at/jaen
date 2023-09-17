@@ -1,13 +1,13 @@
 import {ComponentMeta, Story} from '@storybook/react'
 import React from 'react'
-import {
-  FaCog,
-  FaHome,
-  FaImage,
-  FaPencilAlt,
-  FaSitemap,
-  FaUsersCog
-} from 'react-icons/fa'
+
+import {FaCog} from '@react-icons/all-files/fa/FaCog'
+import {FaHome} from '@react-icons/all-files/fa/FaHome'
+import {FaImage} from '@react-icons/all-files/fa/FaImage'
+import {FaPencilAlt} from '@react-icons/all-files/fa/FaPencilAlt'
+import {FaSitemap} from '@react-icons/all-files/fa/FaSitemap'
+import {FaUsersCog} from '@react-icons/all-files/fa/FaUsersCog'
+
 import {DrawerLeft} from './DrawerLeft'
 export default {
   title: 'JaenFrame/DrawerLeft',

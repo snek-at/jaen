@@ -11,7 +11,7 @@ import {
   MenuList,
   MenuProps
 } from '@chakra-ui/react'
-import {FaCaretDown} from 'react-icons/fa'
+import {FaCaretDown} from '@react-icons/all-files/fa/FaCaretDown'
 import {Link} from '../Link/Link'
 
 export interface MenuItem {

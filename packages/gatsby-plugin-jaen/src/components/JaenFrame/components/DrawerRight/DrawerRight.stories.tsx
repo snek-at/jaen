@@ -1,6 +1,12 @@
 import {ComponentMeta, Story} from '@storybook/react'
 import React from 'react'
-import {FaBook, FaCog, FaLifeRing, FaSignOutAlt, FaUser} from 'react-icons/fa'
+
+import {FaBook} from '@react-icons/all-files/fa/FaBook'
+import {FaCog} from '@react-icons/all-files/fa/FaCog'
+import {FaLifeRing} from '@react-icons/all-files/fa/FaLifeRing'
+import {FaSignOutAlt} from '@react-icons/all-files/fa/FaSignOutAlt'
+import {FaUser} from '@react-icons/all-files/fa/FaUser'
+
 import {DrawerRight} from './DrawerRight'
 export default {
   title: 'JaenFrame/DrawerRight',

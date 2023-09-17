@@ -11,7 +11,8 @@ import {
   Text,
   UnorderedList
 } from '@chakra-ui/react'
-import {FaBullhorn, FaRocket} from 'react-icons/fa'
+import {FaBullhorn} from '@react-icons/all-files/fa/FaBullhorn'
+import {FaRocket} from '@react-icons/all-files/fa/FaRocket'
 
 import {List, ListItem} from '../../shared/components/List'
 

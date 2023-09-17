@@ -1,6 +1,6 @@
 import {Box, HStack, Icon} from '@chakra-ui/react'
-import React, {useEffect} from 'react'
-import {FaPlus} from 'react-icons/fa'
+import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
+import React from 'react'
 
 import {Toolbar} from '../Toolbar'
 

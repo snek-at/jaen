@@ -21,18 +21,17 @@ import {
 import {MediaNode} from '@atsnek/jaen'
 import React, {useCallback, useEffect, useMemo, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
-import {BsLayoutSidebarInset} from 'react-icons/bs'
-import {
-  FaCheck,
-  FaClone,
-  FaDownload,
-  FaMinus,
-  FaPlus,
-  FaSearch,
-  FaSlidersH,
-  FaTimes,
-  FaTrash
-} from 'react-icons/fa'
+import {BsLayoutSidebarInset} from '@react-icons/all-files/bs/BsLayoutSidebarInset'
+
+import {FaCheck} from '@react-icons/all-files/fa/FaCheck'
+import {FaClone} from '@react-icons/all-files/fa/FaClone'
+import {FaDownload} from '@react-icons/all-files/fa/FaDownload'
+import {FaMinus} from '@react-icons/all-files/fa/FaMinus'
+import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
+import {FaSearch} from '@react-icons/all-files/fa/FaSearch'
+import {FaSlidersH} from '@react-icons/all-files/fa/FaSlidersH'
+import {FaTimes} from '@react-icons/all-files/fa/FaTimes'
+import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
 
 import {MediaPreviewState} from '../../types'
 import {MediaGrid} from './components/MediaGrid/MediaGrid'

@@ -13,8 +13,8 @@ import {
   Text
 } from '@chakra-ui/react'
 import React, {useState} from 'react'
+import {FaArrowLeft} from '@react-icons/all-files/fa/FaArrowLeft'
 
-import {FaArrowLeft} from 'react-icons/fa'
 import {JaenFullLogo} from '../../components/shared/JaenLogo/JaenLogo'
 import {Link} from '../../components/shared/Link'
 import StepEmail from './components/StepEmail'

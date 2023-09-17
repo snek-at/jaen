@@ -7,15 +7,14 @@ import {
 } from '@atsnek/jaen'
 import {graphql, SliceComponentProps} from 'gatsby'
 import {useEffect} from 'react'
-import {
-  FaEdit,
-  FaFileDownload,
-  FaFileUpload,
-  FaGlobe,
-  FaImage,
-  FaSitemap,
-  FaTrash
-} from 'react-icons/fa'
+
+import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
+import {FaFileDownload} from '@react-icons/all-files/fa/FaFileDownload'
+import {FaFileUpload} from '@react-icons/all-files/fa/FaFileUpload'
+import {FaGlobe} from '@react-icons/all-files/fa/FaGlobe'
+import {FaImage} from '@react-icons/all-files/fa/FaImage'
+import {FaSitemap} from '@react-icons/all-files/fa/FaSitemap'
+import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
 
 import {useJaenFrameMenuContext} from '../contexts/jaen-frame-menu'
 import JaenFrame from '../components/JaenFrame/JaenFrame'
@@ -182,7 +181,7 @@ const Slice: React.FC<SliceProps> = props => {
       return aOrder - bOrder
     })
 
-    sortedNodes.forEach(node => {
+    sortedNodes.forEach(async node => {
       const config = node.pageContext.pageConfig
 
       if (!config?.menu) return
@@ -193,6 +192,12 @@ const Slice: React.FC<SliceProps> = props => {
 
       const groupType = config.menu.type === 'app' ? 'app' : 'user'
 
+      const icon = config.icon
+        ? (await import(`@react-icons/all-files/fa/${config.icon}`))[
+            config.icon
+          ]
+        : undefined
+
       extendMenu(groupType, {
         group,
         label: config.menu.groupLabel,
@@ -200,9 +205,7 @@ const Slice: React.FC<SliceProps> = props => {
           [node.id]: {
             label: config.menu?.label || config.label,
             path: node.path,
-            icon: config.icon
-              ? require('react-icons/fa')[config.icon]
-              : undefined
+            icon
           }
         }
       })

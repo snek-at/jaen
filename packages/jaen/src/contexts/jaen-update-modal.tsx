@@ -1,5 +1,5 @@
 import React, {createContext, useEffect} from 'react'
-import {FaCogs} from 'react-icons/fa'
+import {FaCogs} from '@react-icons/all-files/fa/FaCogs'
 
 import {useJaenUpdate} from '../hooks/use-jaen-update'
 import {useNotificationsContext} from './notifications'

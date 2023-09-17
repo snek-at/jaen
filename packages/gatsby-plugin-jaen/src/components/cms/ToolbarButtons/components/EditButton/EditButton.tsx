@@ -1,6 +1,6 @@
 import {Button, Icon} from '@chakra-ui/react'
 import React from 'react'
-import {FaEdit} from 'react-icons/fa'
+import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
 
 export interface EditButtonProps {
   isEditing: boolean

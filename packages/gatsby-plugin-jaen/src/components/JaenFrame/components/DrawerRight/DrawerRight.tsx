@@ -19,7 +19,9 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import {useRef} from 'react'
-import {FaMoon, FaSun} from 'react-icons/fa'
+import {FaMoon} from '@react-icons/all-files/fa/FaMoon'
+import {FaSun} from '@react-icons/all-files/fa/FaSun'
+
 import {
   NavigationGroups,
   NavigationGroupsProps

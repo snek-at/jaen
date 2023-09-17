@@ -25,7 +25,7 @@ import {
 import {graphql, HeadFC} from 'gatsby'
 import * as React from 'react'
 
-import {FaCogs} from 'react-icons/fa'
+import {FaCogs} from '@react-icons/all-files/fa/FaCogs'
 
 const pageStyles = {
   color: '#232129',

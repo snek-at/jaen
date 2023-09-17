@@ -1,6 +1,6 @@
 import {Box, Flex, Icon, IconButton, IconButtonProps} from '@chakra-ui/react'
 import {useState} from 'react'
-import {FaBars} from 'react-icons/fa'
+import {FaBars} from '@react-icons/all-files/fa/FaBars'
 
 import {TuneSelector, TuneSelectorProps} from './components/TuneSelector'
 

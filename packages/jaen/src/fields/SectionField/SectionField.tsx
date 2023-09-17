@@ -1,7 +1,9 @@
 import {Box, Button, HStack, Stack, Text} from '@chakra-ui/react'
 import * as React from 'react'
-import {FaArrowDown, FaArrowUp, FaTrash} from 'react-icons/fa'
-import {FiBox} from 'react-icons/fi'
+import {FaArrowDown} from '@react-icons/all-files/fa/FaArrowDown'
+import {FaArrowUp} from '@react-icons/all-files/fa/FaArrowUp'
+import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
+import {FiBox} from '@react-icons/all-files/fi/FiBox'
 
 import {TuneSelectorButton} from '../../components/TuneSelectorButton'
 import {IBlockConnection} from '../../connectors/connect-block'

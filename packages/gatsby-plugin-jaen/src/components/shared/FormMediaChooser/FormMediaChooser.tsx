@@ -9,7 +9,7 @@ import {
   Skeleton
 } from '@chakra-ui/react'
 import {useState} from 'react'
-import {FaCloudUploadAlt} from 'react-icons/fa'
+import {FaCloudUploadAlt} from '@react-icons/all-files/fa/FaCloudUploadAlt'
 
 export interface FormMediaChooserProps {
   onChoose: () => void

@@ -1,3 +1,4 @@
+import {DuplicateSlugError, JaenTemplate} from '@atsnek/jaen'
 import {
   Box,
   Button,
@@ -11,20 +12,20 @@ import {
   Heading,
   HStack,
   Icon,
-  Image,
   Input,
-  Skeleton,
   Stack,
   StackDivider,
-  Tag,
   Text,
   Textarea
 } from '@chakra-ui/react'
-import {DuplicateSlugError, JaenTemplate} from '@atsnek/jaen'
 import {useEffect, useState} from 'react'
-import {Controller, set, SubmitHandler, useForm} from 'react-hook-form'
-import {FaEdit, FaEye, FaImage, FaNewspaper} from 'react-icons/fa'
-import {FaEyeLowVision} from 'react-icons/fa6'
+import {Controller, SubmitHandler, useForm} from 'react-hook-form'
+import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
+import {FaEye} from '@react-icons/all-files/fa/FaEye'
+import {FaImage} from '@react-icons/all-files/fa/FaImage'
+import {FaNewspaper} from '@react-icons/all-files/fa/FaNewspaper'
+
+import {FaEyeLowVision} from '@react-icons/all-files/fa6/FaEyeLowVision'
 import slugify from 'slugify'
 
 import FormMediaChooser from '../../../../../containers/form-media-chooser'

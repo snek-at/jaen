@@ -1,6 +1,6 @@
 {
   "name": "@atsnek/jaen",
-  "version": "1.0.0-rc.19",
+  "version": "1.0.0-rc.20",
   "description": "The Webapps framework for creating scalable and dynamic applications with ease.",
   "type": "module",
   "source": "src/index.ts",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",
+    "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v4.11.0/react-icons-all-files-4.11.0.tgz",
     "@reduxjs/toolkit": "^1.9.5",
     "@snek-functions/origin": "^0.6.2",
     "deepmerge": "^4.3.1",
@@ -31,7 +32,6 @@
     "gatsby-plugin-image": "^3.11.0",
     "imtool": "^1.2.1",
     "isomorphic-dompurify": "^1.8.0",
-    "react-icons": "^4.10.1",
     "react-photo-view": "^1.2.3",
     "react-redux": "^8.1.1",
     "redux": "^4.2.1",
@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
+    "@types/react-icons": "^3.0.0",
     "@types/uuid": "^9.0.2",
     "microbundle": "^0.15.1"
   }

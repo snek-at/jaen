@@ -12,7 +12,7 @@ import {
   WrapItem
 } from '@chakra-ui/react'
 import {useState} from 'react'
-import {FaSearch} from 'react-icons/fa'
+import {FaSearch} from '@react-icons/all-files/fa/FaSearch'
 
 interface BaseTune {
   name: string

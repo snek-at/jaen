@@ -1,6 +1,8 @@
 import {ComponentMeta, Story} from '@storybook/react'
 import React from 'react'
-import {FiBox, FiFileText, FiImage} from 'react-icons/fi'
+import {FiBox} from '@react-icons/all-files/fi/FiBox'
+import {FiFileText} from '@react-icons/all-files/fi/FiFileText'
+import {FiImage} from '@react-icons/all-files/fi/FiImage'
 
 import {SectionBlockSelector} from './SectionBlockSelector.js'
 export default {

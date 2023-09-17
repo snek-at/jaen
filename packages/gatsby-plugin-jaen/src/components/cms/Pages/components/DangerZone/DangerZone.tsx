@@ -8,7 +8,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import {FC} from 'react'
-import {IconType} from 'react-icons/lib'
+import {IconType} from '@react-icons/all-files'
 
 import {Link} from '../../../../shared/Link'
 

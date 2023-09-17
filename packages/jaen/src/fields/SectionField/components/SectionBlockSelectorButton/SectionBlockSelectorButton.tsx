@@ -1,6 +1,6 @@
 import {Box, Flex, IconButton, Icon} from '@chakra-ui/react'
 import React, {useRef, useState} from 'react'
-import {FaPlus} from 'react-icons/fa'
+import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
 
 import {
   SectionBlockSelector,
