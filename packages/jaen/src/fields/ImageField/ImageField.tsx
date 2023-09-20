@@ -103,41 +103,42 @@ export const ImageField = connectField<ImageFieldMediaId, ImageFieldProps>(
     }
 
     return (
-      <HighlightTooltip
-        id={jaenField.id || jaenField.name}
-        isEditing={jaenField.isEditing}
-        boxSize="full"
-        actions={[
-          <Button
-            variant="field-highlighter-tooltip"
-            leftIcon={<FaImage />}
-            onClick={() => {
-              context.toggleModal({defaultSelected: mediaId})
-            }}>
-            Image
-          </Button>,
+      <PageProvider
+        jaenPage={{
+          id: 'JaenPage /cms/media/',
+          mediaNodes: jaenPage.mediaNodes || []
+        }}>
+        <HighlightTooltip
+          id={jaenField.id || jaenField.name}
+          isEditing={jaenField.isEditing}
+          boxSize="full"
+          actions={[
+            <Button
+              variant="field-highlighter-tooltip"
+              leftIcon={<FaImage />}
+              onClick={() => {
+                context.toggleModal({defaultSelected: mediaId})
+              }}>
+              Image
+            </Button>,
 
-          <IconButton
-            variant="field-highlighter-tooltip"
-            aria-label="Remove"
-            icon={<FaTrashAlt />}
-            onClick={handleRemove}
-          />
-        ]}>
-        <PageProvider
-          jaenPage={{
-            id: 'JaenPage /cms/media/',
-            mediaNodes: jaenPage.mediaNodes || []
-          }}>
-          <ImageComponent
-            mediaId={mediaId}
-            fieldName={jaenField.name}
-            imageProps={imageProps}
-            lightbox={isLightbox}
-            lightboxGroup={lightboxGroup}
-          />
-        </PageProvider>
-      </HighlightTooltip>
+            <IconButton
+              variant="field-highlighter-tooltip"
+              aria-label="Remove"
+              icon={<FaTrashAlt />}
+              onClick={handleRemove}
+            />
+          ]}
+          as={ImageComponent}
+          asProps={{
+            mediaId,
+            fieldName: jaenField.name,
+            imageProps,
+            lightbox: isLightbox,
+            lightboxGroup
+          }}
+        />
+      </PageProvider>
     )
   },
   {
@@ -155,57 +156,64 @@ const ImageComponent = forwardRef<
     lightbox?: boolean
     lightboxGroup?: boolean
   }
->((props, ref) => {
-  const image = useImage(props.mediaId || '')
+>(
+  (
+    {mediaId, fieldName, imageProps, lightbox, lightboxGroup, ...props},
+    ref
+  ) => {
+    const image = useImage(mediaId || '')
 
-  if (!image) {
-    return (
-      <Center
+    if (!image) {
+      return (
+        <Center
+          ref={ref}
+          boxSize="full"
+          pos={'relative'}
+          overflow="hidden"
+          style={imageProps?.style}
+          {...props}>
+          <Text color="gray.600" fontSize="sm">
+            No image
+          </Text>
+        </Center>
+      )
+    }
+
+    let element = (
+      <Box
         ref={ref}
         boxSize="full"
         pos={'relative'}
         overflow="hidden"
-        style={props.imageProps?.style}>
-        <Text color="gray.600" fontSize="sm">
-          No image
-        </Text>
-      </Center>
+        cursor={lightbox ? 'zoom-in' : 'default'}
+        {...props}>
+        <GatsbyImage
+          image={image.image}
+          alt={image.description}
+          {...imageProps}
+          style={{
+            ...imageProps?.style,
+            width: '100%',
+            height: '100%'
+          }}
+        />
+      </Box>
     )
-  }
 
-  let element = (
-    <Box
-      ref={ref}
-      boxSize="full"
-      pos={'relative'}
-      overflow="hidden"
-      cursor={props.lightbox ? 'zoom-in' : 'default'}>
-      <GatsbyImage
-        image={image.image}
-        alt={image.description}
-        {...props.imageProps}
-        style={{
-          ...props.imageProps?.style,
-          width: '100%',
-          height: '100%'
-        }}
-      />
-    </Box>
-  )
+    if (lightbox) {
+      const src = getSrc(image.image)
 
-  if (props.lightbox) {
-    const src = getSrc(image.image)
+      element = <PhotoView src={src}>{element}</PhotoView>
 
-    element = <PhotoView src={src}>{element}</PhotoView>
-
-    if (!props.lightboxGroup) {
-      element = (
-        <PhotoProvider maskOpacity={0.8}>
-          <PhotoView src={src}>{element}</PhotoView>
-        </PhotoProvider>
-      )
+      if (!lightboxGroup) {
+        element = (
+          <PhotoProvider maskOpacity={0.8}>
+            <PhotoView src={src}>{element}</PhotoView>
+          </PhotoProvider>
+        )
+      }
     }
-  }
 
-  return element
-})
+    return element
+  }
+)

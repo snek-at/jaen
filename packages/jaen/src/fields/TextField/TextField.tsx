@@ -1,4 +1,4 @@
-import {As, Box, Button, Text, TextProps, Tooltip} from '@chakra-ui/react'
+import {As, Button, Text, TextProps, Tooltip} from '@chakra-ui/react'
 import DOMPurify from 'isomorphic-dompurify'
 import React, {useCallback, useEffect, useState} from 'react'
 
@@ -246,40 +246,34 @@ export const TextField = connectField<string, TextFieldProps>(
           ...rest.style
         }}
         {...rest}
-        {...tunes.activeProps}>
-        {props => (
-          <Box
-            ref={props.ref}
-            tabIndex={props.tabIndex}
-            as="span"
-            display="block"
-            outline="none"
-            dangerouslySetInnerHTML={{__html: value}}
-            contentEditable={jaenField.isEditing}
-            onBlur={handleContentBlur}
-            onPaste={evt => {
-              evt.preventDefault()
+        {...tunes.activeProps}
+        asProps={{
+          outline: 'none',
+          dangerouslySetInnerHTML: {__html: value},
+          contentEditable: jaenField.isEditing,
+          onBlur: handleContentBlur,
+          onPaste: (evt: React.ClipboardEvent<HTMLDivElement>) => {
+            evt.preventDefault()
 
-              if (isRTF) {
-                let text =
-                  evt.clipboardData.getData('text/html') ||
-                  evt.clipboardData.getData('text')
+            if (isRTF) {
+              let text =
+                evt.clipboardData.getData('text/html') ||
+                evt.clipboardData.getData('text')
 
-                text = DOMPurify.sanitize(text, {
-                  ALLOWED_TAGS: ['br', 'span'],
-                  ALLOWED_ATTR: []
-                })
+              text = DOMPurify.sanitize(text, {
+                ALLOWED_TAGS: ['br', 'span'],
+                ALLOWED_ATTR: []
+              })
 
-                document.execCommand('insertHTML', false, text)
-              } else {
-                const text = evt.clipboardData.getData('text')
+              document.execCommand('insertHTML', false, text)
+            } else {
+              const text = evt.clipboardData.getData('text')
 
-                document.execCommand('insertText', false, text)
-              }
-            }}
-          />
-        )}
-      </HighlightTooltip>
+              document.execCommand('insertText', false, text)
+            }
+          }
+        }}
+      />
     )
   },
   {
