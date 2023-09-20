@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jaen",
-  "version": "1.0.0-rc.34",
+  "version": "1.0.0-rc.36",
   "main": "index.js",
   "types": "./src/index.ts",
   "files": [
@@ -23,7 +23,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "framer-motion": "^10.13.0",
-    "gatsby-jaen-resource": "^0.0.2",
+    "gatsby-jaen-resource": "^0.0.4",
     "gatsby-plugin-google-gtag": "^5.12.0",
     "gatsby-plugin-manifest": "^5.12.0",
     "gatsby-plugin-sharp": "^5.11.0",

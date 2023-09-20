@@ -1,6 +1,6 @@
 {
   "name": "gatsby-jaen-resource",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Resource management plugin for Jaen",
   "main": "index.js",
   "keywords": [
@@ -8,6 +8,7 @@
     "@atsnek/jaen"
   ],
   "dependencies": {
+    "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v4.11.0/react-icons-all-files-4.11.0.tgz",
     "react-hook-form": "^7.46.1",
     "snek-query": "^0.0.83"
   },

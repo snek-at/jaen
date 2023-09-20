@@ -1,5 +1,9 @@
 import {PageConfig} from '@atsnek/jaen'
-import {AddIcon, CheckCircleIcon, EditIcon} from '@chakra-ui/icons'
+
+import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
+import {FaCheckCircle} from '@react-icons/all-files/fa/FaCheckCircle'
+import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
+
 import {
   Button,
   ButtonGroup,
@@ -29,7 +33,8 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure
+  useDisclosure,
+  Icon
 } from '@chakra-ui/react'
 import {graphql, Link as GatsbyLink} from 'gatsby'
 import React from 'react'
@@ -128,7 +133,7 @@ const Page: React.FC = () => {
                       w={'fit-content'}
                       h={'fit-content'}
                       isLoaded={!isLoading}>
-                      <CheckCircleIcon />
+                      <Icon as={FaCheckCircle} />
                     </Skeleton>
                   </Td>
                   <Td>
@@ -136,7 +141,7 @@ const Page: React.FC = () => {
                       w={'fit-content'}
                       h={'fit-content'}
                       isLoaded={!isLoading}>
-                      <CheckCircleIcon />
+                      <Icon as={FaCheckCircle} />
                     </Skeleton>
                   </Td>
                   <Td>
@@ -147,7 +152,7 @@ const Page: React.FC = () => {
                       <IconButton
                         as={GatsbyLink}
                         aria-label="Edit"
-                        icon={<EditIcon />}
+                        icon={<Icon as={FaEdit} />}
                         to={`/cms/user/`}
                       />
                     </Skeleton>
@@ -178,13 +183,13 @@ const Page: React.FC = () => {
                       {new Date(user.createdAt).toDateString()}
                     </Text>
                   </Td>
-                  <Td>{user.isActive ? <CheckCircleIcon /> : null}</Td>
-                  <Td>{user.isAdmin ? <CheckCircleIcon /> : null}</Td>
+                  <Td>{user.isActive ? <Icon as={FaCheckCircle} /> : null}</Td>
+                  <Td>{user.isAdmin ? <Icon as={FaCheckCircle} /> : null}</Td>
                   <Td textAlign={'right'}>
                     <IconButton
                       as={GatsbyLink}
                       aria-label="Edit"
-                      icon={<EditIcon />}
+                      icon={<Icon as={FaEdit} />}
                       to={user.id}
                     />
                   </Td>
@@ -350,7 +355,7 @@ const AddUserControl = () => {
         </ModalContent>
       </Modal>
 
-      <Button leftIcon={<AddIcon />} onClick={onOpen}>
+      <Button leftIcon={<Icon as={FaPlus} />} onClick={onOpen}>
         Add User
       </Button>
     </>
