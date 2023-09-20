@@ -60,6 +60,27 @@ export const MdxField = connectField<MdxFieldValue, MdxFieldProps>(
   }
 )
 
+export const UncontrolledMdxField: React.FC<{
+  components: BaseEditorProps['components']
+  onUpdateValue: (value: MdastRoot) => void
+  value?: MdastRoot
+  isEditing?: boolean
+}> = ({components, onUpdateValue, value, isEditing}) => {
+  if (isEditing) {
+    // Render editor in edit mode
+
+    return (
+      <LayzEditor
+        components={components}
+        onUpdateValue={onUpdateValue}
+        rawValue={value}
+      />
+    )
+  } else {
+    return <Preview components={components} mdast={value} />
+  }
+}
+
 const LayzEditor: React.FC<{
   components: BaseEditorProps['components']
   onUpdateValue: (value: MdastRoot) => void

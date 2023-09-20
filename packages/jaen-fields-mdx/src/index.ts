@@ -1,1 +1,1 @@
-export {MdxField, MdxFieldProps} from './MdxField'
+export {MdxField, UncontrolledMdxField, MdxFieldProps} from './MdxField'

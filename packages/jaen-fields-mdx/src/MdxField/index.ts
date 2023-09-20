@@ -1,1 +1,6 @@
-export {MdxField as default, MdxField, MdxFieldProps} from './MdxField.js'
+export {
+  MdxField as default,
+  MdxField,
+  UncontrolledMdxField,
+  MdxFieldProps
+} from './MdxField.js'
