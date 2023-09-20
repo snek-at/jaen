@@ -22,7 +22,10 @@ const config: GatsbyConfig = {
       options: {
         // The folder where the page templates are located
         pageTemplateFolder: `src/templates`,
-        snekResourceId: `63571eee-f41c-4745-9130-d746c2cb97a3`
+        snekResourceId: `63571eee-f41c-4745-9130-d746c2cb97a3`,
+        googleAnalytics: {
+          trackingIds: ['G-M58K75M9PG']
+        }
       }
     },
     'gatsby-plugin-webpack-bundle-analyser-v2'

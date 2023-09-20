@@ -2,6 +2,10 @@
 
 declare global {
   var __SNEK_RESOURCE_ID__: string
+
+  interface Window {
+    cookieConsent: CookieConsent
+  }
 }
 
 import type {PageProps as GatsbyPageProps} from 'gatsby'

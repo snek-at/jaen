@@ -3,3 +3,5 @@ import 'vanilla-cookieconsent/dist/cookieconsent.css'
 
 export {wrapPageElement} from './src/gatsby/wrap-page-element'
 export {wrapRootElement} from './src/gatsby/wrap-root-element'
+
+export {onClientEntry} from './src/gatsby/on-client-entry'

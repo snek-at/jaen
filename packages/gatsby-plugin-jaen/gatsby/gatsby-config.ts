@@ -63,6 +63,18 @@ const Config: GatsbyConfig = {
         display: `standalone`,
         icon: `src/favicon.ico`
       }
+    },
+    {
+      resolve: 'gatsby-plugin-google-gtag',
+      options: {
+        trackingIds: [],
+        gtagConfig: {
+          anonymize_ip: true
+        },
+        pluginConfig: {
+          head: true
+        }
+      }
     }
   ]
 }

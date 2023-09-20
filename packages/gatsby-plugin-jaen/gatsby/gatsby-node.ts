@@ -1,8 +1,29 @@
-import {GatsbyNode, Reporter} from 'gatsby'
+import {GatsbyNode, Reporter, PluginOptions} from 'gatsby'
 import path from 'path'
 
+export interface JaenPluginOptions extends PluginOptions {
+  snekResourceId?: string
+  googleAnalytics?: {
+    trackingIds?: string[]
+  }
+}
+
+export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
+  Joi
+}) => {
+  return Joi.object({
+    snekResourceId: Joi.string().required(),
+    googleAnalytics: Joi.object({
+      trackingIds: Joi.array().items(Joi.string())
+    })
+  })
+}
+
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
-  async ({actions, loaders, stage, plugins}, pluginOptions) => {
+  async (
+    {actions, loaders, stage, plugins},
+    pluginOptions: JaenPluginOptions
+  ) => {
     const snekResourceId = pluginOptions.snekResourceId
 
     if (!snekResourceId) {
@@ -40,9 +61,58 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
     })
   }
 
+export const onPreInit: GatsbyNode['onPreInit'] = async (
+  {store, reporter},
+  pluginOptions: JaenPluginOptions
+) => {
+  // find and remove gatsby-plugin-manifest from store
+  const state = store.getState()
+
+  const manifestPlugin = state.flattenedPlugins.find(
+    plugin => plugin.name === 'gatsby-plugin-manifest'
+  )
+
+  if (manifestPlugin) {
+    const manifestOptions = await resolveManifestOptions({
+      snekResourceId: pluginOptions.snekResourceId,
+      reporter
+    })
+    manifestPlugin.pluginOptions = {
+      ...manifestPlugin.pluginOptions,
+      ...manifestOptions
+    }
+  }
+
+  // Override the gatsby-plugin-google-gtag trackingIds
+  const gtagPlugin = state.flattenedPlugins.find(
+    plugin => plugin.name === 'gatsby-plugin-google-gtag'
+  )
+
+  if (gtagPlugin) {
+    // When no trackingIds are set, use [] as default
+    // This should disable gtag
+    const trackingIds = pluginOptions.googleAnalytics?.trackingIds || []
+
+    if (trackingIds) {
+      gtagPlugin.pluginOptions.trackingIds.push(...trackingIds)
+    }
+  }
+
+  // state.flattenedPlugins[state.flattenedPlugins.indexOf(manifestPlugin)] =
+  //   manifestPlugin
+  // state.flattenedPlugins[state.flattenedPlugins.indexOf(gtagPlugin)] =
+  //   gtagPlugin
+
+  // // push back to store
+  // store.dispatch({
+  //   type: `SET_SITE_FLATTENED_PLUGINS`,
+  //   payload: state.flattenedPlugins
+  // })
+}
+
 export const createPages: GatsbyNode['createPages'] = async (
   {actions, store, reporter},
-  pluginOptions
+  pluginOptions: JaenPluginOptions
 ) => {
   const snekResourceId = pluginOptions.snekResourceId as string | undefined
 
@@ -52,20 +122,6 @@ export const createPages: GatsbyNode['createPages'] = async (
     id: `jaen-frame`,
     component: path.resolve(__dirname, '../../src/slices/jaen-frame.tsx')
   })
-
-  // Override gatsby-plugin-manifest to use our own
-  const state = store.getState()
-
-  const plugin = state.flattenedPlugins.find(
-    plugin => plugin.name === 'gatsby-plugin-manifest'
-  )
-  if (plugin) {
-    const manifestOptions = await resolveManifestOptions({
-      snekResourceId,
-      reporter
-    })
-    plugin.pluginOptions = {...plugin.pluginOptions, ...manifestOptions}
-  }
 }
 
 const resolveManifestOptions = async ({

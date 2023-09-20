@@ -146,6 +146,8 @@ export const CookieConsentProvider: React.FC<CookieConsentProviderProps> = ({
         ...pluginConfig,
         current_lang: locale
       })
+
+      window.cookieConsent = _cc
     }
   }, [locale])
 
