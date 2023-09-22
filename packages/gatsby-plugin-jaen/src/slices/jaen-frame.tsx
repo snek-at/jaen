@@ -6,7 +6,7 @@ import {
   useNotificationsContext
 } from '@atsnek/jaen'
 import {graphql, SliceComponentProps} from 'gatsby'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 
 import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
 import {FaFileDownload} from '@react-icons/all-files/fa/FaFileDownload'
@@ -20,6 +20,7 @@ import {useJaenFrameMenuContext} from '../contexts/jaen-frame-menu'
 import JaenFrame from '../components/JaenFrame/JaenFrame'
 import Logo from '../components/Logo'
 import {CMSManagement, useCMSManagement} from '../connectors/cms-management'
+import {usePageConfig} from './page-config-parser'
 
 type SliceProps = SliceComponentProps<
   {
@@ -54,7 +55,17 @@ const Slice: React.FC<SliceProps> = props => {
 
   const {menu, extendMenu, addMenu, extendAddMenu} = useJaenFrameMenuContext()
 
-  console.log(menu)
+  const {parsePageConfig} = usePageConfig()
+
+  const [pageConfig, setPageConfig] = useState<PageConfig>()
+
+  useEffect(() => {
+    if (props.pageConfig) {
+      parsePageConfig(props.pageConfig).then(config => {
+        setPageConfig(config)
+      })
+    }
+  }, [props.pageConfig])
 
   useEffect(() => {
     if (authentication.user?.isAdmin) {
@@ -182,7 +193,7 @@ const Slice: React.FC<SliceProps> = props => {
     })
 
     sortedNodes.forEach(async node => {
-      const config = node.pageContext.pageConfig
+      const config = await parsePageConfig(node.pageContext.pageConfig)
 
       if (!config?.menu) return
 
@@ -203,8 +214,8 @@ const Slice: React.FC<SliceProps> = props => {
         label: config.menu.groupLabel,
         items: {
           [node.id]: {
-            label: config.menu?.label || config.label,
-            path: node.path,
+            label: config.menu?.label?.toString() || config.label,
+            path: config.menu?.path?.toString() || node.path,
             icon
           }
         }
@@ -215,7 +226,7 @@ const Slice: React.FC<SliceProps> = props => {
   return (
     <JaenFrame
       navigation={{
-        isStickyDisabled: props.pageConfig?.withoutJaenFrameStickyHeader,
+        isStickyDisabled: pageConfig?.withoutJaenFrameStickyHeader,
         app: {
           navigationGroups: menu.app,
           // @ts-ignore
@@ -238,7 +249,7 @@ const Slice: React.FC<SliceProps> = props => {
         },
         addMenu,
         breadcrumbs: {
-          links: props.pageConfig?.breadcrumbs || []
+          links: (pageConfig?.breadcrumbs as any) || []
         }
       }}
       logo={<Logo />}

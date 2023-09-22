@@ -301,8 +301,21 @@ export const pageConfig: PageConfig = {
   label: 'Home Page 2',
   icon: 'FaHome',
   childTemplates: ['BlogPage'],
+  breadcrumbs: [
+    async () => {
+      // fetch random data from api
+      const res = await fetch('https://randomuser.me/api/')
+      const data = await res.json()
+
+      return {
+        label: data.results[0].name.first,
+        path: `/user/${data.results[0].name.first}`
+      }
+    }
+  ],
   menu: {
-    type: 'app'
+    type: 'app',
+    path: () => '/index'
   }
 }
 

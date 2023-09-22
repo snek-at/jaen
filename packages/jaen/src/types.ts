@@ -13,6 +13,11 @@ import type {IGatsbyImageData} from 'gatsby-plugin-image'
 import type * as FaIcons from 'react-icons/fa'
 
 import {IBlockConnection} from './connectors/connect-block'
+import {AuthenticationContext} from './contexts/authentication'
+
+type PageConfigLazyValue<T> =
+  | T
+  | ((context: {auth: typeof AuthenticationContext}) => Promise<T> | T)
 
 export interface PageConfig {
   label: string
@@ -20,15 +25,18 @@ export interface PageConfig {
 
   childTemplates?: string[]
 
-  breadcrumbs?: Array<{
-    label: string
-    path: string
-  }>
+  breadcrumbs?: Array<
+    PageConfigLazyValue<{
+      label: string
+      path: string
+    }>
+  >
 
   withoutJaenFrame?: boolean
   withoutJaenFrameStickyHeader?: boolean
 
   menu?: {
+    path?: PageConfigLazyValue<string>
     label?: string
     group?: string
     groupLabel?: string

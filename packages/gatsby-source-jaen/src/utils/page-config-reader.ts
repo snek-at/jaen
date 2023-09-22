@@ -4,6 +4,7 @@ import {parse, ParserOptions} from '@babel/parser'
 import traverse, {NodePath} from '@babel/traverse'
 import * as t from '@babel/types'
 import ts from 'typescript'
+import generate from '@babel/generator'
 
 import {PageConfig} from '@atsnek/jaen'
 
@@ -49,7 +50,17 @@ function extractDataFromConfig(
       return value.elements.map(element => processValue(element as any))
     } else if (t.isObjectExpression(value)) {
       return extractDataFromConfig(value)
+    } else if (
+      t.isFunctionExpression(value) ||
+      t.isArrowFunctionExpression(value)
+    ) {
+      // Return as string
+      return {
+        type: 'function',
+        value: generate(value as any).code
+      }
     } else {
+      // console.log('Unhandled value type:', value.type)
       // Handle other types as needed (null, undefined, object expressions, etc.)
       return null // You can modify this default behavior according to your requirements
     }
@@ -69,7 +80,7 @@ function extractDataFromConfig(
 function findConfigObject(ast: t.File): t.ObjectExpression | undefined {
   let configObject: t.ObjectExpression | undefined = undefined
 
-  traverse(ast, {
+  traverse(ast as any, {
     ExportNamedDeclaration(path: NodePath<t.ExportNamedDeclaration>) {
       const node = path.node.declaration
       if (node && t.isVariableDeclaration(node)) {
