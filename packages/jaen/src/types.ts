@@ -13,11 +13,11 @@ import type {IGatsbyImageData} from 'gatsby-plugin-image'
 import type * as FaIcons from 'react-icons/fa'
 
 import {IBlockConnection} from './connectors/connect-block'
-import {AuthenticationContext} from './contexts/authentication'
+import {AuthenticationContextType} from './contexts/authentication'
 
 type PageConfigLazyValue<T> =
   | T
-  | ((context: {auth: typeof AuthenticationContext}) => Promise<T> | T)
+  | ((context: {auth: AuthenticationContextType}) => Promise<T> | T)
 
 export interface PageConfig {
   label: string

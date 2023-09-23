@@ -34,7 +34,7 @@ export interface SnekUser {
   }
 }
 
-export interface AutenticationContext {
+export interface AuthenticationContextType {
   isAuthenticated: boolean
   isLoading: boolean
   user: SnekUser | null
@@ -56,7 +56,7 @@ export interface AutenticationContext {
   updatePassword: (password: string) => Promise<void>
 }
 
-export const AuthenticationContext = createContext<AutenticationContext>({
+export const AuthenticationContext = createContext<AuthenticationContextType>({
   isAuthenticated: false,
   isLoading: true,
   user: null,
@@ -92,7 +92,7 @@ export const AuthenticationProvider: React.FC<{
 }> = props => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  const [user, setUser] = useState<AutenticationContext['user']>(null)
+  const [user, setUser] = useState<AuthenticationContextType['user']>(null)
 
   const [isLoading, setIsLoading] = useState(true)
 
@@ -268,7 +268,7 @@ export const AuthenticationProvider: React.FC<{
             ({
               ...prevUser,
               details: updatedUser.details
-            } as AutenticationContext['user'])
+            } as AuthenticationContextType['user'])
         )
       } else {
         throw new Error(errors?.[0]?.message ?? 'Failed to update details')
@@ -309,7 +309,7 @@ export const AuthenticationProvider: React.FC<{
                 isPrimary: newEmail.isPrimary
               }
             ]
-          } as AutenticationContext['user'])
+          } as AuthenticationContextType['user'])
       )
     } else {
       throw new Error(errors?.[0]?.message ?? 'Failed to add email')
@@ -334,7 +334,7 @@ export const AuthenticationProvider: React.FC<{
           ({
             ...prevUser,
             emails: prevUser?.emails?.filter(e => e.id !== emailId)
-          } as AutenticationContext['user'])
+          } as AuthenticationContextType['user'])
       )
     } else {
       throw new Error(errors?.[0]?.message ?? 'Failed to remove email')

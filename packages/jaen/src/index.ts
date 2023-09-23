@@ -38,7 +38,7 @@ export * from './utils/open-storage-gateway'
 export {useDynamicPaths} from './hooks/use-dynamic-paths'
 export {useMediaModal, MediaModalProvider} from './contexts/media-modal'
 
-export {withRedux} from './redux'
+export {withRedux, useAppSelector} from './redux'
 
 export {
   SiteMetadataProvider,
