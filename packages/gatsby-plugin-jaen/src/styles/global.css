@@ -1,0 +1,10 @@
+/******************************************************************************
+** FileRobot Image Editor                                                    **   
+******************************************************************************/
+.SfxModal-Wrapper,
+.SfxPopper-wrapper {
+  z-index: 1000000 !important;
+}
+.kVmiSa.SfxPopper-wrapper {
+  z-index: 1000001 !important;
+}
