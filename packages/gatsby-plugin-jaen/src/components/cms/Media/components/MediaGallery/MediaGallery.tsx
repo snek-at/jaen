@@ -19,7 +19,7 @@ import {
   TagCloseButton
 } from '@chakra-ui/react'
 import {MediaNode} from '@atsnek/jaen'
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import {BsLayoutSidebarInset} from '@react-icons/all-files/bs/BsLayoutSidebarInset'
 
@@ -35,6 +35,7 @@ import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
 
 import {MediaPreviewState} from '../../types'
 import {MediaGrid} from './components/MediaGrid/MediaGrid'
+import {useDebouncedCallback} from 'use-debounce'
 
 export interface MediaGalleryProps {
   pageFilter?: string
@@ -88,14 +89,15 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>('')
 
-  const handleSearchChange: React.ChangeEventHandler<
-    HTMLInputElement
-  > = event => {
-    setSearchQuery(event.target.value)
+  const handleSearchChange = useDebouncedCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(event.target.value)
 
-    // reset selected media node
-    onSelectMediaNode(null)
-  }
+      // reset selected media node
+      onSelectMediaNode(null)
+    },
+    300
+  )
 
   const [mediaNodesLimit, setMediaNodesLimit] = useState<number>(30)
 
@@ -248,6 +250,8 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
   //   // )
   // }, [dropzone.isFileDialogActive])
 
+  const searchRef = useRef<HTMLInputElement>(null)
+
   return (
     <Box w="full">
       <HStack
@@ -326,9 +330,10 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
             <Icon as={FaSearch} color="gray.300" />
           </InputLeftElement>
           <Input
+            ref={searchRef}
             type="text"
             placeholder="Search media..."
-            value={searchQuery}
+            defaultValue={searchQuery}
             onChange={handleSearchChange}
           />
           {searchQuery.length > 0 && (
@@ -340,6 +345,10 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
                 icon={<FaTimes />}
                 onClick={() => {
                   setSearchQuery('')
+                  // clear search input
+                  searchRef.current?.focus()
+
+                  searchRef.current!.value = ''
                 }}
               />
             </InputRightElement>

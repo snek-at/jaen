@@ -1,13 +1,29 @@
 import {
   AspectRatio,
+  Box,
+  Center,
+  HStack,
   Image,
   Input,
+  InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+  InputRightAddon,
+  InputRightElement,
   Skeleton,
+  Spinner,
   Stack,
-  Textarea
+  Text
 } from '@chakra-ui/react'
 import {MediaNode} from '@atsnek/jaen'
-import {MouseEventHandler} from 'react'
+import {
+  MouseEventHandler,
+  RefObject,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
 export interface MediaItemProps {
   node: MediaNode
@@ -28,11 +44,50 @@ export const MediaItem: React.FC<MediaItemProps> = ({
   onDoubleClick,
   onUpdateDescription
 }) => {
+  const imageRef = useRef<HTMLImageElement>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout
+
+    // when the image is in viewport for at least 500ms, we load the full image
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            timeoutId = setTimeout(() => {
+              imageRef.current?.setAttribute('src', node.url)
+              // set loading state to false when image is loaded
+              imageRef.current?.addEventListener('load', () => {
+                setIsLoaded(true)
+              })
+            }, 500)
+          } else {
+            clearTimeout(timeoutId)
+          }
+        })
+      },
+      {threshold: 1}
+    )
+
+    if (imageRef.current) {
+      observer.observe(imageRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+      clearTimeout(timeoutId)
+    }
+  }, [imageRef])
+
   return (
     <Stack key={node.id} id={node.id} justifyContent="center" onClick={onClick}>
       <AspectRatio
         ratio={node.width / node.height}
+        onDoubleClick={onDoubleClick}
         objectFit="contain"
+        borderColor="border.emphasized"
+        borderWidth="1px"
         {...(isSelected && {
           outline: '2px solid',
           outlineColor: 'brand.500',
@@ -40,30 +95,36 @@ export const MediaItem: React.FC<MediaItemProps> = ({
           borderRadius: 'lg'
         })}>
         <Image
-          key={node.id}
-          id={isLast ? 'last-media-item' : undefined}
-          fallback={
-            <Skeleton w="100%" borderRadius="lg" display="inline-block" />
-          }
-          w="100%"
-          h="100%"
-          src={node.url}
+          ref={imageRef}
+          src={node.preview?.url}
           alt={node.description}
-          onDoubleClick={onDoubleClick}
+          id={isLast ? 'last-media-item' : undefined}
         />
       </AspectRatio>
-      <Input
-        key={node?.description}
-        size="xs"
-        textAlign="center"
-        border="none"
-        fontSize="xs"
-        fontWeight="bold"
-        defaultValue={node.description}
-        onBlur={e => {
-          onUpdateDescription?.(e.target.value)
-        }}
-      />
+
+      <InputGroup size="xs">
+        {!isLoaded && (
+          <InputLeftAddon pointerEvents="none">
+            <Spinner size="xs" />
+          </InputLeftAddon>
+        )}
+
+        <Input
+          key={node?.description}
+          textAlign="center"
+          fontSize="xs"
+          fontWeight="bold"
+          defaultValue={node.description}
+          onBlur={e => {
+            onUpdateDescription?.(e.target.value)
+          }}
+        />
+        <InputRightAddon w="4.5trem">
+          <Text fontSize="xs" fontWeight="bold">
+            {node.width}x{node.height}
+          </Text>
+        </InputRightAddon>
+      </InputGroup>
     </Stack>
   )
 }

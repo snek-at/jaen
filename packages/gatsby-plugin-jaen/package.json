@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jaen",
-  "version": "1.0.0-rc.40",
+  "version": "1.0.0-rc.41",
   "main": "index.js",
   "types": "./src/index.ts",
   "files": [
@@ -46,6 +46,7 @@
     "use-debounce": "^9.0.4"
   },
   "devDependencies": {
+    "@types/lodash.throttle": "^4.1.7",
     "gatsby": "^5.11.0"
   }
 }

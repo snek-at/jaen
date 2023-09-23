@@ -2,6 +2,7 @@ import {
   AspectRatio,
   Button,
   ButtonGroup,
+  Center,
   HStack,
   IconButton,
   Image,
@@ -14,6 +15,7 @@ import {
   ModalOverlay,
   Skeleton,
   Spacer,
+  Spinner,
   Text
 } from '@chakra-ui/react'
 import {MediaNode} from '@atsnek/jaen'
@@ -229,6 +231,11 @@ export const MediaPreview: React.FC<MediaPreviewProps> = ({
                     objectFit="contain"
                     src={selectedMediaNode?.url}
                     alt={selectedMediaNode?.description}
+                    fallback={
+                      <Center boxSize="full">
+                        <Spinner color="brand.300" />
+                      </Center>
+                    }
                   />
                 </TransformComponent>
               )
