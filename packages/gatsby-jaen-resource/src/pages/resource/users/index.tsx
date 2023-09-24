@@ -34,7 +34,9 @@ import {
   Thead,
   Tr,
   useDisclosure,
-  Icon
+  Icon,
+  SkeletonCircle,
+  Avatar
 } from '@chakra-ui/react'
 import {graphql, Link as GatsbyLink} from 'gatsby'
 import React from 'react'
@@ -78,15 +80,9 @@ const Page: React.FC = () => {
             {isLoading &&
               // map with 5 rows to show loading
               [...Array(3)].map((_, index) => (
-                <Tr>
+                <Tr key={index}>
                   <Td>
-                    <Skeleton
-                      key={index}
-                      w={'fit-content'}
-                      h={'fit-content'}
-                      isLoaded={!isLoading}>
-                      <Text fontSize="sm">{index + 1}</Text>
-                    </Skeleton>
+                    <SkeletonCircle size="10" isLoaded={!isLoading} />
                   </Td>
                   <Td>
                     <Skeleton
@@ -161,10 +157,14 @@ const Page: React.FC = () => {
               ))}
 
             {users
-              .map((user, index) => (
+              .map(user => (
                 <Tr key={user.id}>
                   <Td>
-                    <Text fontSize="xs">{index + 1}</Text>
+                    <Avatar
+                      size="sm"
+                      name={user.username}
+                      src={user.details?.avatarURL}
+                    />
                   </Td>
                   <Td>
                     <Text fontSize="sm">{user.primaryEmailAddress}</Text>

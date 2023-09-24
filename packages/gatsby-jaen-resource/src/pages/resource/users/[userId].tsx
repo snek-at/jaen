@@ -1,8 +1,10 @@
 import {PageConfig, PageProps, useNotificationsContext} from '@atsnek/jaen'
 import {
+  Avatar,
   Box,
   Button,
   ButtonGroup,
+  Card,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -12,6 +14,8 @@ import {
   InputGroup,
   InputRightElement,
   Skeleton,
+  SkeletonCircle,
+  SkeletonText,
   Stack,
   Switch,
   Text
@@ -25,6 +29,7 @@ import {useUser, useUsers} from '../../../hooks'
 type FormValues = {
   emailAddress: string
   details?: {
+    avatarURL?: string
     firstName?: string
     lastName?: string
   }
@@ -145,8 +150,39 @@ const Page: React.FC<PageProps> = props => {
 
   return (
     <Box>
+      <HStack>
+        {/* <SkeletonCircle isLoaded={!isLoading}>
+          <Avatar name={user?.username ?? ''} src={user?.details?.avatarURL} />
+        </SkeletonCircle>
+
+        <Stack>
+          <SkeletonText isLoaded={!isLoading}>
+            <Text fontSize="2xl">{user?.username}</Text>
+          </SkeletonText>
+          <SkeletonText isLoaded={!isLoading}>
+            <Text fontSize="md">{user?.primaryEmailAddress}</Text>
+          </SkeletonText>
+        </Stack> */}
+      </HStack>
+
+      <Card mt={8} p={4}>
+        <Stack>
+          <HStack>
+            <Avatar name={user?.username} src={user?.details?.avatarURL} />
+            <Stack spacing="0.5">
+              <Text fontWeight="bold" lineHeight="none">
+                {user?.username} ({user?.primaryEmailAddress})
+              </Text>
+              <Text color="muted" lineHeight="none">
+                {user?.details?.firstName} {user?.details?.lastName}
+              </Text>
+            </Stack>
+          </HStack>
+        </Stack>
+      </Card>
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl>
+        <FormControl mt={4}>
           <Skeleton width={'fit-content'} isLoaded={!isLoading}>
             <FormLabel>ID</FormLabel>
           </Skeleton>

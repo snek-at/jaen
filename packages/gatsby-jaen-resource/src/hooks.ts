@@ -17,6 +17,7 @@ export const useUser = (userId: string) => {
     username: string
     createdAt: string
     details?: {
+      avatarURL?: string
       firstName?: string
       lastName?: string
     }
@@ -48,6 +49,7 @@ export const useUser = (userId: string) => {
         username: user.username,
         createdAt: user.createdAt,
         details: {
+          avatarURL: user.details?.avatarURL || undefined,
           firstName: user.details?.firstName || undefined,
           lastName: user.details?.lastName || undefined
         },
@@ -83,6 +85,7 @@ export const useUsers = () => {
       username: string
       createdAt: string
       details?: {
+        avatarURL?: string
         firstName?: string
         lastName?: string
       }
@@ -113,6 +116,7 @@ export const useUsers = () => {
         username: user?.username,
         createdAt: user?.createdAt,
         details: {
+          avatarURL: user?.details?.avatarURL || undefined,
           firstName: user?.details?.firstName || undefined,
           lastName: user?.details?.lastName || undefined
         },
