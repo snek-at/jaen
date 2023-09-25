@@ -81,7 +81,11 @@ export const DrawerRight: React.FC<DrawerRightProps> = ({
               <HStack justifyContent="space-between">
                 <Stack>
                   <HStack>
-                    <Avatar size="sm" src={user.avatarURL} />
+                    <Avatar
+                      size="sm"
+                      name={user.username}
+                      src={user.avatarURL}
+                    />
                     <Stack spacing="0.5">
                       <Text fontSize="sm" fontWeight="bold" lineHeight="none">
                         {user.username}

@@ -6,8 +6,10 @@ import {getLastPartOfId} from '../utils/get-last-part-of-id'
 import {JaenData} from './jaen-data'
 
 export const sourceNodes = async (args: SourceNodesArgs) => {
-  const {actions, createContentDigest, getNodesByType} = args
+  const {actions, reporter, createContentDigest, getNodesByType} = args
   const {createNode} = actions
+
+  const jaenTemplates = getNodesByType('JaenTemplate')
 
   const jaenDataNodes = getNodesByType('JaenData')
 
@@ -27,9 +29,26 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
   const jaenPages = jaenData.pages || []
 
   for (const page of jaenPages) {
-    // const page = await processPage({
-    //   page: dataPage
-    // })
+    if (page.template) {
+      // When template is set we need to make sure that the template exists
+      const template = jaenTemplates.find(
+        template => template.id === page.template
+      )
+
+      if (!template) {
+        // Warn that template does not exist and skip page
+        reporter.warn(
+          `JaenPage with id ${page.id} has template ${
+            page.template
+          }, but this template does not exist. 
+The existing templates are: ${jaenTemplates
+            .map(template => template.id)
+            .join(',')}. \nSkipping page.`
+        )
+
+        continue
+      }
+    }
 
     if (page.id === 'JaenPage /cms/media/') {
       // Process media and create nodes

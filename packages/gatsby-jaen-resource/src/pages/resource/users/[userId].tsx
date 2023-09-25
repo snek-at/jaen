@@ -1,10 +1,18 @@
-import {PageConfig, PageProps, useNotificationsContext} from '@atsnek/jaen'
+import {
+  PageConfig,
+  PageProps,
+  useAuthenticationContext,
+  useNotificationsContext
+} from '@atsnek/jaen'
 import {
   Avatar,
   Box,
   Button,
   ButtonGroup,
   Card,
+  CardBody,
+  CardHeader,
+  Checkbox,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -18,13 +26,20 @@ import {
   SkeletonText,
   Stack,
   Switch,
-  Text
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr
 } from '@chakra-ui/react'
 import {navigate} from 'gatsby'
-import {forwardRef, useEffect, useState} from 'react'
-import {Controller, useForm} from 'react-hook-form'
+import {forwardRef, useEffect, useMemo, useState} from 'react'
+import {Controller, useFieldArray, useForm} from 'react-hook-form'
 
 import {useUser, useUsers} from '../../../hooks'
+import {InfoIcon} from '@chakra-ui/icons'
 
 type FormValues = {
   emailAddress: string
@@ -37,6 +52,10 @@ type FormValues = {
   isActive: boolean
   isAdmin: boolean
   password?: string
+  roles: {
+    id: string
+    description: string
+  }[]
 }
 
 const PasswordInput = forwardRef<HTMLInputElement, any>(
@@ -65,6 +84,9 @@ const PasswordInput = forwardRef<HTMLInputElement, any>(
 
 const Page: React.FC<PageProps> = props => {
   const userId = props.params.userId ?? ''
+
+  const auth = useAuthenticationContext()
+
   const {user, isLoading} = useUser(userId)
   const {updateUser, deleteUser} = useUsers()
   const [changePasword, setChangePassword] = useState(false)
@@ -78,11 +100,10 @@ const Page: React.FC<PageProps> = props => {
         },
         username: user.username,
         isActive: user.isActive,
-        isAdmin: user.isAdmin
+        isAdmin: user.isAdmin,
+        roles: user.roles
       }
     : {}
-
-  console.log('defaultValues', defaultValues)
 
   const {
     register,
@@ -134,6 +155,9 @@ const Page: React.FC<PageProps> = props => {
       }
     })
 
+    // only use role ids
+    diff.roles = diff.roles.filter(Boolean).map((role: any) => role.id)
+
     const success = await updateUser(userId, diff)
 
     if (success) {
@@ -149,22 +173,7 @@ const Page: React.FC<PageProps> = props => {
   }
 
   return (
-    <Box>
-      <HStack>
-        {/* <SkeletonCircle isLoaded={!isLoading}>
-          <Avatar name={user?.username ?? ''} src={user?.details?.avatarURL} />
-        </SkeletonCircle>
-
-        <Stack>
-          <SkeletonText isLoaded={!isLoading}>
-            <Text fontSize="2xl">{user?.username}</Text>
-          </SkeletonText>
-          <SkeletonText isLoaded={!isLoading}>
-            <Text fontSize="md">{user?.primaryEmailAddress}</Text>
-          </SkeletonText>
-        </Stack> */}
-      </HStack>
-
+    <Stack>
       <Card mt={8} p={4}>
         <Stack>
           <HStack>
@@ -182,192 +191,245 @@ const Page: React.FC<PageProps> = props => {
       </Card>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl mt={4}>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <FormLabel>ID</FormLabel>
-          </Skeleton>
-          <Skeleton isLoaded={!isLoading}>
-            <Input placeholder={user?.id} disabled />
-          </Skeleton>
-        </FormControl>
-        <FormControl mt={4} isInvalid={!!errors.emailAddress}>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <FormLabel>E-Mail</FormLabel>
-          </Skeleton>
-          <Skeleton isLoaded={!isLoading}>
-            <Input
-              isDisabled
-              placeholder="john.doe@snek.at"
-              {...register('emailAddress', {
-                required: 'This is required',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: 'Invalid email address'
-                }
-              })}
-            />
-          </Skeleton>
-          <FormErrorMessage>{errors.emailAddress?.message}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl mt={4} isInvalid={!!errors.username}>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <FormLabel>Username</FormLabel>
-          </Skeleton>
-          <Skeleton isLoaded={!isLoading}>
-            <Input
-              placeholder="john.doe"
-              {...register('username', {
-                required: 'This is required'
-              })}
-            />
-          </Skeleton>
-          <FormErrorMessage>
-            {errors.details?.firstName?.message}
-          </FormErrorMessage>
-        </FormControl>
-
-        <Stack direction="row">
-          <Flex flex={1}>
-            <FormControl mt={4} isInvalid={!!errors.details?.lastName}>
-              <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-                <FormLabel>Firstname</FormLabel>
-              </Skeleton>
-              <Skeleton isLoaded={!isLoading}>
-                <Input
-                  placeholder="John"
-                  {...register('details.firstName', {})}
-                />
-              </Skeleton>
-              <FormErrorMessage>
-                {errors.details?.lastName?.message}
-              </FormErrorMessage>
-            </FormControl>
-          </Flex>
-          <Flex flex={1}>
-            <FormControl mt={4} isInvalid={!!errors.details?.lastName}>
-              <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-                <FormLabel>Lastname</FormLabel>
-              </Skeleton>
-              <Skeleton isLoaded={!isLoading}>
-                <Input
-                  width={'full'}
-                  placeholder="Doe"
-                  {...register('details.lastName', {})}
-                />
-              </Skeleton>
-              <FormErrorMessage>
-                {errors.details?.lastName?.message}
-              </FormErrorMessage>
-            </FormControl>
-          </Flex>
-        </Stack>
-
-        <FormControl mt={4} isInvalid={!!errors.password}>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <FormLabel>Password</FormLabel>
-          </Skeleton>
-          {changePasword ? (
+        <Stack spacing="4">
+          <FormControl>
+            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+              <FormLabel>ID</FormLabel>
+            </Skeleton>
             <Skeleton isLoaded={!isLoading}>
-              <PasswordInput
-                {...register('password', {
+              <Input placeholder={user?.id} disabled />
+            </Skeleton>
+          </FormControl>
+          <FormControl isInvalid={!!errors.emailAddress}>
+            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+              <FormLabel>E-Mail</FormLabel>
+            </Skeleton>
+            <Skeleton isLoaded={!isLoading}>
+              <Input
+                isDisabled
+                placeholder="john.doe@snek.at"
+                {...register('emailAddress', {
                   required: 'This is required',
                   pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    message:
-                      'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character'
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: 'Invalid email address'
                   }
                 })}
               />
             </Skeleton>
-          ) : (
+            <FormErrorMessage>{errors.emailAddress?.message}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={!!errors.username}>
             <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-              <Button onClick={() => setChangePassword(true)}>Change </Button>
+              <FormLabel>Username</FormLabel>
             </Skeleton>
-          )}
-          <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
-        </FormControl>
+            <Skeleton isLoaded={!isLoading}>
+              <Input
+                placeholder="john.doe"
+                {...register('username', {
+                  required: 'This is required'
+                })}
+              />
+            </Skeleton>
+            <FormErrorMessage>
+              {errors.details?.firstName?.message}
+            </FormErrorMessage>
+          </FormControl>
 
-        <FormControl mt={4} isInvalid={!!errors.isActive}>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <FormLabel>Active</FormLabel>
-          </Skeleton>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <Controller
-              control={control}
-              name="isActive"
-              defaultValue={user?.isActive}
-              render={({field: {value, onChange, onBlur, ref}}) => (
-                <Switch
-                  ref={ref}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  isChecked={value}
+          <Stack direction="row">
+            <Flex flex={1}>
+              <FormControl mt={4} isInvalid={!!errors.details?.lastName}>
+                <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+                  <FormLabel>Firstname</FormLabel>
+                </Skeleton>
+                <Skeleton isLoaded={!isLoading}>
+                  <Input
+                    placeholder="John"
+                    {...register('details.firstName', {})}
+                  />
+                </Skeleton>
+                <FormErrorMessage>
+                  {errors.details?.lastName?.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Flex>
+            <Flex flex={1}>
+              <FormControl mt={4} isInvalid={!!errors.details?.lastName}>
+                <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+                  <FormLabel>Lastname</FormLabel>
+                </Skeleton>
+                <Skeleton isLoaded={!isLoading}>
+                  <Input
+                    width={'full'}
+                    placeholder="Doe"
+                    {...register('details.lastName', {})}
+                  />
+                </Skeleton>
+                <FormErrorMessage>
+                  {errors.details?.lastName?.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Flex>
+          </Stack>
+
+          <FormControl isInvalid={!!errors.password}>
+            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+              <FormLabel>Password</FormLabel>
+            </Skeleton>
+            {changePasword ? (
+              <Skeleton isLoaded={!isLoading}>
+                <PasswordInput
+                  {...register('password', {
+                    required: 'This is required',
+                    pattern: {
+                      value:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      message:
+                        'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character'
+                    }
+                  })}
                 />
-              )}
-            />
-          </Skeleton>
-          <FormErrorMessage>{errors.isActive?.message}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl mt={4} isInvalid={!!errors.isAdmin}>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <FormLabel>Admin</FormLabel>
-          </Skeleton>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <Controller
-              control={control}
-              name="isAdmin"
-              defaultValue={user?.isAdmin}
-              render={({field: {value, onChange, onBlur, ref}}) => (
-                <Switch
-                  ref={ref}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  isChecked={value}
-                />
-              )}
-            />
-          </Skeleton>
-          <FormErrorMessage>{errors.isAdmin?.message}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl mt={4}>
-          <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-            <FormLabel>Created at</FormLabel>
-          </Skeleton>
-          <Skeleton isLoaded={!isLoading}>
-            <Input
-              placeholder={new Date(user?.createdAt ?? 0).toDateString()}
-              disabled
-            />
-          </Skeleton>
-        </FormControl>
-
-        <Box mt={8}>
-          <HStack width="full">
-            <ButtonGroup isDisabled={!isDirty}>
+              </Skeleton>
+            ) : (
               <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-                <Button type="submit" isLoading={isSubmitting}>
-                  Save Changes
+                <Button onClick={() => setChangePassword(true)}>Change </Button>
+              </Skeleton>
+            )}
+            <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={!!errors.isActive}>
+            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+              <FormLabel>Active</FormLabel>
+            </Skeleton>
+            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+              <Controller
+                control={control}
+                name="isActive"
+                defaultValue={user?.isActive}
+                render={({field: {value, onChange, onBlur, ref}}) => (
+                  <Switch
+                    ref={ref}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    isChecked={value}
+                  />
+                )}
+              />
+            </Skeleton>
+            <FormErrorMessage>{errors.isActive?.message}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Roles</FormLabel>
+
+            <Table>
+              <Thead>
+                <Tr>
+                  <Th>Role</Th>
+                  <Th>ID</Th>
+                  <Th>Active</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {auth.user?.resource?.roles ? (
+                  auth.user.resource.roles.map((role, index) => (
+                    <Tr key={index}>
+                      <Td>{role.description}</Td>
+                      <Td>{role.id}</Td>
+                      <Td textAlign="right">
+                        <Controller
+                          control={control}
+                          name={`roles.${index}` as const}
+                          render={({field: {value, onChange, ref}}) => (
+                            <Checkbox
+                              ref={ref}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                onChange(e.target.checked ? role : null)
+                              }}
+                              isChecked={value?.id === role.id}
+                            />
+                          )}
+                        />
+                      </Td>
+                    </Tr>
+                  ))
+                ) : (
+                  <Tr>
+                    <Td colSpan={3}>
+                      <HStack>
+                        <Text>
+                          No roles found. Please contact your administrator.
+                        </Text>
+                      </HStack>
+                    </Td>
+                  </Tr>
+                )}
+              </Tbody>
+            </Table>
+          </FormControl>
+
+          <FormControl isInvalid={!!errors.isAdmin}>
+            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+              <FormLabel>Admin</FormLabel>
+            </Skeleton>
+            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+              <Controller
+                control={control}
+                name="isAdmin"
+                defaultValue={user?.isAdmin}
+                render={({field: {value, onChange, onBlur, ref}}) => (
+                  <Switch
+                    ref={ref}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    isChecked={value}
+                  />
+                )}
+              />
+            </Skeleton>
+            <FormErrorMessage>{errors.isAdmin?.message}</FormErrorMessage>
+          </FormControl>
+
+          <FormControl>
+            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+              <FormLabel>Created at</FormLabel>
+            </Skeleton>
+            <Skeleton isLoaded={!isLoading}>
+              <Input
+                placeholder={new Date(user?.createdAt ?? 0).toDateString()}
+                disabled
+              />
+            </Skeleton>
+          </FormControl>
+
+          <Box mt={4}>
+            <HStack width="full">
+              <ButtonGroup isDisabled={!isDirty}>
+                <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+                  <Button type="submit" isLoading={isSubmitting}>
+                    Save Changes
+                  </Button>
+                </Skeleton>
+                <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+                  <Button variant="outline" onClick={onReset}>
+                    Cancel
+                  </Button>
+                </Skeleton>
+              </ButtonGroup>
+              <Skeleton width={'fit-content'} isLoaded={!isLoading}>
+                <Button variant="outline" onClick={handleDelete}>
+                  Delete
                 </Button>
               </Skeleton>
-              <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-                <Button variant="outline" onClick={onReset}>
-                  Cancel
-                </Button>
-              </Skeleton>
-            </ButtonGroup>
-            <Skeleton width={'fit-content'} isLoaded={!isLoading}>
-              <Button variant="outline" onClick={handleDelete}>
-                Delete
-              </Button>
-            </Skeleton>
-          </HStack>
-        </Box>
+            </HStack>
+          </Box>
+        </Stack>
       </form>
-    </Box>
+    </Stack>
   )
 }
 

@@ -31,6 +31,10 @@ export interface SnekUser {
   resource: {
     id: string
     name: string
+    roles: Array<{
+      id: string
+      description: string
+    }>
   }
 }
 
@@ -136,7 +140,11 @@ export const AuthenticationProvider: React.FC<{
             })),
             resource: {
               id: u.resource.id,
-              name: u.resource.name
+              name: u.resource.name,
+              roles: u.resource.roles.map(r => ({
+                id: r.id,
+                description: r.description
+              }))
             }
           },
           tokenPair: {
@@ -196,7 +204,11 @@ export const AuthenticationProvider: React.FC<{
         })),
         resource: {
           id: user.resource.id,
-          name: user.resource.name
+          name: user.resource.name,
+          roles: user.resource.roles.map(r => ({
+            id: r.id,
+            description: r.description
+          }))
         }
       }
     })

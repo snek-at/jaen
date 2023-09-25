@@ -23,6 +23,7 @@ export const useUser = (userId: string) => {
     }
     isActive: boolean
     isAdmin: boolean
+    roles: Array<{id: string; description: string}>
   }>()
 
   const checkErrors = (errors: Array<{message: string}>) => {
@@ -54,7 +55,11 @@ export const useUser = (userId: string) => {
           lastName: user.details?.lastName || undefined
         },
         isActive: user.isActive,
-        isAdmin: user.isAdmin
+        isAdmin: user.isAdmin,
+        roles: user.roles.map(role => ({
+          id: role.id,
+          description: role.description
+        }))
       }
     })
 
