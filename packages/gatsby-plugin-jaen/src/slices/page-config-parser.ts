@@ -12,17 +12,12 @@ export const usePageConfig = () => {
       if (field.type === 'function') {
         let result: any | null = null
         try {
-          console.log('field.value', field.value)
           const func: Function | undefined = new Function(
             `return ${field.value}`
           )()
 
-          console.log(func, typeof func)
-
           if (func) {
             result = await func({auth})
-
-            console.log('result', result)
           }
         } catch (e) {
           console.log('error', e)

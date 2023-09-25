@@ -27,6 +27,10 @@ export interface SnekUser {
     isVerified?: boolean
     isPrimary?: boolean
   }>
+  roles?: Array<{
+    id: string
+    description: string
+  }>
 
   resource: {
     id: string
@@ -138,6 +142,10 @@ export const AuthenticationProvider: React.FC<{
               isVerified: e.isVerified,
               isPrimary: e.isPrimary
             })),
+            roles: u.roles?.map(r => ({
+              id: r.id,
+              description: r.description
+            })),
             resource: {
               id: u.resource.id,
               name: u.resource.name,
@@ -201,6 +209,10 @@ export const AuthenticationProvider: React.FC<{
           emailAddress: e.emailAddress,
           isVerified: e.isVerified,
           isPrimary: e.isPrimary
+        })),
+        roles: user.roles?.map(r => ({
+          id: r.id,
+          description: r.description
         })),
         resource: {
           id: user.resource.id,
@@ -477,9 +489,24 @@ export const withAuthentication = <P extends {}>(
         return null
       }
 
-      const shouldRedirect =
-        !isAuthenticated ||
-        (pageConfig?.auth?.isAdminRequired && !user?.isAdmin)
+      let shouldRedirect = false
+
+      if (!isAuthenticated) {
+        shouldRedirect = true
+      } else if (pageConfig?.auth?.isAdminRequired && !user?.isAdmin) {
+        shouldRedirect = true
+      }
+
+      // Make sure at least one role of config.auth?.roles is in authentication.user?.roles
+      const configRoles = pageConfig.auth?.roles || []
+      const userRoles = user?.roles || []
+
+      if (
+        configRoles.length > 0 &&
+        !userRoles.some(role => configRoles.includes(role.id))
+      ) {
+        shouldRedirect = true
+      }
 
       if (shouldRedirect) {
         if (options?.onRedirectToLogin) {

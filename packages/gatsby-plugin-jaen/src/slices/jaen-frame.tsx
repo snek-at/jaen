@@ -199,6 +199,17 @@ const Slice: React.FC<SliceProps> = props => {
 
       if (config.auth?.isAdminRequired && !authentication.user?.isAdmin) return
 
+      // Make sure at least one role of config.auth?.roles is in authentication.user?.roles
+      const configRoles = config.auth?.roles || []
+      const userRoles = authentication.user?.roles || []
+
+      if (
+        configRoles.length > 0 &&
+        !userRoles.some(role => configRoles.includes(role.id))
+      ) {
+        return
+      }
+
       const group = config.menu.group || 'default'
 
       const groupType = config.menu.type === 'app' ? 'app' : 'user'

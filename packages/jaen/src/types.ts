@@ -48,7 +48,7 @@ export interface PageConfig {
   auth?: {
     isRequired?: boolean
     isAdminRequired?: boolean
-    // permissions?: string[]
+    roles?: string[]
   }
 
   layout?: {
