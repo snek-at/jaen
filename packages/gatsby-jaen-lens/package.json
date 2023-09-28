@@ -1,8 +1,17 @@
 {
   "name": "gatsby-jaen-lens",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "Snek lens plugin for Jaen to render proxied views of internal services behind a firewall.",
   "main": "index.js",
+  "scripts": {
+    "build": "tsc gatsby/* --outDir dist/gatsby --esModuleInterop --skipLibCheck --resolveJsonModule"
+  },
+  "files": [
+    "dist",
+    "src",
+    "gatsby-*",
+    "index.js"
+  ],
   "keywords": [
     "gatsby",
     "@atsnek/jaen",

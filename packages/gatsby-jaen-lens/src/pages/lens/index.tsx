@@ -18,6 +18,7 @@ import {
   Table,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr
@@ -293,6 +294,9 @@ export const pageConfig: PageConfig = {
   },
   layout: {
     name: 'jaen'
+  },
+  auth: {
+    isRequired: true
   },
 
   breadcrumbs: [

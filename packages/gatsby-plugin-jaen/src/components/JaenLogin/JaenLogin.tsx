@@ -27,7 +27,7 @@ import {FaArrowLeft} from '@react-icons/all-files/fa/FaArrowLeft'
 import Logo from '../Logo'
 import {JaenFullLogo} from '../shared/JaenLogo/JaenLogo'
 import {Link} from '../shared/Link/Link'
-import {PasswordField} from './components/PasswordField'
+import {PasswordField} from '../shared/PasswordField'
 
 export interface JaenLoginProps {
   onSignIn: (values: FormData) => Promise<void>

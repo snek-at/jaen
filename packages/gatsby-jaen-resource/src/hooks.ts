@@ -44,6 +44,8 @@ export const useUser = (userId: string) => {
     const [user, errors] = await sq.query(Query => {
       const user = Query.user({id: userId})
 
+      console.log('USER', user)
+
       return {
         id: user.id,
         primaryEmailAddress: user.primaryEmailAddress,

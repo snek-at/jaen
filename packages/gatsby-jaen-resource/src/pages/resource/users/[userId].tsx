@@ -110,9 +110,15 @@ const Page: React.FC<PageProps> = props => {
     reset,
     handleSubmit,
     control,
-    formState: {errors, isSubmitting, isDirty, isValid}
+    formState: {errors, isSubmitting, isDirty}
   } = useForm<FormValues>({
     defaultValues
+  })
+
+  const {remove, append, fields} = useFieldArray({
+    control,
+    name: 'roles',
+    keyName: 'key'
   })
 
   const {confirm} = useNotificationsContext()
@@ -339,20 +345,25 @@ const Page: React.FC<PageProps> = props => {
                       <Td>{role.description}</Td>
                       <Td>{role.id}</Td>
                       <Td textAlign="right">
-                        <Controller
-                          control={control}
-                          name={`roles.${index}` as const}
-                          render={({field: {value, onChange, ref}}) => (
-                            <Checkbox
-                              ref={ref}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                onChange(e.target.checked ? role : null)
-                              }}
-                              isChecked={value?.id === role.id}
-                            />
-                          )}
+                        <Checkbox
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            if (e.target.checked) {
+                              append(role)
+                            } else {
+                              const found = fields.findIndex(
+                                field => field.id === role.id
+                              )
+
+                              if (found > -1) {
+                                remove(found)
+                              }
+                            }
+                          }}
+                          isChecked={
+                            !!fields.find(field => field.id === role.id)
+                          }
                         />
                       </Td>
                     </Tr>

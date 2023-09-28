@@ -1,4 +1,4 @@
-import {Box, GlobalStyle, ChakraProvider} from '@chakra-ui/react'
+import {Box, GlobalStyle, ChakraProvider, ThemeProvider} from '@chakra-ui/react'
 import {LayoutProps} from '@atsnek/jaen'
 
 import {JaenPageLayout} from '../components/JaenPageLayout'
@@ -15,12 +15,12 @@ const Layout: React.FC<LayoutProps> = ({children, pageProps}) => {
     <JaenPageLayout layout={layout.type}>{children}</JaenPageLayout>
   ) : (
     <Box zIndex="1">
-      <ChakraProvider theme={userTheme}>
+      <ThemeProvider theme={userTheme}>
         <CustomLayout pageProps={pageProps}>
           <GlobalStyle />
           {children}
         </CustomLayout>
-      </ChakraProvider>
+      </ThemeProvider>
     </Box>
   )
 }
