@@ -13,8 +13,8 @@ export interface SchemaOrg {
   siteUrl: string
   datePublished: string | false
   defaultTitle: string
-  description: string
-  image: string
+  description?: string
+  image?: string
   isBlogPost: boolean
   organization?: Organization
 }
@@ -31,67 +31,69 @@ export const getSchemaOrg = ({
   title,
   url
 }: SchemaOrg) => {
-  const baseSchema = [
-    {
-      '@context': 'http://schema.org',
-      '@type': 'WebSite',
-      url,
-      name: title,
-      alternateName: defaultTitle
-    }
-  ]
+  const schema: {
+    '@context': string
+    '@graph': any[]
+  } = {
+    '@context': 'http://schema.org',
+    '@graph': []
+  }
 
-  const schema = isBlogPost
-    ? [
-        ...baseSchema,
-        {
-          '@context': 'http://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            {
-              '@type': 'ListItem',
-              position: 1,
-              item: {
-                '@id': url,
-                name: title,
-                image
-              }
+  schema['@graph'].push({
+    '@type': 'WebSite',
+    url,
+    name: title,
+    alternateName: defaultTitle
+  })
+
+  if (isBlogPost) {
+    schema['@graph'] = schema['@graph'].concat([
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            item: {
+              '@id': url,
+              name: title,
+              image
             }
-          ]
+          }
+        ]
+      },
+      {
+        '@type': 'BlogPosting',
+        url,
+        name: title,
+        alternateName: defaultTitle,
+        headline: title,
+        image: {
+          '@type': 'ImageObject',
+          url: image
         },
-        {
-          '@context': 'http://schema.org',
-          '@type': 'BlogPosting',
-          url,
-          name: title,
-          alternateName: defaultTitle,
-          headline: title,
-          image: {
+        description,
+        author: {
+          '@type': 'Person',
+          name: author?.name
+        },
+        publisher: {
+          '@type': 'Organization',
+          url: organization?.url,
+          logo: {
             '@type': 'ImageObject',
-            url: image
+            url: organization?.logo
           },
-          description,
-          author: {
-            '@type': 'Person',
-            name: author?.name
-          },
-          publisher: {
-            '@type': 'Organization',
-            url: organization?.url,
-            logo: {
-              '@type': 'ImageObject',
-              url: organization?.logo
-            },
-            name: organization?.name
-          },
-          mainEntityOfPage: {
-            '@type': 'WebSite',
-            '@id': siteUrl
-          },
-          datePublished
-        }
-      ]
-    : baseSchema
+          name: organization?.name
+        },
+        mainEntityOfPage: {
+          '@type': 'WebSite',
+          '@id': siteUrl
+        },
+        datePublished
+      }
+    ])
+  }
 
   return schema
 }

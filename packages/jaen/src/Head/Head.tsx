@@ -34,8 +34,11 @@ export const Head: React.FC<
 
   const description = jaenPageMetadata?.description || siteMetadata?.description
   const image = jaenPageMetadata?.image || siteMetadata?.image
-  const url = `${siteMetadata?.siteUrl}${props.location.pathname}`
-  const isBlogPost = !!jaenPageMetadata?.blogPost || false
+  const siteUrl = siteMetadata?.siteUrl || '/'
+  const url = siteMetadata?.siteUrl
+    ? `${siteMetadata?.siteUrl}${props.location.pathname}`
+    : props.location.pathname
+  const isBlogPost = !!jaenPageMetadata?.blogPost?.date || false
   const datePublished =
     (isBlogPost && jaenPageMetadata?.blogPost?.date) || false
   const fbAppID = siteMetadata?.social?.fbAppID
@@ -45,12 +48,12 @@ export const Head: React.FC<
     author: siteMetadata?.author,
     datePublished,
     defaultTitle,
-    description: description || '',
-    image: image || '',
+    description,
+    image,
     isBlogPost,
     organization: siteMetadata?.organization,
     title,
-    siteUrl: siteMetadata?.siteUrl || '',
+    siteUrl,
     url
   })
 
