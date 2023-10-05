@@ -34,6 +34,7 @@ const pagesSlice = createSlice({
         id,
         slug,
         jaenFields,
+        sections,
         jaenPageMetadata,
         parentPage,
         childPages,
@@ -54,6 +55,7 @@ const pagesSlice = createSlice({
           modifiedAt,
           ...(slug && {slug}),
           ...(jaenFields !== undefined && {jaenFields}),
+          ...(sections !== undefined && {sections}),
           jaenPageMetadata,
           ...(parentPage !== undefined && {parentPage}),
           ...(childPages && {childPages}),
@@ -106,6 +108,7 @@ const pagesSlice = createSlice({
           modifiedAt,
           slug,
           jaenFields: jaenFields || null,
+          sections,
           jaenPageMetadata: jaenPageMetadata || {
             title: 'New Page'
           },
