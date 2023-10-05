@@ -256,17 +256,17 @@ export const CMSManagementProvider = withRedux(
     ): void => {
       const page = pagesDict[pageId]
 
-      // check if slug is unique when moving page
-      if (updatedPage.parentPage?.id) {
-        const slug = updatedPage.slug || 'new-page'
+      // check if slug is unique when updating slug
+      const slug = updatedPage.slug || 'new-page'
 
-        const isSlugDuplicate = pages(updatedPage.parentPage?.id).some(
-          page => page.slug === slug && page.id !== pageId
-        )
+      const parentPage = updatedPage.parentPage || page?.parentPage
 
-        if (isSlugDuplicate) {
-          throw new DuplicateSlugError(slug)
-        }
+      const isSlugDuplicate = pages(parentPage?.id).some(
+        page => page.slug === slug && page.id !== pageId
+      )
+
+      if (isSlugDuplicate) {
+        throw new DuplicateSlugError(slug)
       }
 
       dispatch(
