@@ -193,7 +193,6 @@ export interface JaenPage {
    * - Used to determine the component to render.
    */
   template: string | null
-  childTemplates: string[]
   /**
    * Path to the component to render.
    *

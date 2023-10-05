@@ -94,7 +94,6 @@ The existing templates are: ${jaenTemplates
       slug,
       parentPage: page.parentPage?.id,
       childPages: page.childPages?.map(child => child.id) || [],
-      childTemplates: page.childTemplates || [],
       jaenPageMetadata: {
         ...page.jaenPageMetadata,
         title: page.jaenPageMetadata?.title || slug

@@ -55,8 +55,6 @@ export const onCreatePage = async ({
       id: jaenPageId
     }),
     childPages: jaenPageNode?.childPages || [],
-    childTemplates:
-      jaenPageNode?.childTemplates || pageConfig?.childTemplates || [],
     pageConfig
   }
 

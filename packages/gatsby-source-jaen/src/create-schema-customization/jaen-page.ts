@@ -14,7 +14,6 @@ export const createSchemaCustomization = async ({
       sections: [JaenSection!]!
 
       template: String
-      childTemplates: [String!]!
 
       buildPath: String @buildPath
       excludedFromIndex: Boolean

@@ -12,7 +12,6 @@ export const fragments = graphql`
     buildPath
     slug
     template
-    childTemplates
     excludedFromIndex
     jaenPageMetadata {
       title
@@ -54,7 +53,6 @@ export const fragments = graphql`
     jaenFields
     excludedFromIndex
     template
-    childTemplates
     parentPage {
       id
     }

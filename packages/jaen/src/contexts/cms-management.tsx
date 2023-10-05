@@ -369,10 +369,10 @@ export const CMSManagementProvider = withRedux(
           )
         }
 
-        if (page.childTemplates) {
+        if (page.pageConfig?.childTemplates) {
           const childTemplates: JaenTemplate[] = []
 
-          for (const childTemplateId of page.childTemplates) {
+          for (const childTemplateId of page.pageConfig?.childTemplates) {
             const childTemplate = templates.find(
               template => template.id === childTemplateId
             )
