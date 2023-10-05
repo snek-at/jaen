@@ -1,4 +1,4 @@
-import {GatsbyNode, Reporter, PluginOptions} from 'gatsby'
+import {GatsbyNode, PluginOptions, Reporter} from 'gatsby'
 import path from 'path'
 
 export interface JaenPluginOptions extends PluginOptions {
@@ -21,7 +21,7 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
   async (
-    {actions, loaders, stage, plugins},
+    {actions, loaders, stage, plugins, getConfig},
     pluginOptions: JaenPluginOptions
   ) => {
     const snekResourceId = pluginOptions.snekResourceId
@@ -33,6 +33,40 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
     }
 
     const {version} = await import('@atsnek/jaen/package.json')
+
+    const config = getConfig()
+
+    const babelLoaderRule = config.module.rules.find(
+      rule => String(rule.test) === String(/\.(js|mjs|jsx|ts|tsx)$/)
+    )
+
+    // Fix HMR by removing the pageConfig API from the babel-loader
+    const babelLoaderWithPlugin = {
+      ...babelLoaderRule,
+      use: ({resourceQuery, issuer}) => {
+        const babelLoaderOptions = {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              require.resolve('../../babel-plugin-remove-page-config.js')
+            ]
+          }
+        }
+
+        const existingLoaders = babelLoaderRule.use({resourceQuery, issuer})
+        return [babelLoaderOptions, ...existingLoaders]
+      }
+    }
+
+    config.module.rules = [
+      ...config.module.rules.filter(
+        rule => String(rule.test) !== String(/\.(js|mjs|jsx|ts|tsx)$/)
+      ),
+
+      babelLoaderWithPlugin
+    ]
+
+    actions.replaceWebpackConfig(config)
 
     if (stage === 'build-html' || stage === 'develop-html') {
       actions.setWebpackConfig({

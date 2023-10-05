@@ -1,13 +1,14 @@
 {
   "name": "gatsby-plugin-jaen",
-  "version": "1.0.0-rc.49",
+  "version": "1.0.0-rc.50",
   "main": "index.js",
   "types": "./src/index.ts",
   "files": [
     "dist",
     "src",
     "gatsby-*",
-    "index.js"
+    "index.js",
+    "babel-plugin-remove-page-config.js"
   ],
   "scripts": {
     "build": "tsc gatsby/* --outDir dist/gatsby --esModuleInterop --skipLibCheck --resolveJsonModule"
