@@ -40,6 +40,7 @@ export interface SignupProps {
 interface FormData {
   firstName: string
   lastName: string
+  username: string
   email: string
   password: string
 }
@@ -66,6 +67,12 @@ export const Signup: React.FC<SignupProps> = props => {
 
     try {
       await props.onSignUp(data)
+
+      setAlert({
+        status: 'success',
+        message: `Successfully signed up.`,
+        description: `Please check your email for a verification link.`
+      })
     } catch (e) {
       setAlert({
         status: 'error',
@@ -187,6 +194,16 @@ export const Signup: React.FC<SignupProps> = props => {
                     <FormErrorMessage>
                       {errors.email && 'Email is required'}
                     </FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel htmlFor="username">Username</FormLabel>
+                    <Input
+                      id="username"
+                      {...register('username', {
+                        required: true
+                      })}
+                    />
                   </FormControl>
 
                   <PasswordField

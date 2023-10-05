@@ -3763,6 +3763,13 @@
   dependencies:
     snek-query "*"
 
+"@snek-functions/origin@^0.8.21":
+  version "0.8.21"
+  resolved "https://registry.yarnpkg.com/@snek-functions/origin/-/origin-0.8.21.tgz#2abfb98747ac746bb9b3afa411e46869269c1cbd"
+  integrity sha512-Uf3IWwH6xU6P1LY6HK/bupjFx1TIJuRYF7rQ+F/jFvqEL6y+JiyNEtgvHWumBn1R44ohvWA8e0FqWsjy97MDcw==
+  dependencies:
+    snek-query "*"
+
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"

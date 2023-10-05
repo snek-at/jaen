@@ -1,6 +1,11 @@
-import {PageConfig, useAuthenticationContext} from '@atsnek/jaen'
+import {
+  PageConfig,
+  snekResourceId,
+  useAuthenticationContext
+} from '@atsnek/jaen'
 import {navigate, PageProps} from 'gatsby'
 import React from 'react'
+import {sq} from '@snek-functions/origin'
 
 import {Signup} from '../components/Signup/Signup'
 
@@ -21,9 +26,25 @@ const SignupPage: React.FC<PageProps> = () => {
       signInPath="/login"
       goBackPath="/"
       onSignUp={async data => {
-        alert(
-          'Sorry, registration is currently disabled. Please try again later.'
+        const [_, errors] = await sq.mutate(
+          m =>
+            m.userCreate({
+              resourceId: snekResourceId,
+              values: {
+                details: {
+                  firstName: data.firstName,
+                  lastName: data.lastName
+                },
+                username: data.username,
+                emailAddress: data.email,
+                password: data.password
+              }
+            }).id
         )
+
+        if (errors?.length > 0) {
+          throw errors[0]
+        }
       }}
     />
   )
