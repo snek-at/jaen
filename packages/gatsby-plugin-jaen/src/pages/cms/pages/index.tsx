@@ -6,6 +6,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react'
 import {FaArrowRight} from '@react-icons/all-files/fa/FaArrowRight'
 import {FaEdit} from '@react-icons/all-files/fa/FaEdit'
 import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
+import {FaClone} from '@react-icons/all-files/fa/FaClone'
 
 import {Pages} from '../../../components/cms/Pages/Pages'
 import {
@@ -220,6 +221,41 @@ const PagesPage: React.FC = () => {
       onTreeSelect={handleTreeSelect}
       disableNewButton={manager.templatesForPage(currentPage.id).length === 0}
       dangerZoneActions={[
+        {
+          title: 'Duplicate page',
+          description: 'This will duplicate the page with its subpages.',
+          buttonText: 'Duplicate page',
+          icon: FaClone,
+          onClick: async () => {
+            const slug = await prompt({
+              title: 'Duplicate page',
+              message:
+                'Please enter a new slug for the duplicated page. This will affect the path.',
+              confirmText: 'Duplicate',
+              cancelText: 'Cancel',
+              placeholder: `${currentPage.slug}-copy`
+            })
+
+            if (slug) {
+              try {
+                manager.clonePage(currentPage.id, slug)
+
+                toast({
+                  title: 'Page duplicated',
+                  description: `Page ${currentPage.slug} has been duplicated`,
+                  status: 'success'
+                })
+              } catch (e) {
+                toast({
+                  title: 'Could not duplicate page',
+                  description: e.message,
+                  status: 'error'
+                })
+              }
+            }
+          },
+          isDisabled: !currentPage.template
+        },
         {
           title: 'Move page',
           description: 'This will move the page and all its subpages.',

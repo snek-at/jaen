@@ -55,6 +55,7 @@ interface CMSManagementContextData {
   addPage: (page: Partial<JaenPage>) => string
   removePage: (pageId: string) => void
   updatePage: (pageId: string, updatedPage: Partial<JaenPage>) => void
+  clonePage: (pageId: string, slug?: string) => void
   setIsEditing: (editing: boolean) => void
 
   draft: {
@@ -88,6 +89,7 @@ const CMSManagementContext = createContext<CMSManagementContextData>({
   addPage: () => '',
   removePage: () => {},
   updatePage: () => {},
+  clonePage: () => {},
   setIsEditing: () => {},
   draft: {
     save: () => {},
@@ -297,6 +299,34 @@ export const CMSManagementProvider = withRedux(
       }
 
       deletePage(pageId)
+    }
+
+    const clonePage = (pageId: string, slug?: string) => {
+      const page = pagesDict[pageId]
+
+      if (!page) {
+        throw new Error(`Could not find page with id ${pageId}`)
+      }
+
+      const newPage: Partial<JaenPage> = {
+        ...page,
+        id: undefined,
+        slug: slug || page.slug + '-copy',
+        jaenPageMetadata: {
+          ...page.jaenPageMetadata,
+          title: page.jaenPageMetadata?.title + ' (copy)'
+        }
+      }
+
+      const newPageId = addPage(newPage)
+
+      if (page.childPages) {
+        for (const child of page.childPages) {
+          clonePage(child.id, child.slug)
+        }
+      }
+
+      return newPageId
     }
 
     const tree = useMemo(() => {
@@ -571,6 +601,7 @@ export const CMSManagementProvider = withRedux(
           addPage,
           removePage,
           updatePage,
+          clonePage,
           setIsEditing,
           draft: {
             save: saveDraft,

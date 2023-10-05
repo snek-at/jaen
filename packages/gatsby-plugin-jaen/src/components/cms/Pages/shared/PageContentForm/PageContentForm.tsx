@@ -12,6 +12,7 @@ import {
   Heading,
   HStack,
   Icon,
+  IconButton,
   Input,
   Stack,
   StackDivider,
@@ -31,6 +32,7 @@ import slugify from 'slugify'
 import FormMediaChooser from '../../../../../containers/form-media-chooser'
 import {Link} from '../../../../shared/Link'
 import {ChooseButton, ChooseButtonProps} from '../ChooseButton/ChooseButton'
+import {FaClone} from '@react-icons/all-files/fa/FaClone'
 
 const texts = {
   heading: {
