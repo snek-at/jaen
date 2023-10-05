@@ -247,17 +247,25 @@ const PagesPage: React.FC = () => {
             )
 
             if (parentPageId) {
-              manager.updatePage(currentPage.id, {
-                parentPage: {
-                  id: parentPageId
-                }
-              })
+              try {
+                manager.updatePage(currentPage.id, {
+                  parentPage: {
+                    id: parentPageId
+                  }
+                })
 
-              toast({
-                title: 'Page moved',
-                description: `Page ${currentPage.slug} has been moved`,
-                status: 'success'
-              })
+                toast({
+                  title: 'Page moved',
+                  description: `Page ${currentPage.slug} has been moved`,
+                  status: 'success'
+                })
+              } catch (e) {
+                toast({
+                  title: 'Could not move page',
+                  description: e.message,
+                  status: 'error'
+                })
+              }
             }
           },
           isDisabled: !currentPage.template
@@ -278,15 +286,23 @@ const PagesPage: React.FC = () => {
             })
 
             if (slug) {
-              manager.updatePage(currentPage.id, {
-                slug
-              })
+              try {
+                manager.updatePage(currentPage.id, {
+                  slug
+                })
 
-              toast({
-                title: 'Slug updated',
-                description: `Slug has been updated to ${slug}`,
-                status: 'success'
-              })
+                toast({
+                  title: 'Slug updated',
+                  description: `Slug has been updated to ${slug}`,
+                  status: 'success'
+                })
+              } catch (e) {
+                toast({
+                  title: 'Could not update slug',
+                  description: e.message,
+                  status: 'error'
+                })
+              }
             }
           },
           isDisabled: !currentPage.template
