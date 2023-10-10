@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react'
+import React, {useContext, useMemo, useState} from 'react'
 
 import {
   SectionBlockContextType,
@@ -10,6 +10,7 @@ import {actions} from '../redux/slices/page'
 import {JaenPage} from '../types'
 import {findSection} from '../utils/page/section'
 import {useContentManagement} from './use-content-management'
+import {EditingContext} from '../contexts/editing'
 
 export function useField<IValue>(
   name: string,
@@ -106,7 +107,12 @@ export function useField<IValue>(
 
   const staticField = getStaticField()
 
-  const {isEditing} = useContentManagement()
+  const editingContext = useContext(EditingContext)
+  const contentManagement = useContentManagement()
+
+  const isEditing = editingContext
+    ? editingContext.isEditing
+    : contentManagement.isEditing
 
   const props = useMemo(() => {
     return field?.props || staticField?.props || {}

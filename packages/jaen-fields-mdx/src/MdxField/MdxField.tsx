@@ -1,4 +1,4 @@
-import {connectField} from '@atsnek/jaen'
+import {connectField, EditingProvider} from '@atsnek/jaen'
 import React, {useEffect} from 'react'
 
 import {Preview} from './components/Preview.js'
@@ -70,11 +70,13 @@ export const UncontrolledMdxField: React.FC<{
     // Render editor in edit mode
 
     return (
-      <LayzEditor
-        components={components}
-        onUpdateValue={onUpdateValue}
-        rawValue={value}
-      />
+      <EditingProvider isEditing={isEditing}>
+        <LayzEditor
+          components={components}
+          onUpdateValue={onUpdateValue}
+          rawValue={value}
+        />
+      </EditingProvider>
     )
   } else {
     return <Preview components={components} mdast={value} />
