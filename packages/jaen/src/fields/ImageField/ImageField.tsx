@@ -1,4 +1,4 @@
-import {Box, Button, Center, IconButton, Text} from '@chakra-ui/react'
+import {Box, Button, Center, IconButton, Image, Text} from '@chakra-ui/react'
 import {GatsbyImage, getSrc} from 'gatsby-plugin-image'
 import {CSSProperties, forwardRef, ReactEventHandler} from 'react'
 import {FaImage} from '@react-icons/all-files/fa/FaImage'
@@ -135,7 +135,8 @@ export const ImageField = connectField<ImageFieldMediaId, ImageFieldProps>(
             fieldName: jaenField.name,
             imageProps,
             lightbox: isLightbox,
-            lightboxGroup
+            lightboxGroup,
+            defaultValue
           }}
         />
       </PageProvider>
@@ -155,15 +156,25 @@ const ImageComponent = forwardRef<
 
     lightbox?: boolean
     lightboxGroup?: boolean
+
+    defaultValue?: string
   }
 >(
   (
-    {mediaId, fieldName, imageProps, lightbox, lightboxGroup, ...props},
+    {
+      mediaId,
+      fieldName,
+      imageProps,
+      lightbox,
+      lightboxGroup,
+      defaultValue,
+      ...props
+    },
     ref
   ) => {
     const image = useImage(mediaId || '')
 
-    if (!image) {
+    if (!image && !defaultValue) {
       return (
         <Center
           ref={ref}
@@ -187,21 +198,31 @@ const ImageComponent = forwardRef<
         overflow="hidden"
         cursor={lightbox ? 'zoom-in' : 'default'}
         {...props}>
-        <GatsbyImage
-          image={image.image}
-          alt={image.description}
-          {...imageProps}
-          style={{
-            ...imageProps?.style,
-            width: '100%',
-            height: '100%'
-          }}
-        />
+        {image ? (
+          <GatsbyImage
+            image={image?.image}
+            alt={image.description}
+            {...imageProps}
+            style={{
+              ...imageProps?.style,
+              width: '100%',
+              height: '100%'
+            }}
+          />
+        ) : (
+          // @ts-ignore
+          <Image
+            {...imageProps}
+            src={defaultValue}
+            boxSize="full"
+            style={imageProps?.style}
+          />
+        )}
       </Box>
     )
 
     if (lightbox) {
-      const src = getSrc(image.image)
+      const src = image ? getSrc(image.image) : defaultValue
 
       element = <PhotoView src={src}>{element}</PhotoView>
 
