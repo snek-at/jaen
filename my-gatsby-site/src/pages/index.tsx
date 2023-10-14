@@ -26,6 +26,7 @@ import {graphql, HeadFC} from 'gatsby'
 import * as React from 'react'
 
 import {FaCogs} from '@react-icons/all-files/fa/FaCogs'
+import {UncontrolledMdxField} from '@atsnek/jaen-fields-mdx'
 
 const pageStyles = {
   color: '#232129',
@@ -207,8 +208,21 @@ const IndexPage: React.FC<PageProps> = () => {
 
   const index = useJaenPageIndex()
 
+  console.log('index', index)
+
   return (
     <>
+      <UncontrolledMdxField
+        components={{
+          Foo: () => {
+            return <Field.Image name="image" />
+          }
+        }}
+        onUpdateValue={() => {}}
+        value={undefined}
+        isEditing={true}
+      />
+
       <Text>{__JAEN_SOURCE_TEMPLATES__}</Text>
       <Text>{JSON.stringify(siteMetadata)}</Text>
       {/* <Text>{cm.colorMode}</Text> */}
@@ -229,7 +243,7 @@ const IndexPage: React.FC<PageProps> = () => {
         <Button variant="outline">test 2</Button>
         <main style={pageStyles}>
           <h1 style={headingStyles}>
-            Congratulations
+            Congratulations22222sss555
             <br />
             <span style={headingAccentStyles}>
               — you just made a Gatsby site! 🎉🎉🎉
