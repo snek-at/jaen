@@ -53,6 +53,18 @@ const PagesNew: React.FC = () => {
     string | undefined
   >(undefined)
 
+  const [addedPageId, setAddedPageId] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    if (addedPageId) {
+      navigate(manager.pagePath(addedPageId), {
+        replace: true
+      })
+
+      setAddedPageId(undefined)
+    }
+  }, [addedPageId, manager.pagePath])
+
   useEffect(() => {
     try {
       const pageId = atob(location.hash.replace('#', ''))
@@ -96,7 +108,7 @@ const PagesNew: React.FC = () => {
             status: 'success'
           })
 
-          navigate(`/cms/pages/#${btoa(addedPageId)}`)
+          setAddedPageId(addedPageId)
         }
       }}
     />
