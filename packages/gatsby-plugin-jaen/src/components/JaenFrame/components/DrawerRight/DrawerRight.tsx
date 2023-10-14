@@ -59,6 +59,7 @@ export const DrawerRight: React.FC<DrawerRightProps> = ({
         m="0"
         size="sm"
         cursor="pointer"
+        name={user.username}
         src={user.avatarURL}
         onClick={onToggle}>
         <AvatarBadge
