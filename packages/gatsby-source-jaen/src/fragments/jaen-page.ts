@@ -54,10 +54,10 @@ export const fragments = graphql`
     excludedFromIndex
     template
     parentPage {
-      id
+      ...JaenPageDataStructure
     }
     childPages {
-      id
+      ...JaenPageDataStructure
     }
     jaenPageMetadata {
       title
