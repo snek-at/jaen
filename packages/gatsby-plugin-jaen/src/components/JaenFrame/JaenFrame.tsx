@@ -1,4 +1,4 @@
-import {Box, HStack, Icon} from '@chakra-ui/react'
+import {Box, Flex, HStack, Icon} from '@chakra-ui/react'
 import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
 import React from 'react'
 
@@ -108,9 +108,9 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
             logo={props.navigation.app.logo}
           />
 
-          <Box
-            h="full"
+          <Flex
             maxW="12rem"
+            h="10"
             display={{
               base: 'none',
               md: 'block'
@@ -124,9 +124,9 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
                   content: 'none'
                 }
               }}>
-              {props.logo || <JaenLogo transform="scale(1.05)" />}
+              {props.logo || <JaenLogo />}
             </Link>
-          </Box>
+          </Flex>
 
           <Box
             display={{
@@ -137,9 +137,9 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
           </Box>
         </HStack>
 
-        <Box mx="auto" h="full">
+        <Flex mx="auto" alignItems="center" h="full">
           <Box
-            h="full"
+            h="10"
             maxW="12rem"
             display={{
               base: 'block',
@@ -154,12 +154,10 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
                   content: 'none'
                 }
               }}>
-              {props.logo || (
-                <JaenLogo h="full" w="auto" transform="scale(1.05)" />
-              )}
+              {props.logo || <JaenLogo h="full" w="auto" />}
             </Link>
           </Box>
-        </Box>
+        </Flex>
 
         <HStack
           spacing={4}

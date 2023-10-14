@@ -57,7 +57,9 @@ export const DrawerLeft: React.FC<DrawerLeftProps> = ({
           <DrawerContent borderRightRadius="xl">
             <DrawerHeader p="4">
               <HStack justifyContent="space-between">
-                <Box h="12">{logo || <JaenFullLogo />}</Box>
+                <Box h="10" maxW="12rem">
+                  {logo || <JaenFullLogo />}
+                </Box>
                 <DrawerCloseButton
                   ref={initialFocusRef}
                   pos="static"
