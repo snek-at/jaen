@@ -8,25 +8,32 @@ import {
   Stack
 } from '@chakra-ui/react'
 import React from 'react'
-import {Controller, useForm} from 'react-hook-form'
+import {Controller, DeepPartial, useForm} from 'react-hook-form'
 
 import {FieldGroup} from '../../../../components/shared/FieldGroup'
 import {FormImageChooser} from '../../../../components/shared/FormImageChooser'
 
 export interface AccountFormData {
-  firstName: string
-  lastName: string
+  details: {
+    firstName: string
+    lastName: string
+    avatarURL: string
+  }
   username: string
-  avatarURL: string
+}
+
+export interface AccountFormDataUpdate {
+  details: {
+    firstName: string
+    lastName: string
+    avatarFile: File | null
+  }
+  username: string
 }
 
 export interface AccountFormProps {
-  onSubmit: (
-    data: AccountFormData & {
-      avatarFile: File | null
-    }
-  ) => Promise<void>
-  defaultValues?: Partial<AccountFormData>
+  onSubmit: (data: AccountFormDataUpdate) => Promise<void>
+  defaultValues?: DeepPartial<AccountFormData>
 }
 
 export const AccountForm: React.FC<AccountFormProps> = ({
@@ -51,7 +58,12 @@ export const AccountForm: React.FC<AccountFormProps> = ({
 
     await onSubmit({
       ...data,
-      avatarFile
+      details: {
+        firstName: data.details.firstName,
+        lastName: data.details.lastName,
+
+        avatarFile
+      }
     })
 
     reset(data)
@@ -62,19 +74,19 @@ export const AccountForm: React.FC<AccountFormProps> = ({
       <FieldGroup title="Account">
         <Stack width="full" spacing="8" maxW="2xl">
           <Stack>
-            <FormControl id="firstName" isInvalid={!!errors.firstName}>
+            <FormControl id="firstName" isInvalid={!!errors.details?.firstName}>
               <FormLabel>First Name</FormLabel>
-              <Input placeholder="" {...register('firstName', {})} />
+              <Input placeholder="" {...register('details.firstName', {})} />
               <FormErrorMessage>
-                {errors.firstName && errors.firstName.message}
+                {errors.details?.firstName && errors.details.firstName.message}
               </FormErrorMessage>
             </FormControl>
 
-            <FormControl id="lastName" isInvalid={!!errors?.lastName}>
+            <FormControl id="lastName" isInvalid={!!errors?.details?.lastName}>
               <FormLabel>Last Name</FormLabel>
-              <Input placeholder="" {...register('lastName', {})} />
+              <Input placeholder="" {...register('details.lastName', {})} />
               <FormErrorMessage>
-                {errors.lastName && errors.lastName.message}
+                {errors.details?.lastName && errors.details.lastName.message}
               </FormErrorMessage>
             </FormControl>
           </Stack>
@@ -100,20 +112,23 @@ export const AccountForm: React.FC<AccountFormProps> = ({
 
             <Controller
               control={control}
-              name="avatarURL"
+              name="details.avatarURL"
               render={({field: {value}}) => {
                 return (
                   <FormImageChooser
                     value={value}
                     onChoose={file => {
                       setAvatarFile(file)
-                      setValue('avatarURL', URL.createObjectURL(file), {
+                      setValue('details.avatarURL', URL.createObjectURL(file), {
                         shouldDirty: true
                       })
                     }}
                     onRemove={() => {
                       setAvatarFile(null)
-                      setValue('avatarURL', defaultValues?.avatarURL || '')
+                      setValue(
+                        'details.avatarURL',
+                        defaultValues?.details?.avatarURL || ''
+                      )
                     }}
                     description="Upload a profile picture to make your account easier to recognize."
                   />

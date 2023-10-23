@@ -57,7 +57,7 @@ export interface AuthenticationContextType {
   updateDetails: (details: {
     firstName?: string
     lastName?: string
-    avatarFile?: File
+    avatarFile?: File | null
   }) => Promise<void>
 
   addEmail: (emailAddress: string) => Promise<void>
@@ -253,12 +253,20 @@ export const AuthenticationProvider: React.FC<{
     async details => {
       if (!user) return
 
-      let avatarBase64: string | undefined
+      let detailsToUpdate: Record<string, any> = {}
+
+      // loop through details and add to valuesToUpdate if not undefined and not equal to current value
+      for (const [key, value] of Object.entries(details)) {
+        // @ts-ignore
+        if (value !== undefined && value !== user.details?.[key]) {
+          detailsToUpdate[key] = value
+        }
+      }
 
       if (details.avatarFile) {
         const tool = await fromImage(details.avatarFile)
 
-        avatarBase64 = await tool.thumbnail(250, true).toDataURL()
+        detailsToUpdate.avatarFile = await tool.thumbnail(250, true).toDataURL()
       }
 
       // Assuming you have a function to update user details from your backend, e.g., updateUserDetails
@@ -266,10 +274,7 @@ export const AuthenticationProvider: React.FC<{
         const updateUser = m.userUpdate({
           id: user.id,
           values: {
-            details: {
-              ...details,
-              avatarFile: details.avatarFile ? avatarBase64 : ''
-            }
+            details: detailsToUpdate
           }
         })
 

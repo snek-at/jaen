@@ -22,7 +22,7 @@ const SettingsPage: React.FC<PageProps> = () => {
       }}
       onAccountFormSubmit={async data => {
         try {
-          await authentication.updateDetails(data)
+          await authentication.updateDetails(data.details)
 
           toast({
             title: 'Account updated',

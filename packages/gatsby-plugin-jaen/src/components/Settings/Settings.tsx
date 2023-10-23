@@ -1,7 +1,10 @@
 import {Heading, Stack, StackDivider} from '@chakra-ui/react'
 
 import {AccountForm} from './components/AccountForm'
-import {AccountFormData} from './components/AccountForm/AccountForm'
+import {
+  AccountFormData,
+  AccountFormDataUpdate
+} from './components/AccountForm/AccountForm'
 import {EmailForm} from './components/EmailForm'
 import {EmailFormData} from './components/EmailForm/EmailForm'
 import {PasswordForm} from './components/PasswordForm'
@@ -26,7 +29,7 @@ interface FormDataType {
 export interface SettingsProps {
   data: FormDataType
 
-  onAccountFormSubmit: (data: AccountFormData) => Promise<void>
+  onAccountFormSubmit: (data: AccountFormDataUpdate) => Promise<void>
   onEmailFormSubmit: (data: EmailFormData) => Promise<void>
   onEmailRemove: (emailId: string) => Promise<void>
   onEmailConfirmationResend: (emailId: string) => Promise<void>
@@ -34,7 +37,7 @@ export interface SettingsProps {
 }
 
 export const Settings: React.FC<SettingsProps> = props => {
-  const handleAccountFormSubmit = async (data: AccountFormData) => {
+  const handleAccountFormSubmit = async (data: AccountFormDataUpdate) => {
     console.log('Account form data:', data)
     // Add logic to handle account form submission
 
@@ -76,9 +79,11 @@ export const Settings: React.FC<SettingsProps> = props => {
       <AccountForm
         onSubmit={handleAccountFormSubmit}
         defaultValues={{
-          firstName: props.data.details?.firstName,
-          lastName: props.data.details?.lastName,
-          avatarURL: props.data.details?.avatarURL,
+          details: {
+            firstName: props.data.details?.firstName,
+            lastName: props.data.details?.lastName,
+            avatarURL: props.data.details?.avatarURL
+          },
           username: props.data.username
         }}
       />
