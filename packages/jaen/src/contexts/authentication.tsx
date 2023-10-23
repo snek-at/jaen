@@ -54,7 +54,11 @@ export interface AuthenticationContextType {
   logout: () => Promise<void>
   openLoginModal: () => void
 
-  updateDetails: (details: SnekUser['details']) => Promise<void>
+  updateDetails: (details: {
+    firstName?: string
+    lastName?: string
+    avatarFile?: File
+  }) => Promise<void>
 
   addEmail: (emailAddress: string) => Promise<void>
   removeEmail: (emailId: string) => Promise<void>
@@ -245,12 +249,8 @@ export const AuthenticationProvider: React.FC<{
     }
   }, [isAuthenticated])
 
-  const updateDetails = useCallback(
-    async (details: {
-      firstName?: string
-      lastName?: string
-      avatarFile?: File
-    }) => {
+  const updateDetails: AuthenticationContextType['updateDetails'] = useCallback(
+    async details => {
       if (!user) return
 
       let avatarBase64: string | undefined
@@ -267,8 +267,7 @@ export const AuthenticationProvider: React.FC<{
           id: user.id,
           values: {
             details: {
-              firstName: details.firstName,
-              lastName: details.lastName,
+              ...details,
               avatarFile: details.avatarFile ? avatarBase64 : ''
             }
           }
