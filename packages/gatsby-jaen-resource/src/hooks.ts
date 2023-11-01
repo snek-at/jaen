@@ -42,7 +42,7 @@ export const useUser = (userId: string) => {
 
   const fetchUser = useCallback(async () => {
     const [user, errors] = await sq.query(Query => {
-      const user = Query.user({id: userId})
+      const user = Query.user({id: userId, resourceId: snekResourceId})
 
       console.log('USER', user)
 
@@ -144,11 +144,11 @@ export const useUsers = () => {
 
   const addUser = async (values: UserCreate['values']) => {
     const [newUser, errors] = await sq.mutate(Mutation => {
-      const user = Mutation.userRegister({
+      const user = Mutation.userCreate({
         resourceId: snekResourceId,
         values,
         skipEmailVerification: true
-      })?.user
+      })
 
       return {
         id: user?.id,
