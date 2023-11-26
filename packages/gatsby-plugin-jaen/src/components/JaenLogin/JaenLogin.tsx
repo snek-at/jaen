@@ -152,6 +152,7 @@ export const JaenLogin: React.FC<JaenLoginProps> = props => {
                       Username or email address
                     </FormLabel>
                     <Input
+                      autoFocus
                       id="login"
                       {...register('login', {required: true})}
                     />

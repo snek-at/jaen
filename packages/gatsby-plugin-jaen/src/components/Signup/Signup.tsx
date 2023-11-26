@@ -154,6 +154,7 @@ export const Signup: React.FC<SignupProps> = props => {
                       isInvalid={!!errors.firstName}>
                       <FormLabel htmlFor="firstName">First name</FormLabel>
                       <Input
+                        autoFocus
                         id="firstName"
                         {...register('firstName', {
                           required: true
