@@ -58,7 +58,6 @@ const Page: React.FC<PageProps> = () => {
     const success = !errors || errors.length === 0
 
     if (success) {
-      alert(accessToken)
       toast({
         title: 'Success',
         description: 'Password updated successfully',
