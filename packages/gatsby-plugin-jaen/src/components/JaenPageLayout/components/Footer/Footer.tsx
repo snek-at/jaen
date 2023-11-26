@@ -21,7 +21,7 @@ export const Footer: React.FC<FooterProps> = props => {
             base: 'column-reverse',
             md: 'row'
           }}>
-          <Box maxW="64" h="10">
+          <Box maxW="64" h="full">
             <Logo />
           </Box>
 

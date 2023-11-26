@@ -57,7 +57,7 @@ export const DrawerLeft: React.FC<DrawerLeftProps> = ({
           <DrawerContent borderRightRadius="xl">
             <DrawerHeader p="4">
               <HStack justifyContent="space-between">
-                <Box h="10" maxW="12rem">
+                <Box h="full" maxW="12rem">
                   {logo || <JaenFullLogo />}
                 </Box>
                 <DrawerCloseButton

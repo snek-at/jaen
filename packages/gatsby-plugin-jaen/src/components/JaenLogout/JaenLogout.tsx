@@ -37,7 +37,7 @@ export const JaenLogout: React.FC<JaenLogoutProps> = props => {
             borderRadius={{base: 'none', sm: 'xl'}}>
             <Stack spacing="12">
               <HStack justify="center" py="4">
-                <Box maxW="64" h="10">
+                <Box maxW="64" h="full">
                   <Logo />
                 </Box>
               </HStack>

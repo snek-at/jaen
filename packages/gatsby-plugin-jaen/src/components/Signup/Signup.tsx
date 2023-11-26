@@ -137,7 +137,7 @@ export const Signup: React.FC<SignupProps> = props => {
               borderRadius={{base: 'none', sm: 'xl'}}>
               <Stack spacing="6">
                 <HStack justify="center" py="4">
-                  <Box maxW="64" h="10">
+                  <Box maxW="64" h="full">
                     <Logo />
                   </Box>
                 </HStack>

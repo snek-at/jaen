@@ -110,7 +110,7 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
 
           <Flex
             maxW="12rem"
-            h="10"
+            h="full"
             display={{
               base: 'none',
               md: 'block'
@@ -139,7 +139,7 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
 
         <Flex mx="auto" alignItems="center" h="full">
           <Box
-            h="10"
+            h="full"
             maxW="12rem"
             display={{
               base: 'block',
