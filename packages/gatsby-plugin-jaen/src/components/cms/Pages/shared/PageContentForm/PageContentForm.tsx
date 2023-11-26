@@ -253,6 +253,17 @@ export const PageContentForm: React.FC<PageContentFormProps> = ({
     setIsImageInUse(!!props.values?.image?.src)
   }, [props.values?.image?.src])
 
+  // watch blogPost.date and
+  const blogPost = watch('blogPost', {})
+
+  useEffect(() => {
+    if (blogPost) {
+      if (!blogPost.date) {
+        setValue('blogPost.date', new Date().toISOString().slice(0, 16))
+      }
+    }
+  }, [blogPost?.date])
+
   if (mode === 'edit' && isEditFormLocked) {
     return (
       <Stack w="full" divider={<StackDivider />} spacing="4">
@@ -374,17 +385,6 @@ export const PageContentForm: React.FC<PageContentFormProps> = ({
       </Stack>
     )
   }
-
-  // watch blogPost.date and
-  const blogPost = watch('blogPost', {})
-
-  useEffect(() => {
-    if (blogPost) {
-      if (!blogPost.date) {
-        setValue('blogPost.date', new Date().toISOString().slice(0, 16))
-      }
-    }
-  }, [blogPost?.date])
 
   return (
     <form
