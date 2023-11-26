@@ -375,6 +375,17 @@ export const PageContentForm: React.FC<PageContentFormProps> = ({
     )
   }
 
+  // watch blogPost.date and
+  const blogPost = watch('blogPost', {})
+
+  useEffect(() => {
+    if (blogPost) {
+      if (!blogPost.date) {
+        setValue('blogPost.date', new Date().toISOString().slice(0, 16))
+      }
+    }
+  }, [blogPost?.date])
+
   return (
     <form
       onSubmit={e => {
