@@ -49,7 +49,7 @@ const PasswordResetPage: React.FC<PageProps> = () => {
     emailAddress: string,
     otp: string,
     password: string
-  ): Promise<void> => {
+  ): Promise<boolean> => {
     try {
       const [_, errors] = await sq.mutate(m =>
         m.passwordResetConfirm({
@@ -69,12 +69,16 @@ const PasswordResetPage: React.FC<PageProps> = () => {
       })
 
       void navigate('/login/')
+
+      return true
     } catch (e) {
       toast({
         title: 'Error',
         description: e.message,
         status: 'error'
       })
+
+      return false
     }
   }
 

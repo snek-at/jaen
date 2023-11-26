@@ -44,7 +44,12 @@ const StepPassword: React.FC<StepEmailProps> = props => {
             name="password"
             rules={{required: 'This field is required'}}
             render={({field}) => (
-              <Input {...field} type="password" autoComplete="new-password" />
+              <Input
+                autoFocus
+                {...field}
+                type="password"
+                autoComplete="new-password"
+              />
             )}
           />
         </FormControl>

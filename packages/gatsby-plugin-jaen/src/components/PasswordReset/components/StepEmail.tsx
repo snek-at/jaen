@@ -41,6 +41,7 @@ const StepEmail: React.FC<StepEmailProps> = props => {
             initiate the password reset process.
           </FormLabel>
           <Input
+            autoFocus
             {...register('emailAddress', {
               required: true
             })}

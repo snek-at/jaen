@@ -27,11 +27,21 @@ const StepOTP: React.FC<StepEmailProps> = props => {
     handleSubmit,
     control,
     watch,
+    setError,
     formState: {isSubmitting, errors}
   } = useForm<FormData>()
 
   const onSubmit = async (data: FormData) => {
-    await props.onSubmit(data)
+    try {
+      await props.onSubmit(data)
+    } catch (e) {
+      // otp is wrong
+
+      setError('otp', {
+        type: 'manual',
+        message: 'The OTP is invalid. Please try again.'
+      })
+    }
   }
 
   const otp = watch('otp', '')
@@ -53,6 +63,7 @@ const StepOTP: React.FC<StepEmailProps> = props => {
                   render={({field}) => {
                     return (
                       <PinInput
+                        autoFocus
                         otp
                         size="lg"
                         onChange={value => {

@@ -39,7 +39,7 @@ interface PasswordResetProps {
     email: string,
     otp: string,
     password: string
-  ) => Promise<void>
+  ) => Promise<boolean>
 }
 
 interface FormData {
@@ -181,19 +181,14 @@ export const PasswordReset: React.FC<PasswordResetProps> = props => {
             {formStep === FormStep.OTP && (
               <StepOTP
                 onSubmit={async data => {
-                  try {
-                    await props.onResetPassword(
-                      formData.emailAddress,
-                      data.otp,
-                      formData.password
-                    )
-                  } catch (err) {
-                    setAlert({
-                      status: 'error',
-                      message: 'Failed to reset password',
-                      description: err.message
-                    })
-                    return
+                  const success = await props.onResetPassword(
+                    formData.emailAddress,
+                    data.otp,
+                    formData.password
+                  )
+
+                  if (!success) {
+                    throw new Error('Wrong OTP. Please try again.')
                   }
                 }}
               />
