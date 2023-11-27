@@ -102,8 +102,8 @@ jobs:
         with:
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: "."
+          ref: ${{github.ref}}
           fetch-depth: 0
-      - run: git checkout .
 
       - name: Detect package manager 🔍
         id: detect-package-manager
