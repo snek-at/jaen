@@ -206,6 +206,11 @@ export const PageContentForm: React.FC<PageContentFormProps> = ({
 
   const onSubmit: SubmitHandler<FormValues> = data => {
     try {
+      // make blogPost undefined if not in use or empty
+      if (!isBlogPostInUse || !data.blogPost?.date) {
+        data.blogPost = undefined
+      }
+
       return props.onSubmit(data)
     } catch (e) {
       if (e instanceof DuplicateSlugError) {
@@ -254,15 +259,22 @@ export const PageContentForm: React.FC<PageContentFormProps> = ({
   }, [props.values?.image?.src])
 
   // watch blogPost.date and
-  const blogPost = watch('blogPost', {})
+  const blogPost = watch('blogPost', undefined)
 
   useEffect(() => {
-    if (blogPost) {
+    if (blogPost && isBlogPostInUse) {
       if (!blogPost.date) {
         setValue('blogPost.date', new Date().toISOString().slice(0, 16))
       }
     }
   }, [blogPost?.date])
+
+  // reset blogPost.date if isBlogPostInUse is false
+  useEffect(() => {
+    if (!isBlogPostInUse) {
+      setValue('blogPost', props.values?.blogPost || undefined)
+    }
+  }, [isBlogPostInUse])
 
   if (mode === 'edit' && isEditFormLocked) {
     return (
