@@ -98,10 +98,11 @@ jobs:
       # Checkout step
       # See: https://github.com/actions/checkout
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: "."
+          fetch-depth: 2
       - run: git checkout HEAD^
 
       - name: Detect package manager 🔍
