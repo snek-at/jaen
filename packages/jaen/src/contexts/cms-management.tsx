@@ -508,6 +508,8 @@ export const CMSManagementProvider = withRedux(
 
     const publishDraft = useCallback(async () => {
       try {
+        const state = store.getState() as RootState
+
         const message = await notification.prompt(
           {
             icon: FaRocket,
@@ -516,12 +518,10 @@ export const CMSManagementProvider = withRedux(
             confirmText: 'Publish',
             cancelText: 'Cancel'
           },
-          `Update ${Object.values(dynamicPagesDict).length} pages`
+          `Update ${Object.values(state.page.pages.nodes).length} pages`
         )
 
         if (message) {
-          const state = store.getState() as RootState
-
           const migrationData = {
             message,
             createdAt: new Date().toISOString(),
