@@ -78,76 +78,75 @@ export const useJaenPageIndex = (
 } => {
   const {jaenPage, jaenPages} = usePageContext()
 
-  let id = jaenPage.id
-
-  if (props?.jaenPageId) {
-    id = props?.jaenPageId
-  } else if (props?.path) {
-    if (jaenPages == null) {
-      throw new Error('Unable to resolve page by path. No pages provided.')
-    }
-
-    const resolveJaenPageIdByPath = (
-      path: string,
-      staticPages: Array<Partial<JaenPage>>
-    ) => {
-      const state = store.getState() as IJaenState
-      const dynamicPageId = state.page.routing.dynamicPaths[path]?.pageId
-
-      if (dynamicPageId) {
-        return dynamicPageId
+  const id = useMemo(() => {
+    if (props?.jaenPageId) {
+      return props.jaenPageId
+    } else if (props?.path) {
+      if (jaenPages == null) {
+        throw new Error('Unable to resolve page by path. No pages provided.')
       }
 
-      return staticPages.find(page => page.buildPath === path)?.id
+      const path = props?.path
+
+      const newId = resolveJaenPageIdByPath(path, jaenPages)
+
+      if (!newId) {
+        throw new Error(`Could not resolve page by path: ${path}`)
+      }
+
+      return newId
     }
 
-    const path = props?.path
-
-    const newId = resolveJaenPageIdByPath(path, jaenPages)
-
-    if (!newId) {
-      throw new Error(`Could not resolve page by path: ${path}`)
-    }
-
-    id = newId
-  }
+    return jaenPage.id
+  }, [jaenPage, jaenPages, props])
 
   const staticChildren = useMemo(() => {
-    const jaenPagesChildren: Array<{id: string} & Partial<JaenPage>> =
-      jaenPages?.find(page => page.id === id)?.childPages || []
-
     let children: Array<{id: string} & Partial<JaenPage>> = []
 
     if (jaenPage.id === id) {
       children = jaenPage.childPages || []
+    } else {
+      children = jaenPages?.find(page => page.id === id)?.childPages || []
     }
 
-    const mergedChildren = [...children, ...jaenPagesChildren]
-
     // Filter out duplicates based on the ID
-    const uniqueChildren = mergedChildren.filter(
+    const uniqueChildren = children.filter(
       (child, index, self) => index === self.findIndex(c => c.id === child.id)
     )
 
     return uniqueChildren
   }, [jaenPage, jaenPage.childPages, jaenPages, id])
 
-  const [dynamicChildrenIds, setDynamicChildrenIds] = useState(() => {
-    const state = store.getState() as IJaenState
+  const getDynamicChildren = () => {
+    const state = store.getState() as RootState
 
-    return state.page.pages.nodes[id]?.childPages
-  })
+    const page = state.page.pages.nodes[id]
+    if (page?.childPages) {
+      const actualPages = []
+
+      for (const {id, deleted} of page.childPages) {
+        if (deleted) {
+          continue
+        }
+
+        const actualChild = state.page.pages.nodes[id]
+        if (actualChild) {
+          actualPages.push(actualChild)
+        }
+      }
+
+      return actualPages as JaenPage[]
+    }
+
+    return []
+  }
+
+  const [dynamicChildren, setDynamicChildren] =
+    useState<JaenPage[]>(getDynamicChildren)
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
-      const state = store.getState() as RootState
-
-      const page = state.page.pages.nodes[id]
-      if (page) {
-        const onlyNotDeleted = page.childPages?.filter(c => !c.deleted)
-
-        setDynamicChildrenIds(onlyNotDeleted)
-      }
+      setDynamicChildren(getDynamicChildren())
     })
 
     return () => {
@@ -155,28 +154,12 @@ export const useJaenPageIndex = (
     }
   }, [id])
 
-  const [dynamicChildren, setDynamicChildren] = useState<JaenPage[]>([])
-
-  useEffect(() => {
-    if (dynamicChildrenIds) {
-      const state = store.getState() as IJaenState
-
-      const dynamicJaenPages = state.page.pages.nodes
-      const ds = dynamicChildrenIds.map(({id}) => ({
-        id,
-        ...dynamicJaenPages[id]
-      })) as JaenPage[]
-
-      setDynamicChildren(ds)
-    }
-  }, [dynamicChildrenIds])
-
   // merge children with staticChildren by id
   const childPages = useMemo(() => {
     // This is a double check for deleted pages just in case
     let mergedChildren = deepmerge(staticChildren, dynamicChildren, {
       arrayMerge: deepmergeArrayIdMerge
-    }).filter(c => !c.excludedFromIndex && !c.deleted)
+    }).filter(c => !c.excludedFromIndex || !c.deleted)
 
     if (props) {
       const {filter, sort} = props
@@ -205,4 +188,18 @@ export const useJaenPageIndex = (
       )
     }
   }
+}
+
+const resolveJaenPageIdByPath = (
+  path: string,
+  staticPages: Array<Partial<JaenPage>>
+) => {
+  const state = store.getState() as IJaenState
+  const dynamicPageId = state.page.routing.dynamicPaths[path]?.pageId
+
+  if (dynamicPageId) {
+    return dynamicPageId
+  }
+
+  return staticPages.find(page => page.buildPath === path)?.id
 }
