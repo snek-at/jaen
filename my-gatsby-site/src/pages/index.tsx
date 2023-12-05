@@ -317,13 +317,31 @@ export const pageConfig: PageConfig = {
   childTemplates: ['BlogPage'],
   breadcrumbs: [
     async () => {
-      // fetch random data from api
-      const res = await fetch('https://randomuser.me/api/')
-      const data = await res.json()
+      // // fetch random data from api
+      // const res = await fetch('https://randomuser.me/api/')
+      // const data = await res.json()
+
+      const randomUsernames = [
+        'johndoe',
+        'janedoe',
+        'johnsmith',
+        'janesmith',
+        'johnjones',
+        'janejones',
+        'johndoe2',
+        'janedoe2',
+        'johnsmith2',
+        'janesmith2',
+        'johnjones2',
+        'janejones2'
+      ]
+
+      const randomUsername =
+        randomUsernames[Math.floor(Math.random() * randomUsernames.length)]
 
       return {
-        label: data.results[0].name.first,
-        path: `/user/${data.results[0].name.first}`
+        label: randomUsername,
+        path: `/user/${randomUsername}`
       }
     }
   ],
