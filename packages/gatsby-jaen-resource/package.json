@@ -1,6 +1,6 @@
 {
   "name": "gatsby-jaen-resource",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Resource management plugin for Jaen",
   "main": "index.js",
   "keywords": [
