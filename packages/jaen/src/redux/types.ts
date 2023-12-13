@@ -12,15 +12,6 @@ export interface IPageState {
     registeredPageFields: Record<string, number>
     nodes: Record<string, Partial<JaenPage>>
   }
-  routing: {
-    dynamicPaths: Record<
-      string,
-      {
-        pageId: string
-        templateName: string
-      }
-    >
-  }
 }
 
 export interface IStatusState {

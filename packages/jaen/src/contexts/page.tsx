@@ -2,9 +2,9 @@ import deepmerge from 'deepmerge'
 import {createContext, useContext, useEffect, useMemo, useState} from 'react'
 
 import {RootState, store} from '../redux'
-import {IJaenState} from '../redux/types'
 import {JaenPage} from '../types'
 import {deepmergeArrayIdMerge} from '../utils/deepmerge'
+import {useDynamicPaths} from '../hooks/use-dynamic-paths'
 
 export interface PageProviderProps {
   jaenPage: {
@@ -78,6 +78,10 @@ export const useJaenPageIndex = (
 } => {
   const {jaenPage, jaenPages} = usePageContext()
 
+  const paths = useDynamicPaths({
+    staticPages: (jaenPages || []) as any
+  })
+
   const id = useMemo(() => {
     if (props?.jaenPageId) {
       return props.jaenPageId
@@ -88,7 +92,7 @@ export const useJaenPageIndex = (
 
       const path = props?.path
 
-      const newId = resolveJaenPageIdByPath(path, jaenPages)
+      const newId = paths[path]?.jaenPageId
 
       if (!newId) {
         throw new Error(`Could not resolve page by path: ${path}`)
@@ -98,7 +102,7 @@ export const useJaenPageIndex = (
     }
 
     return jaenPage.id
-  }, [jaenPage, jaenPages, props])
+  }, [jaenPage, jaenPages, props, paths])
 
   const staticChildren = useMemo(() => {
     let children: Array<{id: string} & Partial<JaenPage>> = []
@@ -188,18 +192,4 @@ export const useJaenPageIndex = (
       )
     }
   }
-}
-
-const resolveJaenPageIdByPath = (
-  path: string,
-  staticPages: Array<Partial<JaenPage>>
-) => {
-  const state = store.getState() as IJaenState
-  const dynamicPageId = state.page.routing.dynamicPaths[path]?.pageId
-
-  if (dynamicPageId) {
-    return dynamicPageId
-  }
-
-  return staticPages.find(page => page.buildPath === path)?.id
 }

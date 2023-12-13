@@ -11,9 +11,6 @@ export const pageInitialState: IPageState = {
     lastAddedNodeId: undefined,
     registeredPageFields: {},
     nodes: {}
-  },
-  routing: {
-    dynamicPaths: {}
   }
 }
 
