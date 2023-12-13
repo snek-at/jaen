@@ -60,7 +60,7 @@ export function useField<IValue>(
     return undefined
   }
 
-  const getField = () => {
+  const getField = (): ReturnType<typeof getPageField> => {
     const state = store.getState() as RootState
 
     const page = state.page.pages.nodes[jaenPage.id]
@@ -90,6 +90,10 @@ export function useField<IValue>(
       }
     | undefined
   >(getField)
+
+  React.useEffect(() => {
+    setField(getField)
+  }, [jaenPage.id, getField])
 
   React.useEffect(() => {
     const unsubscribe = store.subscribe(() => {
