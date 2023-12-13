@@ -23,6 +23,10 @@ const BlogPage: React.FC<PageProps> = props => {
         }}>
         Navigate
       </Button>
+
+      <pre style={{whiteSpace: 'pre-wrap'}}>
+        {JSON.stringify(index, null, 2)}
+      </pre>
     </main>
   )
 }
