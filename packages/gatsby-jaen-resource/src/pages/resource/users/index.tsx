@@ -328,13 +328,7 @@ const AddUserControl = () => {
                 <FormLabel>Password</FormLabel>
                 <PasswordInput
                   {...register('password', {
-                    required: 'This is required',
-                    pattern: {
-                      value:
-                        /^(?:(?=.*[a-z])(?:(?=.*[A-Z])(?=.*[\d\W])|(?=.*\W)(?=.*\d))|(?=.*\W)(?=.*[A-Z])(?=.*\d)).{8,}$/,
-                      message:
-                        'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character'
-                    }
+                    required: 'This is required'
                   })}
                 />
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
