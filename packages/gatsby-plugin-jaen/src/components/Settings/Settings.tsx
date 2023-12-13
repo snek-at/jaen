@@ -1,4 +1,10 @@
-import {Heading, Stack, StackDivider} from '@chakra-ui/react'
+import {
+  Button,
+  ButtonGroup,
+  Heading,
+  Stack,
+  StackDivider
+} from '@chakra-ui/react'
 
 import {AccountForm} from './components/AccountForm'
 import {
@@ -9,6 +15,7 @@ import {EmailForm} from './components/EmailForm'
 import {EmailFormData} from './components/EmailForm/EmailForm'
 import {PasswordForm} from './components/PasswordForm'
 import {PasswordFormData} from './components/PasswordForm/PasswordForm'
+import {useState} from 'react'
 
 interface FormDataType {
   username?: string
@@ -34,6 +41,9 @@ export interface SettingsProps {
   onEmailRemove: (emailId: string) => Promise<void>
   onEmailConfirmationResend: (emailId: string) => Promise<void>
   onPasswordFormSubmit: (data: PasswordFormData) => Promise<void>
+
+  onExportDataSubmit: () => Promise<void>
+  onDeleteAccountSubmit: () => Promise<void>
 }
 
 export const Settings: React.FC<SettingsProps> = props => {
@@ -72,6 +82,24 @@ export const Settings: React.FC<SettingsProps> = props => {
     await props.onPasswordFormSubmit(data)
   }
 
+  const [isExportingData, setIsExportingData] = useState(false)
+  const handleExportDataSubmit = async () => {
+    setIsExportingData(true)
+    // Add logic to handle data export
+
+    await props.onExportDataSubmit()
+    setIsExportingData(false)
+  }
+
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false)
+  const handleDeleteAccountSubmit = async () => {
+    setIsDeletingAccount(true)
+    // Add logic to handle account deletion
+
+    await props.onDeleteAccountSubmit()
+    setIsDeletingAccount(false)
+  }
+
   return (
     <Stack spacing="4" divider={<StackDivider />} px={{base: '4', md: '10'}}>
       <Heading size="sm">Settings</Heading>
@@ -93,10 +121,25 @@ export const Settings: React.FC<SettingsProps> = props => {
         onResendVerification={handleEmailConfirmationResend}
         defaultValues={{emails: props.data.emails || []}}
       />
-      <PasswordForm
-        onSubmit={handlePasswordFormSubmit}
-        passwordResetPath="/password_reset"
-      />
+      <PasswordForm onSubmit={handlePasswordFormSubmit} />
+
+      <ButtonGroup justifyContent="flex-end">
+        <Button
+          isLoading={isExportingData}
+          onClick={handleExportDataSubmit}
+          type="submit"
+          variant="outline">
+          Export GDPR data
+        </Button>
+
+        <Button
+          isLoading={isDeletingAccount}
+          onClick={handleDeleteAccountSubmit}
+          type="submit"
+          colorScheme="red">
+          Delete account
+        </Button>
+      </ButtonGroup>
     </Stack>
   )
 

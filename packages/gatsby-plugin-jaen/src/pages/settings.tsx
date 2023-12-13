@@ -11,7 +11,7 @@ import {Settings} from '../components/Settings'
 const SettingsPage: React.FC<PageProps> = () => {
   const authentication = useAuthenticationContext()
 
-  const {toast} = useNotificationsContext()
+  const {toast, confirm} = useNotificationsContext()
 
   return (
     <Settings
@@ -92,6 +92,57 @@ const SettingsPage: React.FC<PageProps> = () => {
             title: 'Verification email sent',
             status: 'success'
           })
+        } catch (e) {
+          toast({
+            title: 'Error',
+            description: e.message,
+            status: 'error'
+          })
+        }
+      }}
+      onExportDataSubmit={async () => {
+        try {
+          await authentication.exportData()
+
+          toast({
+            title:
+              "The data's being exported. You'll receive an email shortly.",
+            status: 'success'
+          })
+        } catch (e) {
+          toast({
+            title: 'Error',
+            description: e.message,
+            status: 'error'
+          })
+        }
+      }}
+      onDeleteAccountSubmit={async () => {
+        try {
+          const confirmed1 = await confirm({
+            title: 'Delete account',
+            message: 'Are you sure you want to delete your account?',
+            confirmText: 'Delete',
+            cancelText: 'Cancel'
+          })
+
+          if (!confirmed1) {
+            return
+          }
+
+          const confirmed2 = await confirm({
+            title: 'Delete account',
+            message:
+              'Are you really sure you want to delete your account? This action is irreversible.',
+            confirmText: "Delete, I'm sure",
+            cancelText: 'Cancel'
+          })
+
+          if (!confirmed2) {
+            return
+          }
+
+          await authentication.deleteUser()
         } catch (e) {
           toast({
             title: 'Error',

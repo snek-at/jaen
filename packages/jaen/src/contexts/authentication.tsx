@@ -66,6 +66,9 @@ export interface AuthenticationContextType {
   emailConfirmationResend: (emailId: string) => Promise<void>
 
   updatePassword: (password: string) => Promise<void>
+
+  exportData: () => Promise<void>
+  deleteUser: () => Promise<void>
 }
 
 export const AuthenticationContext = createContext<AuthenticationContextType>({
@@ -79,7 +82,9 @@ export const AuthenticationContext = createContext<AuthenticationContextType>({
   addEmail: () => Promise.resolve(),
   removeEmail: () => Promise.resolve(),
   emailConfirmationResend: () => Promise.resolve(),
-  updatePassword: () => Promise.resolve()
+  updatePassword: () => Promise.resolve(),
+  exportData: () => Promise.resolve(),
+  deleteUser: () => Promise.resolve()
 })
 
 export const AuthenticationProvider: React.FC<{
@@ -413,6 +418,42 @@ export const AuthenticationProvider: React.FC<{
     [user]
   )
 
+  const exportData = useCallback(async () => {
+    // Assuming you have a function to export data from your backend, e.g., exportData
+    const [exportedData, errors] = await sq.mutate(m => {
+      const exportData = m.userExportData
+
+      return exportData
+    })
+
+    const isSuccess = !!exportedData && !errors
+
+    if (!isSuccess) {
+      throw new Error(errors?.[0]?.message ?? 'Failed to export data')
+    }
+  }, [])
+
+  const deleteUser = useCallback(async () => {
+    if (!user) return
+
+    // Assuming you have a function to delete an account from your backend, e.g., deleteAccount
+    const [deletedAccount, errors] = await sq.mutate(m => {
+      const deleteAccount = m.userDelete({
+        id: user.id
+      })
+
+      return deleteAccount
+    })
+
+    const isSuccess = !!deletedAccount && !errors
+
+    if (!isSuccess) {
+      throw new Error(errors?.[0]?.message ?? 'Failed to delete account')
+    }
+
+    await logout()
+  }, [user])
+
   const value = useMemo(() => {
     return {
       isAuthenticated,
@@ -425,7 +466,9 @@ export const AuthenticationProvider: React.FC<{
       addEmail,
       removeEmail,
       emailConfirmationResend,
-      updatePassword
+      updatePassword,
+      exportData,
+      deleteUser
     }
   }, [
     isAuthenticated,
@@ -438,7 +481,9 @@ export const AuthenticationProvider: React.FC<{
     addEmail,
     removeEmail,
     emailConfirmationResend,
-    updatePassword
+    updatePassword,
+    exportData,
+    deleteUser
   ])
 
   const JaenLogin = props.JaenLoginComponent

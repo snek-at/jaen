@@ -7,13 +7,11 @@ import {
   Text,
   Button,
   ButtonGroup,
-  HStack,
   FormErrorMessage
 } from '@chakra-ui/react'
 import {useForm, Controller} from 'react-hook-form'
 
 import {FieldGroup} from '../../../../components/shared/FieldGroup'
-import {Link} from '../../../../components/shared/Link'
 
 export interface PasswordFormData {
   password: string
@@ -22,13 +20,9 @@ export interface PasswordFormData {
 
 export interface PasswordFormProps {
   onSubmit: (data: PasswordFormData) => Promise<void>
-  passwordResetPath: string
 }
 
-export const PasswordForm: React.FC<PasswordFormProps> = ({
-  onSubmit,
-  passwordResetPath
-}) => {
+export const PasswordForm: React.FC<PasswordFormProps> = ({onSubmit}) => {
   const {
     handleSubmit,
     control,
@@ -106,14 +100,11 @@ export const PasswordForm: React.FC<PasswordFormProps> = ({
               characters including a number and a lowercase letter.
             </Text>
 
-            <HStack spacing="4">
+            <ButtonGroup>
               <Button isLoading={isSubmitting} type="submit" variant="outline">
                 Update password
               </Button>
-              <Link fontSize="sm" to={passwordResetPath}>
-                I forgot my password
-              </Link>
-            </HStack>
+            </ButtonGroup>
           </Stack>
         </Stack>
       </FieldGroup>
