@@ -47,6 +47,8 @@ export default <RootState extends {}>(persistKey: string) => {
   }
 
   const persistState = (store: Store) => {
+    saveState(store.getState() as RootState)
+
     store.subscribe(() => {
       saveState(store.getState() as RootState)
     })

@@ -149,6 +149,8 @@ export const useJaenPageIndex = (
     useState<JaenPage[]>(getDynamicChildren)
 
   useEffect(() => {
+    setDynamicChildren(getDynamicChildren())
+
     const unsubscribe = store.subscribe(() => {
       setDynamicChildren(getDynamicChildren())
     })
