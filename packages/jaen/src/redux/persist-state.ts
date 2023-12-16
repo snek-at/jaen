@@ -16,6 +16,11 @@ export default <RootState extends {}>(persistKey: string) => {
   }
 
   const saveState = (state: RootState) => {
+    // skip if localStorage is not available
+    if (typeof window === 'undefined') {
+      return
+    }
+
     try {
       // recursively remove all isLoading and error properties
       const removeLoadingAndError = (obj: Record<string, any>) => {
