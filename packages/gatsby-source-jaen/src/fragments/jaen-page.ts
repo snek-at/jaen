@@ -9,6 +9,8 @@ export const fragments = graphql`
 
   fragment JaenPageDataStructure on JaenPage {
     id
+    createdAt
+    modifiedAt
     buildPath
     slug
     template
@@ -46,6 +48,7 @@ export const fragments = graphql`
   }
 
   fragment JaenPageData on JaenPage {
+    ...JaenPageDataStructure
     pageConfig
     id
     buildPath
