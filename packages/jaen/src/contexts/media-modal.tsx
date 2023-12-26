@@ -22,7 +22,7 @@ const MediaModalContext = createContext<MediaModalContextType>({
 })
 
 export interface MediaModalProviderProps {
-  MediaModalComponent: React.LazyExoticComponent<any>
+  MediaModalComponent: React.LazyExoticComponent<React.FC<any>>
   children: React.ReactNode
 }
 
