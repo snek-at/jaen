@@ -44,7 +44,9 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
       }>(link, {cache})
 
       jaenData.patches.push({
-        createdAt: response.createdAt || new Date().toISOString(),
+        createdAt: response.createdAt || new Date(
+          2001, 20, 10
+        ),
         title: response.message,
         url: link
       })
@@ -56,15 +58,19 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
       }
     }
 
+    const contentDigest = createContentDigest(jaenData)
+
     // 3. Create JaenData node
     const jaenDataNode = {
       id: createNodeId('JaenData'),
       internal: {
         type: 'JaenData',
-        contentDigest: createContentDigest(jaenData)
+        contentDigest,
       },
       ...jaenData
     }
+
+
 
     // 3. Deep remove all objects that contains the key 'deleted' with value true
 
@@ -94,6 +100,9 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
 
     // 5. Create JaenData node using createNode action
     await createNode(jaenDataNode)
+
+    // 6. Cache the contentDigest of the JaenData node
+    await cache.set('JaenDataContentDigest', contentDigest)
 
     // Log a success message using the reporter
     reporter.info('Nodes sourced and created successfully!')

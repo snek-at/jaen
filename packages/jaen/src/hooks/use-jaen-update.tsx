@@ -8,30 +8,14 @@ declare global {
 
 export const useJaenUpdate = () => {
   const key = 'ljch'
-  // is undefined when running in development mode
-  const latestWebpackCompilationHash =
-    typeof window !== 'undefined' ? window.___webpackCompilationHash : undefined
+  // @ts-ignore
+  const latestWebpackCompilationHash = __JAEN_DATA_CONTENT_DIGEST__
 
   const isDisabled = latestWebpackCompilationHash === undefined
 
   const isJaenUpdate = () => {
     if (typeof window === 'undefined') {
       return false
-    }
-
-    // set the latestJaenCompilationHash to the latest webpack compilation hash if
-    // the `jaen-state` key is set in localStorage. This is to ensure that there is only
-    // a incoming build when the user has logged in to jaen.
-
-    // event listener on localStorage to update the latestJaenCompilationHash
-    // when the `jaen-state` key is set.
-
-    if (latestWebpackCompilationHash) {
-      const isJaenStateKeySet = localStorage.getItem(persistKey) !== null
-
-      if (isJaenStateKeySet) {
-        localStorage.setItem(key, latestWebpackCompilationHash)
-      }
     }
 
     const latestJaenCompilationHash = localStorage.getItem(key)
@@ -46,6 +30,18 @@ export const useJaenUpdate = () => {
       latestWebpackCompilationHash !== latestJaenCompilationHash
     ) {
       return true
+    }
+
+    // set the latestJaenCompilationHash to the latest webpack compilation hash if
+    // the `jaen-state` key is set in localStorage. This is to ensure that there is only
+    // a incoming build when the user has logged in to jaen.
+
+    if (latestWebpackCompilationHash) {
+      const isJaenStateKeySet = localStorage.getItem(persistKey) !== null
+
+      if (isJaenStateKeySet) {
+        localStorage.setItem(key, latestWebpackCompilationHash)
+      }
     }
 
     return false

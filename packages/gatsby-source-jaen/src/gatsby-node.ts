@@ -20,6 +20,7 @@ import {createSchemaCustomization as createSchemaCustomizationJaenSite} from './
 import {createSchemaCustomization as createSchemaCustomizationJaenWidget} from './create-schema-customization/jaen-widget'
 
 import {onCreateWebpackConfig as onCreateWebpackConfigJaenTemplate} from './on-create-webpack-config/jaen-template'
+import {onCreateWebpackConfig as onCreateWebpackConfigJaenData} from './on-create-webpack-config/jaen-data'
 
 export const sourceNodes: GatsbyNode['sourceNodes'] = async args => {
   await sourceNodesJaenData(args)
@@ -65,4 +66,5 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
   async args => {
     await onCreateWebpackConfigJaenTemplate(args)
+    await onCreateWebpackConfigJaenData(args)
   }
