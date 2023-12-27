@@ -19,20 +19,6 @@ export const useJaenUpdate = () => {
       return false
     }
 
-    const latestJaenCompilationHash = localStorage.getItem(key)
-
-    // If the latest webpack compilation hash is not null and different from the latest
-    // jaen compilation hash, then we know that there are changes. Otherwise,
-    // there are no changes.
-
-    if (
-      latestWebpackCompilationHash &&
-      latestJaenCompilationHash !== null &&
-      latestWebpackCompilationHash !== latestJaenCompilationHash
-    ) {
-      return true
-    }
-
     // set the latestJaenCompilationHash to the latest webpack compilation hash if
     // the `jaen-state` key is set in localStorage. This is to ensure that there is only
     // a incoming build when the user has logged in to jaen.
@@ -46,6 +32,20 @@ export const useJaenUpdate = () => {
       if (isJaenStateKeySet) {
         localStorage.setItem(key, latestWebpackCompilationHash)
       }
+    }
+
+    const latestJaenCompilationHash = localStorage.getItem(key)
+
+    // If the latest webpack compilation hash is not null and different from the latest
+    // jaen compilation hash, then we know that there are changes. Otherwise,
+    // there are no changes.
+
+    if (
+      latestWebpackCompilationHash &&
+      latestJaenCompilationHash !== null &&
+      latestWebpackCompilationHash !== latestJaenCompilationHash
+    ) {
+      return true
     }
 
     return false
