@@ -44,9 +44,7 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
       }>(link, {cache})
 
       jaenData.patches.push({
-        createdAt: response.createdAt || new Date(
-          2001, 20, 10
-        ),
+        createdAt: response.createdAt || new Date(2001, 20, 10),
         title: response.message,
         url: link
       })
@@ -65,12 +63,10 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
       id: createNodeId('JaenData'),
       internal: {
         type: 'JaenData',
-        contentDigest,
+        contentDigest
       },
       ...jaenData
     }
-
-
 
     // 3. Deep remove all objects that contains the key 'deleted' with value true
 

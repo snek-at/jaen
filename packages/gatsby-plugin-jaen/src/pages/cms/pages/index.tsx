@@ -171,6 +171,15 @@ const PagesPage: React.FC = () => {
     return _parentPages
   }, [manager, currentPage])
 
+  const updatePageChildsOrder = useCallback(
+    (newOrder: string[]) => {
+      manager.updatePage(currentPage.id, {
+        childPagesOrder: newOrder
+      })
+    },
+    [manager]
+  )
+
   return (
     <Pages
       pageId={currentPage.id}
@@ -217,6 +226,7 @@ const PagesPage: React.FC = () => {
         jaenTemplates: manager.templates
       }}
       children={children}
+      onUpdateChildPagesOrder={updatePageChildsOrder}
       tree={manager.tree}
       onTreeSelect={handleTreeSelect}
       disableNewButton={manager.templatesForPage(currentPage.id).length === 0}

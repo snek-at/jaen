@@ -62,6 +62,7 @@ export const fragments = graphql`
     childPages {
       ...JaenPageDataStructure
     }
+    childPagesOrder
     jaenPageMetadata {
       title
       image

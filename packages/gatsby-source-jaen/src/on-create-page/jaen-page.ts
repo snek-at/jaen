@@ -30,7 +30,7 @@ export const onCreatePage = async ({
   }
 
   // Find the JaenPage node with the same id
-  const jaenPageNode = getNode(jaenPageId) as Node | undefined
+  const jaenPageNode = getNode(jaenPageId) as any | undefined
 
   const path = page.path.replace(/\/+$/, '') // Remove trailing slashes from the path
   const lastPathElement = path.split('/').pop() || '' // Extract the last element
@@ -55,6 +55,10 @@ export const onCreatePage = async ({
       id: jaenPageId
     }),
     childPages: jaenPageNode?.childPages || [],
+    childPagesOrder:
+      jaenPageNode?.childPagesOrder ||
+      jaenPageNode?.childPages?.map((child: Node) => child.id) ||
+      [],
     pageConfig
   }
 

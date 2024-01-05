@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-jaen",
-  "version": "1.0.0-rc.21",
+  "version": "1.0.0-rc.22",
   "description": "Source plugin for pulling data into Gatsby from Jaen",
   "files": [
     "dist",

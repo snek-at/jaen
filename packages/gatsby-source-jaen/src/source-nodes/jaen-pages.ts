@@ -89,8 +89,12 @@ The existing templates are: ${jaenTemplates
       slug = getLastPartOfId(page.id) || 'root'
     }
 
+    const childPagesOrder =
+      page.childPagesOrder || page.childPages?.map(child => child.id) || []
+
     const pageWithSlug = {
       ...page,
+      childPagesOrder,
       slug,
       parentPage: page.parentPage?.id,
       childPages: page.childPages?.map(child => child.id) || [],

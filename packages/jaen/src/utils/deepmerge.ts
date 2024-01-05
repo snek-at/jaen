@@ -56,6 +56,10 @@ export const deepmergeArrayIdMerge = (
 
   const destination = target.slice()
 
+  if (target.every(v => ['string', 'number'].includes(typeof v))) {
+    return source
+  }
+
   source.forEach((item, index) => {
     if (typeof destination[index] === 'undefined') {
       destination[index] = options.cloneUnlessOtherwiseSpecified(item, options)

@@ -201,11 +201,41 @@ export const CMSManagementProvider = withRedux(
         }))
 
         if (parentId) {
-          return valuesWithIds.filter(
-            page => page.parentPage?.id === parentId
-          ) as JaenPage[]
+          const parentPage = valuesWithIds.find(page => page.id === parentId)
+
+          if (parentPage) {
+            const childPages = parentPage.childPages || []
+            const sortedChildPages = [...childPages]
+
+            sortedChildPages.sort((a, b) => {
+              // Check if the parentPage has a childPagesOrder
+              if (!parentPage.childPagesOrder) {
+                return 5
+              }
+
+              const aIndex = parentPage.childPagesOrder?.indexOf(a.id)
+              const bIndex = parentPage.childPagesOrder?.indexOf(b.id)
+
+              return aIndex - bIndex
+            })
+
+            console.log(sortedChildPages, childPages, parentPage)
+
+            return sortedChildPages.map(child => {
+              const found = valuesWithIds.find(page => page.id === child.id)
+
+              if (!found) {
+                throw new Error(
+                  `Could not find page with id ${child.id} in pagesDict`
+                )
+              }
+
+              return found
+            }) as JaenPage[]
+          }
         }
-        // If no parentId is provided, return all pages
+
+        // If no parentId is provided or if there's no childPagesOrder, return all pages
         return Object.values(valuesWithIds) as JaenPage[]
       },
       [pagesDict]
@@ -526,10 +556,12 @@ export const CMSManagementProvider = withRedux(
             message,
             createdAt: new Date().toISOString(),
             data: {
-              pages: Object.entries(state.page.pages.nodes).map(([id, page]) => ({
-                id,
-                ...page
-              })),
+              pages: Object.entries(state.page.pages.nodes).map(
+                ([id, page]) => ({
+                  id,
+                  ...page
+                })
+              ),
               site: state.site,
               widgets: state.widget.nodes
             }
