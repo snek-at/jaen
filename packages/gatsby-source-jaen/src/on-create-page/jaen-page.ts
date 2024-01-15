@@ -47,6 +47,8 @@ export const onCreatePage = async ({
     jaenFields: null,
     sections: [],
     template: null,
+    createdAt: new Date((page as any).updatedAt).toISOString(),
+    modifiedAt: new Date((page as any).updatedAt).toISOString(),
     ...jaenPageNode,
     parentPage: getJaenPageParentId({
       parentPage: jaenPageNode?.parentPage

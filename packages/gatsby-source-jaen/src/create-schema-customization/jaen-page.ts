@@ -23,6 +23,9 @@ export const createSchemaCustomization = async ({
       parentPage: JaenPage @link
       childPages: [JaenPage!]! @childPages
       childPagesOrder: [String!]!
+
+      createdAt: Date!
+      modifiedAt: Date!
     }
 
     type MediaNode implements Node {
