@@ -152,3 +152,14 @@ jobs:
           SCALE_SERP_GOOGLE_PLACE_ID: ${{ secrets.SCALE_SERP_GOOGLE_PLACE_ID }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           GATSBY_MAPBOX_ACCESS_TOKEN: ${{ secrets.GATSBY_MAPBOX_ACCESS_TOKEN }}
+
+      - name: Deploy Cloudflare Pages 🚀
+        # See: https://github.com/cloudflare/pages-action
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ inputs.CLOUDFLARE_PROJECT_NAME }}
+          directory: ./public
+          # Optional: Specify the Wrangler version
+          wranglerVersion: '3'
