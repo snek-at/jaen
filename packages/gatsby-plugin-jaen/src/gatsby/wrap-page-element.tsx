@@ -53,7 +53,7 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
           }
         }
       ),
-    [pageProps.pageContext?.pageConfig]
+    [pageProps]
   )
 
   const withoutJaenFrame = pageProps.pageContext?.pageConfig?.withoutJaenFrame
