@@ -59,6 +59,7 @@ export const FormImageChooser: React.FC<FormImageChooserProps> = props => {
         minW="36"
         borderRadius="lg"
         bg="bg.subtle"
+        cursor="pointer"
         {...getRootProps()}>
         {selectedImage || props.value ? (
           <Image

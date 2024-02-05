@@ -1,13 +1,11 @@
-import {PageConfig, useAuthenticationContext} from '@atsnek/jaen'
-import {graphql, PageProps, useStaticQuery} from 'gatsby'
+import {PageConfig, useAuth} from '@atsnek/jaen'
+import {PageProps, graphql, useStaticQuery} from 'gatsby'
 
-import {CMSManagement, useCMSManagement} from '../../connectors/cms-management'
 import {Dashboard} from '../../components/cms/Dashboard'
-import {JaenPageLayout} from '../../components/JaenPageLayout/JaenPageLayout'
-import {useEffect} from 'react'
+import {CMSManagement, useCMSManagement} from '../../connectors/cms-management'
 
 const DashboardPage: React.FC<PageProps> = () => {
-  const authentication = useAuthenticationContext()
+  const auth = useAuth()
 
   const manager = useCMSManagement()
 
@@ -33,12 +31,9 @@ const DashboardPage: React.FC<PageProps> = () => {
     }
   `)
 
-  const user =
-    authentication.user?.details?.firstName || authentication.user?.username
-
   return (
     <Dashboard
-      user={user}
+      user={auth.user?.profile.given_name || auth.user?.profile.sub}
       isPublishing={manager.isPublishing}
       patches={patches}
     />

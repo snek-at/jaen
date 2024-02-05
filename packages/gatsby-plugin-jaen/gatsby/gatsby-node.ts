@@ -2,7 +2,12 @@ import {GatsbyNode, PluginOptions, Reporter} from 'gatsby'
 import path from 'path'
 
 export interface JaenPluginOptions extends PluginOptions {
-  snekResourceId?: string
+  zitadel: {
+    organizationId: string
+    clientId: string
+    authority: string
+    redirectUri: string
+  }
   googleAnalytics?: {
     trackingIds?: string[]
   }
@@ -12,7 +17,12 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
   Joi
 }) => {
   return Joi.object({
-    snekResourceId: Joi.string().required(),
+    zitadel: Joi.object({
+      organizationId: Joi.string().required(),
+      clientId: Joi.string().required(),
+      authority: Joi.string().required(),
+      redirectUri: Joi.string().required()
+    }).required(),
     googleAnalytics: Joi.object({
       trackingIds: Joi.array().items(Joi.string())
     })
@@ -24,14 +34,6 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
     {actions, loaders, stage, plugins, getConfig},
     pluginOptions: JaenPluginOptions
   ) => {
-    const snekResourceId = pluginOptions.snekResourceId
-
-    if (!snekResourceId) {
-      throw new Error(
-        `The plugin option 'snekResourceId' is required. Please add the option to your gatsby-config.js file.`
-      )
-    }
-
     const {version} = await import('@atsnek/jaen/package.json')
 
     const config = getConfig()
@@ -89,7 +91,16 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
       plugins: [
         plugins.define({
           __VERSION__: JSON.stringify(version),
-          __SNEK_RESOURCE_ID__: JSON.stringify(snekResourceId)
+          __ZITADEL_ORGANIZATION_ID__: JSON.stringify(
+            pluginOptions.zitadel.organizationId
+          ),
+          __ZITADEL_CLIENT_ID__: JSON.stringify(pluginOptions.zitadel.clientId),
+          __ZITADEL_AUTHORITY__: JSON.stringify(
+            pluginOptions.zitadel.authority
+          ),
+          __ZITADEL_REDIRECT_URI__: JSON.stringify(
+            pluginOptions.zitadel.redirectUri
+          )
         })
       ]
     })
@@ -107,14 +118,14 @@ export const onPreInit: GatsbyNode['onPreInit'] = async (
   )
 
   if (manifestPlugin) {
-    const manifestOptions = await resolveManifestOptions({
-      snekResourceId: pluginOptions.snekResourceId,
-      reporter
-    })
-    manifestPlugin.pluginOptions = {
-      ...manifestPlugin.pluginOptions,
-      ...manifestOptions
-    }
+    // const manifestOptions = await resolveManifestOptions({
+    //   snekResourceId: pluginOptions.snekResourceId,
+    //   reporter
+    // })
+    // manifestPlugin.pluginOptions = {
+    //   ...manifestPlugin.pluginOptions,
+    //   ...manifestOptions
+    // }
   }
 
   // Override the gatsby-plugin-google-gtag trackingIds
@@ -148,7 +159,7 @@ export const createPages: GatsbyNode['createPages'] = async (
   {actions, store, reporter},
   pluginOptions: JaenPluginOptions
 ) => {
-  const snekResourceId = pluginOptions.snekResourceId as string | undefined
+  // const snekResourceId = pluginOptions.snekResourceId as string | undefined
 
   // Create JaenFrame slice
 
@@ -158,67 +169,67 @@ export const createPages: GatsbyNode['createPages'] = async (
   })
 }
 
-const resolveManifestOptions = async ({
-  snekResourceId,
-  reporter
-}: {
-  snekResourceId?: string
-  reporter: Reporter
-}) => {
-  // Fetch from services.snek.at
+// const resolveManifestOptions = async ({
+//   snekResourceId,
+//   reporter
+// }: {
+//   snekResourceId?: string
+//   reporter: Reporter
+// }) => {
+//   // Fetch from services.snek.at
 
-  let resource: {
-    id: string
-    name: string
-  }
+//   let resource: {
+//     id: string
+//     name: string
+//   }
 
-  try {
-    const query = `
-  query Manifest($resourceId: String!) {
-    resource(id: $resourceId) {
-      id
-      name
-    }
-  }
-  `
+//   try {
+//     const query = `
+//   query Manifest($resourceId: String!) {
+//     resource(id: $resourceId) {
+//       id
+//       name
+//     }
+//   }
+//   `
 
-    const variables = {
-      resourceId: snekResourceId
-    }
+//     const variables = {
+//       resourceId: snekResourceId
+//     }
 
-    const response = await fetch('https://services.snek.at/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({query, variables})
-    })
+//     const response = await fetch('https://services.snek.at/graphql', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({query, variables})
+//     })
 
-    const json = await response.json()
+//     const json = await response.json()
 
-    if (json.errors) {
-      throw new Error(json.errors[0].message)
-    }
+//     if (json.errors) {
+//       throw new Error(json.errors[0].message)
+//     }
 
-    resource = json.data.resource
-  } catch (err) {
-    reporter.warn(
-      `gatsby-plugin-manifest - failed to fetch resource ${snekResourceId} from services.snek.at`
-    )
+//     resource = json.data.resource
+//   } catch (err) {
+//     reporter.warn(
+//       `gatsby-plugin-manifest - failed to fetch resource ${snekResourceId} from services.snek.at`
+//     )
 
-    resource = {
-      id: 'dev',
-      name: 'Development Resource'
-    }
-  }
+//     resource = {
+//       id: 'dev',
+//       name: 'Development Resource'
+//     }
+//   }
 
-  return {
-    name: resource.name,
-    short_name: resource.name,
-    start_url: '/',
-    background_color: `#f7f0eb`,
-    theme_color: `#a2466c`,
-    display: `standalone`,
-    icon: `src/favicon.ico`
-  }
-}
+//   return {
+//     name: resource.name,
+//     short_name: resource.name,
+//     start_url: '/',
+//     background_color: `#f7f0eb`,
+//     theme_color: `#a2466c`,
+//     display: `standalone`,
+//     icon: `src/favicon.ico`
+//   }
+// }

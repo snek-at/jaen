@@ -1,6 +1,6 @@
 {
   "name": "@atsnek/jaen",
-  "version": "1.0.0-rc.46",
+  "version": "1.0.0-rc.47",
   "description": "The Webapps framework for creating scalable and dynamic applications with ease.",
   "type": "module",
   "source": "src/index.ts",
@@ -32,6 +32,8 @@
     "gatsby-plugin-image": "^3.11.0",
     "imtool": "^1.2.1",
     "isomorphic-dompurify": "^1.8.0",
+    "oidc-client-ts": "^2.4.0",
+    "react-oidc-context": "^2.3.1",
     "react-photo-view": "^1.2.3",
     "react-redux": "^8.1.1",
     "redux": "^4.2.1",

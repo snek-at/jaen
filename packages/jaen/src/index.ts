@@ -1,10 +1,16 @@
 export * from './connectors'
 export {
   AuthenticationProvider,
-  useAuthenticationContext,
-  withAuthentication,
-  SnekUser
-} from './contexts/authentication'
+  useAuth,
+  withAuthSecurity,
+  checkUserRoles
+} from './contexts/auth'
+export {
+  AuthUserProvider,
+  AuthUser,
+  AuthPasswordPolicy,
+  useAuthUser
+} from './contexts/auth-user'
 export {
   CMSManagementProvider,
   useCMSManagementContext,
@@ -63,7 +69,5 @@ export {useWidget} from './hooks/use-widget'
 export {Head} from './Head'
 
 export {PhotoProvider} from 'react-photo-view'
-
-export const snekResourceId = __SNEK_RESOURCE_ID__
 
 export * as osg from './utils/open-storage-gateway'

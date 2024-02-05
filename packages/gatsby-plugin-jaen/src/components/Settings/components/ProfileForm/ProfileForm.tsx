@@ -10,33 +10,34 @@ import {
 import React from 'react'
 import {Controller, DeepPartial, useForm} from 'react-hook-form'
 
-import {FieldGroup} from '../../../../components/shared/FieldGroup'
-import {FormImageChooser} from '../../../../components/shared/FormImageChooser'
+import {FieldGroup} from '../../../shared/FieldGroup'
+import {FormImageChooser} from '../../../shared/FormImageChooser'
 
-export interface AccountFormData {
-  details: {
-    firstName: string
-    lastName: string
-    avatarURL: string
-  }
-  username: string
+export interface ProfileFormData {
+  firstName: string
+  lastName: string
+  displayName: string
+  preferredLanguage: string
+  gender: string
+  avatarUrl: string
 }
 
-export interface AccountFormDataUpdate {
-  details: {
-    firstName: string
-    lastName: string
-    avatarFile: File | null
-  }
-  username: string
+export interface ProfileFormDataUpdate {
+  firstName: string
+  lastName: string
+  avatarURL?: string
+  displayName: string
+  preferredLanguage?: string
+  gender?: string
+  avatarUrl?: string
 }
 
-export interface AccountFormProps {
-  onSubmit: (data: AccountFormDataUpdate) => Promise<void>
-  defaultValues?: DeepPartial<AccountFormData>
+export interface ProfileFormProps {
+  onSubmit: (data: ProfileFormDataUpdate) => Promise<void>
+  defaultValues?: DeepPartial<ProfileFormData>
 }
 
-export const AccountForm: React.FC<AccountFormProps> = ({
+export const ProfileForm: React.FC<ProfileFormProps> = ({
   onSubmit,
   defaultValues
 }) => {
@@ -47,7 +48,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({
     formState: {errors, isSubmitting},
     setValue,
     reset
-  } = useForm<AccountFormData>({
+  } = useForm<ProfileFormData>({
     defaultValues
   })
 
@@ -57,13 +58,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({
     // promise to wait for image upload
 
     await onSubmit({
-      ...data,
-      details: {
-        firstName: data.details.firstName,
-        lastName: data.details.lastName,
-
-        avatarFile
-      }
+      ...data
     })
 
     reset(data)
@@ -148,4 +143,4 @@ export const AccountForm: React.FC<AccountFormProps> = ({
   )
 }
 
-export default AccountForm
+export default ProfileForm

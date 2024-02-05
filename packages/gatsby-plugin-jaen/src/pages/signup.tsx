@@ -1,53 +1,19 @@
-import {
-  PageConfig,
-  snekResourceId,
-  useAuthenticationContext
-} from '@atsnek/jaen'
+import {PageConfig, useAuth} from '@atsnek/jaen'
 import {navigate, PageProps} from 'gatsby'
 import React from 'react'
-import {sq} from '@snek-functions/origin'
-
-import {Signup} from '../components/Signup/Signup'
 
 const SignupPage: React.FC<PageProps> = () => {
-  const {isAuthenticated, isLoading} = useAuthenticationContext()
+  const auth = useAuth()
 
   React.useEffect(() => {
-    if (isAuthenticated) {
+    if (auth.isAuthenticated) {
       void navigate('/')
+    } else {
+      auth.signinRedirect()
     }
-  }, [isAuthenticated])
+  }, [auth.isAuthenticated])
 
-  if (isLoading || isAuthenticated) {
-    return null
-  }
-  return (
-    <Signup
-      signInPath="/login"
-      goBackPath="/"
-      onSignUp={async data => {
-        const [_, errors] = await sq.mutate(
-          m =>
-            m.userCreate({
-              resourceId: snekResourceId,
-              values: {
-                details: {
-                  firstName: data.firstName,
-                  lastName: data.lastName
-                },
-                username: data.username,
-                emailAddress: data.email,
-                password: data.password
-              }
-            }).id
-        )
-
-        if (errors?.length > 0) {
-          throw errors[0]
-        }
-      }}
-    />
-  )
+  return null
 }
 
 export default SignupPage

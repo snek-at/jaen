@@ -1,7 +1,7 @@
-import {PageConfig, useAuthenticationContext} from '@atsnek/jaen'
+import {PageConfig, useAuth} from '@atsnek/jaen'
 
 export const usePageConfig = () => {
-  const auth = useAuthenticationContext()
+  const auth = useAuth()
 
   const parsePageConfig = async (pageConfig: PageConfig) => {
     // Recursively go through all the fields and parse lazy fields

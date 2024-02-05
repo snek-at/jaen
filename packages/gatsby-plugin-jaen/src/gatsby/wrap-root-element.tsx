@@ -14,10 +14,6 @@ import {SiteMetadataProvider} from '../connectors/site-metadata'
 import {theme} from '../theme/jaen-theme/index'
 import {JaenFrameMenuProvider} from '../contexts/jaen-frame-menu'
 
-const JaenLogin = lazy(
-  async () => await import('../components/JaenLogin/JaenLogin')
-)
-
 const MediaModalComponent = lazy(
   async () => await import('../containers/media-modal')
 )
@@ -26,12 +22,6 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
   {element},
   pluginOptions
 ) => {
-  const snekResourceId = pluginOptions.snekResourceId as string
-
-  if (!snekResourceId) {
-    throw new Error('snekResourceId is not defined')
-  }
-
   if (element?.type?.name === '' || element?.type?.name === 'Head') {
     return <SiteMetadataProvider>{element}</SiteMetadataProvider>
   }
@@ -42,9 +32,7 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
         <NotificationsProvider>
           <JaenUpdateModalProvider>
             <SiteMetadataProvider>
-              <AuthenticationProvider
-                snekResourceId={snekResourceId}
-                JaenLoginComponent={JaenLogin}>
+              <AuthenticationProvider>
                 <JaenFrameMenuProvider>
                   <MediaModalProvider MediaModalComponent={MediaModalComponent}>
                     <JaenWidgetProvider>{element}</JaenWidgetProvider>

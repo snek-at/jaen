@@ -1,4 +1,4 @@
-import {PageConfig, useAuthenticationContext} from '@atsnek/jaen'
+import {PageConfig, useAuth} from '@atsnek/jaen'
 import {PageProps} from 'gatsby'
 import React from 'react'
 
@@ -6,17 +6,17 @@ import {JaenLogout} from '../components/JaenLogout/JaenLogout'
 import {useCMSManagement, withCMSManagement} from '../connectors/cms-management'
 
 const LogoutPage: React.FC<PageProps> = withCMSManagement(() => {
-  const {logout, isAuthenticated} = useAuthenticationContext()
+  const auth = useAuth()
   const {setIsEditing} = useCMSManagement()
-
-  React.useEffect(() => {}, [isAuthenticated])
 
   return (
     <JaenLogout
       onSignOut={async () => {
         setIsEditing(false)
 
-        await logout()
+        await auth.signoutRedirect({
+          post_logout_redirect_uri: 'http://localhost:8000'
+        })
       }}
       goBackPath="/"
     />

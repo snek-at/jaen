@@ -1,7 +1,9 @@
-// add __SNEK_RESOURCE_ID__ constant to global
-
 declare global {
-  var __SNEK_RESOURCE_ID__: string
+  var __VERSION__: string
+  var __ZITADEL_ORGANIZATION_ID__: string
+  var __ZITADEL_CLIENT_ID__: string
+  var __ZITADEL_AUTHORITY__: string
+  var __ZITADEL_REDIRECT_URI__: string
 
   interface Window {
     cookieConsent: CookieConsent
@@ -13,11 +15,11 @@ import type {IGatsbyImageData} from 'gatsby-plugin-image'
 import type * as FaIcons from 'react-icons/fa'
 
 import {IBlockConnection} from './connectors/connect-block'
-import {AuthenticationContextType} from './contexts/authentication'
+import {useAuth} from './contexts/auth'
 
 type PageConfigLazyValue<T> =
   | T
-  | ((context: {auth: AuthenticationContextType}) => Promise<T> | T)
+  | ((context: {auth: ReturnType<typeof useAuth>}) => Promise<T> | T)
 
 export interface PageConfig {
   label: string

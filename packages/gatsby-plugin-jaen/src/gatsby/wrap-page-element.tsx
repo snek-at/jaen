@@ -1,17 +1,17 @@
-import {Flex} from '@chakra-ui/react'
 import {
   FieldHighlighterProvider,
   JaenPage,
   PageConfig,
-  useAuthenticationContext,
-  withAuthentication
+  useAuth,
+  withAuthSecurity
 } from '@atsnek/jaen'
-import {GatsbyBrowser, navigate, PageProps, Slice} from 'gatsby'
-import React, {useMemo} from 'react'
+import {Flex} from '@chakra-ui/react'
+import {GatsbyBrowser, PageProps, Slice} from 'gatsby'
+import React from 'react'
 
+import {theme} from '../theme/jaen-theme/index'
 import {DynamicPageRenderer} from './DynamicPageRenderer'
 import Layout from './Layout'
-import {theme} from '../theme/jaen-theme/index'
 
 // Import other necessary components here
 
@@ -38,48 +38,11 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
   children,
   pageProps
 }) => {
-  const AuthenticatedPage = useMemo(
-    () =>
-      withAuthentication<{
-        children: React.ReactNode
-      }>(
-        ({children}) => {
-          return <Layout pageProps={pageProps}>{children}</Layout>
-        },
-        pageProps.pageContext?.pageConfig,
-        {
-          onRedirectToLogin: () => {
-            navigate('/login')
-          }
-        }
-      ),
-    [pageProps]
-  )
+  const auth = useAuth()
 
   const withoutJaenFrame = pageProps.pageContext?.pageConfig?.withoutJaenFrame
 
-  const AuthenticatedJaenFrame = useMemo(
-    () =>
-      withAuthentication(
-        () => (
-          <Slice
-            alias="jaen-frame"
-            jaenPageId={pageProps.pageContext?.jaenPageId}
-            pageConfig={pageProps.pageContext?.pageConfig as any}
-          />
-        ),
-        pageProps.pageContext?.pageConfig,
-        {
-          forceAuth: true,
-          onRedirectToLogin: () => {
-            navigate('/login')
-          }
-        }
-      ),
-    [pageProps.pageContext?.jaenPageId, pageProps.pageContext?.pageConfig]
-  )
-
-  const authentication = useAuthenticationContext()
+  const SecurePage = withAuthSecurity(Layout, pageProps.pageContext?.pageConfig)
 
   if (!withoutJaenFrame) {
     return (
@@ -88,18 +51,24 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
         flexDirection="column"
         visibility={
           pageProps.pageContext?.pageConfig?.auth?.isRequired &&
-          !authentication.isAuthenticated
+          !auth.isAuthenticated
             ? 'hidden'
             : 'visible'
         }>
-        <AuthenticatedJaenFrame />
+        {auth.isAuthenticated && (
+          <Slice
+            alias="jaen-frame"
+            jaenPageId={pageProps.pageContext?.jaenPageId}
+            pageConfig={pageProps.pageContext?.pageConfig as any}
+          />
+        )}
 
-        <AuthenticatedPage>{children}</AuthenticatedPage>
+        <SecurePage pageProps={pageProps}>{children}</SecurePage>
       </Flex>
     )
   }
 
-  return <AuthenticatedPage>{children}</AuthenticatedPage>
+  return <SecurePage pageProps={pageProps}>{children}</SecurePage>
 }
 
 export interface WithJaenPageProviderProps {

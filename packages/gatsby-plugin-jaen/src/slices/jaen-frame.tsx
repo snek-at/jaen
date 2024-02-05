@@ -1,9 +1,10 @@
 import {
   PageConfig,
-  useAuthenticationContext,
+  useAuth,
   useJaenUpdateModalContext,
   useMediaModal,
-  useNotificationsContext
+  useNotificationsContext,
+  checkUserRoles
 } from '@atsnek/jaen'
 import {graphql, SliceComponentProps} from 'gatsby'
 import {useEffect, useState} from 'react'
@@ -44,7 +45,7 @@ type SliceProps = SliceComponentProps<
 const Slice: React.FC<SliceProps> = props => {
   const manager = useCMSManagement()
 
-  const authentication = useAuthenticationContext()
+  const auth = useAuth()
   const mediaModal = useMediaModal()
 
   const {toast} = useNotificationsContext()
@@ -67,8 +68,10 @@ const Slice: React.FC<SliceProps> = props => {
     }
   }, [props.pageConfig])
 
+  const isJaenAdmin = checkUserRoles(auth.user, ['jaen:admin'])
+
   useEffect(() => {
-    if (authentication.user?.isAdmin) {
+    if (isJaenAdmin) {
       extendMenu('user', {
         group: 'add',
         items: {
@@ -197,17 +200,13 @@ const Slice: React.FC<SliceProps> = props => {
 
       if (!config?.menu) return
 
-      if (config.auth?.isAdminRequired && !authentication.user?.isAdmin) return
+      if (config.auth?.isAdminRequired && !isJaenAdmin) return
 
       // Make sure at least one role of config.auth?.roles is in authentication.user?.roles
       const configRoles = config.auth?.roles || []
-      const userRoles = authentication.user?.roles || []
 
-      if (
-        configRoles.length > 0 &&
-        !userRoles.some(role => configRoles.includes(role.id))
-      ) {
-        return
+      if (configRoles.length > 0) {
+        if (!checkUserRoles(auth.user, configRoles)) return
       }
 
       const group = config.menu.group || 'default'
@@ -232,7 +231,7 @@ const Slice: React.FC<SliceProps> = props => {
         }
       })
     })
-  }, [authentication.user, props.data.allSitePage.nodes, manager.isEditing])
+  }, [auth.user, props.data.allSitePage.nodes, manager.isEditing])
 
   return (
     <JaenFrame
@@ -245,12 +244,14 @@ const Slice: React.FC<SliceProps> = props => {
           logo: <Logo />
         },
         user: {
-          user: authentication.user
+          user: auth.user
             ? {
-                username: authentication.user?.username,
-                firstName: authentication.user.details?.firstName,
-                lastName: authentication.user.details?.lastName,
-                avatarURL: authentication.user.details?.avatarURL
+                username:
+                  auth.user?.profile?.preferred_username ||
+                  auth.user.profile.sub,
+                firstName: auth.user?.profile?.given_name,
+                lastName: auth.user?.profile?.family_name,
+                avatarURL: auth.user?.profile?.picture
               }
             : {
                 username: 'Guest'
@@ -269,9 +270,11 @@ const Slice: React.FC<SliceProps> = props => {
 }
 
 const JaenFrameSlice: React.FC<SliceProps> = props => {
-  const authentication = useAuthenticationContext()
+  const auth = useAuth()
 
-  if (authentication.user?.isAdmin) {
+  const isJaenAdmin = checkUserRoles(auth.user, ['jaen:admin'])
+
+  if (isJaenAdmin) {
     return (
       <CMSManagement>
         <Slice {...props} />
