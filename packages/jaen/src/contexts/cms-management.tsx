@@ -219,8 +219,6 @@ export const CMSManagementProvider = withRedux(
               return aIndex - bIndex
             })
 
-            console.log(sortedChildPages, childPages, parentPage)
-
             return sortedChildPages.map(child => {
               const found = valuesWithIds.find(page => page.id === child.id)
 
@@ -400,16 +398,18 @@ export const CMSManagementProvider = withRedux(
 
         if (page.slug === 'root') return '/'
 
-        const path = [page.slug]
+        const pathParts = [page.slug]
 
         let parent = pagesDict[page.parentPage?.id || '']
 
         while (parent && parent.slug !== 'root') {
-          path.unshift(parent.slug)
+          pathParts.unshift(parent.slug)
           parent = pagesDict[parent.parentPage?.id || '']
         }
 
-        return '/' + path.join('/')
+        const path = pathParts.join('/')
+
+        return path.startsWith('/') ? path : '/' + path
       },
       [pagesDict]
     )
@@ -575,7 +575,7 @@ export const CMSManagementProvider = withRedux(
           if (uploadedMigration) {
             const [_, errors] = await sq.mutate(m =>
               m.jaenPublish({
-                resourceId: __SNEK_RESOURCE_ID__,
+                resourceId: '',
                 migrationURL: uploadedMigration.fileUrl
               })
             )
