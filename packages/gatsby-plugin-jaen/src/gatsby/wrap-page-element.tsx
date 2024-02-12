@@ -7,7 +7,7 @@ import {
 } from '@atsnek/jaen'
 import {Flex} from '@chakra-ui/react'
 import {GatsbyBrowser, PageProps, Slice} from 'gatsby'
-import React from 'react'
+import React, {useMemo} from 'react'
 
 import {theme} from '../theme/jaen-theme/index'
 import {DynamicPageRenderer} from './DynamicPageRenderer'
@@ -42,8 +42,6 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
 
   const withoutJaenFrame = pageProps.pageContext?.pageConfig?.withoutJaenFrame
 
-  const SecurePage = withAuthSecurity(Layout, pageProps.pageContext?.pageConfig)
-
   if (!withoutJaenFrame) {
     return (
       <Flex
@@ -63,12 +61,12 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
           />
         )}
 
-        <SecurePage pageProps={pageProps}>{children}</SecurePage>
+        <Layout pageProps={pageProps}>{children}</Layout>
       </Flex>
     )
   }
 
-  return <SecurePage pageProps={pageProps}>{children}</SecurePage>
+  return <Layout pageProps={pageProps}>{children}</Layout>
 }
 
 export interface WithJaenPageProviderProps {
@@ -87,7 +85,16 @@ const withJaenPageProvider = <P extends WithJaenPageProviderProps>(
   Component: React.ComponentType<P>
 ): React.FC<P> => {
   return props => {
-    return <DynamicPageRenderer {...props} Component={Component} />
+    const SecureRendered = useMemo(
+      () =>
+        withAuthSecurity(
+          DynamicPageRenderer,
+          props.pageProps.pageContext?.pageConfig
+        ),
+      [props.pageProps.pageContext.pageConfig]
+    )
+
+    return <SecureRendered {...props} Component={Component} />
   }
 }
 

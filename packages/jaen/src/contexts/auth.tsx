@@ -37,7 +37,14 @@ export const AuthenticationProvider: React.FC<{
       redirect_uri={__ZITADEL_REDIRECT_URI__}
       scope={scope}
       loadUserInfo
-      authority={__ZITADEL_AUTHORITY__}>
+      authority={__ZITADEL_AUTHORITY__}
+      onSigninCallback={() => {
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        )
+      }}>
       {children}
     </AuthProvider>
   )
@@ -83,6 +90,8 @@ export const withAuthSecurity = <P extends object>(
         case 'signoutSilent':
         case 'signoutRedirect':
           return 'Signing you out...'
+        case undefined:
+          return undefined
         default:
           return 'Loading...'
       }
@@ -90,37 +99,37 @@ export const withAuthSecurity = <P extends object>(
 
     const isAuthRequired = pageConfig?.auth?.isRequired
 
-    if (isAuthRequired) {
-      if (auth.isLoading) {
-        return (
-          <Center height="100vh">
-            <Box textAlign="center">
-              <Spinner size="xl" color="blue.500" mb={4} />
-              <Text>{loadingText}</Text>
-              {auth.error && (
-                <Alert status="error" mt={4}>
-                  <AlertIcon />
-                  Error: {auth.error.message}
-                </Alert>
-              )}
-            </Box>
-          </Center>
-        )
-      }
-
-      if (auth.error) {
-        return (
-          <Center height="100vh">
-            <Box textAlign="center">
-              <Alert status="error" mb={4}>
+    if (loadingText) {
+      return (
+        <Center height="100vh">
+          <Box textAlign="center">
+            <Spinner size="xl" color="blue.500" mb={4} />
+            <Text>{loadingText}</Text>
+            {auth.error && (
+              <Alert status="error" mt={4}>
                 <AlertIcon />
                 Error: {auth.error.message}
               </Alert>
-            </Box>
-          </Center>
-        )
-      }
+            )}
+          </Box>
+        </Center>
+      )
+    }
 
+    if (auth.error) {
+      return (
+        <Center height="100vh">
+          <Box textAlign="center">
+            <Alert status="error" mb={4}>
+              <AlertIcon />
+              Error: {auth.error.message}
+            </Alert>
+          </Box>
+        </Center>
+      )
+    }
+
+    if (isAuthRequired) {
       const roles = pageConfig?.auth?.roles
 
       if (roles) {
