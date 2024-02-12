@@ -4,6 +4,7 @@ declare global {
   var __ZITADEL_CLIENT_ID__: string
   var __ZITADEL_AUTHORITY__: string
   var __ZITADEL_REDIRECT_URI__: string
+  var __ZITADEL_PROJECT_IDS__: string[]
 
   interface Window {
     cookieConsent: CookieConsent

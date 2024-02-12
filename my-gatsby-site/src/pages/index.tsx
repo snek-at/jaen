@@ -3,30 +3,19 @@ import {
   Field,
   PageConfig,
   PageProps,
-  useAuthenticationContext,
+  useAuth,
   useJaenPageIndex,
-  useJaenUpdateModalContext,
   useMediaModal,
-  useNotificationsContext,
   useSiteMetadataContext
 } from '@atsnek/jaen'
 import {useJaenFrameMenuContext} from 'gatsby-plugin-jaen'
 
-import {
-  LightMode,
-  ChakraProvider,
-  Button,
-  GlobalStyle,
-  DarkMode,
-  useColorMode,
-  Text,
-  Box
-} from '@chakra-ui/react'
-import {graphql, HeadFC} from 'gatsby'
+import {Box, Button, LightMode, Text} from '@chakra-ui/react'
+import {graphql} from 'gatsby'
 import * as React from 'react'
 
-import {FaCogs} from '@react-icons/all-files/fa/FaCogs'
 import {UncontrolledMdxField} from '@atsnek/jaen-fields-mdx'
+import {FaCogs} from '@react-icons/all-files/fa/FaCogs'
 
 const pageStyles = {
   color: '#232129',
@@ -178,7 +167,7 @@ const TestBlock = connectBlock(
 )
 
 const IndexPage: React.FC<PageProps> = () => {
-  const authentication = useAuthenticationContext()
+  const auth = useAuth()
 
   const siteMetadata = useSiteMetadataContext()
 
@@ -208,7 +197,18 @@ const IndexPage: React.FC<PageProps> = () => {
 
   const index = useJaenPageIndex()
 
-  console.log('index', index)
+  // console.log('index', index)
+
+  if (auth.isAuthenticated) {
+    return (
+      <pre
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(auth.user, null, 2)
+        }}></pre>
+    )
+  }
+
+  return <button onClick={auth.signinRedirect}>login</button>
 
   return (
     <>
@@ -250,7 +250,7 @@ const IndexPage: React.FC<PageProps> = () => {
             </span>
           </h1>
 
-          <button onClick={authentication.openLoginModal}>login</button>
+          <button onClick={auth.signinRedirect}>login</button>
 
           <button onClick={mediaSelector.toggleModal}>media</button>
 

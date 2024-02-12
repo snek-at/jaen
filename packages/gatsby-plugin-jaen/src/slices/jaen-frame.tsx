@@ -68,9 +68,11 @@ const Slice: React.FC<SliceProps> = props => {
     }
   }, [props.pageConfig])
 
-  const isJaenAdmin = checkUserRoles(auth.user, ['jaen:admin'])
-
   useEffect(() => {
+    const isJaenAdmin = checkUserRoles(auth.user, ['jaen:admin'])
+
+    console.log('isJaenAdmin', isJaenAdmin, auth.user)
+
     if (isJaenAdmin) {
       extendMenu('user', {
         group: 'add',

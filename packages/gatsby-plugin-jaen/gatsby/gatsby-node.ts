@@ -7,6 +7,7 @@ export interface JaenPluginOptions extends PluginOptions {
     clientId: string
     authority: string
     redirectUri: string
+    projectIds?: string[]
   }
   googleAnalytics?: {
     trackingIds?: string[]
@@ -21,7 +22,8 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
       organizationId: Joi.string().required(),
       clientId: Joi.string().required(),
       authority: Joi.string().required(),
-      redirectUri: Joi.string().required()
+      redirectUri: Joi.string().required(),
+      projectIds: Joi.array().items(Joi.string())
     }).required(),
     googleAnalytics: Joi.object({
       trackingIds: Joi.array().items(Joi.string())
@@ -100,6 +102,9 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
           ),
           __ZITADEL_REDIRECT_URI__: JSON.stringify(
             pluginOptions.zitadel.redirectUri
+          ),
+          __ZITADEL_PROJECT_IDS__: JSON.stringify(
+            pluginOptions.zitadel.projectIds || []
           )
         })
       ]

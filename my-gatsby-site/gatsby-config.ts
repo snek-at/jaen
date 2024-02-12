@@ -17,17 +17,17 @@ const config: GatsbyConfig = {
   },
   plugins: [
     {
-      resolve: `gatsby-jaen-lens`,
-      options: {
-        roles: ['7aaaa527-d959-477d-b90f-4ae9da60e115']
-      }
-    },
-    {
       resolve: `gatsby-plugin-jaen`,
       options: {
         // The folder where the page templates are located
         pageTemplateFolder: `src/templates`,
-        snekResourceId: `63571eee-f41c-4745-9130-d746c2cb97a3`,
+        zitadel: {
+          organizationId: '252746033782587395',
+          clientId: '252746210698395651@services',
+          authority: 'https://access.netsnek.com',
+          redirectUri: 'http://localhost:8000',
+          projectIds: ['252765861113233411', '252899191242620931']
+        },
         googleAnalytics: {
           trackingIds: ['G-M58K75M9PG']
         }

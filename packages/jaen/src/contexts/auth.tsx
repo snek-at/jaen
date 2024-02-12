@@ -8,11 +8,34 @@ export {useAuth} from 'react-oidc-context'
 export const AuthenticationProvider: React.FC<{
   children: React.ReactNode
 }> = ({children}) => {
+  const scope = useMemo(() => {
+    const projectIds: string[] = __ZITADEL_PROJECT_IDS__
+
+    // Add "zitadel" to projectIds
+    projectIds.push('zitadel')
+
+    const parts = new Set<string>()
+
+    parts.add('openid')
+    parts.add('profile')
+    parts.add('email')
+    parts.add('my:zitadel:grants')
+    parts.add(`urn:zitadel:iam:org:id:${__ZITADEL_ORGANIZATION_ID__}`)
+    parts.add('urn:zitadel:iam:org:projects:roles')
+    parts.add('urn:iam:org:project:roles')
+    projectIds.forEach(projectId => {
+      parts.add(`urn:zitadel:iam:org:project:id:${projectId}:aud`)
+      parts.add(`urn:zitadel:iam:org:project:id:${projectId}:roles`)
+    })
+
+    return Array.from(parts).join(' ')
+  }, [])
+
   return (
     <AuthProvider
       client_id={__ZITADEL_CLIENT_ID__}
       redirect_uri={__ZITADEL_REDIRECT_URI__}
-      scope={`openid profile email urn:zitadel:iam:org:id:${__ZITADEL_ORGANIZATION_ID__} urn:zitadel:iam:org:projects:roles urn:zitadel:iam:org:project:id:zitadel:aud`}
+      scope={scope}
       loadUserInfo
       authority={__ZITADEL_AUTHORITY__}>
       {children}
@@ -28,10 +51,21 @@ export const checkUserRoles = (
     return false
   }
 
-  const userRoles = (user.profile['urn:zitadel:iam:org:projects:roles'] ||
-    []) as string[]
+  const userRoles = (user.profile['urn:zitadel:iam:org:project:roles'] ||
+    []) as {
+    [roleKey: string]: {
+      [id: string]: string
+    }
+  }[]
 
-  return roles.some(role => userRoles.includes(role))
+  // Check if role is in userRoles (roleKey)
+  for (const role of roles) {
+    if (userRoles.find(userRole => userRole[role])) {
+      return true
+    }
+  }
+
+  return false
 }
 
 export const withAuthSecurity = <P extends object>(
@@ -43,8 +77,10 @@ export const withAuthSecurity = <P extends object>(
 
     const loadingText = useMemo(() => {
       switch (auth.activeNavigator) {
+        case 'signinRedirect':
         case 'signinSilent':
           return 'Signing you in...'
+        case 'signoutSilent':
         case 'signoutRedirect':
           return 'Signing you out...'
         default:
