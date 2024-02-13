@@ -1,6 +1,6 @@
 import {As, Button, Text, TextProps, Tooltip} from '@chakra-ui/react'
 import DOMPurify from 'isomorphic-dompurify'
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useMemo, useState} from 'react'
 
 import {FaAlignCenter} from '@react-icons/all-files/fa/FaAlignCenter'
 import {FaAlignJustify} from '@react-icons/all-files/fa/FaAlignJustify'
@@ -29,15 +29,18 @@ const cleanRichText = (
   const {isRTF} = options
 
   if (isRTF) {
-    return DOMPurify.sanitize(text, {
-      FORBID_TAGS: ['p']
-    })
+    return DOMPurify.sanitize(text, {})
   }
 
   return DOMPurify.sanitize(text, {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: []
   })
+}
+
+const checkForHTMLTags = (input: string) => {
+  const htmlTagsRegex = /<("[^"]*"|'[^']*'|[^'">])*>/g
+  return htmlTagsRegex.test(input)
 }
 
 export interface TextFieldProps extends Omit<TextProps, 'children'> {
@@ -53,7 +56,7 @@ export const TextField = connectField<string, TextFieldProps>(
     jaenField,
     defaultValue,
     as: Wrapper = Text,
-    asAs,
+    asAs: definedAsAs,
     styleTunes: fieldStyleTunes = [],
     isRTF = true,
     ...rest
@@ -77,12 +80,15 @@ export const TextField = connectField<string, TextFieldProps>(
 
     const {toast} = useNotificationsContext()
 
-    // @ts-expect-error
-    const isWrapperHeading = Wrapper.displayName === 'Heading'
-
-    if (isWrapperHeading && !asAs) {
-      asAs = 'h2'
-    }
+    const asAs = useMemo(() => {
+      if (checkForHTMLTags(value)) {
+        return 'div'
+      } else if ((Wrapper as any).displayName === 'Heading') {
+        return 'h2'
+      } else {
+        return definedAsAs
+      }
+    }, [value, (Wrapper as any).displayName, definedAsAs])
 
     const handleTextSave = useDebouncedCallback(
       useCallback(

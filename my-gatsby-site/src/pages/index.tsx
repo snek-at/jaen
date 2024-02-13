@@ -201,10 +201,14 @@ const IndexPage: React.FC<PageProps> = () => {
 
   if (auth.isAuthenticated) {
     return (
-      <pre
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(auth.user, null, 2)
-        }}></pre>
+      <div>
+        <pre
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(auth.user, null, 2)
+          }}></pre>
+
+        <Field.Text name="foo" />
+      </div>
     )
   }
 
