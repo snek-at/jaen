@@ -199,6 +199,8 @@ const IndexPage: React.FC<PageProps> = () => {
 
   // console.log('index', index)
 
+  console.log('__REMOTE__', __JAEN_REMOTE__)
+
   if (auth.isAuthenticated) {
     return (
       <div>

@@ -1,10 +1,18 @@
 declare global {
   var __VERSION__: string
-  var __ZITADEL_ORGANIZATION_ID__: string
-  var __ZITADEL_CLIENT_ID__: string
-  var __ZITADEL_AUTHORITY__: string
-  var __ZITADEL_REDIRECT_URI__: string
-  var __ZITADEL_PROJECT_IDS__: string[]
+
+  var __JAEN_REMOTE__: {
+    repository: string
+    cwd?: string
+  }
+
+  var __JAEN_ZITADEL__: {
+    organizationId: string
+    clientId: string
+    authority: string
+    redirectUri: string
+    projectIds?: string[]
+  }
 
   interface Window {
     cookieConsent: CookieConsent

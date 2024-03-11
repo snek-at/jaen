@@ -9,7 +9,7 @@ export const AuthenticationProvider: React.FC<{
   children: React.ReactNode
 }> = ({children}) => {
   const scope = useMemo(() => {
-    const projectIds: string[] = __ZITADEL_PROJECT_IDS__
+    const projectIds: string[] = __JAEN_ZITADEL__.projectIds || []
 
     // Add "zitadel" to projectIds
     projectIds.push('zitadel')
@@ -19,13 +19,9 @@ export const AuthenticationProvider: React.FC<{
     parts.add('openid')
     parts.add('profile')
     parts.add('email')
-    parts.add('my:zitadel:grants')
-    parts.add(`urn:zitadel:iam:org:id:${__ZITADEL_ORGANIZATION_ID__}`)
-    parts.add('urn:zitadel:iam:org:projects:roles')
-    parts.add('urn:iam:org:project:roles')
+    parts.add(`urn:zitadel:iam:org:id:${__JAEN_ZITADEL__.organizationId}`)
     projectIds.forEach(projectId => {
       parts.add(`urn:zitadel:iam:org:project:id:${projectId}:aud`)
-      parts.add(`urn:zitadel:iam:org:project:id:${projectId}:roles`)
     })
 
     return Array.from(parts).join(' ')
@@ -33,11 +29,11 @@ export const AuthenticationProvider: React.FC<{
 
   return (
     <AuthProvider
-      client_id={__ZITADEL_CLIENT_ID__}
-      redirect_uri={__ZITADEL_REDIRECT_URI__}
+      client_id={__JAEN_ZITADEL__.clientId}
+      redirect_uri={__JAEN_ZITADEL__.redirectUri}
       scope={scope}
       loadUserInfo
-      authority={__ZITADEL_AUTHORITY__}
+      authority={__JAEN_ZITADEL__.authority}
       onSigninCallback={() => {
         window.history.replaceState(
           {},

@@ -2,7 +2,6 @@
 import deepmerge from 'deepmerge'
 import {createContext, ReactNode, useCallback, useContext, useMemo} from 'react'
 import {FaRocket} from '@react-icons/all-files/fa/FaRocket'
-import {sq} from '@snek-functions/origin'
 
 import {
   resetState,
@@ -22,6 +21,7 @@ import {deepmergeArrayIdMerge} from '../utils/deepmerge'
 import {useSiteMetadataContext} from './site-metadata'
 import {uploadFile} from '../utils/open-storage-gateway'
 import {useNotificationsContext} from './notifications'
+import {sqJaen} from '../clients/jaen/src'
 
 // Errors
 
@@ -573,9 +573,12 @@ export const CMSManagementProvider = withRedux(
           )
 
           if (uploadedMigration) {
-            const [_, errors] = await sq.mutate(m =>
-              m.jaenPublish({
-                resourceId: '',
+            const [_, errors] = await sqJaen.mutate(m =>
+              m.publish({
+                config: {
+                  repository: __JAEN_REMOTE__.repository,
+                  repositoryCwd: __JAEN_REMOTE__.cwd
+                },
                 migrationURL: uploadedMigration.fileUrl
               })
             )

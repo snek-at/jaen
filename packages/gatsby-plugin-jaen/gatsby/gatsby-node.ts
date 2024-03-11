@@ -2,6 +2,10 @@ import {GatsbyNode, PluginOptions, Reporter} from 'gatsby'
 import path from 'path'
 
 export interface JaenPluginOptions extends PluginOptions {
+  remote: {
+    repository: string
+    cwd?: string
+  }
   zitadel: {
     organizationId: string
     clientId: string
@@ -18,6 +22,10 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
   Joi
 }) => {
   return Joi.object({
+    remote: Joi.object({
+      repository: Joi.string().required(),
+      cwd: Joi.string()
+    }).required(),
     zitadel: Joi.object({
       organizationId: Joi.string().required(),
       clientId: Joi.string().required(),
@@ -25,6 +33,7 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
       redirectUri: Joi.string().required(),
       projectIds: Joi.array().items(Joi.string())
     }).required(),
+
     googleAnalytics: Joi.object({
       trackingIds: Joi.array().items(Joi.string())
     })
@@ -93,19 +102,9 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
       plugins: [
         plugins.define({
           __VERSION__: JSON.stringify(version),
-          __ZITADEL_ORGANIZATION_ID__: JSON.stringify(
-            pluginOptions.zitadel.organizationId
-          ),
-          __ZITADEL_CLIENT_ID__: JSON.stringify(pluginOptions.zitadel.clientId),
-          __ZITADEL_AUTHORITY__: JSON.stringify(
-            pluginOptions.zitadel.authority
-          ),
-          __ZITADEL_REDIRECT_URI__: JSON.stringify(
-            pluginOptions.zitadel.redirectUri
-          ),
-          __ZITADEL_PROJECT_IDS__: JSON.stringify(
-            pluginOptions.zitadel.projectIds || []
-          )
+
+          __JAEN_REMOTE__: JSON.stringify(pluginOptions.remote),
+          __JAEN_ZITADEL__: JSON.stringify(pluginOptions.zitadel)
         })
       ]
     })

@@ -1,6 +1,6 @@
 {
   "name": "@atsnek/jaen",
-  "version": "1.0.0-rc.53",
+  "version": "1.0.0-rc.55",
   "description": "The Webapps framework for creating scalable and dynamic applications with ease.",
   "type": "module",
   "source": "src/index.ts",
@@ -26,7 +26,6 @@
     "@chakra-ui/react": "^2.8.0",
     "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v4.11.0/react-icons-all-files-4.11.0.tgz",
     "@reduxjs/toolkit": "^1.9.5",
-    "@snek-functions/origin": "^0.9.0",
     "deepmerge": "^4.3.1",
     "form-data": "^4.0.0",
     "gatsby-plugin-image": "^3.11.0",

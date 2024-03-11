@@ -21,6 +21,9 @@ const config: GatsbyConfig = {
       options: {
         // The folder where the page templates are located
         pageTemplateFolder: `src/templates`,
+        remote: {
+          repository: 'atsnek/jaen-starter'
+        },
         zitadel: {
           organizationId: '252746033782587395',
           clientId: '252746210698395651@services',
