@@ -16,6 +16,9 @@ export interface JaenPluginOptions extends PluginOptions {
   googleAnalytics?: {
     trackingIds?: string[]
   }
+  sentry?: {
+    dsn: string
+  }
 }
 
 export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
@@ -36,6 +39,9 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
 
     googleAnalytics: Joi.object({
       trackingIds: Joi.array().items(Joi.string())
+    }),
+    sentry: Joi.object({
+      dsn: Joi.string().required()
     })
   })
 }
@@ -144,6 +150,17 @@ export const onPreInit: GatsbyNode['onPreInit'] = async (
 
     if (trackingIds) {
       gtagPlugin.pluginOptions.trackingIds.push(...trackingIds)
+    }
+  }
+
+  if (pluginOptions.sentry) {
+    // Override sentry plugin options
+    const sentryPlugin = state.flattenedPlugins.find(
+      plugin => plugin.name === '@sentry/gatsby'
+    )
+
+    if (sentryPlugin) {
+      sentryPlugin.pluginOptions.dsn = pluginOptions.sentry.dsn
     }
   }
 

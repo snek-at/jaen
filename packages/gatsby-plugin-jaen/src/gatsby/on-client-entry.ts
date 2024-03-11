@@ -1,4 +1,5 @@
 import {GatsbyBrowser} from 'gatsby'
+import * as Sentry from '@sentry/gatsby'
 import {JaenPluginOptions} from './types'
 
 export const onClientEntry: GatsbyBrowser['onClientEntry'] = async (
@@ -22,4 +23,14 @@ export const onClientEntry: GatsbyBrowser['onClientEntry'] = async (
       window[`ga-disable-${googleAnaltyticsTrackingId}`] = true
     }
   }
+
+  Sentry.addIntegration(Sentry.browserTracingIntegration())
+  Sentry.addIntegration(Sentry.browserProfilingIntegration())
+  Sentry.addIntegration(Sentry.replayIntegration())
+
+  Sentry.addIntegration(
+    Sentry.feedbackIntegration({
+      colorScheme: 'system'
+    })
+  )
 }

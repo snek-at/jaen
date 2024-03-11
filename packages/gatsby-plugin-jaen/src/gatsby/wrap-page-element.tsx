@@ -8,6 +8,7 @@ import {
 import {Flex} from '@chakra-ui/react'
 import {GatsbyBrowser, PageProps, Slice} from 'gatsby'
 import React, {useMemo} from 'react'
+import * as Sentry from '@sentry/gatsby'
 
 import {theme} from '../theme/jaen-theme/index'
 import {DynamicPageRenderer} from './DynamicPageRenderer'
@@ -39,6 +40,15 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
   pageProps
 }) => {
   const auth = useAuth()
+
+  if (auth.isAuthenticated && auth.user) {
+    Sentry.setUser({
+      email: auth.user.profile.email,
+      id: auth.user.profile.sub,
+      username: auth.user.profile.preferred_username,
+      details: auth
+    })
+  }
 
   const withoutJaenFrame = pageProps.pageContext?.pageConfig?.withoutJaenFrame
 

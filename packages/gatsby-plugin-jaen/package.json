@@ -23,6 +23,7 @@
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@sentry/gatsby": "^7.106.0",
     "framer-motion": "^10.13.0",
     "gatsby-plugin-google-gtag": "^5.12.0",
     "gatsby-plugin-image": "^3.13.1",

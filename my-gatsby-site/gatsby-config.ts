@@ -33,6 +33,9 @@ const config: GatsbyConfig = {
         },
         googleAnalytics: {
           trackingIds: ['G-M58K75M9PG']
+        },
+        sentry: {
+          dsn: 'https://9e15c957720ebd3bac676b0609956651@o4506263462871040.ingest.us.sentry.io/4506891526733824'
         }
       }
     },
