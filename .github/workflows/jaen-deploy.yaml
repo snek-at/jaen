@@ -70,6 +70,9 @@ on:
       GATSBY_SNEK_FUNCTION_URL:
         description: URL of the Snek function.
         required: false
+      SENTRY_AUTH_TOKEN:
+        description: Sentry token.
+        required: false
 
 # Environment variables
 # See: https://help.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#env
