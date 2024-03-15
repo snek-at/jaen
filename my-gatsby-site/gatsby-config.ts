@@ -19,26 +19,26 @@ const config: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-jaen`,
       options: {
-        // The folder where the page templates are located
-        pageTemplateFolder: `src/templates`,
         remote: {
           repository: 'atsnek/jaen-starter'
         },
         zitadel: {
-          organizationId: '252746033782587395',
+          organizationId: '257964756269268995',
           clientId: '252746210698395651@services',
-          authority: 'https://access.netsnek.com',
-          redirectUri: 'http://localhost:8000',
-          projectIds: ['252765861113233411', '252899191242620931']
+          authority: 'https://accounts.cronit.io',
+          redirectUri: 'http://localhost:8000'
         },
         googleAnalytics: {
           trackingIds: ['G-M58K75M9PG']
         },
         sentry: {
+          org: 'cronit',
+          project: 'jaen-my-gatsby-site',
           dsn: 'https://9e15c957720ebd3bac676b0609956651@o4506263462871040.ingest.us.sentry.io/4506891526733824'
         }
       }
     },
+    `gatsby-jaen-mailpress`,
     'gatsby-plugin-webpack-bundle-analyser-v2'
   ]
 }

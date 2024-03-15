@@ -24,7 +24,14 @@ export const onClientEntry: GatsbyBrowser['onClientEntry'] = async (
     }
   }
 
-  Sentry.addIntegration(Sentry.browserTracingIntegration())
+  Sentry.addIntegration(
+    Sentry.browserTracingIntegration({
+      enableInp: true,
+      _experiments: {
+        enableInteractions: true
+      }
+    })
+  )
   Sentry.addIntegration(Sentry.browserProfilingIntegration())
   Sentry.addIntegration(Sentry.replayIntegration())
 

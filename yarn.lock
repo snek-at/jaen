@@ -14563,6 +14563,19 @@ snake-case@^3.0.4:
     dot-case "^3.0.4"
     tslib "^2.0.3"
 
+snek-query@^0.0.110:
+  version "0.0.110"
+  resolved "https://registry.yarnpkg.com/snek-query/-/snek-query-0.0.110.tgz#b36235af494864cd7a6c001f6d96d9fd6336bfa1"
+  integrity sha512-Gw4yeHznJOhPCdvPUDWYO21SHtwlvoRqK7qefrXC4USb9Ovc6mddcB2yzErkzI/O+VTrq5ztzKusucdUF6ZHdw==
+  dependencies:
+    commander "^9.4.1"
+    graphql "^16.6.0"
+    lodash.clonedeep "^4.5.0"
+    pino "^8.8.0"
+    pino-pretty "^9.1.1"
+    rxjs "^7.8.0"
+    typescript "^4.9.4"
+
 snek-query@^0.0.83:
   version "0.0.83"
   resolved "https://registry.yarnpkg.com/snek-query/-/snek-query-0.0.83.tgz#57fcadb2f63a0c26f1ac05de666ba0e05e841b6a"

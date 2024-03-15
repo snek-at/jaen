@@ -1,18 +1,25 @@
 import {PageConfig, PageProps, useNotificationsContext} from '@atsnek/jaen'
-import {sq} from '@snek-functions/origin'
-import {useEffect, useMemo, useState} from 'react'
+import {useEffect, useMemo} from 'react'
 
-import {CopyIcon} from '@chakra-ui/icons'
+import {CopyIcon, DeleteIcon} from '@chakra-ui/icons'
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Box,
   Button,
   ButtonGroup,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Heading,
   IconButton,
   Input,
@@ -24,166 +31,38 @@ import {
   Select,
   Skeleton,
   Stack,
+  Table,
+  Tag,
+  Tbody,
+  Td,
   Text,
   Textarea,
+  Th,
+  Thead,
+  Tr,
   UnorderedList,
-  useClipboard
+  VStack
 } from '@chakra-ui/react'
 import {Editor} from '@monaco-editor/react'
 import {Link as GatsbyLink, navigate} from 'gatsby'
 import {sanitize} from 'isomorphic-dompurify'
-import {Controller, useForm} from 'react-hook-form'
-import {asEnumKey} from 'snek-query'
+import {Controller, useFieldArray, useForm} from 'react-hook-form'
+import {useQuery} from 'snek-query/react-hooks'
+import {sq} from '../../../client/src'
 import {
-  EmailAddress,
-  EmailAddressType
-} from '@snek-functions/origin/dist/schema.generated'
-
-interface MailPressTemplate {
-  id: string
-  description: string
-  updatedAt: string
-  createdAt: string
-  envelope?: {
-    subject?: string | null
-    from?: EmailAddress | null
-    to?: string
-    replyTo?: EmailAddress | null
-  }
-  authorizationUser?: {
-    userId?: string
-    authorization?: string
-  }
-  transformer?: string | null
-  parent?: {
-    id?: string | null
-    description?: string | null
-  }
-  linked?: {
-    id?: string | null
-    description?: string | null
-  }[]
-  content?: string | null
-  variables?: string
-}
+  EmailTemplate,
+  VariableDefinition
+} from '../../../client/src/schema.generated'
+import templates from '.'
 
 const Page: React.FC<PageProps> = ({params}) => {
   const templateId = params.templateId
 
   if (!templateId) {
-    return null
+    throw new Error('Template ID is required')
   }
 
-  const [isLoading, setIsLoading] = useState(true)
-
-  const [template, setTemplate] = useState<MailPressTemplate | null>(null)
-
-  useEffect(() => {
-    // mock data
-    const load = async () => {
-      setIsLoading(true)
-
-      const [data, errors] = await sq.query(q => {
-        const t = q.mailpressTemplate({id: templateId})
-
-        return {
-          id: t.id,
-          description: t.description,
-          transformer: t.transformer,
-          content: t.content,
-          updatedAt: t.updatedAt,
-          createdAt: t.createdAt,
-          envelope: {
-            subject: t.envelope?.subject,
-            from: t.envelope?.from,
-            to: JSON.stringify(
-              t.envelope?.to?.map(e => ({
-                value: e.value,
-                type: e.type
-              }))
-            ),
-            replyTo: t.envelope?.replyTo
-          },
-          authorizationUser: {
-            userId: t.authorizationUser?.userId,
-            authorization: t.authorizationUser?.authorization
-          },
-          parent: {
-            id: t.parent?.id,
-            description: t.parent?.description
-          },
-          linked: t.linked?.map(l => ({
-            id: l.id,
-            description: l.description
-          })),
-
-          variables: JSON.stringify(
-            t.variables.map(v => ({
-              id: v.id,
-              name: v.name,
-              isRequired: v.isRequired,
-              isConstant: v.isConstant,
-              description: v.description,
-              defaultValue: v.defaultValue
-            }))
-          )
-        }
-      })
-
-      if (errors?.length) {
-        toast({
-          title: 'Error!',
-          description: `Error loading template ${templateId}`,
-          status: 'error',
-          duration: 3000,
-          isClosable: true
-        })
-      } else {
-        setTemplate(data as any)
-      }
-
-      setIsLoading(false)
-    }
-
-    load()
-  }, [templateId])
-
-  const [templates, setTemplates] = useState<
-    {
-      id: string
-      description: string
-    }[]
-  >([])
-
-  useEffect(() => {
-    const loadAllTemplateForParentChooser = async () => {
-      const [data, errors] = await sq.query(q => {
-        return q.mailpressAllTemplate.map(t => {
-          return {
-            id: t.id,
-            description: t.description
-          }
-        })
-      })
-
-      if (errors?.length) {
-        toast({
-          title: 'Error!',
-          description: `Error loading templates`,
-          status: 'error',
-          duration: 3000,
-          isClosable: true
-        })
-      } else {
-        // remove current template from list
-        const filtered = data.filter(t => t.id !== templateId)
-
-        setTemplates(filtered)
-      }
-    }
-
-    loadAllTemplateForParentChooser()
-  }, [])
+  const {toast, confirm} = useNotificationsContext()
 
   const {
     register,
@@ -192,13 +71,53 @@ const Page: React.FC<PageProps> = ({params}) => {
     watch,
     control,
     formState: {errors, isSubmitting, isDirty}
-  } = useForm<MailPressTemplate>({
+  } = useForm<{
+    id: string
+    parentId?: string
+    description: string
+    verifyReplyTo?: boolean
+    content: string
+    transformer?: string
+    updatedAt: string
+    createdAt: string
+    envelope: {
+      subject?: string
+      to?: {
+        email: string
+      }[]
+      replyTo?: string
+    }
+    variables: {
+      id?: string
+      name: string
+      isRequired?: boolean
+      isConstant?: boolean
+      description?: string
+      defaultValue?: string
+    }[]
+  }>({
     defaultValues: {
       id: '',
       description: '',
+      content: '',
       updatedAt: '',
-      createdAt: ''
+      createdAt: '',
+      envelope: {
+        subject: '',
+        to: [],
+        replyTo: ''
+      }
     }
+  })
+
+  const variablesField = useFieldArray({
+    control,
+    name: 'variables'
+  })
+
+  const envelopeToField = useFieldArray({
+    control,
+    name: 'envelope.to'
   })
 
   const unsafeContent = watch('content')
@@ -207,59 +126,88 @@ const Page: React.FC<PageProps> = ({params}) => {
     return sanitize(unsafeContent || '')
   }, [unsafeContent])
 
+  const {data, isLoading, error, refetch} = useQuery(sq)
+
   useEffect(() => {
-    if (template) {
-      reset(template)
+    if (error) {
+      toast({
+        title: 'Failed to load template',
+        description: (error as any)[0].message
+      })
     }
-  }, [template])
+  }, [error])
 
-  const onSubmit = async (formData: MailPressTemplate) => {
-    console.log(formData)
+  useEffect(() => {
+    const template = data.template({id: templateId})
 
-    // update using sq
-    const [data, errors] = await sq.mutate(u =>
-      u.mailpressTemplateUpdate({
+    reset({
+      id: template.id,
+      parentId: template.parent()?.id ?? undefined,
+      description: template.description,
+      verifyReplyTo: template.verifyReplyTo ?? false,
+      content: template.content,
+      transformer: template.transformer ?? undefined,
+      updatedAt: template.updatedAt,
+      createdAt: template.createdAt,
+      envelope: {
+        subject: template.envelope()?.subject ?? undefined,
+        to: template.envelope()?.to?.map(email => ({email})) || undefined,
+        replyTo: template.envelope()?.replyTo ?? undefined
+      },
+      variables: template.variables().nodes.map(v => ({
+        id: v.id,
+        name: v.name,
+        isRequired: v.isRequired ?? undefined,
+        isConstant: v.isConstant ?? undefined,
+        description: v.description || undefined,
+        defaultValue: v.defaultValue || undefined
+      }))
+    })
+  }, [data])
+
+  const onSubmit = handleSubmit(async data => {
+    if (data.transformer) {
+      const [_, errors] = await sq.mutate(m =>
+        m.templateTransformer({
+          id: templateId,
+          transformer: data.transformer!
+        })
+      )
+
+      if (errors) {
+        toast({
+          title: 'Error!',
+          description: `Error updating transformer for template ${templateId}`,
+          status: 'error'
+        })
+      }
+    }
+
+    const [_, errors] = await sq.mutate(m =>
+      m.templateUpdate({
         id: templateId,
         data: {
-          description: formData.description,
+          description: data.description,
+          parentId: data.parentId || undefined,
+          verifyReplyTo: data.verifyReplyTo ?? undefined,
+          content: data.content,
           envelope: {
-            subject: formData.envelope?.subject,
-            from:
-              formData.envelope?.from?.value && formData.envelope?.from?.type
-                ? {
-                    value: formData.envelope?.from.value,
-                    type: asEnumKey(
-                      EmailAddressType,
-                      formData.envelope?.from.type
-                    )
-                  }
-                : undefined,
-            to: JSON.parse(formData.envelope?.to || '[]').map((e: any) => ({
-              value: e.value,
-              type: asEnumKey(EmailAddressType, e.type)
-            })),
-            replyTo:
-              formData.envelope?.replyTo?.value &&
-              formData.envelope?.replyTo?.type
-                ? {
-                    value: formData.envelope?.replyTo.value,
-                    type: asEnumKey(
-                      EmailAddressType,
-                      formData.envelope?.replyTo.type
-                    )
-                  }
-                : undefined
+            subject: data.envelope.subject || undefined,
+            to: data.envelope.to?.map(to => to.email) || undefined,
+            replyTo: data.envelope.replyTo || undefined
           },
-          transformer: formData.transformer,
-          content: formData.content,
-          parentId: formData.parent?.id ? formData.parent?.id : undefined,
-          linkedIds: formData.linked?.map((t: any) => t.id),
-          variables: JSON.parse(formData.variables || '[]')
-        } as any
+          variables: data.variables.map(v => ({
+            name: v.name,
+            isRequired: v.isRequired ?? undefined,
+            isConstant: v.isConstant ?? undefined,
+            description: v.description || undefined,
+            defaultValue: v.defaultValue || undefined
+          }))
+        }
       })
     )
 
-    if (errors?.length) {
+    if (errors) {
       toast({
         title: 'Error!',
         description: `Error updating template ${templateId}`,
@@ -272,9 +220,9 @@ const Page: React.FC<PageProps> = ({params}) => {
         status: 'success'
       })
     }
-  }
 
-  const {toast, confirm} = useNotificationsContext()
+    refetch()
+  })
 
   const handleDeleteClick = async () => {
     const confirmed = await confirm({
@@ -283,15 +231,13 @@ const Page: React.FC<PageProps> = ({params}) => {
       confirmText: 'Delete',
       cancelText: 'Cancel'
     })
-
     if (confirmed) {
       // delete using sq
-      const [data, errors] = await sq.mutate(u =>
-        u.mailpressTemplateDelete({
+      const [data, errors] = await sq.mutate(m =>
+        m.templateDelete({
           id: templateId
         })
       )
-
       if (errors?.length) {
         toast({
           title: 'Error!',
@@ -304,7 +250,6 @@ const Page: React.FC<PageProps> = ({params}) => {
           description: `Template ID ${templateId} deleted`,
           status: 'success'
         })
-
         navigate('..')
       }
     }
@@ -321,6 +266,311 @@ const Page: React.FC<PageProps> = ({params}) => {
       status: 'success'
     })
   }
+
+  return (
+    <Stack spacing="4">
+      <Tag size="lg" variant="solid" colorScheme="blue">
+        {data.me?.organization()?.email()?.email || 'No Email Configured'}
+      </Tag>
+
+      <Heading size="md">Email Template</Heading>
+
+      <Skeleton isLoaded={!isLoading}>
+        <InputGroup>
+          <InputLeftAddon>Template ID</InputLeftAddon>
+          <Input type="text" defaultValue={templateId} isDisabled />
+          <InputRightElement
+            as={IconButton}
+            icon={<CopyIcon />}
+            variant="outline"
+            onClick={onCopy}></InputRightElement>
+        </InputGroup>
+      </Skeleton>
+
+      <form onSubmit={onSubmit}>
+        <Stack spacing="8">
+          <Stack spacing="4">
+            <Skeleton isLoaded={!isLoading}>
+              <FormControl
+                id="description"
+                isRequired
+                isInvalid={!!errors.description}>
+                <FormLabel>Description</FormLabel>
+                <Input type="text" {...register('description')} />
+                <FormErrorMessage>
+                  {errors.description?.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Skeleton>
+
+            <Skeleton isLoaded={!isLoading}>
+              <FormControl id="parent">
+                <FormLabel>Parent</FormLabel>
+                <Select {...register('parentId')}>
+                  {data
+                    .allTemplate()
+                    .nodes.filter(n => n.id !== templateId)
+                    .map(t => (
+                      <option key={t.id} value={t.id}>
+                        {t.description} ({t.id})
+                      </option>
+                    ))}
+                </Select>
+              </FormControl>
+            </Skeleton>
+
+            <Skeleton isLoaded={!isLoading}>
+              <FormControl id="verifyReplyTo">
+                <FormLabel>Verify Reply To</FormLabel>
+                <Checkbox {...register('verifyReplyTo')} />
+              </FormControl>
+            </Skeleton>
+
+            <Skeleton isLoaded={!isLoading}>
+              <FormControl id="linked">
+                <FormLabel>Linked</FormLabel>
+                {data.template({id: templateId}).links().nodes.length ? (
+                  <UnorderedList>
+                    {data
+                      .template({id: templateId})
+                      .links()
+                      .nodes.map(t => (
+                        <ListItem key={t.id}>
+                          <Link as={GatsbyLink} to={`../${t.id}`}>
+                            {t.description} ({t.id})
+                          </Link>
+                        </ListItem>
+                      ))}
+                  </UnorderedList>
+                ) : (
+                  <Text>No linked templates</Text>
+                )}
+              </FormControl>
+            </Skeleton>
+
+            <Card>
+              <CardHeader>
+                <Heading size="sm">Envelope</Heading>
+              </CardHeader>
+              <CardBody>
+                <Stack spacing={4}>
+                  <FormControl id="subject">
+                    <FormLabel htmlFor="subject">Subject</FormLabel>
+                    <Input
+                      type="text"
+                      id="subject"
+                      {...register('envelope.subject')}
+                    />
+                  </FormControl>
+
+                  <Card>
+                    <CardHeader>To</CardHeader>
+                    <CardBody>
+                      <Stack>
+                        {envelopeToField.fields.map((field, index) => (
+                          <FormControl key={index} id={`envelope.to.${index}`}>
+                            <InputGroup>
+                              <Input
+                                type="text"
+                                placeholder="Enter email address"
+                                {...register(`envelope.to.${index}.email`)}
+                              />
+                              <InputRightElement>
+                                <IconButton
+                                  aria-label="delete to field"
+                                  icon={<DeleteIcon />}
+                                  onClick={() => envelopeToField.remove(index)}
+                                  variant="ghost"
+                                />
+                              </InputRightElement>
+                            </InputGroup>
+                          </FormControl>
+                        ))}
+                      </Stack>
+                    </CardBody>
+                    <CardFooter>
+                      <Button
+                        onClick={() => envelopeToField.append({email: ''})}>
+                        Add To
+                      </Button>
+                    </CardFooter>
+                  </Card>
+
+                  <FormControl id="replyTo">
+                    <FormLabel htmlFor="replyTo">Reply To</FormLabel>
+                    <Input
+                      type="text"
+                      id="replyTo"
+                      placeholder="Enter email address"
+                      {...register('envelope.replyTo')}
+                    />
+                  </FormControl>
+                </Stack>
+              </CardBody>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Heading size="sm">Transformer</Heading>
+              </CardHeader>
+              <CardBody>
+                <Stack>
+                  <Skeleton isLoaded={!isLoading}>
+                    <FormControl id="transformer">
+                      <Controller
+                        control={control}
+                        name="transformer"
+                        render={({field}) => (
+                          <Editor
+                            theme={'vs-dark'}
+                            height="var(--chakra-sizes-xs)"
+                            defaultLanguage="javascript"
+                            defaultValue={field.value || undefined}
+                            onChange={(value, event) => field.onChange(value)}
+                          />
+                        )}
+                      />
+                    </FormControl>
+                  </Skeleton>
+                </Stack>
+              </CardBody>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Heading size="sm">Content</Heading>
+              </CardHeader>
+              <CardBody>
+                <Stack>
+                  <Stack>
+                    <Skeleton isLoaded={!isLoading}>
+                      <FormControl id="content">
+                        <Controller
+                          control={control}
+                          name="content"
+                          render={({field}) => (
+                            <Editor
+                              theme={'vs-dark'}
+                              height="var(--chakra-sizes-md)"
+                              defaultLanguage="html"
+                              defaultValue={field.value || undefined}
+                              onChange={(value, event) => field.onChange(value)}
+                            />
+                          )}
+                        />
+                      </FormControl>
+                    </Skeleton>
+                  </Stack>
+
+                  <Stack>
+                    <Heading size="sm">Preview</Heading>
+                    <Skeleton isLoaded={!isLoading}>
+                      <Box
+                        dangerouslySetInnerHTML={{__html: templateContent}}
+                      />
+                    </Skeleton>
+                  </Stack>
+                </Stack>
+              </CardBody>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Heading size="sm">Variables</Heading>
+              </CardHeader>
+              <CardBody>
+                <Stack spacing={4}>
+                  <Table variant="striped" colorScheme="gray">
+                    <Thead>
+                      <Tr>
+                        <Th>Name</Th>
+                        <Th>Description</Th>
+                        <Th>Default Value</Th>
+                        <Th>Required</Th>
+                        <Th>Constant</Th>
+                        <Th></Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {variablesField.fields.map((field, index) => (
+                        <Tr key={index}>
+                          <Td>{field.name}</Td>
+                          <Td>
+                            <Textarea
+                              minH="10"
+                              {...register(`variables.${index}.description`)}
+                            />
+                          </Td>
+                          <Td>
+                            <Input
+                              type="text"
+                              {...register(`variables.${index}.defaultValue`)}
+                            />
+                          </Td>
+                          <Td>
+                            <Checkbox
+                              {...register(`variables.${index}.isRequired`)}
+                            />
+                          </Td>
+                          <Td>
+                            <Checkbox
+                              {...register(`variables.${index}.isConstant`)}
+                            />
+                          </Td>
+                          <Td>
+                            <Button
+                              colorScheme="red"
+                              onClick={() => variablesField.remove(index)}>
+                              Remove
+                            </Button>
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+
+                  <Button
+                    onClick={() =>
+                      variablesField.append({name: 'NEW_VARIABLE'})
+                    }>
+                    Add Variable
+                  </Button>
+                </Stack>
+              </CardBody>
+            </Card>
+          </Stack>
+
+          <ButtonGroup justifyContent="end" isDisabled={isLoading}>
+            <Button
+              type="button"
+              variant="outline"
+              colorScheme="red"
+              isDisabled={isLoading || isSubmitting}
+              onClick={handleDeleteClick}>
+              Delete
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              isDisabled={isLoading || isSubmitting || !isDirty}
+              onClick={() => {
+                refetch()
+              }}>
+              Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              isLoading={isLoading || isSubmitting}
+              isDisabled={isLoading || isSubmitting}>
+              Save
+            </Button>
+          </ButtonGroup>
+        </Stack>
+      </form>
+    </Stack>
+  )
 
   // Form with chakraui components
   return (

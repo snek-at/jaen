@@ -17,6 +17,8 @@ export interface JaenPluginOptions extends PluginOptions {
     trackingIds?: string[]
   }
   sentry?: {
+    org: string
+    project: string
     dsn: string
   }
 }
@@ -41,6 +43,8 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
       trackingIds: Joi.array().items(Joi.string())
     }),
     sentry: Joi.object({
+      org: Joi.string().required(),
+      project: Joi.string().required(),
       dsn: Joi.string().required()
     })
   })
@@ -162,6 +166,10 @@ export const onPreInit: GatsbyNode['onPreInit'] = async (
     if (sentryPlugin) {
       sentryPlugin.pluginOptions.dsn = pluginOptions.sentry.dsn
     }
+
+    // Write sentry.org and sentry.project to process.env
+    process.env.SENTRY_ORG = pluginOptions.sentry.org
+    process.env.SENTRY_PROJECT = pluginOptions.sentry.project
   }
 
   // state.flattenedPlugins[state.flattenedPlugins.indexOf(manifestPlugin)] =

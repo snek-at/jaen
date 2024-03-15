@@ -1,5 +1,6 @@
 import {PageConfig, useNotificationsContext} from '@atsnek/jaen'
 import {
+  Box,
   Button,
   HStack,
   Heading,
@@ -15,9 +16,10 @@ import {
   Tr
 } from '@chakra-ui/react'
 import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
-import {sq} from '@snek-functions/origin'
 import {Link as GatsbyLink, graphql} from 'gatsby'
-import {useEffect, useState} from 'react'
+import {useQuery} from 'snek-query/react-hooks'
+import {sq} from '../../../client/src'
+import {useEffect} from 'react'
 
 interface MailPressTemplate {
   id: string
@@ -42,40 +44,53 @@ const SkeletonRow = () => (
 const Page: React.FC = () => {
   const {prompt, toast} = useNotificationsContext()
 
-  const [templates, setTemplates] = useState<MailPressTemplate[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  // const [templates, setTemplates] = useState<MailPressTemplate[]>([])
+  // const [isLoading, setIsLoading] = useState(true)
+
+  // useEffect(() => {
+  //   // mock data
+  //   const load = async () => {
+  //     const [data, errors] = await sq.query(q => {
+  //       return q.mailpressAllTemplate.map(t => {
+  //         return {
+  //           id: t.id,
+  //           description: t.description,
+  //           subject: t.envelope?.subject,
+  //           from: t.envelope?.from?.value,
+  //           replyTo: t.envelope?.replyTo?.value,
+  //           updatedAt: t.updatedAt,
+  //           createdAt: t.createdAt
+  //         }
+  //       })
+  //     })
+
+  //     if (errors?.length) {
+  //       toast({
+  //         title: 'Error',
+  //         description: 'Failed to load templates'
+  //       })
+  //     } else {
+  //       setTemplates(data)
+  //     }
+
+  //     setIsLoading(false)
+  //   }
+
+  //   load()
+  // }, [])
+
+  const {data, error, isLoading, refetch} = useQuery(sq)
 
   useEffect(() => {
-    // mock data
-    const load = async () => {
-      const [data, errors] = await sq.query(q => {
-        return q.mailpressAllTemplate.map(t => {
-          return {
-            id: t.id,
-            description: t.description,
-            subject: t.envelope?.subject,
-            from: t.envelope?.from?.value,
-            replyTo: t.envelope?.replyTo?.value,
-            updatedAt: t.updatedAt,
-            createdAt: t.createdAt
-          }
-        })
+    if (error) {
+      console.log('error', error)
+      toast({
+        title: 'Failed to load templates',
+        description: (error as any)[0].message,
+        status: 'error'
       })
-
-      if (errors?.length) {
-        toast({
-          title: 'Error',
-          description: 'Failed to load templates'
-        })
-      } else {
-        setTemplates(data)
-      }
-
-      setIsLoading(false)
     }
-
-    load()
-  }, [])
+  }, [error])
 
   const handleAddTemplateClick = async () => {
     const description = await prompt({
@@ -85,29 +100,26 @@ const Page: React.FC = () => {
 
     if (description) {
       const [data, errors] = await sq.mutate(m => {
-        const t = m.mailpressTemplateCreate({
+        return m.templateCreate({
           data: {
             description: description,
-            content: 'Hello!'
+            content: 'Hello!',
+            variables: [],
+            envelope: {
+              subject: 'Hello!'
+            }
           }
         })
-
-        return {
-          id: t.id,
-          description: t.description,
-          subject: t.envelope?.subject,
-          from: t.envelope?.from?.value,
-          replyTo: t.envelope?.replyTo?.value,
-          updatedAt: t.updatedAt,
-          createdAt: t.createdAt
-        }
       })
-
       if (errors) {
-        console.error(errors)
+        toast({
+          title: 'Failed to create template',
+          description: errors[0]!.message,
+          status: 'error'
+        })
+      } else {
+        refetch()
       }
-
-      setTemplates([...templates, data])
     }
   }
 
@@ -127,37 +139,44 @@ const Page: React.FC = () => {
         <Table>
           <Thead position="sticky" top={0} zIndex={1} borderColor="black">
             <Tr my=".8rem">
-              <Th></Th>
+              <Th>Description</Th>
               <Th>Subject</Th>
-              <Th>From</Th>
+              <Th>To</Th>
               <Th>Reply-To</Th>
               <Th>Updated at</Th>
               <Th>Created at</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {isLoading ? (
-              // Display skeletons while loading
+            {isLoading && (
               <>
                 <SkeletonRow />
                 <SkeletonRow />
+                <SkeletonRow />
               </>
-            ) : (
-              // Render actual data when not loading
-              templates.map(template => (
-                <Tr key={template.id}>
-                  <Td>
-                    <Link as={GatsbyLink} to={`./${template.id}`}>
-                      {template.description}
-                    </Link>
-                  </Td>
-                  <Td>{template.subject}</Td>
-                  <Td>{template.from}</Td>
-                  <Td>{template.replyTo}</Td>
-                  <Td>{template.updatedAt}</Td>
-                  <Td>{template.createdAt}</Td>
-                </Tr>
-              ))
+            )}
+
+            {data.allTemplate().nodes.map(template => (
+              <Tr
+                key={template.id}
+                visibility={isLoading ? 'hidden' : 'visible'}>
+                <Td>
+                  <Link as={GatsbyLink} to={`./${template.id}`}>
+                    {template.description}
+                  </Link>
+                </Td>
+                <Td>{template.envelope()?.subject}</Td>
+                <Td>{template.envelope()?.to}</Td>
+                <Td>{template.envelope()?.replyTo}</Td>
+                <Td>{template.updatedAt}</Td>
+                <Td>{template.createdAt}</Td>
+              </Tr>
+            ))}
+
+            {data.allTemplate().nodes.length === 0 && (
+              <Tr visibility={isLoading ? 'hidden' : 'visible'}>
+                <Td colSpan={6}>No templates found</Td>
+              </Tr>
             )}
           </Tbody>
         </Table>

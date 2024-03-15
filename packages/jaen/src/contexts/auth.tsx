@@ -23,6 +23,7 @@ export const AuthenticationProvider: React.FC<{
     projectIds.forEach(projectId => {
       parts.add(`urn:zitadel:iam:org:project:id:${projectId}:aud`)
     })
+    parts.add('offline_access')
 
     return Array.from(parts).join(' ')
   }, [])

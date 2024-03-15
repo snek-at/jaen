@@ -35,6 +35,13 @@ export const onCreatePage = async ({
   const path = page.path.replace(/\/+$/, '') // Remove trailing slashes from the path
   const lastPathElement = path.split('/').pop() || '' // Extract the last element
 
+  const createdAt = (page as any).createdAt
+    ? new Date((page as any).createdAt)
+    : new Date()
+  const modifiedAt = (page as any).updatedAt
+    ? new Date((page as any).updatedAt)
+    : new Date()
+
   const newJaenPageNode = {
     id: jaenPageId,
     slug: lastPathElement,
@@ -47,8 +54,8 @@ export const onCreatePage = async ({
     jaenFields: null,
     sections: [],
     template: null,
-    createdAt: new Date((page as any).updatedAt).toISOString(),
-    modifiedAt: new Date((page as any).updatedAt).toISOString(),
+    createdAt: createdAt.toISOString(),
+    modifiedAt: modifiedAt.toISOString(),
     ...jaenPageNode,
     parentPage: getJaenPageParentId({
       parentPage: jaenPageNode?.parentPage

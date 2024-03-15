@@ -15,7 +15,7 @@ const LogoutPage: React.FC<PageProps> = withCMSManagement(() => {
         setIsEditing(false)
 
         await auth.signoutRedirect({
-          post_logout_redirect_uri: 'http://localhost:8000'
+          post_logout_redirect_uri: window.location.origin
         })
       }}
       goBackPath="/"

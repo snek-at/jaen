@@ -5,7 +5,7 @@ const Page: React.FC<PageProps> = ({location, pageContext}) => {
     <>
       You cannot see this page in the node graph visualizer because it has the
       following pageConfig:
-      <pre>{JSON.stringify(pageConfig, null, 2)}</pre>
+      <pre>{JSON.stringify(pageContext.pageConfig, null, 2)}</pre>
     </>
   )
 }

@@ -1,6 +1,6 @@
 {
   "name": "@atsnek/jaen",
-  "version": "1.0.0-rc.55",
+  "version": "1.0.0-rc.56",
   "description": "The Webapps framework for creating scalable and dynamic applications with ease.",
   "type": "module",
   "source": "src/index.ts",
@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.module.js"
     },
+    "./dist/types": "./dist/types.d.ts",
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.ts",
