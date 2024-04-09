@@ -1,6 +1,7 @@
 import {ColorModeScript} from '@chakra-ui/react'
 import {GatsbySSR} from 'gatsby'
-import './src/styles/global.css'
+
+import './dist/jaen.css'
 
 import {theme} from './src/theme/jaen-theme/index'
 

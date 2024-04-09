@@ -3,12 +3,15 @@ import {
   Field,
   PageConfig,
   PageProps,
+  PageProvider,
   useAuth,
+  useField,
   useJaenPageIndex,
   useMediaModal,
+  usePageContext,
   useSiteMetadataContext
 } from '@atsnek/jaen'
-import {useJaenFrameMenuContext} from 'gatsby-plugin-jaen'
+import {Link, useJaenFrameMenuContext} from 'gatsby-plugin-jaen'
 
 import {Box, Button, LightMode, Text} from '@chakra-ui/react'
 import {graphql} from 'gatsby'
@@ -201,20 +204,27 @@ const IndexPage: React.FC<PageProps> = () => {
 
   console.log('__REMOTE__', __JAEN_REMOTE__)
 
-  if (auth.isAuthenticated) {
-    return (
-      <div>
-        <pre
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(auth.user, null, 2)
-          }}></pre>
+  // if (auth.isAuthenticated) {
+  //   return (
+  //     <div>
+  //       <pre
+  //         dangerouslySetInnerHTML={{
+  //           __html: JSON.stringify(auth.user, null, 2)
+  //         }}></pre>
 
-        <Field.Text name="foo" />
-      </div>
-    )
-  }
+  //       <Field.Image name="image" />
+  //     </div>
+  //   )
+  // }
 
-  return <button onClick={auth.signinRedirect}>login</button>
+  return (
+    <>
+      <button onClick={auth.signinRedirect}>login</button>
+      <Link to="/mdx">mdx</Link>
+      <Field.Image name="image" />
+      <Field.Image name="test" />
+    </>
+  )
 
   return (
     <>

@@ -1,21 +1,10 @@
-import {JaenPage, PageProvider, useDynamicPaths, withRedux} from '@atsnek/jaen'
-import {PageProps} from 'gatsby'
+import {PageProps, PageProvider, useDynamicPaths, withRedux} from '@atsnek/jaen'
 
 import React, {lazy, useMemo} from 'react'
 import {useJaenPagePaths} from './jaen-page-paths'
 
-export interface DynamicPageRendererProps {
-  pageProps: PageProps<
-    {
-      jaenPage?: JaenPage
-      allJaenPage?: {
-        nodes: Array<JaenPage>
-      }
-    },
-    {
-      jaenPageId?: string
-    }
-  >
+export interface DynamicPageRendererProps extends Omit<PageProps, 'children'> {
+  children: React.ReactElement<any, string | React.JSXElementConstructor<any>>
   Component: React.ComponentType<any>
 }
 
@@ -27,11 +16,9 @@ export const DynamicPageRenderer: React.FC<DynamicPageRendererProps> =
       staticPages: allJaenPagePaths.allJaenPage.nodes
     }) // Replace this with the actual hook you're using
 
-    const pathWithTrailingSlash = props.pageProps.location.pathname.endsWith(
-      '/'
-    )
-      ? props.pageProps.location.pathname
-      : props.pageProps.location.pathname + '/'
+    const pathWithTrailingSlash = props.location.pathname.endsWith('/')
+      ? props.location.pathname
+      : props.location.pathname + '/'
 
     const dynamicJaenPage = paths[pathWithTrailingSlash]
 
@@ -59,17 +46,16 @@ export const DynamicPageRenderer: React.FC<DynamicPageRendererProps> =
     }
 
     if (dynamic) {
+      console.log('dynamic', dynamic)
+
       return (
         <PageProvider jaenPage={{id: dynamic.jaenPageId}}>
           <React.Suspense fallback={<div>Loading...</div>}>
             <Component
               {...props}
-              pageProps={{
-                ...props.pageProps,
-                pageContext: {
-                  ...props.pageProps.pageContext,
-                  jaenPageId: dynamic.jaenPageId
-                }
+              pageContext={{
+                ...props.pageContext,
+                jaenPageId: dynamic.jaenPageId
               }}>
               <dynamic.Component
                 {...{
@@ -84,14 +70,14 @@ export const DynamicPageRenderer: React.FC<DynamicPageRendererProps> =
       )
     }
 
-    if (props.pageProps.pageContext.jaenPageId) {
+    if (props.pageContext.jaenPageId) {
       return (
         <PageProvider
           jaenPage={{
-            id: props.pageProps.pageContext.jaenPageId,
-            ...props.pageProps.data?.jaenPage
+            id: props.pageContext.jaenPageId,
+            ...props.data?.jaenPage
           }}
-          jaenPages={props.pageProps.data?.allJaenPage?.nodes || []}>
+          jaenPages={props.data?.allJaenPage?.nodes || []}>
           <Component {...props} />
         </PageProvider>
       )

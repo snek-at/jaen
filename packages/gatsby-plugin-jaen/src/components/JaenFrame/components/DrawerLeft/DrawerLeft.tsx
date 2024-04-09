@@ -1,19 +1,21 @@
+import {Menu} from 'lucide-react'
+
+import {Button} from '../../../../components/ui/button'
 import {
-  Box,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  HStack,
-  Icon,
-  IconButton,
-  Text,
-  useDisclosure
-} from '@chakra-ui/react'
-import {useRef} from 'react'
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarImage
+} from '../../../../components/ui/avatar'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '../../../../components/ui/sheet'
 import {FaBars} from '@react-icons/all-files/fa/FaBars'
 import {JaenFullLogo} from '../../../shared/JaenLogo/JaenLogo'
 import {
@@ -32,19 +34,41 @@ export const DrawerLeft: React.FC<DrawerLeftProps> = ({
   logo,
   version
 }) => {
-  const {isOpen, onClose, onToggle} = useDisclosure()
-
-  const initialFocusRef = useRef<HTMLButtonElement>(null)
-
   return (
-    <>
-      <IconButton
-        aria-label="Open main menu"
-        icon={<Icon as={FaBars} fontSize="lg" color="brand.500 !important" />}
-        size="sm"
-        onClick={onToggle}
-        variant="outline"
-      />
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="icon" className="my-auto">
+          <Menu
+            className="w-4 h-4"
+            style={{
+              color: 'var(--chakra-colors-brand-500)'
+            }}
+          />
+        </Button>
+      </SheetTrigger>
+
+      <SheetContent side="left" className="flex flex-col">
+        <SheetHeader>
+          <SheetTitle></SheetTitle>
+          <div className="max-w-xs">{logo || <JaenFullLogo />}</div>
+
+          {/* <HStack justifyContent="space-between">
+            <Box h="full" maxW="12rem">
+              {logo || <JaenFullLogo />}
+            </Box>
+            <MenuButton items={[]} />
+          </HStack> */}
+        </SheetHeader>
+
+        <div className="flex-1 overflow-y-auto">
+          <NavigationGroups groups={navigationGroups} />
+        </div>
+
+        <SheetFooter>
+          <p>{version}</p>
+        </SheetFooter>
+      </SheetContent>
+      {/* 
       <Drawer
         placement="left"
         size="xs"
@@ -79,7 +103,7 @@ export const DrawerLeft: React.FC<DrawerLeftProps> = ({
             </DrawerFooter>
           </DrawerContent>
         </Box>
-      </Drawer>
-    </>
+      </Drawer> */}
+    </Sheet>
   )
 }

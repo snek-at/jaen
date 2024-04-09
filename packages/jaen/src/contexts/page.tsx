@@ -68,6 +68,11 @@ export interface UsePageIndexProps {
   path?: string
   filter?: (page: Partial<JaenPage>) => boolean
   sort?: (a: Partial<JaenPage>, b: Partial<JaenPage>) => number
+
+  /**
+   * Include excluded pages in the index.
+   */
+  includeExcluded?: boolean
 }
 
 export const useJaenPageIndex = (
@@ -133,7 +138,10 @@ export const useJaenPageIndex = (
           continue
         }
 
-        const actualChild = state.page.pages.nodes[id]
+        const actualChild = {
+          ...state.page.pages.nodes[id],
+          id
+        }
         if (actualChild) {
           actualPages.push(actualChild)
         }
@@ -165,7 +173,15 @@ export const useJaenPageIndex = (
     // This is a double check for deleted pages just in case
     let mergedChildren = deepmerge(staticChildren, dynamicChildren, {
       arrayMerge: deepmergeArrayIdMerge
-    }).filter(c => !c.excludedFromIndex || !c.deleted)
+    })
+
+    mergedChildren = mergedChildren.filter(c => {
+      if (props?.includeExcluded) {
+        return !c.deleted
+      }
+
+      return !c.excludedFromIndex && !c.deleted
+    })
 
     if (props) {
       const {filter, sort} = props

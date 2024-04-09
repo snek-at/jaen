@@ -92,6 +92,13 @@ The existing templates are: ${jaenTemplates
     const childPagesOrder =
       page.childPagesOrder || page.childPages?.map(child => child.id) || []
 
+    const createdAt = (page as any).createdAt
+      ? new Date((page as any).createdAt)
+      : new Date()
+    const modifiedAt = (page as any).updatedAt
+      ? new Date((page as any).updatedAt)
+      : new Date()
+
     const pageWithSlug = {
       ...page,
       childPagesOrder,
@@ -101,7 +108,9 @@ The existing templates are: ${jaenTemplates
       jaenPageMetadata: {
         ...page.jaenPageMetadata,
         title: page.jaenPageMetadata?.title || slug
-      }
+      },
+      createdAt: createdAt.toISOString(),
+      modifiedAt: modifiedAt.toISOString()
     }
 
     const pageNode = {

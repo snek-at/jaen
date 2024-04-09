@@ -1,5 +1,6 @@
 import {LayoutProps, useWidget} from '@atsnek/jaen'
 import {Box, Heading, HStack, Button} from '@chakra-ui/react'
+import {useEffect} from 'react'
 
 const Layout: React.FC<LayoutProps> = ({children, pageProps}) => {
   const [widget, setWidget] = useWidget<string>('Header_Title', {

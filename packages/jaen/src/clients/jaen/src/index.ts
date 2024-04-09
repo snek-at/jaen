@@ -6,11 +6,11 @@ import {Query, Mutation} from './schema.generated.js'
 export const sqJaen = makeSnekQuery(
   {Query, Mutation},
   {
-    apiURL: 'https://services.netsnek.com/jaen/graphql',
+    apiURL: 'https://jaen-pylon.cronit.io/graphql',
     middlewares: [
       ({context}) => {
         const oidcStorage = sessionStorage.getItem(
-          `oidc.user:https://access.netsnek.com:${__JAEN_ZITADEL__.clientId}`
+          `oidc.user:${__JAEN_ZITADEL__.authority}:${__JAEN_ZITADEL__.clientId}`
         )
 
         if (oidcStorage) {

@@ -59,6 +59,8 @@ export interface ImageFieldProps extends ImageProps {
    * In this example, the GIF image will be displayed after the optimized image (no GIF).
    */
   overload?: boolean
+  sizes?: string
+  autoScale?: boolean
 }
 
 export type ImageFieldMediaId = string
@@ -70,6 +72,8 @@ export const ImageField = connectField<ImageFieldMediaId, ImageFieldProps>(
     lightboxGroup,
     defaultValue,
     overload,
+    sizes,
+    autoScale = true,
     ...imageProps
   }) => {
     const isLightbox = lightbox && !jaenField.isEditing
@@ -111,7 +115,7 @@ export const ImageField = connectField<ImageFieldMediaId, ImageFieldProps>(
         <HighlightTooltip
           id={jaenField.id || jaenField.name}
           isEditing={jaenField.isEditing}
-          boxSize="full"
+          boxSize={autoScale ? 'full' : 'fit-content'}
           actions={[
             <Button
               variant="field-highlighter-tooltip"
@@ -136,7 +140,9 @@ export const ImageField = connectField<ImageFieldMediaId, ImageFieldProps>(
             imageProps,
             lightbox: isLightbox,
             lightboxGroup,
-            defaultValue
+            defaultValue,
+            sizes,
+            autoScale
           }}
         />
       </PageProvider>
@@ -158,16 +164,20 @@ const ImageComponent = forwardRef<
     lightboxGroup?: boolean
 
     defaultValue?: string
+    sizes?: string
+    autoScale?: boolean
   }
 >(
   (
     {
       mediaId,
       fieldName,
-      imageProps,
+      imageProps = {},
       lightbox,
       lightboxGroup,
       defaultValue,
+      sizes,
+      autoScale,
       ...props
     },
     ref
@@ -178,10 +188,11 @@ const ImageComponent = forwardRef<
       return (
         <Center
           ref={ref}
-          boxSize="full"
+          boxSize={autoScale ? 'full' : undefined}
           pos={'relative'}
           overflow="hidden"
           style={imageProps?.style}
+          className={imageProps?.className}
           {...props}>
           <Text color="gray.600" fontSize="sm">
             No image
@@ -193,7 +204,7 @@ const ImageComponent = forwardRef<
     let element = (
       <Box
         ref={ref}
-        boxSize="full"
+        boxSize={autoScale ? 'full' : undefined}
         pos={'relative'}
         overflow="hidden"
         cursor={lightbox ? 'zoom-in' : 'default'}
@@ -203,18 +214,19 @@ const ImageComponent = forwardRef<
             image={image?.image}
             alt={image.description}
             {...imageProps}
+            sizes={sizes}
             style={{
               ...imageProps?.style,
-              width: '100%',
-              height: '100%'
+              ...(autoScale ? {height: '100%', width: '100%'} : {})
             }}
           />
         ) : (
           // @ts-ignore
           <Image
             {...imageProps}
+            sizes={sizes}
             src={defaultValue}
-            boxSize="full"
+            boxSize={autoScale ? 'full' : undefined}
             style={imageProps?.style}
           />
         )}

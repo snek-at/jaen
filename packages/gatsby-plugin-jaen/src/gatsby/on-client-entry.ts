@@ -37,7 +37,12 @@ export const onClientEntry: GatsbyBrowser['onClientEntry'] = async (
 
   Sentry.addIntegration(
     Sentry.feedbackIntegration({
-      colorScheme: 'system'
+      colorScheme: 'light',
+      showBranding: false,
+      formTitle: 'Give Feedback',
+      buttonLabel: 'Feedback',
+      submitButtonLabel: 'Send Feedback',
+      messagePlaceholder: 'Report an issue or share your ideas.'
     })
   )
 }

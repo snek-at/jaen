@@ -71,8 +71,6 @@ const Slice: React.FC<SliceProps> = props => {
   useEffect(() => {
     const isJaenAdmin = checkUserRoles(auth.user, ['jaen:admin'])
 
-    console.log('isJaenAdmin', isJaenAdmin, auth.user)
-
     if (isJaenAdmin) {
       extendMenu('user', {
         group: 'add',
@@ -249,8 +247,10 @@ const Slice: React.FC<SliceProps> = props => {
           user: auth.user
             ? {
                 username:
-                  auth.user?.profile?.preferred_username ||
-                  auth.user.profile.sub,
+                  auth.user.profile.preferred_username?.replace(
+                    `@${auth.user.profile['urn:zitadel:iam:user:resourceowner:primary_domain']}`,
+                    ''
+                  ) || auth.user.profile.sub,
                 firstName: auth.user?.profile?.given_name,
                 lastName: auth.user?.profile?.family_name,
                 avatarURL: auth.user?.profile?.picture

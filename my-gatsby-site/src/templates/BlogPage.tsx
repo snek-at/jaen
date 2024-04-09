@@ -27,6 +27,8 @@ const BlogPage: React.FC<PageProps> = props => {
       <pre style={{whiteSpace: 'pre-wrap'}}>
         {JSON.stringify(index, null, 2)}
       </pre>
+
+      <Field.Image name="foo" className="test1234" />
     </main>
   )
 }

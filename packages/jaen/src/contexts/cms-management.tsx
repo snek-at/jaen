@@ -157,11 +157,10 @@ export const CMSManagementProvider = withRedux(
             cleanDict[pageId] = {...page}
 
             if (page.childPages) {
-              const validChildren = page.childPages.filter(
-                (child: {id: string | number}) => {
-                  return !pageDict[child.id]?.deleted
-                }
-              )
+              const validChildren = page.childPages.filter(child => {
+                return !child.deleted && !pageDict[child.id]?.deleted
+              })
+
               cleanDict[pageId]!.childPages = validChildren
             }
           }
@@ -286,6 +285,51 @@ export const CMSManagementProvider = withRedux(
     ): void => {
       const page = pagesDict[pageId]
 
+      function deepObjectDiff(
+        obj1: Partial<JaenPage>,
+        obj2: Partial<JaenPage>
+      ) {
+        function compareObjects(
+          o1: {[x: string]: any},
+          o2: {[x: string]: any; hasOwnProperty: (arg0: string) => any}
+        ) {
+          for (const key in o2) {
+            if (o2.hasOwnProperty(key)) {
+              if (
+                o1[key] &&
+                typeof o1[key] === 'object' &&
+                o2[key] &&
+                typeof o2[key] === 'object'
+              ) {
+                if (!compareObjects(o1[key], o2[key])) {
+                  return false
+                }
+              } else if (o1[key] !== o2[key]) {
+                return false
+              }
+            }
+          }
+          return true
+        }
+
+        const diff: Partial<JaenPage> = {}
+
+        for (const key in obj2) {
+          if (
+            !obj1.hasOwnProperty(key) ||
+            (typeof obj2[key] === 'object' &&
+              !compareObjects(obj1[key], obj2[key])) ||
+            (typeof obj2[key] !== 'object' && obj1[key] !== obj2[key])
+          ) {
+            diff[key] = obj2[key]
+          }
+        }
+
+        return diff
+      }
+
+      updatedPage = deepObjectDiff(page || {}, updatedPage)
+
       // check if slug is unique when updating slug
       const slug = updatedPage.slug || 'new-page'
 
@@ -303,7 +347,11 @@ export const CMSManagementProvider = withRedux(
         pageActions.page_updateOrCreate({
           id: pageId,
           ...updatedPage,
-          fromId: page?.parentPage?.id
+          fromId:
+            // Only set the fromId if the parentPage has changed
+            updatedPage?.parentPage?.id || updatedPage?.parentPage === null
+              ? page?.parentPage?.id
+              : undefined
         })
       )
     }

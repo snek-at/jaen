@@ -320,6 +320,10 @@ export const FieldHighlighterProvider: React.FC<
     }
   }, [])
 
+  // const memoedChildren = React.useMemo(() => {
+  //   return props.children
+  // }, [props.children])
+
   return (
     <FieldHighlighterProviderContext.Provider value={{ref}}>
       {portaledTooltip}

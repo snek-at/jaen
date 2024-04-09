@@ -494,7 +494,13 @@ const Page: React.FC<PageProps> = ({params}) => {
                     <Tbody>
                       {variablesField.fields.map((field, index) => (
                         <Tr key={index}>
-                          <Td>{field.name}</Td>
+                          <Td>
+                            <Input
+                              type="text"
+                              defaultValue={field.name}
+                              {...register(`variables.${index}.name`)}
+                            />
+                          </Td>
                           <Td>
                             <Textarea
                               minH="10"

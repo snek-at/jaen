@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react'
 import {AuthContextProps, AuthProvider, useAuth} from 'react-oidc-context'
-import {PageConfig} from '../types'
+import {PageProps} from '../types'
 import {Alert, AlertIcon, Box, Center, Spinner, Text} from '@chakra-ui/react'
 
 export {useAuth} from 'react-oidc-context'
@@ -72,11 +72,15 @@ export const checkUserRoles = (
   return false
 }
 
-export const withAuthSecurity = <P extends object>(
-  Component: React.ComponentType<P>,
-  pageConfig?: PageConfig
+export const withAuthSecurity = <
+  P extends Omit<PageProps, 'children'> & {
+    children: React.ReactElement<any, string | React.JSXElementConstructor<any>>
+  }
+>(
+  Component: React.ComponentType<P>
 ) => {
-  return (props: P) => {
+  const Wrapper: React.FC<P> = props => {
+    const pageConfigAuth = props.pageContext.pageConfig?.auth
     const auth = useAuth()
 
     const loadingText = useMemo(() => {
@@ -94,7 +98,7 @@ export const withAuthSecurity = <P extends object>(
       }
     }, [auth.activeNavigator])
 
-    const isAuthRequired = pageConfig?.auth?.isRequired
+    const isAuthRequired = pageConfigAuth?.isRequired
 
     if (loadingText) {
       return (
@@ -127,7 +131,7 @@ export const withAuthSecurity = <P extends object>(
     }
 
     if (isAuthRequired) {
-      const roles = pageConfig?.auth?.roles
+      const roles = pageConfigAuth?.roles
 
       if (roles) {
         const hasRoles = checkUserRoles(auth.user, roles)
@@ -164,4 +168,6 @@ export const withAuthSecurity = <P extends object>(
 
     return <Component {...props} />
   }
+
+  return Wrapper
 }

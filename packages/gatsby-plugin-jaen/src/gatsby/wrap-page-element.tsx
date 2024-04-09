@@ -2,12 +2,13 @@ import {
   FieldHighlighterProvider,
   JaenPage,
   PageConfig,
+  PageProps,
   useAuth,
   withAuthSecurity
 } from '@atsnek/jaen'
 import {Flex} from '@chakra-ui/react'
-import {GatsbyBrowser, PageProps, Slice} from 'gatsby'
-import React, {useMemo} from 'react'
+import {GatsbyBrowser, Slice} from 'gatsby'
+import React, {useEffect, useMemo} from 'react'
 import * as Sentry from '@sentry/gatsby'
 
 import {theme} from '../theme/jaen-theme/index'
@@ -16,28 +17,13 @@ import Layout from './Layout'
 
 // Import other necessary components here
 
-interface PageContext {
-  pageConfig?: PageConfig
-  jaenPageId?: string
-}
-
-interface CustomPageElementProps {
-  pageProps: PageProps<
-    {
-      jaenPage?: JaenPage
-      allJaenPage?: {
-        nodes: Array<JaenPage>
-      }
-    },
-    PageContext
-  >
-
-  children: React.ReactNode
+interface CustomPageElementProps extends Omit<PageProps, 'children'> {
+  children: React.ReactElement<any, string | React.JSXElementConstructor<any>>
 }
 
 const CustomPageElement: React.FC<CustomPageElementProps> = ({
   children,
-  pageProps
+  ...props
 }) => {
   const auth = useAuth()
 
@@ -50,7 +36,7 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
     })
   }
 
-  const withoutJaenFrame = pageProps.pageContext?.pageConfig?.withoutJaenFrame
+  const withoutJaenFrame = props.pageContext?.pageConfig?.withoutJaenFrame
 
   if (!withoutJaenFrame) {
     return (
@@ -58,7 +44,7 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
         pos="relative"
         flexDirection="column"
         visibility={
-          pageProps.pageContext?.pageConfig?.auth?.isRequired &&
+          props.pageContext?.pageConfig?.auth?.isRequired &&
           !auth.isAuthenticated
             ? 'hidden'
             : 'visible'
@@ -66,44 +52,27 @@ const CustomPageElement: React.FC<CustomPageElementProps> = ({
         {auth.isAuthenticated && (
           <Slice
             alias="jaen-frame"
-            jaenPageId={pageProps.pageContext?.jaenPageId}
-            pageConfig={pageProps.pageContext?.pageConfig as any}
+            jaenPageId={props.pageContext?.jaenPageId}
+            pageConfig={props.pageContext?.pageConfig as any}
           />
         )}
 
-        <Layout pageProps={pageProps}>{children}</Layout>
+        <Layout pageProps={props}>{children}</Layout>
       </Flex>
     )
   }
 
-  return <Layout pageProps={pageProps}>{children}</Layout>
+  return <Layout pageProps={props}>{children}</Layout>
 }
 
-export interface WithJaenPageProviderProps {
-  pageProps: PageProps<
-    {
-      jaenPage?: JaenPage
-      allJaenPage?: {
-        nodes: Array<JaenPage>
-      }
-    },
-    PageContext
-  >
-}
+const SecureRendered = withAuthSecurity(DynamicPageRenderer)
 
-const withJaenPageProvider = <P extends WithJaenPageProviderProps>(
+const withJaenPageProvider = <
+  P extends React.ComponentProps<typeof DynamicPageRenderer>
+>(
   Component: React.ComponentType<P>
 ): React.FC<P> => {
   return props => {
-    const SecureRendered = useMemo(
-      () =>
-        withAuthSecurity(
-          DynamicPageRenderer,
-          props.pageProps.pageContext?.pageConfig
-        ),
-      [props.pageProps.pageContext.pageConfig]
-    )
-
     return <SecureRendered {...props} Component={Component} />
   }
 }
@@ -115,8 +84,8 @@ export const wrapPageElement: GatsbyBrowser['wrapPageElement'] = ({
   props
 }) => {
   return (
-    <FieldHighlighterProvider path={props.path} theme={theme}>
-      <JaenPageElement pageProps={props}>{element}</JaenPageElement>
+    <FieldHighlighterProvider path={props.location.pathname} theme={theme}>
+      <JaenPageElement {...(props as any)} children={element} />
     </FieldHighlighterProvider>
   )
 }
