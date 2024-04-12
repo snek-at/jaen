@@ -3,8 +3,10 @@ import {Badge, Box, HStack} from '@chakra-ui/react'
 import {markdown, markdownLanguage} from '@codemirror/lang-markdown'
 import {languages} from '@codemirror/language-data'
 
-import CodeMirror, {ReactCodeMirrorProps} from '@uiw/react-codemirror'
-import type {EditorView} from 'codemirror'
+import CodeMirror, {
+  ReactCodeMirrorProps,
+  EditorView
+} from '@uiw/react-codemirror'
 
 import React, {useCallback, useEffect, useState} from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
@@ -164,7 +166,8 @@ export const Editor: React.FC<EditorProps> = props => {
               <MemoizedCodeMirror
                 value={state.value}
                 extensions={[
-                  markdown({base: markdownLanguage, codeLanguages: languages})
+                  markdown({base: markdownLanguage, codeLanguages: languages}),
+                  EditorView.lineWrapping
                 ]}
                 onCreateEditor={editorView => {
                   setView(editorView)
