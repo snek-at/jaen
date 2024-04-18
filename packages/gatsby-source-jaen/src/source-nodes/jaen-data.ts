@@ -51,7 +51,14 @@ export const sourceNodes = async (args: SourceNodesArgs) => {
 
       if (response) {
         jaenData = deepmerge(jaenData, response.data, {
-          arrayMerge: deepmergeArrayIdMerge
+          arrayMerge: deepmergeArrayIdMerge,
+          customMerge: key => {
+            if (key === 'IMA:MdxField') {
+              return (target, source) => {
+                return {...target, ...source}
+              }
+            }
+          }
         })
       }
     }
