@@ -8,7 +8,7 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
   Joi
 }) => {
   return Joi.object({
-    pylonUrl: Joi.string().required()
+    pylonUrl: Joi.string()
   })
 }
 
