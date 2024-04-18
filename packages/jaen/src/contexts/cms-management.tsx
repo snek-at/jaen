@@ -50,6 +50,7 @@ interface CMSManagementContextData {
     label: string
     children: Array<CMSManagementContextData['tree'][0]>
     showInNodeGraphVisualizer: boolean
+    excludedFromIndex: boolean
   }>
   pagePath: (pageId: string) => string
   addPage: (page: Partial<JaenPage>) => string
@@ -421,7 +422,8 @@ export const CMSManagementProvider = withRedux(
           label: child.jaenPageMetadata.title || child.slug,
           showInNodeGraphVisualizer:
             child.pageConfig?.showInNodeGraphVisualizer ?? true,
-          children: buildTree(child.id)
+          children: buildTree(child.id),
+          excludedFromIndex: !!child.excludedFromIndex
         }))
       }
 
@@ -432,7 +434,8 @@ export const CMSManagementProvider = withRedux(
         label: root.jaenPageMetadata.title || root.slug,
         showInNodeGraphVisualizer:
           root.pageConfig?.showInNodeGraphVisualizer ?? true,
-        children: buildTree(root.id)
+        children: buildTree(root.id),
+        excludedFromIndex: !!root.excludedFromIndex
       })
 
       return tree
