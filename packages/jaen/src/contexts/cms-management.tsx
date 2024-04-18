@@ -268,7 +268,9 @@ export const CMSManagementProvider = withRedux(
       // check if slug is unique
       const slug = page.slug || 'new-page'
 
-      const isSlugDuplicate = pages().some(page => page.slug === slug)
+      const isSlugDuplicate = pages(page.parentPage?.id).some(
+        page => page.slug === slug
+      )
 
       if (isSlugDuplicate) {
         throw new DuplicateSlugError(slug)
