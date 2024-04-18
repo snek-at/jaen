@@ -2,6 +2,7 @@ import {evaluateSync} from '@mdx-js/mdx'
 import {useDebounceFn} from 'ahooks'
 import {frontmatterToMarkdown} from 'mdast-util-frontmatter'
 import {gfmToMarkdown} from 'mdast-util-gfm'
+import {mathToMarkdown} from 'mdast-util-math'
 import {mdxToMarkdown} from 'mdast-util-mdx'
 import {useEffect, useState} from 'react'
 import * as runtime from 'react/jsx-runtime'
@@ -22,11 +23,14 @@ import {MdastRoot} from './components/types.js'
 
 import {rehypeUnwrapImages} from './rehype-unwrap-images'
 
+import rehypeMathjax from 'rehype-mathjax/svg'
+
 const parseMdast = (tree: MdastRoot) => {
   const out = toMarkdown(tree as any, {
     extensions: [
       mdxToMarkdown(),
       gfmToMarkdown(),
+      mathToMarkdown(),
       directiveToMarkdown,
       frontmatterToMarkdown()
     ] as any
@@ -58,6 +62,7 @@ function evaluateFile(file: VFile) {
         capture('mdast')
       ],
       rehypePlugins: [
+        rehypeMathjax,
         rehypeSlug,
         rehypeUnwrapImages,
         [

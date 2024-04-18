@@ -7,6 +7,7 @@ import {Statistics} from 'vfile-statistics'
 import {ErrorFallback} from './ErrorFallback.js'
 import {BaseEditorProps} from './types.js'
 
+import {Stack} from '@chakra-ui/react'
 import StatsReporterError from './StatsReporterError.js'
 
 const FallbackComponent: React.FC<{error: Error}> = ({error}) => {
@@ -49,7 +50,27 @@ const processContent = ({
             <code className={className} {...props} />
           )
         },
-        ...components
+        ...components,
+        wrapper: ({children}: any) => {
+          const Wrapper = components?.wrapper
+          const el = (
+            <Stack
+              sx={{
+                'mjx-container': {
+                  display: 'inline-block !important',
+                  verticalAlign: 'text-bottom !important'
+                }
+              }}>
+              {children}
+            </Stack>
+          )
+
+          if (Wrapper) {
+            return <Wrapper>{el}</Wrapper>
+          }
+
+          return el
+        }
       }
     })
   } catch (error) {

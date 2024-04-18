@@ -17,20 +17,24 @@ Image.defaultProps = {
 
 export const Link: React.FC<{
   to: string
+  isExternal?: boolean
   children: React.ReactNode
-}> = ({to, children}) => {
-  // Check if link is internal or external
-  if (to.startsWith('/')) {
+}> = ({to, children, ...props}) => {
+  const isExternal =
+    props.isExternal !== undefined
+      ? props.isExternal
+      : to.startsWith('http://') || to.startsWith('https://')
+
+  if (isExternal) {
     return (
-      <ChakraLink as={GatsbyLink} to={to}>
+      <ChakraLink href={to} isExternal>
         {children}
       </ChakraLink>
     )
   }
 
-  // External link
   return (
-    <ChakraLink href={to} isExternal>
+    <ChakraLink as={GatsbyLink} to={to}>
       {children}
     </ChakraLink>
   )
