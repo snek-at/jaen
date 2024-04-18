@@ -1,14 +1,8 @@
-import {useColorModeValue, useToken} from '@chakra-ui/react'
-import {useEffect, useRef} from 'react'
+import {useToken} from '@chakra-ui/react'
+import {useEffect, useMemo, useRef} from 'react'
 
-import {
-  darkTheme,
-  GraphCanvas,
-  GraphCanvasRef,
-  lightTheme,
-  useSelection
-} from 'reagraph'
-import {convertTreeToGraph, TreeNode} from './convert-tree-to-graph'
+import {GraphCanvas, GraphCanvasRef, useSelection} from 'reagraph'
+import {TreeNode, convertTreeToGraph} from './convert-tree-to-graph'
 
 export const Graph: React.FC<{
   tree: TreeNode[]
@@ -63,75 +57,67 @@ export const Graph: React.FC<{
     // a single fallback or fallback array matching the length of the previous arg
   )
 
-  const theme = useColorModeValue(
-    {
-      ...lightTheme,
+  const theme = useMemo(
+    () => ({
+      canvas: {background: '#fff'},
       node: {
-        ...lightTheme.node,
+        fill: '#7CA0AB',
         activeFill: brand500,
+        opacity: 1,
+        selectedOpacity: 1,
+        inactiveOpacity: 1,
         label: {
-          ...lightTheme.node.label,
+          color: '#2A6475',
+          stroke: '#fff',
+          activeColor: brand500
+        },
+        subLabel: {
+          color: '#ddd',
+          stroke: 'transparent',
           activeColor: brand500
         }
       },
+      lasso: {
+        border: '1px solid #55aaff',
+        background: 'rgba(75, 160, 255, 0.1)'
+      },
       ring: {
-        ...lightTheme.ring,
+        fill: '#D8E6EA',
         activeFill: brand500
       },
       edge: {
-        ...lightTheme.edge,
+        fill: '#D8E6EA',
         activeFill: brand500,
+        opacity: 1,
+        selectedOpacity: 1,
+        inactiveOpacity: 1,
         label: {
-          ...lightTheme.edge.label,
-          stroke: lightTheme.canvas.background,
-          activeColor: brand500
+          stroke: '#fff',
+          color: '#2A6475',
+          activeColor: brand500,
+          fontSize: 6
         }
       },
       arrow: {
-        ...lightTheme.arrow,
+        fill: '#D8E6EA',
         activeFill: brand500
       },
       cluster: {
-        ...lightTheme.cluster
-      }
-    },
-
-    {
-      ...darkTheme,
-      node: {
-        ...darkTheme.node,
-        activeFill: brand500,
+        stroke: '#D8E6EA',
+        opacity: 1,
+        selectedOpacity: 1,
+        inactiveOpacity: 1,
         label: {
-          ...darkTheme.node.label,
-          stroke: darkTheme.canvas.background,
-          activeColor: brand500
+          stroke: '#fff',
+          color: '#2A6475'
         }
-      },
-      ring: {
-        ...darkTheme.ring,
-        activeFill: brand500
-      },
-      edge: {
-        ...darkTheme.edge,
-        activeFill: brand500,
-        label: {
-          ...darkTheme.edge.label,
-          activeColor: brand500
-        }
-      },
-      arrow: {
-        ...darkTheme.arrow,
-        activeFill: brand500
-      },
-      cluster: {
-        ...darkTheme.cluster
       }
-    }
+    }),
+    [brand500]
   )
 
   return (
     <GraphCanvas
-      key={theme.canvas.background}
       selections={selections}
       actives={actives}
       onCanvasClick={onCanvasClick}
