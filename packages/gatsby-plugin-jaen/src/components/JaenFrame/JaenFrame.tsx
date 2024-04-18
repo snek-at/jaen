@@ -2,10 +2,12 @@ import React from 'react'
 
 import {Toolbar} from '../Toolbar'
 
+import {Icon} from '@chakra-ui/react'
+import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
 import {Link} from 'gatsby'
 import {cn} from '../../lib/utils'
 import {JaenLogo} from '../shared/JaenLogo/JaenLogo'
-import {MenuButtonProps} from '../shared/MenuButton/MenuButton'
+import {MenuButton, MenuButtonProps} from '../shared/MenuButton/MenuButton'
 import {
   Breadcrumbs,
   BreadcrumbsProps
@@ -43,7 +45,7 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
   return (
     <header
       className={cn(
-        'flex h-16 px-4 border-b border-border backdrop-blur-sm justify-between gap-8 z-40  bg-white',
+        'flex h-16 px-4 border-b border-border backdrop-blur-sm justify-between gap-8 z-40 bg-white',
         {
           'sticky top-0': !props.navigation.isStickyDisabled
         }
@@ -58,12 +60,24 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
         <Breadcrumbs links={props.navigation.breadcrumbs.links} />
       </div>
 
-      <Link className="flex-1 max-w-xs no-underline" to="/">
-        {props.logo || <JaenLogo />}
-      </Link>
+      <div className="flex justify-center items-center flex-1">
+        <Link className="no-underline" to="/">
+          {props.logo || <JaenLogo />}
+        </Link>
+      </div>
 
       <div className="flex my-auto gap-4">
         <Toolbar />
+
+        <MenuButton
+          display={{
+            base: 'none',
+            md: 'flex'
+          }}
+          leftIcon={<Icon as={FaPlus} color="brand.500" />}
+          variant="outline"
+          items={props.navigation.addMenu.items}
+        />
 
         <DrawerRight
           user={props.navigation.user.user}
