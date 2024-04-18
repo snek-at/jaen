@@ -6,6 +6,9 @@ declare global {
     cwd?: string
   }
 
+  var __JAEN_PYLON_URL__: string | undefined
+  var __JAEN_MAILPRESS_PYLON_URL__: string | undefined
+
   var __JAEN_ZITADEL__: {
     organizationId: string
     clientId: string

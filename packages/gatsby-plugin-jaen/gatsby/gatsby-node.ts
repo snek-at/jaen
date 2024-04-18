@@ -6,6 +6,7 @@ export interface JaenPluginOptions extends PluginOptions {
     repository: string
     cwd?: string
   }
+  pylonUrl?: string
   zitadel: {
     organizationId: string
     clientId: string
@@ -31,6 +32,7 @@ export const pluginOptionsSchema: GatsbyNode['pluginOptionsSchema'] = ({
       repository: Joi.string().required(),
       cwd: Joi.string()
     }).required(),
+    pylonUrl: Joi.string(),
     zitadel: Joi.object({
       organizationId: Joi.string().required(),
       clientId: Joi.string().required(),
@@ -114,6 +116,7 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
           __VERSION__: JSON.stringify(version),
 
           __JAEN_REMOTE__: JSON.stringify(pluginOptions.remote),
+          __JAEN_PYLON_URL__: JSON.stringify(pluginOptions.pylonUrl),
           __JAEN_ZITADEL__: JSON.stringify(pluginOptions.zitadel)
         })
       ]

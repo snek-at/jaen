@@ -3,10 +3,12 @@ import {User} from 'oidc-client-ts'
 
 import {Query, Mutation} from './schema.generated.js'
 
+const apiURL = __JAEN_PYLON_URL__ || 'https://jaen-pylon.cronit.io/graphql'
+
 export const sqJaen = makeSnekQuery(
   {Query, Mutation},
   {
-    apiURL: 'https://jaen-pylon.cronit.io/graphql',
+    apiURL: apiURL,
     middlewares: [
       ({context}) => {
         const oidcStorage = sessionStorage.getItem(

@@ -4,10 +4,13 @@ import '@atsnek/jaen/dist/types'
 
 import {Query, Mutation} from './schema.generated'
 
+const apiURL =
+  __JAEN_MAILPRESS_PYLON_URL__ || 'https://mailpress.cronit.io/graphql'
+
 export const sq = makeSnekQuery(
   {Query, Mutation},
   {
-    apiURL: 'https://mailpress.cronit.io/graphql',
+    apiURL,
     middlewares: [
       ({context}) => {
         const oidcStorage = sessionStorage.getItem(
