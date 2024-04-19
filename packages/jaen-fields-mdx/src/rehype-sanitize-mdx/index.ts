@@ -15,7 +15,7 @@ export default function rehypeSanitize(componentsNames: string[] = []) {
     }, {})
 
     const schema = deepmerge(defaultSchema, {
-      tagNames: ['Link', 'Image'],
+      tagNames: componentsNames,
       attributes: {
         '*': ['className'],
         // Allow rehype-mathjax classes.
@@ -27,8 +27,6 @@ export default function rehypeSanitize(componentsNames: string[] = []) {
     })
 
     return function (tree: Root) {
-      console.log('tree', tree)
-
       const result = sanitize(tree, schema) as Root
       return result
     }
