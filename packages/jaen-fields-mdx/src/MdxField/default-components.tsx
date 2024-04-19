@@ -12,6 +12,7 @@ export const Image = ({name, defaultValue, alt, ...rest}: any) => {
 
 Image.defaultProps = {
   name: () => `image-${(Math.random() + 1).toString(36).substring(7)}`,
+  alt: 'Placeholder Image Alt',
   defaultValue: 'https://via.placeholder.com/150'
 }
 
