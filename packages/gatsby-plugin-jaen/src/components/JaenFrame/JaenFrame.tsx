@@ -45,12 +45,12 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
   return (
     <header
       className={cn(
-        'flex h-16 px-4 border-b border-border backdrop-blur-sm justify-between gap-8 z-40 bg-white',
+        'flex h-16 px-4 border-b border-border backdrop-blur-sm gap-2 z-40 bg-white justify-center',
         {
           'sticky top-0': !props.navigation.isStickyDisabled
         }
       )}>
-      <div className="flex gap-4 my-auto">
+      <div className="flex flex-1 gap-4 my-auto bg-red-400">
         <DrawerLeft
           navigationGroups={props.navigation.app.navigationGroups}
           version={props.navigation.app.version}
@@ -61,12 +61,12 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
       </div>
 
       <div className="flex justify-center items-center flex-1">
-        <Link className="no-underline h-full" to="/">
+        <Link className="no-underline h-full max-w-xs" to="/">
           {props.logo || <JaenLogo />}
         </Link>
       </div>
 
-      <div className="flex my-auto gap-4">
+      <div className="flex flex-1 my-auto gap-4 bg-red-500 justify-end">
         <Toolbar />
 
         <MenuButton
