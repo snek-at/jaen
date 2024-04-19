@@ -18,7 +18,6 @@ Image.defaultProps = {
 
 const linkProps: LinkProps = {
   position: 'relative',
-  display: 'inline-block',
   color: 'brand.600',
   textDecoration: 'none',
   w: 'fit-content',
