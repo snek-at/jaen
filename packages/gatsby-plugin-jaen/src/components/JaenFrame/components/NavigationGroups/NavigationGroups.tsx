@@ -1,10 +1,10 @@
-import {Link} from 'gatsby'
-import {ReloadIcon} from '@radix-ui/react-icons'
-import {useLocation} from '@reach/router'
-import {Button} from '../../../ui/button'
-import {Separator} from '../../../ui/separator'
-import {useColorMode} from '@chakra-ui/react'
-import {cn} from '../../../../lib/utils'
+import { ReloadIcon } from '@radix-ui/react-icons'
+import { useLocation } from '@reach/router'
+import { Link } from 'gatsby'
+import { cn } from '../../../../lib/utils'
+import { Button } from '../../../ui/button'
+import { Separator } from '../../../ui/separator'
+import { SheetClose } from '../../../ui/sheet'
 
 export interface NavigationItem {
   icon: React.ComponentType
@@ -48,7 +48,7 @@ export const NavigationGroups: React.FC<NavigationGroupsProps> = ({
                 // Check if path is active
                 const isActive = location.pathname === value.path
 
-                return (
+                const btn = (
                   <Button
                     key={key}
                     asChild={!!value.path}
@@ -95,6 +95,12 @@ export const NavigationGroups: React.FC<NavigationGroupsProps> = ({
                     )}
                   </Button>
                 )
+
+                if (value.path) {
+                  return <SheetClose asChild>{btn}</SheetClose>
+                }
+
+                return btn
               })}
             </div>
 
