@@ -16,7 +16,13 @@ export default function rehypeSanitize(componentsNames: string[] = []) {
 
     const schema = deepmerge(defaultSchema, {
       tagNames: ['Link', 'Image'],
-      attributes: {'*': ['className'], ...allowAllAttributes},
+      attributes: {
+        '*': ['className'],
+        // Allow rehype-mathjax classes.
+        code: [['className', /^language-./, 'math-inline', 'math-display']],
+        // Allow all attributes for components. The security of the components is the responsibility of the user.
+        ...allowAllAttributes
+      },
       clobberPrefix: ''
     })
 

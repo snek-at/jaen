@@ -62,7 +62,6 @@ function evaluateFile(file: VFile, components: {[key: string]: any}) {
         capture('mdast')
       ],
       rehypePlugins: [
-        rehypeMathjax,
         rehypeSlug,
         rehypeUnwrapImages,
         [
@@ -71,7 +70,8 @@ function evaluateFile(file: VFile, components: {[key: string]: any}) {
             tagName: 'code'
           }
         ],
-        rehypeSanitize(Object.keys(components))
+        rehypeSanitize(Object.keys(components)),
+        rehypeMathjax
       ],
       recmaPlugins: []
     }).default
