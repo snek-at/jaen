@@ -61,7 +61,7 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
       </div>
 
       <div className="flex justify-center items-center flex-1">
-        <Link className="no-underline" to="/">
+        <Link className="no-underline h-full" to="/">
           {props.logo || <JaenLogo />}
         </Link>
       </div>
