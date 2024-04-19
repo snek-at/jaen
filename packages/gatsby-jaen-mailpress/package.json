@@ -1,6 +1,6 @@
 {
   "name": "gatsby-jaen-mailpress",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Mailpress management plugin for Jaen",
   "main": "index.js",
   "types": "./dist/index.d.ts",
