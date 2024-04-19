@@ -289,6 +289,7 @@ function transform(state, node) {
         return text(state, unsafe)
       }
 
+      case 'mdxJsxTextElement':
       case 'mdxJsxFlowElement': {
         return mdxJsxFlowElement(state, unsafe)
       }
