@@ -50,7 +50,7 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
           'sticky top-0': !props.navigation.isStickyDisabled
         }
       )}>
-      <div className="flex flex-1 gap-4 my-auto bg-red-400">
+      <div className="flex flex-1 gap-4 my-auto">
         <DrawerLeft
           navigationGroups={props.navigation.app.navigationGroups}
           version={props.navigation.app.version}
@@ -66,7 +66,7 @@ export const JaenFrame: React.FC<JaenFrameProps> = React.memo(props => {
         </Link>
       </div>
 
-      <div className="flex flex-1 my-auto gap-4 bg-red-500 justify-end">
+      <div className="flex flex-1 my-auto gap-4 justify-end">
         <Toolbar />
 
         <MenuButton
