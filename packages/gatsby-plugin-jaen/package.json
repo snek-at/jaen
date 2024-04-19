@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jaen",
-  "version": "1.0.0-rc.94",
+  "version": "1.0.0-rc.95",
   "main": "index.js",
   "types": "./src/index.ts",
   "files": [
