@@ -37,6 +37,7 @@ const processContent = ({
     // check if state.file.result is a functio, if not throw error
 
     if (typeof state.file.result !== 'function') {
+      console.error(state)
       throw new Error(`Preview could not be generated.`)
     }
 

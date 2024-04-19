@@ -33,13 +33,17 @@ export const Editor: React.FC<EditorProps> = props => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [defaultValue, _] = useState(props.mdast)
 
-  const [state, setConfig] = useMdx({
-    gfm: true,
-    frontmatter: true,
-    math: true,
-    directive: true,
-    mdast: defaultValue
-  }) as any
+  const [state, setConfig] = useMdx(
+    {
+      gfm: true,
+      frontmatter: true,
+      math: true,
+      directive: true,
+      mdast: defaultValue
+    },
+    false,
+    props.components
+  ) as any
 
   const [view, setView] = React.useState<EditorView | null>(null)
 
@@ -218,7 +222,6 @@ export const Editor: React.FC<EditorProps> = props => {
             .join(' ')
 
           const snippet = `<${name}${propsChain && ' ' + propsChain}>${
-            // @ts-expect-error
             component.defaultProps?.children || ''
           }</${name}>`
 

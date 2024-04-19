@@ -7,6 +7,9 @@ import {mdxToMarkdown} from 'mdast-util-mdx'
 import {useEffect, useState} from 'react'
 import * as runtime from 'react/jsx-runtime'
 import rehypeSlug from 'rehype-slug-custom-id'
+import rehypeMdxCodeProps from 'rehype-mdx-code-props'
+import {rehypeUnwrapImages} from './rehype-unwrap-images'
+import rehypeMathjax from 'rehype-mathjax/svg'
 
 import {directiveToMarkdown} from 'mdast-util-directive'
 import remarkDirective from 'remark-directive'
@@ -17,13 +20,10 @@ import {VFile} from 'vfile'
 import {VFileMessage} from 'vfile-message'
 
 import {toMarkdown} from 'mdast-util-to-markdown'
-import rehypeMdxCodeProps from 'rehype-mdx-code-props'
 
 import {MdastRoot} from './components/types.js'
 
-import {rehypeUnwrapImages} from './rehype-unwrap-images'
-
-import rehypeMathjax from 'rehype-mathjax/svg'
+import rehypeSanitize from '../rehype-sanitize-mdx/index.js'
 
 const parseMdast = (tree: MdastRoot) => {
   const out = toMarkdown(tree as any, {
@@ -43,7 +43,7 @@ function createFile(value: string) {
   return new VFile({basename: 'example.mdx', value})
 }
 
-function evaluateFile(file: VFile) {
+function evaluateFile(file: VFile, components: {[key: string]: any}) {
   const capture = (name: string) => () => (tree: any) => {
     file.data[name] = tree
   }
@@ -70,7 +70,8 @@ function evaluateFile(file: VFile) {
           {
             tagName: 'code'
           }
-        ]
+        ],
+        rehypeSanitize(Object.keys(components))
       ],
       recmaPlugins: []
     }).default
@@ -92,12 +93,17 @@ interface Defaults {
   directive: boolean
   mdast?: MdastRoot
 }
-const initializeState = (defaults: Defaults) => {
+const initializeState = (
+  defaults: Defaults,
+  components: {
+    [key: string]: any
+  } = {}
+) => {
   const markdown = defaults.mdast ? parseMdast(defaults.mdast) : ''
 
   const file = createFile(markdown)
 
-  evaluateFile(file)
+  evaluateFile(file, components)
 
   return {
     ...defaults,
@@ -106,7 +112,13 @@ const initializeState = (defaults: Defaults) => {
   }
 }
 
-export function useMdx(defaults: Defaults, live: boolean = false) {
+export function useMdx(
+  defaults: Defaults,
+  live: boolean = false,
+  components: {
+    [key: string]: any
+  } = {}
+) {
   const [state, setState] = useState(() => initializeState(defaults))
 
   useEffect(() => {
@@ -119,7 +131,7 @@ export function useMdx(defaults: Defaults, live: boolean = false) {
     async config => {
       const file = createFile(config.value)
 
-      evaluateFile(file)
+      evaluateFile(file, components)
 
       setState({...config, file})
     },

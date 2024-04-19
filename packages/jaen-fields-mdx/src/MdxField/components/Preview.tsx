@@ -24,7 +24,7 @@ export const Preview = React.memo<BuildEditorProps>(({components, mdast}) => {
     [mdast]
   )
 
-  const [state, _] = useMdx(defaults, true) as any
+  const [state, _] = useMdx(defaults, true, components) as any
 
   const stats = state.file ? statistics(state.file) : ({} as Statistics)
 
