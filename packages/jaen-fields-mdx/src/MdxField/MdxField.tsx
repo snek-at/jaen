@@ -9,6 +9,22 @@ import {defaultData} from './default-data.js'
 
 type MdxFieldValue = MdastRoot
 
+const baseComponents = {
+  Image,
+  Link,
+  a: (props: any) => {
+    return <Link to={props.href}>{props.children}</Link>
+  },
+  img: (props: any) => {
+    const src = props.src
+    const alt = props.alt
+
+    const name = `${src}-${alt}`
+
+    return <Image name={name} defaultValue={src} alt={alt} />
+  }
+}
+
 export interface MdxFieldProps {
   components: BaseEditorProps['components']
 }
@@ -24,21 +40,8 @@ export const MdxField = connectField<MdxFieldValue, MdxFieldProps>(
     }, [jaenField.value])
 
     components = {
-      ...components,
-      img: (props: any) => {
-        const src = props.src
-        const alt = props.alt
-
-        const name = `${src}-${alt}`
-
-        return <Image name={name} defaultValue={src} alt={alt} />
-      },
-
-      Image,
-      a: (props: any) => {
-        return <Link to={props.href}>{props.children}</Link>
-      },
-      Link
+      ...baseComponents,
+      ...components
     }
 
     if (jaenField.isEditing) {
@@ -72,7 +75,10 @@ export const UncontrolledMdxField: React.FC<{
     return (
       <EditingProvider isEditing={isEditing}>
         <LayzEditor
-          components={components}
+          components={{
+            ...baseComponents,
+            ...components
+          }}
           onUpdateValue={onUpdateValue}
           rawValue={value}
         />
