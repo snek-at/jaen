@@ -266,11 +266,7 @@ function transform(state, node) {
   if (node && typeof node === 'object') {
     const unsafe = /** @type {Record<string, Readonly<unknown>>} */ node
 
-    console.log(unsafe)
-
     const type = typeof unsafe.type === 'string' ? unsafe.type : ''
-
-    console.log(type)
 
     switch (type) {
       case 'comment': {
@@ -369,8 +365,6 @@ function element(state, unsafe) {
     unsafe.children
   )
 
-  console.log('properties', unsafe.attributes)
-
   const props = properties(state, unsafe.properties)
 
   state.stack.pop()
@@ -430,8 +424,6 @@ function element(state, unsafe) {
  * Safe element.
  */
 function mdxJsxFlowElement(state, unsafe) {
-  console.log(unsafe, 'unsafe')
-
   const name = typeof unsafe.name === 'string' ? unsafe.name : ''
 
   state.stack.push(name)
@@ -441,11 +433,7 @@ function mdxJsxFlowElement(state, unsafe) {
     unsafe.children
   )
 
-  console.log('properties', unsafe.attributes)
-
   const props = properties(state, unsafe.attributes)
-
-  console.log('props', props)
 
   state.stack.pop()
 
@@ -456,7 +444,6 @@ function mdxJsxFlowElement(state, unsafe) {
     name !== '*' &&
     (!state.schema.tagNames || state.schema.tagNames.includes(name))
   ) {
-    console.log('here')
     safeElement = true
 
     // Some nodes can break out of their context if they don’t have a certain
@@ -467,8 +454,6 @@ function mdxJsxFlowElement(state, unsafe) {
 
       safeElement = false
 
-      console.log(ancestors)
-
       while (++index < ancestors.length) {
         if (state.stack.includes(ancestors[index])) {
           safeElement = true
@@ -477,11 +462,7 @@ function mdxJsxFlowElement(state, unsafe) {
     }
   }
 
-  console.log(safeElement, name)
-
   if (!safeElement) {
-    console.log(content)
-
     return state.schema.strip && !state.schema.strip.includes(name)
       ? content
       : undefined
@@ -589,7 +570,6 @@ function children(state, children) {
  *   Safe value.
  */
 function properties(state, properties) {
-  console.log(properties, 'properties')
   const tagName = state.stack[state.stack.length - 1]
   const attributes = state.schema.attributes
   const required = state.schema.required
@@ -613,8 +593,6 @@ function properties(state, properties) {
         : properties
       : {}
 
-  console.log(props, 'props')
-
   /** @type {Properties} */
   const result = {}
   /** @type {string} */
@@ -624,8 +602,6 @@ function properties(state, properties) {
     if (own.call(props, key)) {
       const unsafe = props[key]
 
-      console.log('unsafe', unsafe, findDefinition(specific, key))
-
       let safe = propertyValue(
         state,
         findDefinition(specific, key),
@@ -633,12 +609,8 @@ function properties(state, properties) {
         unsafe
       )
 
-      console.log(safe, 'safe')
-
       if (safe === null || safe === undefined) {
-        console.log(findDefinition(defaults, key))
         safe = propertyValue(state, findDefinition(defaults, key), key, unsafe)
-        console.log(safe, 'safe')
       }
 
       if (safe !== null && safe !== undefined) {
@@ -861,15 +833,10 @@ function findDefinition(definitions, key) {
   let dataDefault
   let index = -1
 
-  console.log(definitions, key)
-
   if (definitions) {
     while (++index < definitions.length) {
       const entry = definitions[index]
-      console.log(entry, key)
       const name = typeof entry === 'string' ? entry : entry[0]
-
-      console.log(name, key)
 
       if (name === key) {
         return entry
