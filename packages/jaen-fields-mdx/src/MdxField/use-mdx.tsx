@@ -119,11 +119,13 @@ export function useMdx(
     [key: string]: any
   } = {}
 ) {
-  const [state, setState] = useState(() => initializeState(defaults))
+  const [state, setState] = useState(() =>
+    initializeState(defaults, components)
+  )
 
   useEffect(() => {
     if (live) {
-      setState(initializeState(defaults))
+      setState(initializeState(defaults, components))
     }
   }, [defaults, live])
 
