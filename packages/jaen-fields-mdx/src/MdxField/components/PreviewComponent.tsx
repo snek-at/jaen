@@ -56,6 +56,7 @@ const processContent = ({
           const Wrapper = components?.wrapper
           const el = (
             <Stack
+              w="full"
               sx={{
                 'mjx-container': {
                   display: 'inline-block !important',
@@ -79,42 +80,40 @@ const processContent = ({
   }
 }
 
-export const PreviewComponent: React.FC<PreviewComponentProps> = ({
-  state,
-  stats,
-  components
-}) => {
-  const [content, setContent] = useState<React.ReactNode>(() =>
-    processContent({state, components})
-  )
-  const [error, setError] = useState<Error | null>(null)
+export const PreviewComponent: React.FC<PreviewComponentProps> = React.memo(
+  ({state, stats, components}) => {
+    const [content, setContent] = useState<React.ReactNode>(() =>
+      processContent({state, components})
+    )
+    const [error, setError] = useState<Error | null>(null)
 
-  useEffect(() => {
-    async function processState() {
-      try {
-        const result = await processContent({
-          state,
-          components
-        })
-        setContent(result)
-        setError(null)
-      } catch (error) {
-        setError(error)
+    useEffect(() => {
+      async function processState() {
+        try {
+          const result = await processContent({
+            state,
+            components
+          })
+          setContent(result)
+          setError(null)
+        } catch (error) {
+          setError(error)
+        }
       }
-    }
 
-    processState()
-  }, [state.file, components])
+      processState()
+    }, [state.file?.value, components])
 
-  return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <noscript>Enable JavaScript for the rendered result.</noscript>
+    return (
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <noscript>Enable JavaScript for the rendered result.</noscript>
 
-      {state.file?.result && <>{content}</>}
+        {state.file?.result && <>{content}</>}
 
-      {error && <FallbackComponent error={error} />}
+        {error && <FallbackComponent error={error} />}
 
-      <StatsReporterError state={state} stats={stats} />
-    </ErrorBoundary>
-  )
-}
+        <StatsReporterError state={state} stats={stats} />
+      </ErrorBoundary>
+    )
+  }
+)

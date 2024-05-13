@@ -14,6 +14,15 @@ export const deepmergeArrayIdMerge = (
     return target.slice()
   }
 
+  // Check if target and source are arrays of primitives
+  if (
+    target.every(v => typeof v !== 'object') &&
+    source.every(v => typeof v !== 'object')
+  ) {
+    // Take the source array
+    return source.slice()
+  }
+
   const groups = ['id', 'fieldName']
 
   for (const group of groups) {

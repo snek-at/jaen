@@ -26,7 +26,9 @@ export const Preview = React.memo<BuildEditorProps>(({components, mdast}) => {
 
   const [state, _] = useMdx(defaults, true, components) as any
 
-  const stats = state.file ? statistics(state.file) : ({} as Statistics)
+  const stats = useMemo(() => {
+    return state.file ? statistics(state.file) : ({} as Statistics)
+  }, [state.file])
 
   // useEffect(() => {
   //   console.log('useEffect', defaultValue)

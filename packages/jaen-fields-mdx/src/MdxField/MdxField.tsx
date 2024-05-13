@@ -1,5 +1,5 @@
 import {connectField, EditingProvider} from '@atsnek/jaen'
-import React, {useEffect} from 'react'
+import React, {useEffect, useMemo} from 'react'
 
 import {Preview} from './components/Preview.js'
 import {BaseEditorProps, MdastRoot} from './components/types.js'
@@ -39,23 +39,25 @@ export const MdxField = connectField<MdxFieldValue, MdxFieldProps>(
       setRawValue(jaenField.value || jaenField.staticValue || defaultData)
     }, [jaenField.value])
 
-    components = {
-      ...baseComponents,
-      ...components
-    }
+    const combinedComponents = useMemo(() => {
+      return {
+        ...baseComponents,
+        ...components
+      }
+    }, [baseComponents, JSON.stringify(components)])
 
     if (jaenField.isEditing) {
       // Render editor in edit mode
 
       return (
         <LayzEditor
-          components={components}
+          components={combinedComponents}
           onUpdateValue={jaenField.onUpdateValue}
           rawValue={rawValue}
         />
       )
     } else {
-      return <Preview components={components} mdast={rawValue} />
+      return <Preview components={combinedComponents} mdast={rawValue} />
     }
   },
   {
@@ -69,23 +71,27 @@ export const UncontrolledMdxField: React.FC<{
   value?: MdastRoot
   isEditing?: boolean
 }> = ({components, onUpdateValue, value, isEditing}) => {
+  const combinedComponents = useMemo(() => {
+    return {
+      ...baseComponents,
+      ...components
+    }
+  }, [baseComponents, components])
+
   if (isEditing) {
     // Render editor in edit mode
 
     return (
       <EditingProvider isEditing={isEditing}>
         <LayzEditor
-          components={{
-            ...baseComponents,
-            ...components
-          }}
+          components={combinedComponents}
           onUpdateValue={onUpdateValue}
           rawValue={value}
         />
       </EditingProvider>
     )
   } else {
-    return <Preview components={components} mdast={value} />
+    return <Preview components={combinedComponents} mdast={value} />
   }
 }
 

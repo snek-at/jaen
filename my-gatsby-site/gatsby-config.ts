@@ -13,7 +13,7 @@ const config: GatsbyConfig = {
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   flags: {
-    DEV_SSR: true
+    DEV_SSR: false
   },
   plugins: [
     {
@@ -23,10 +23,18 @@ const config: GatsbyConfig = {
           repository: 'atsnek/jaen-starter'
         },
         zitadel: {
-          organizationId: '257964756269268995',
+          organizationId: '252746033782587395',
           clientId: '252746210698395651@services',
           authority: 'https://accounts.cronit.io',
-          redirectUri: 'http://localhost:8000'
+          redirectUri:
+            process.env.NODE_ENV === 'production'
+              ? 'https://cronit.io'
+              : 'http://localhost:8000',
+          projectIds: [
+            '252765861113233411',
+            '252899191242620931',
+            '260237544631828483'
+          ]
         },
         googleAnalytics: {
           trackingIds: ['G-M58K75M9PG']
@@ -38,8 +46,8 @@ const config: GatsbyConfig = {
         }
       }
     },
-    `gatsby-jaen-mailpress`,
-    'gatsby-plugin-webpack-bundle-analyser-v2'
+    `gatsby-jaen-mailpress`
+    // 'gatsby-plugin-webpack-bundle-analyser-v2'
   ]
 }
 

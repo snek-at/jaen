@@ -201,6 +201,8 @@ const PagesPage: React.FC = () => {
         },
         parentPages,
         onSubmit: data => {
+          alert('submit')
+          console.log('manager.updatePage', manager.updatePage)
           manager.updatePage(currentPage.id, {
             slug: data.slug,
             template: data.template,

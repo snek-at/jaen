@@ -1,6 +1,6 @@
 import {PageProps, PageProvider, useDynamicPaths, withRedux} from '@atsnek/jaen'
 
-import React, {lazy, useMemo} from 'react'
+import React, {lazy, useEffect, useMemo} from 'react'
 import {useJaenPagePaths} from './jaen-page-paths'
 
 export interface DynamicPageRendererProps extends Omit<PageProps, 'children'> {

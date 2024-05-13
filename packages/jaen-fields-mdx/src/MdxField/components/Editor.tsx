@@ -8,7 +8,7 @@ import CodeMirror, {
   EditorView
 } from '@uiw/react-codemirror'
 
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useMemo, useState} from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
 import {statistics, Statistics} from 'vfile-statistics'
 
@@ -53,7 +53,10 @@ export const Editor: React.FC<EditorProps> = props => {
     }
   )
 
-  const stats = state.file ? statistics(state.file) : ({} as Statistics)
+  const stats = useMemo(
+    () => (state.file ? statistics(state.file) : ({} as Statistics)),
+    [state.file]
+  )
 
   const onUpdate = useCallback(
     (v: {docChanged: any; state: {doc: any}}) => {

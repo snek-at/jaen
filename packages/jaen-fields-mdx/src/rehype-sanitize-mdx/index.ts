@@ -28,6 +28,7 @@ export default function rehypeSanitize(componentsNames: string[] = []) {
 
     return function (tree: Root) {
       const result = sanitize(tree, schema) as Root
+
       return result
     }
   }

@@ -286,6 +286,8 @@ export const CMSManagementProvider = withRedux(
       pageId: string,
       updatedPage: Partial<JaenPage>
     ): void => {
+      console.log('updatedPage', updatedPage, 'pageId', pageId)
+
       const page = pagesDict[pageId]
 
       function deepObjectDiff(
@@ -332,6 +334,8 @@ export const CMSManagementProvider = withRedux(
       }
 
       updatedPage = deepObjectDiff(page || {}, updatedPage)
+
+      console.log('updatedPage', updatedPage, 'page', page)
 
       // check if slug is unique when updating slug
       const slug = updatedPage.slug || 'new-page'

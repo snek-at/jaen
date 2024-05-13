@@ -223,6 +223,22 @@ const IndexPage: React.FC<PageProps> = () => {
       <Link to="/mdx">mdx</Link>
       <Field.Image name="image" />
       <Field.Image name="test" />
+
+      <Box>
+        {index?.childPages?.map(child => {
+          return index.withJaenPage(
+            child.id,
+            <Box key={child.id}>
+              <Text>{child.title}</Text>
+              <Text>{child.slug}</Text>
+              <Text>{child.id}</Text>
+              <Text>{child.template}</Text>
+              <Field.Image name="image" />
+              <Field.Text name="text" />
+            </Box>
+          )
+        })}
+      </Box>
     </>
   )
 
@@ -369,11 +385,17 @@ export const pageConfig: PageConfig = {
 
 export const query = graphql`
   query ($jaenPageId: String!) {
-    ...JaenPageQuery
+    jaenPage(id: {eq: $jaenPageId}) {
+      ...JaenPageData
+      childPages {
+        ...JaenPageData
+      }
+    }
+
     allJaenPage {
       nodes {
         ...JaenPageData
-        children {
+        childPages {
           ...JaenPageData
         }
       }

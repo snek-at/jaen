@@ -587,7 +587,18 @@ function properties(state, properties) {
         ? // Reduce to an object.
           properties.reduce((acc, prop) => {
             if (prop.type === 'mdxJsxAttribute') {
-              acc[prop.name] = prop.value
+              if (prop.value?.type === 'mdxJsxAttributeValueExpression') {
+                acc[prop.name] = prop.value
+              } else {
+                // Use `true` for boolean attributes. When prop={null} is passed, it’s
+                // is a of type `mdxJsxAttributeValueExpression` with value `null`.
+
+                if (prop.value === null) {
+                  acc[prop.name] = true
+                } else {
+                  acc[prop.name] = prop.value
+                }
+              }
             }
             return acc
           }, {})
@@ -700,6 +711,18 @@ function propertyValueMany(state, definition, key, values) {
  *   Safe value.
  */
 function propertyValuePrimitive(state, definition, key, value) {
+  if (value?.type === 'mdxJsxAttributeValueExpression') {
+    if (value.value === 'undefined') {
+      return propertyValuePrimitive(state, definition, key, undefined)
+    } else if (value.value === 'true') {
+      return propertyValuePrimitive(state, definition, key, true)
+    } else if (value.value === 'false') {
+      return propertyValuePrimitive(state, definition, key, undefined)
+    } else {
+      return propertyValuePrimitive(state, definition, key, value.value)
+    }
+  }
+
   if (
     typeof value !== 'boolean' &&
     typeof value !== 'number' &&

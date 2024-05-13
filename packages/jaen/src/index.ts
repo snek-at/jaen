@@ -25,6 +25,7 @@ export {
 export {usePageContext, useJaenPageIndex, PageProvider} from './contexts/page'
 export {useSectionBlockContext, SectionBlockContextType} from './contexts/block'
 export {useEditingContext, EditingProvider} from './contexts/editing'
+export {usePage} from './hooks/use-page'
 export {useSectionField, UseSectionField} from './hooks/use-section-field'
 export {Field} from './fields'
 export {useField} from './hooks/use-field'

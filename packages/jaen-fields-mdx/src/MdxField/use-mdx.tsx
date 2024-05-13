@@ -64,13 +64,13 @@ function evaluateFile(file: VFile, components: {[key: string]: any}) {
       rehypePlugins: [
         rehypeSlug,
         rehypeUnwrapImages,
+        rehypeSanitize(Object.keys(components)),
         [
           rehypeMdxCodeProps,
           {
             tagName: 'code'
           }
         ],
-        rehypeSanitize(Object.keys(components)),
         rehypeMathjax
       ],
       recmaPlugins: []

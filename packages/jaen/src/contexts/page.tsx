@@ -83,6 +83,8 @@ export const useJaenPageIndex = (
 } => {
   const {jaenPage, jaenPages} = usePageContext()
 
+  console.log('jaenPage', jaenPage, 'jaenPages', jaenPages)
+
   const paths = useDynamicPaths({
     staticPages: (jaenPages || []) as any
   })
