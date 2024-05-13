@@ -1,9 +1,87 @@
-import React, {useMemo} from 'react'
-import {AuthContextProps, AuthProvider, useAuth} from 'react-oidc-context'
-import {PageProps} from '../types'
 import {Alert, AlertIcon, Box, Center, Spinner, Text} from '@chakra-ui/react'
+import React, {useEffect, useMemo} from 'react'
+import {AuthProvider} from 'react-oidc-context'
+import {PageProps} from '../types'
 
-export {useAuth} from 'react-oidc-context'
+import {useAuth as useOIDCAuth} from 'react-oidc-context'
+
+export const useAuth = () => {
+  const oidcAuth = useOIDCAuth()
+
+  const [isRolesLoading, setIsRolesLoading] = React.useState<boolean>(false)
+  const [roles, setRoles] = React.useState<string[]>([])
+
+  useEffect(() => {
+    const getUsergrants = async () => {
+      setIsRolesLoading(true)
+      // https://accounts.cronit.io/auth/v1/usergrants/me/_search
+
+      const response = await fetch(
+        `${__JAEN_ZITADEL__.authority}/auth/v1/usergrants/me/_search`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${oidcAuth.user?.access_token}`
+          }
+        }
+      )
+
+      const data = await response.json()
+
+      const userRoles = data.result.map((grant: any) => {
+        return (grant.roles || []).map((role: any) => {
+          return `${grant.projectId}:${role}`
+        })
+      })
+
+      const projectScopedRoles = userRoles.flat()
+
+      const roles = (oidcAuth.user?.profile[
+        'urn:zitadel:iam:org:project:roles'
+      ] || []) as {
+        [roleKey: string]: {
+          [id: string]: string
+        }
+      }[]
+
+      const rolesSet = new Set<string>([
+        ...projectScopedRoles,
+        ...roles.flatMap(item => Object.keys(item))
+      ])
+
+      setRoles(Array.from(rolesSet))
+
+      setIsRolesLoading(false)
+    }
+
+    if (oidcAuth.user) {
+      getUsergrants()
+    }
+  }, [oidcAuth.user])
+
+  const auth = useMemo(() => {
+    return {
+      ...oidcAuth,
+      user: {
+        ...oidcAuth.user,
+        roles
+      },
+      isLoading: isRolesLoading || oidcAuth.isLoading
+    }
+  }, [oidcAuth, roles, isRolesLoading])
+
+  return auth
+}
+
+export const checkUserRoles = (
+  user: ReturnType<typeof useAuth>['user'],
+  roles: string[]
+) => {
+  if (!user) return false
+
+  return roles.some(role => user.roles.includes(role))
+}
 
 export const AuthenticationProvider: React.FC<{
   children: React.ReactNode
@@ -45,31 +123,6 @@ export const AuthenticationProvider: React.FC<{
       {children}
     </AuthProvider>
   )
-}
-
-export const checkUserRoles = (
-  user: AuthContextProps['user'],
-  roles: string[]
-) => {
-  if (!user) {
-    return false
-  }
-
-  const userRoles = (user.profile['urn:zitadel:iam:org:project:roles'] ||
-    []) as {
-    [roleKey: string]: {
-      [id: string]: string
-    }
-  }[]
-
-  // Check if role is in userRoles (roleKey)
-  for (const role of roles) {
-    if (userRoles.find(userRole => userRole[role])) {
-      return true
-    }
-  }
-
-  return false
 }
 
 export const withAuthSecurity = <
