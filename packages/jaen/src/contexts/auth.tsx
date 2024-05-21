@@ -29,11 +29,11 @@ export const useAuth = () => {
 
       const data = await response.json()
 
-      const userRoles = data.result.map((grant: any) => {
+      const userRoles = (data.result?.map((grant: any) => {
         return (grant.roles || []).map((role: any) => {
           return `${grant.projectId}:${role}`
         })
-      })
+      }) || []) as string[][]
 
       const projectScopedRoles = userRoles.flat()
 
@@ -136,6 +136,8 @@ export const withAuthSecurity = <
     const pageConfigAuth = props.pageContext.pageConfig?.auth
     const auth = useAuth()
 
+    console.log('auth', auth)
+
     const loadingText = useMemo(() => {
       switch (auth.activeNavigator) {
         case 'signinRedirect':
@@ -150,8 +152,6 @@ export const withAuthSecurity = <
           return 'Loading...'
       }
     }, [auth.activeNavigator])
-
-    const isAuthRequired = pageConfigAuth?.isRequired
 
     if (loadingText) {
       return (
@@ -183,8 +183,16 @@ export const withAuthSecurity = <
       )
     }
 
-    if (isAuthRequired) {
-      const roles = pageConfigAuth?.roles
+    if (pageConfigAuth?.isRequired) {
+      let roles = pageConfigAuth?.roles
+
+      if (pageConfigAuth.isAdminRequired) {
+        if (!roles) {
+          roles = ['jaen:admin']
+        } else {
+          roles.push('jaen:admin')
+        }
+      }
 
       if (roles) {
         const hasRoles = checkUserRoles(auth.user, roles)

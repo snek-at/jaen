@@ -24,7 +24,7 @@ const Link = <T extends As>(
       return <Wrapper as={GatsbyLink} to={to} {...props} ref={ref} />
     }
 
-    return <Wrapper as="a" href={to} {...props} ref={ref} />
+    return <Wrapper as="a" isExternal href={to} {...props} ref={ref} />
   }
 
   return <Wrapper {...props} ref={ref} />

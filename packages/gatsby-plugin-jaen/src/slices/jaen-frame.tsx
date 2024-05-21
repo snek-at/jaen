@@ -244,16 +244,16 @@ const Slice: React.FC<SliceProps> = props => {
           logo: <Logo />
         },
         user: {
-          user: auth.user
+          user: auth.user?.profile
             ? {
                 username:
                   auth.user.profile.preferred_username?.replace(
                     `@${auth.user.profile['urn:zitadel:iam:user:resourceowner:primary_domain']}`,
                     ''
                   ) || auth.user.profile.sub,
-                firstName: auth.user?.profile?.given_name,
-                lastName: auth.user?.profile?.family_name,
-                avatarURL: auth.user?.profile?.picture
+                firstName: auth.user.profile.given_name,
+                lastName: auth.user.profile.family_name,
+                avatarURL: auth.user.profile.picture
               }
             : {
                 username: 'Guest'
