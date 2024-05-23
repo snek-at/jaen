@@ -34,9 +34,9 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
 
       <CookieConsentProvider>
         <NotificationsProvider>
-          <JaenUpdateModalProvider>
-            <SiteMetadataProvider>
-              <AuthenticationProvider>
+          <AuthenticationProvider>
+            <JaenUpdateModalProvider>
+              <SiteMetadataProvider>
                 <JaenFrameMenuProvider>
                   <MediaModalProvider MediaModalComponent={MediaModalComponent}>
                     <JaenWidgetProvider>
@@ -45,9 +45,9 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
                     </JaenWidgetProvider>
                   </MediaModalProvider>
                 </JaenFrameMenuProvider>
-              </AuthenticationProvider>
-            </SiteMetadataProvider>
-          </JaenUpdateModalProvider>
+              </SiteMetadataProvider>
+            </JaenUpdateModalProvider>
+          </AuthenticationProvider>
         </NotificationsProvider>
       </CookieConsentProvider>
     </ChakraProvider>

@@ -1,4 +1,5 @@
-import {persistKey, resetState} from '../redux'
+import {checkUserRoles, useAuth} from '../contexts/auth'
+import {resetState} from '../redux'
 
 declare global {
   interface Window {
@@ -7,6 +8,8 @@ declare global {
 }
 
 export const useJaenUpdate = () => {
+  const auth = useAuth()
+
   const key = 'ljch'
   // @ts-ignore
   const latestWebpackCompilationHash = __JAEN_DATA_CONTENT_DIGEST__
@@ -33,13 +36,13 @@ export const useJaenUpdate = () => {
     }
 
     // set the latestJaenCompilationHash to the latest webpack compilation hash if
-    // the `jaen-state` key is set in localStorage. This is to ensure that there is only
-    // a incoming build when the user has logged in to jaen.
+    // the user has the 'jaen-admin' role. This is to ensure that only jaen-admins
+    // see the update modal.
 
     if (latestWebpackCompilationHash) {
-      const isJaenStateKeySet = localStorage.getItem(persistKey) !== null
+      const isJaenAdmin = checkUserRoles(auth.user, ['jaen:admin'])
 
-      if (isJaenStateKeySet) {
+      if (isJaenAdmin) {
         localStorage.setItem(key, latestWebpackCompilationHash)
       }
     }
