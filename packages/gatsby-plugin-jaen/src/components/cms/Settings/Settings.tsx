@@ -71,8 +71,6 @@ export const Settings: React.FC<SettingsProps> = ({data, onUpdate}) => {
     })
   }, [data])
 
-  console.log('values', getValues())
-
   return (
     <Box id="coco">
       <form

@@ -5,6 +5,7 @@ import {RootState, store} from '../redux'
 import {JaenPage} from '../types'
 import {deepmergeArrayIdMerge} from '../utils/deepmerge'
 import {useDynamicPaths} from '../hooks/use-dynamic-paths'
+import {usePage} from '../hooks/use-page'
 
 export interface PageProviderProps {
   jaenPage: {
@@ -73,6 +74,11 @@ export interface UsePageIndexProps {
    * Include excluded pages in the index.
    */
   includeExcluded?: boolean
+
+  /**
+   * Sort the pages based on the `sortOrder` field.
+   */
+  sortByPageOrder?: boolean
 }
 
 export const useJaenPageIndex = (
@@ -82,8 +88,6 @@ export const useJaenPageIndex = (
   withJaenPage: (childId: string, children: React.ReactNode) => React.ReactNode
 } => {
   const {jaenPage, jaenPages} = usePageContext()
-
-  console.log('jaenPage', jaenPage, 'jaenPages', jaenPages)
 
   const paths = useDynamicPaths({
     staticPages: (jaenPages || []) as any
@@ -111,6 +115,8 @@ export const useJaenPageIndex = (
     return jaenPage.id
   }, [jaenPage, jaenPages, props, paths])
 
+  const {childPagesOrder = []} = usePage({id: id})
+
   const staticChildren = useMemo(() => {
     let children: Array<{id: string} & Partial<JaenPage>> = []
 
@@ -136,13 +142,10 @@ export const useJaenPageIndex = (
       const actualPages = []
 
       for (const {id, deleted} of page.childPages) {
-        if (deleted) {
-          continue
-        }
-
         const actualChild = {
           ...state.page.pages.nodes[id],
-          id
+          id,
+          deleted
         }
         if (actualChild) {
           actualPages.push(actualChild)
@@ -184,6 +187,16 @@ export const useJaenPageIndex = (
 
       return !c.excludedFromIndex && !c.deleted
     })
+
+    if (props?.sortByPageOrder) {
+      // sort based on childPagesOrder
+      mergedChildren = mergedChildren.sort((a, b) => {
+        const aIndex = childPagesOrder.indexOf(a.id)
+        const bIndex = childPagesOrder.indexOf(b.id)
+
+        return aIndex - bIndex
+      })
+    }
 
     if (props) {
       const {filter, sort} = props

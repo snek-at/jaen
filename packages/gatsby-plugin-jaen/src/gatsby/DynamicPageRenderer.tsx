@@ -46,8 +46,6 @@ export const DynamicPageRenderer: React.FC<DynamicPageRendererProps> =
     }
 
     if (dynamic) {
-      console.log('dynamic', dynamic)
-
       return (
         <PageProvider jaenPage={{id: dynamic.jaenPageId}}>
           <React.Suspense fallback={<div>Loading...</div>}>

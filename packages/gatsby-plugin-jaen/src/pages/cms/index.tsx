@@ -33,7 +33,7 @@ const DashboardPage: React.FC<PageProps> = () => {
 
   return (
     <Dashboard
-      user={auth.user?.profile.given_name || auth.user?.profile.sub}
+      user={auth.user?.profile?.given_name || auth.user?.profile?.sub}
       isPublishing={manager.isPublishing}
       patches={patches}
     />

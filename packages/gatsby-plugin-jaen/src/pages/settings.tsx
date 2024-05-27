@@ -7,8 +7,6 @@ import {Settings} from '../components/Settings'
 const SettingsPage: React.FC<PageProps> = () => {
   const authUser = useAuthUser()
 
-  console.log('AUTH USER', authUser)
-
   return (
     <Settings
       user={authUser.user}

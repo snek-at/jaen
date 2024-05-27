@@ -13,6 +13,8 @@ import {JaenWidgetProvider} from '../contexts/jaen-widget'
 import {SiteMetadataProvider} from '../connectors/site-metadata'
 import {theme} from '../theme/jaen-theme/index'
 import {JaenFrameMenuProvider} from '../contexts/jaen-frame-menu'
+import {Toaster} from '../components/ui/toaster'
+import {Popup} from '../components/Popup'
 
 const MediaModalComponent = lazy(
   async () => await import('../containers/media-modal')
@@ -28,19 +30,24 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
 
   return (
     <ChakraProvider theme={theme} cssVarsRoot="#coco">
+      <Toaster />
+
       <CookieConsentProvider>
         <NotificationsProvider>
-          <JaenUpdateModalProvider>
-            <SiteMetadataProvider>
-              <AuthenticationProvider>
+          <AuthenticationProvider>
+            <JaenUpdateModalProvider>
+              <SiteMetadataProvider>
                 <JaenFrameMenuProvider>
                   <MediaModalProvider MediaModalComponent={MediaModalComponent}>
-                    <JaenWidgetProvider>{element}</JaenWidgetProvider>
+                    <JaenWidgetProvider>
+                      <Popup />
+                      {element}
+                    </JaenWidgetProvider>
                   </MediaModalProvider>
                 </JaenFrameMenuProvider>
-              </AuthenticationProvider>
-            </SiteMetadataProvider>
-          </JaenUpdateModalProvider>
+              </SiteMetadataProvider>
+            </JaenUpdateModalProvider>
+          </AuthenticationProvider>
         </NotificationsProvider>
       </CookieConsentProvider>
     </ChakraProvider>
