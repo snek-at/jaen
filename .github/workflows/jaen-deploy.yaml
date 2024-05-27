@@ -1,0 +1,169 @@
+# SPDX-FileCopyrightText: Copyright © 2021 snek.at
+# SPDX-License-Identifier: EUPL-1.2
+#
+# Use of this source code is governed by an EUPL-1.2 license that can be found
+# in the LICENSE file at https://snek.at/license
+
+# Workflow name
+# See: https://help.github.com/en/articles/workflow-syntax-for-github-actions#name
+name: Deploy Jaen
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+# Workflow trigger
+# See: https://help.github.com/en/articles/workflow-syntax-for-github-actions#on
+on:
+  # Workflow call trigger
+  # See: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_call
+  workflow_call:
+    # Workflow call inputs
+    # See: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callinputs
+    inputs:
+      CLOUDFLARE_PROJECT_NAME:
+        description: 'The name of the project in Cloudflare'
+        required: false
+        type: 'string'
+    # Workflow call secrets
+    # See: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecrets
+    secrets:
+      CLOUDFLARE_ACCOUNT_ID:
+        description: Cloudflare account id.
+        required: false
+      CLOUDFLARE_API_TOKEN:
+        description: Cloudflare api key.
+        required: false
+      SCALE_SERP_APIKEY:
+        description: Scale Serp api key.
+        required: false
+      SCALE_SERP_GOOGLE_PLACE_ID:
+        description: Place IDs uniquely identify a place in the Google Places database and on Google Maps.
+        required: false
+      GATSBY_MYSHOPIFY_URL:
+        description: Domain for a Shopify shop (foo.myshopify.com).
+        required: false
+      GATSBY_STOREFRONT_API_KEY:
+        description: Key for Shopify Storefront API.
+        required: false
+      SHOPIFY_APP_PASSWORD:
+        description: Personal access token for a Shopify account.
+        required: false
+      SENDGRID_API_KEY:
+        description: SendGrid api key.
+        required: false
+      GATSBY_MAPBOX_ACCESS_TOKEN:
+        description: Mapbox access token.
+        required: false
+      GATSBY_SNEK_FUNCTION_URL:
+        description: URL of the Snek function.
+        required: false
+      SENTRY_AUTH_TOKEN:
+        description: Sentry token.
+        required: false
+
+# Environment variables
+# See: https://help.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#env
+env:
+ NODE_OPTIONS: --max-old-space-size=8192
+
+# Jobs
+# See: https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobs
+jobs:
+  # Job id
+  # See: https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_id
+  jaen-deploy:
+    # Runs on ubuntu-latest
+    # See: https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        # Working directory
+        # See: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+        working-directory: ${{ github.event.client_payload.cwd || '.' }}
+
+    # Steps
+    # See: https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idsteps
+    steps:
+      # Checkout step
+      # See: https://github.com/actions/checkout
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          # Relative path under $GITHUB_WORKSPACE to place the repository
+          path: "."
+          ref: ${{github.ref}}
+          fetch-depth: 0
+
+      - name: Detect package manager 🔍
+        id: detect-package-manager
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "command=install" >> $GITHUB_OUTPUT
+            exit 0
+          elif [ -f "${{ github.workspace }}/package.json" ]; then
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "command=ci" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "Unable to determine packager manager"
+            exit 1
+          fi
+
+      - name: Setup Node 🔧
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+
+      - name: Install dependencies 📦
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+      - name: Restore cache 🗄️
+        uses: actions/cache@v3
+        with:
+          path: |
+            public
+            .cache
+          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('public') }}
+          restore-keys: |
+            ${{ runner.os }}-gatsby-build-
+
+      - name: Build with Gatsby 🛠️
+        run:
+          ${{ steps.detect-package-manager.outputs.manager }} run build
+        env:
+          PREFIX_PATHS: 'true'
+          GATSBY_MYSHOPIFY_URL:  ${{ secrets.GATSBY_MYSHOPIFY_URL }}
+          GATSBY_STOREFRONT_API_KEY:  ${{ secrets.GATSBY_STOREFRONT_API_KEY }}
+          SHOPIFY_APP_PASSWORD:  ${{ secrets.SHOPIFY_APP_PASSWORD }}
+          SCALE_SERP_APIKEY: ${{ secrets.SCALE_SERP_APIKEY }}
+          SCALE_SERP_GOOGLE_PLACE_ID: ${{ secrets.SCALE_SERP_GOOGLE_PLACE_ID }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          GATSBY_MAPBOX_ACCESS_TOKEN: ${{ secrets.GATSBY_MAPBOX_ACCESS_TOKEN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+      - name: Deploy Cloudflare Pages 🚀
+        # See: https://github.com/cloudflare/pages-action
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ inputs.CLOUDFLARE_PROJECT_NAME }}
+          directory: ./public
+          # Optional: Specify the Wrangler version
+          wranglerVersion: '3'

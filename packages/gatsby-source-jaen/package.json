@@ -1,0 +1,35 @@
+{
+  "name": "gatsby-source-jaen",
+  "version": "1.0.0-rc.26",
+  "description": "Source plugin for pulling data into Gatsby from Jaen",
+  "files": [
+    "dist",
+    "src",
+    "gatsby-*",
+    "index.js"
+  ],
+  "dependencies": {
+    "@babel/generator": "^7.22.15",
+    "@babel/parser": "^7.22.11",
+    "@babel/traverse": "^7.22.11",
+    "deepmerge": "^4.2.2"
+  },
+  "devDependencies": {
+    "@atsnek/jaen": "^1.0.0-rc.1",
+    "@types/babel__generator": "^7.6.5",
+    "@types/babel__traverse": "^7.20.1",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "@atsnek/jaen": "^1.0.0-rc.1"
+  },
+  "scripts": {
+    "build": "tsc src/gatsby-node.ts src/gatsby-config.ts --outDir dist --esModuleInterop --skipLibCheck --resolveJsonModule"
+  },
+  "keywords": [
+    "gatsby",
+    "source",
+    "plugin",
+    "@atsnek/jaen"
+  ]
+}
