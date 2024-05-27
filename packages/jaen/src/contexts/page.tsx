@@ -142,13 +142,10 @@ export const useJaenPageIndex = (
       const actualPages = []
 
       for (const {id, deleted} of page.childPages) {
-        if (deleted) {
-          continue
-        }
-
         const actualChild = {
           ...state.page.pages.nodes[id],
-          id
+          id,
+          deleted
         }
         if (actualChild) {
           actualPages.push(actualChild)
