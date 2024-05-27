@@ -136,8 +136,6 @@ export const withAuthSecurity = <
     const pageConfigAuth = props.pageContext.pageConfig?.auth
     const auth = useAuth()
 
-    console.log('auth', auth)
-
     const loadingText = useMemo(() => {
       switch (auth.activeNavigator) {
         case 'signinRedirect':

@@ -214,12 +214,6 @@ export const CMSManagementProvider = withRedux(
                 return 5
               }
 
-              console.log(
-                'parentPage.childPagesOrder',
-                parentPage.childPagesOrder,
-                parentPage
-              )
-
               const aIndex = parentPage.childPagesOrder?.indexOf(a.id)
               const bIndex = parentPage.childPagesOrder?.indexOf(b.id)
 

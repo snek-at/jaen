@@ -91,8 +91,6 @@ export const Settings: React.FC<SettingsProps> = props => {
   const query = new URLSearchParams(window.location.search)
   const initialTab = query.get('activeTab') || 'GENERAL' // replace 'GENERAL' with your default tab value
 
-  console.log('settings', props)
-
   const notify = useNotificationsContext()
 
   const [user, setUser] = useState(props.user)
