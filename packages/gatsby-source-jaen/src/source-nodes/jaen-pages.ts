@@ -110,7 +110,8 @@ The existing templates are: ${jaenTemplates
         title: page.jaenPageMetadata?.title || slug
       },
       createdAt: createdAt.toISOString(),
-      modifiedAt: modifiedAt.toISOString()
+      modifiedAt: modifiedAt.toISOString(),
+      createdBy: page.createdBy || 'gatsby-source-jaen'
     }
 
     const pageNode = {

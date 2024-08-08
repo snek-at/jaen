@@ -9,6 +9,8 @@ import {FaAlignRight} from '@react-icons/all-files/fa/FaAlignRight'
 import {FaBold} from '@react-icons/all-files/fa/FaBold'
 import {FaItalic} from '@react-icons/all-files/fa/FaItalic'
 import {FaUnderline} from '@react-icons/all-files/fa/FaUnderline'
+import {FaLink} from '@react-icons/all-files/fa/FaLink'
+import {FaUnlink} from '@react-icons/all-files/fa/FaUnlink'
 
 import {useDebouncedCallback} from 'use-debounce'
 
@@ -29,7 +31,11 @@ const cleanRichText = (
   const {isRTF} = options
 
   if (isRTF) {
-    return DOMPurify.sanitize(text, {})
+    // allow target="_blank" for links
+    return DOMPurify.sanitize(text, {
+      ADD_TAGS: ['a'],
+      ADD_ATTR: ['href', 'target']
+    })
   }
 
   return DOMPurify.sanitize(text, {
@@ -193,6 +199,30 @@ export const TextField = connectField<string, TextFieldProps>(
           onTune: () => {
             document.execCommand('underline')
           }
+        },
+        {
+          name: 'link',
+          Icon: FaLink,
+          onTune: async () => {
+            const url = window.prompt('Enter the URL')
+
+            if (url) {
+              const selection = document.getSelection()
+
+              document.execCommand(
+                'insertHTML',
+                false,
+                `<a href="${url}" target="_blank">${selection}</a>`
+              )
+            }
+          }
+        },
+        {
+          name: 'unlink',
+          Icon: FaUnlink,
+          onTune: () => {
+            document.execCommand('unlink', false)
+          }
         }
       ]
     }
@@ -277,6 +307,12 @@ export const TextField = connectField<string, TextFieldProps>(
 
               document.execCommand('insertText', false, text)
             }
+          }
+        }}
+        sx={{
+          a: {
+            color: 'brand.300',
+            textDecoration: 'underline'
           }
         }}
       />

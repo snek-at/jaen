@@ -108,7 +108,8 @@ const Slice: React.FC<SliceProps> = props => {
                   : 'You can no longer edit the page',
                 status: !manager.isEditing ? 'success' : 'info'
               })
-            }
+            },
+            order: 1
           },
           save: {
             label: 'Save draft',
@@ -121,7 +122,8 @@ const Slice: React.FC<SliceProps> = props => {
                 description: 'Your changes have been saved',
                 status: 'success'
               })
-            }
+            },
+            order: 2
           },
           import: {
             label: 'Import draft',
@@ -142,7 +144,8 @@ const Slice: React.FC<SliceProps> = props => {
                   status: 'error'
                 })
               }
-            }
+            },
+            order: 3
           },
           discard: {
             label: 'Discard changes',
@@ -165,7 +168,8 @@ const Slice: React.FC<SliceProps> = props => {
             icon: FaGlobe,
             onClick: async () => {
               manager.draft.publish()
-            }
+            },
+            order: 4
           }
         }
       })
@@ -226,6 +230,7 @@ const Slice: React.FC<SliceProps> = props => {
           [node.id]: {
             label: config.menu?.label?.toString() || config.label,
             path: config.menu?.path?.toString() || node.path,
+            order: config.menu?.order,
             icon
           }
         }

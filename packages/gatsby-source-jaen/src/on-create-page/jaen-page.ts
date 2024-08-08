@@ -57,6 +57,7 @@ export const onCreatePage = async ({
     createdAt: createdAt.toISOString(),
     modifiedAt: modifiedAt.toISOString(),
     ...jaenPageNode,
+    createdBy: jaenPageNode?.createdBy || 'gatsby-source-jaen',
     parentPage: getJaenPageParentId({
       parentPage: jaenPageNode?.parentPage
         ? {id: jaenPageNode.parentPage as string}

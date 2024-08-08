@@ -38,7 +38,8 @@ const pagesSlice = createSlice({
         template,
         excludedFromIndex,
         fromId,
-        childPagesOrder = []
+        childPagesOrder = [],
+        createdBy
       } = action.payload
 
       const parentPageId = parentPage?.id || null
@@ -105,6 +106,7 @@ const pagesSlice = createSlice({
         state.nodes[id] = {
           createdAt: modifiedAt,
           modifiedAt,
+          createdBy,
           slug,
           jaenFields: jaenFields || null,
           sections,

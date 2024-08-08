@@ -7,6 +7,7 @@ import {BaseEditorProps, MdastRoot} from './components/types.js'
 import {Image, Link} from './default-components.js'
 import {defaultData} from './default-data.js'
 
+import { TabsProps } from './components/TabsTemplate.js'
 type MdxFieldValue = MdastRoot
 
 const baseComponents = {
@@ -27,10 +28,11 @@ const baseComponents = {
 
 export interface MdxFieldProps {
   components: BaseEditorProps['components']
+  tabsTemplate?: React.FC<TabsProps> // Ensure this is React.FC<TabsProps>
 }
 
 export const MdxField = connectField<MdxFieldValue, MdxFieldProps>(
-  ({jaenField, components}) => {
+  ({jaenField, components, tabsTemplate}) => {
     const [rawValue, setRawValue] = React.useState<MdastRoot | undefined>(
       jaenField.staticValue || defaultData
     )
@@ -54,6 +56,7 @@ export const MdxField = connectField<MdxFieldValue, MdxFieldProps>(
           components={combinedComponents}
           onUpdateValue={jaenField.onUpdateValue}
           rawValue={rawValue}
+          tabsTemplate={tabsTemplate} // Pass tabsTemplate to LayzEditor
         />
       )
     } else {
@@ -70,7 +73,8 @@ export const UncontrolledMdxField: React.FC<{
   onUpdateValue: (value: MdastRoot) => void
   value?: MdastRoot
   isEditing?: boolean
-}> = ({components, onUpdateValue, value, isEditing}) => {
+  tabsTemplate?: React.FC<TabsProps> // Ensure this is React.FC<TabsProps>
+}> = ({components, onUpdateValue, value, isEditing, tabsTemplate}) => {
   const combinedComponents = useMemo(() => {
     return {
       ...baseComponents,
@@ -87,6 +91,7 @@ export const UncontrolledMdxField: React.FC<{
           components={combinedComponents}
           onUpdateValue={onUpdateValue}
           rawValue={value}
+          tabsTemplate={tabsTemplate} // Pass tabsTemplate to LayzEditor
         />
       </EditingProvider>
     )
@@ -99,7 +104,8 @@ const LayzEditor: React.FC<{
   components: BaseEditorProps['components']
   onUpdateValue: (value: MdastRoot) => void
   rawValue?: MdastRoot
-}> = ({components, onUpdateValue, rawValue}) => {
+  tabsTemplate?: BaseEditorProps['tabsTemplate'] // Ensure this is React.FC<TabsProps>
+}> = ({components, onUpdateValue, rawValue, tabsTemplate}) => {
   const Editor = React.lazy(async () => await import('./components/Editor.js'))
 
   const MemoedEditor = React.useMemo(() => Editor, [])
@@ -110,7 +116,9 @@ const LayzEditor: React.FC<{
         components={components}
         onUpdateValue={onUpdateValue}
         mode="editAndPreview"
-        mdast={rawValue}></MemoedEditor>
+        mdast={rawValue}
+        tabsTemplate={tabsTemplate} // Pass tabsTemplate to Editor
+      />
     </React.Suspense>
   )
 }

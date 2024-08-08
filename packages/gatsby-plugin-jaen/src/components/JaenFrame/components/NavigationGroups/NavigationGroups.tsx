@@ -1,10 +1,11 @@
-import { ReloadIcon } from '@radix-ui/react-icons'
-import { useLocation } from '@reach/router'
-import { Link } from 'gatsby'
-import { cn } from '../../../../lib/utils'
-import { Button } from '../../../ui/button'
-import { Separator } from '../../../ui/separator'
-import { SheetClose } from '../../../ui/sheet'
+import {ReloadIcon} from '@radix-ui/react-icons'
+import {useLocation} from '@reach/router'
+import {Link} from 'gatsby'
+
+import {cn} from '../../../../lib/utils'
+import {Button} from '../../../ui/button'
+import {Separator} from '../../../ui/separator'
+import {SheetClose} from '../../../ui/sheet'
 
 export interface NavigationItem {
   icon: React.ComponentType
@@ -12,6 +13,7 @@ export interface NavigationItem {
   onClick?: () => void
   path?: string
   isLoading?: boolean
+  order?: number
 }
 
 export interface NavigationGroup {
@@ -42,66 +44,74 @@ export const NavigationGroups: React.FC<NavigationGroupsProps> = ({
             )}
 
             <div className="flex flex-col mt-1">
-              {Object.entries(value.items).map(([key, value]) => {
-                const icon = <value.icon />
+              {Object.entries(value.items)
+                .sort((a, b) => {
+                  return (a[1].order || 0) - (b[1].order || 0)
+                })
+                .map(([key, value]) => {
+                  const icon = <value.icon />
 
-                // Check if path is active
-                const isActive = location.pathname === value.path
+                  // Check if path is active
+                  const isActive = location.pathname === value.path
 
-                const btn = (
-                  <Button
-                    key={key}
-                    asChild={!!value.path}
-                    className={cn('justify-start', {
-                      'bg-accent': isActive
-                    })}
-                    variant="ghost"
-                    disabled={isActive || value.isLoading}
-                    onClick={() => {
-                      value.onClick?.()
+                  const btn = (
+                    <Button
+                      key={key}
+                      asChild={!!value.path}
+                      className={cn('justify-start', {
+                        'bg-accent': isActive
+                      })}
+                      variant="ghost"
+                      disabled={isActive || value.isLoading}
+                      onClick={() => {
+                        value.onClick?.()
 
-                      onClick?.()
-                    }}>
-                    {value.path ? (
-                      <Link to={value.path}>
-                        {value.isLoading ? (
-                          <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                        ) : (
-                          <span
-                            className="mr-2 h-4 w-4"
-                            style={{
-                              color: 'var(--chakra-colors-brand-500)'
-                            }}>
-                            {icon}
-                          </span>
-                        )}
-                        {value.label}
-                      </Link>
-                    ) : (
-                      <>
-                        {value.isLoading ? (
-                          <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                        ) : (
-                          <span
-                            className="mr-2 h-4 w-4"
-                            style={{
-                              color: 'var(--chakra-colors-brand-500)'
-                            }}>
-                            {icon}
-                          </span>
-                        )}
-                        {value.label}
-                      </>
-                    )}
-                  </Button>
-                )
+                        onClick?.()
+                      }}>
+                      {value.path ? (
+                        <Link to={value.path}>
+                          {value.isLoading ? (
+                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                          ) : (
+                            <span
+                              className="mr-2 h-4 w-4"
+                              style={{
+                                color: 'var(--chakra-colors-brand-500)'
+                              }}>
+                              {icon}
+                            </span>
+                          )}
+                          {value.label}
+                        </Link>
+                      ) : (
+                        <>
+                          {value.isLoading ? (
+                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                          ) : (
+                            <span
+                              className="mr-2 h-4 w-4"
+                              style={{
+                                color: 'var(--chakra-colors-brand-500)'
+                              }}>
+                              {icon}
+                            </span>
+                          )}
+                          {value.label}
+                        </>
+                      )}
+                    </Button>
+                  )
 
-                if (value.path) {
-                  return <SheetClose asChild>{btn}</SheetClose>
-                }
+                  if (value.path) {
+                    return (
+                      <SheetClose key={key} asChild>
+                        {btn}
+                      </SheetClose>
+                    )
+                  }
 
-                return btn
-              })}
+                  return btn
+                })}
             </div>
 
             <Separator className="my-2" />
