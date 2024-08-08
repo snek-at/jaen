@@ -1,0 +1,27 @@
+diff --git a/node_modules/gatsby/cache-dir/create-content-digest-browser-shim.js b/node_modules/gatsby/cache-dir/create-content-digest-browser-shim.js
+index edc673f..cbd390c 100644
+--- a/node_modules/gatsby/cache-dir/create-content-digest-browser-shim.js
++++ b/node_modules/gatsby/cache-dir/create-content-digest-browser-shim.js
+@@ -1 +1 @@
+-exports.createContentDigest = () => ``
++export const createContentDigest = () => ``
+diff --git a/node_modules/gatsby/cache-dir/public-page-renderer.js b/node_modules/gatsby/cache-dir/public-page-renderer.js
+index 6a91ada..e2ee03a 100644
+--- a/node_modules/gatsby/cache-dir/public-page-renderer.js
++++ b/node_modules/gatsby/cache-dir/public-page-renderer.js
+@@ -1,9 +1,11 @@
+ const preferDefault = m => (m && m.default) || m
+ 
++let renderer = () => null;
++
+ if (process.env.BUILD_STAGE === `develop`) {
+-  module.exports = preferDefault(require(`./public-page-renderer-dev`))
++  renderer = preferDefault(require(`./public-page-renderer-dev`))
+ } else if (process.env.BUILD_STAGE === `build-javascript`) {
+-  module.exports = preferDefault(require(`./public-page-renderer-prod`))
+-} else {
+-  module.exports = () => null
++  renderer = preferDefault(require(`./public-page-renderer-prod`))
+ }
++
++export default renderer;

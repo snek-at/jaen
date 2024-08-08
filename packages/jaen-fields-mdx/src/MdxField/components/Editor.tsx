@@ -8,7 +8,7 @@ import CodeMirror, {
   EditorView
 } from '@uiw/react-codemirror'
 
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import React, {useCallback, useEffect, useMemo} from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
 import {statistics, Statistics} from 'vfile-statistics'
 
@@ -30,16 +30,13 @@ const MemoizedCodeMirror = React.memo<ReactCodeMirrorProps>(props => {
 export interface EditorProps extends BaseEditorProps {}
 
 export const Editor: React.FC<EditorProps> = props => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [defaultValue, _] = useState(props.mdast)
-
   const [state, setConfig] = useMdx(
     {
       gfm: true,
       frontmatter: true,
       math: true,
       directive: true,
-      mdast: defaultValue
+      mdast: props.mdast
     },
     false,
     props.components

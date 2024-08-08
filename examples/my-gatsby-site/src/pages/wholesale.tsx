@@ -15,6 +15,6 @@ export const pageConfig: PageConfig = {
   icon: 'FaWarehouse',
   auth: {
     isRequired: true,
-    roles: ['4d84a68f-7b18-4efe-ae73-d6d3dd226110']
+    roles: ['260237544631828483:kassabuch:admin']
   }
 }

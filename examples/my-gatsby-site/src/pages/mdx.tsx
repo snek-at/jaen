@@ -1,8 +1,9 @@
 import {Field, PageConfig, PageProps} from '@atsnek/jaen'
 import {Box} from '@chakra-ui/react'
-import {MdxField} from '@atsnek/jaen-fields-mdx'
+import {MdxField, UncontrolledMdxField} from '@atsnek/jaen-fields-mdx'
 import {Link} from 'gatsby-plugin-jaen'
 import {usePage} from '@atsnek/jaen'
+import {useState} from 'react'
 
 const QASMPlayground: React.FC<{
   playground?: boolean
@@ -25,6 +26,17 @@ const Page: React.FC<PageProps> = ({location, pageContext}) => {
   const page = usePage()
 
   console.log('page:', page)
+
+  const [value, setValue] = useState<any>()
+
+  return (
+    <UncontrolledMdxField
+      components={{QASMPlayground}}
+      value={value}
+      onUpdateValue={setValue}
+      isEditing={true}
+    />
+  )
 
   return (
     <>
