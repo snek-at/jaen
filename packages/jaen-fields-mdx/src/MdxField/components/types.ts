@@ -1,11 +1,9 @@
 import {Root as MdastRoot} from 'mdast'
-import {TabsProps} from './TabsTemplate'
 
 export interface BaseEditorProps {
-  components: Record<string, React.ComponentType<any>>;
-  onUpdateValue: (value: any) => void;
-  mdast?: any;
-  tabsTemplate?: React.FC<TabsProps>; // Update this line
+  mdast?: MdastRoot
+  components?: Record<string, React.ComponentType<any>>
+  onUpdateValue?: (value: MdastRoot) => void
   mode?: 'preview' | 'build' | 'editAndPreview' | 'editAndBuild'
 }
 

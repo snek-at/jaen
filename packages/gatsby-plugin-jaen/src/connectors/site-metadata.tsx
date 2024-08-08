@@ -1,7 +1,7 @@
 import {
   SiteMetadata,
   SiteMetadataProvider as JaenSiteMetadataProvider
-} from 'jaen'
+} from '@atsnek/jaen'
 import {useStaticQuery, graphql} from 'gatsby'
 
 export interface SiteMetadataProps {

@@ -1,4 +1,4 @@
-import {PageConfig, useAuth} from 'jaen'
+import {PageConfig, useAuth} from '@atsnek/jaen'
 
 export const usePageConfig = () => {
   const auth = useAuth()

@@ -24,8 +24,6 @@ export const createSchemaCustomization = async ({
       childPages: [JaenPage!]! @childPages
       childPagesOrder: [String!]!
 
-      createdBy: String!
-
       createdAt: Date!
       modifiedAt: Date!
     }

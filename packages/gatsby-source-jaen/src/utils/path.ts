@@ -1,4 +1,4 @@
-import {JaenPage} from 'jaen'
+import {JaenPage} from '@atsnek/jaen'
 
 interface PageNode {
   id: string

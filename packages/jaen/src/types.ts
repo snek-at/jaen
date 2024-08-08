@@ -171,7 +171,6 @@ export interface JaenPage {
   id: string
   slug: string
   path?: string
-  createdBy: string
   createdAt: string
   modifiedAt: string
   jaenPageMetadata: Partial<{

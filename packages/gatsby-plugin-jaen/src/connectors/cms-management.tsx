@@ -1,7 +1,7 @@
-import {CMSManagementProvider, JaenPage, JaenTemplate} from 'jaen'
+import {CMSManagementProvider, JaenPage, JaenTemplate} from '@atsnek/jaen'
 import {graphql, useStaticQuery} from 'gatsby'
 
-export {useCMSManagementContext as useCMSManagement} from 'jaen'
+export {useCMSManagementContext as useCMSManagement} from '@atsnek/jaen'
 
 export interface CMSManagementProps {
   children: React.ReactNode

@@ -1,5 +1,5 @@
 import {Box, GlobalStyle, ChakraProvider, ThemeProvider} from '@chakra-ui/react'
-import {LayoutProps} from 'jaen'
+import {LayoutProps} from '@atsnek/jaen'
 
 import {JaenPageLayout} from '../components/JaenPageLayout'
 import CustomLayout from '../components/Layout'

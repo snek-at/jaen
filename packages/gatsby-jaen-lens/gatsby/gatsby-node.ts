@@ -1,4 +1,4 @@
-import {PageConfig} from 'jaen'
+import {PageConfig} from '@atsnek/jaen'
 import {GatsbyNode, PluginOptions} from 'gatsby'
 
 export interface JaenLensPluginOptions extends PluginOptions {

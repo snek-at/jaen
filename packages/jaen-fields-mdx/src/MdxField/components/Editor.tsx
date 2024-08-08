@@ -133,10 +133,8 @@ export const Editor: React.FC<EditorProps> = props => {
     props.onUpdateValue?.(state.file.data.mdast)
   }, [state.file.data?.mdast])
 
-  const TabsTemplateComponent = props.tabsTemplate || TabsTemplate
-
   return (
-    <TabsTemplateComponent
+    <TabsTemplate
       tabs={[
         {
           label: (

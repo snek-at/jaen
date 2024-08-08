@@ -1,4 +1,4 @@
-import {PageConfig, PageProps} from 'jaen'
+import {PageConfig, PageProps} from '@atsnek/jaen'
 
 const Page: React.FC<PageProps> = ({location, pageContext}) => {
   return (

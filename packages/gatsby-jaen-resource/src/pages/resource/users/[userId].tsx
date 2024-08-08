@@ -3,7 +3,7 @@ import {
   PageProps,
   useAuthenticationContext,
   useNotificationsContext
-} from 'jaen'
+} from '@atsnek/jaen'
 import {
   Avatar,
   Box,

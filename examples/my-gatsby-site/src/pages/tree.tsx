@@ -3,7 +3,7 @@ import {
   PageConfig,
   PageProps,
   useCMSManagementContext
-} from 'jaen'
+} from '@atsnek/jaen'
 import {CMSManagement} from 'gatsby-plugin-jaen'
 
 const Page: React.FC<PageProps> = ({location, pageContext}) => {

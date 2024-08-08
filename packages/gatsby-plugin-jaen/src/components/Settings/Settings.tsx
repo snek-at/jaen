@@ -2,7 +2,7 @@ import {
   AuthUser,
   useNotificationsContext,
   AuthPasswordPolicy
-} from 'jaen'
+} from '@atsnek/jaen'
 import {
   Avatar,
   Button,

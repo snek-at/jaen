@@ -1,4 +1,4 @@
-import {PageConfig} from 'jaen'
+import {PageConfig} from '@atsnek/jaen'
 import {graphql} from 'gatsby'
 import React, {useMemo} from 'react'
 import {useForm} from 'react-hook-form'
@@ -466,7 +466,7 @@ const Page: React.FC = () => {
 
 export default Page
 
-export {Head} from 'jaen'
+export {Head} from '@atsnek/jaen'
 
 export const pageConfig: PageConfig = {
   label: 'Jaen CMS | Notification',

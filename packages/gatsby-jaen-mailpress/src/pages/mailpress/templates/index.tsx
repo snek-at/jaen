@@ -1,5 +1,6 @@
-import {PageConfig, useNotificationsContext} from 'jaen'
+import {PageConfig, useNotificationsContext} from '@atsnek/jaen'
 import {
+  Box,
   Button,
   HStack,
   Heading,
@@ -16,9 +17,19 @@ import {
 } from '@chakra-ui/react'
 import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
 import {Link as GatsbyLink, graphql} from 'gatsby'
-import {useEffect} from 'react'
 import {useQuery} from 'snek-query/react-hooks'
 import {sq} from '../../../client/src'
+import {useEffect} from 'react'
+
+interface MailPressTemplate {
+  id: string
+  description: string
+  subject?: string | null
+  from?: string | null
+  replyTo?: string | null
+  updatedAt: string
+  createdAt: string
+}
 
 const SkeletonRow = () => (
   <Tr>
@@ -88,7 +99,7 @@ const Page: React.FC = () => {
     })
 
     if (description) {
-      const [_, errors] = await sq.mutate(m => {
+      const [data, errors] = await sq.mutate(m => {
         return m.templateCreate({
           data: {
             description: description,
@@ -218,4 +229,4 @@ export const query = graphql`
   }
 `
 
-export {Head} from 'jaen'
+export {Head} from '@atsnek/jaen'

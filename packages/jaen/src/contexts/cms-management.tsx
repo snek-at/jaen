@@ -22,7 +22,6 @@ import {useSiteMetadataContext} from './site-metadata'
 import {uploadFile} from '../utils/open-storage-gateway'
 import {useNotificationsContext} from './notifications'
 import {sqJaen} from '../clients/jaen/src'
-import {useAuth} from './auth'
 // import {diffObjects} from '../utils/diff-objects'
 
 // Errors
@@ -112,8 +111,6 @@ interface CMSManagementProviderProps {
 // Create the CMSManagementProvider component
 export const CMSManagementProvider = withRedux(
   ({staticPages, children, templates}: CMSManagementProviderProps) => {
-    const auth = useAuth()
-
     const dispatch = useAppDispatch()
 
     const notification = useNotificationsContext()
@@ -280,8 +277,6 @@ export const CMSManagementProvider = withRedux(
       if (isSlugDuplicate) {
         throw new DuplicateSlugError(slug)
       }
-
-      page.createdBy = auth.user?.profile?.sub || 'unknown'
 
       dispatch(pageActions.page_updateOrCreate(page))
 

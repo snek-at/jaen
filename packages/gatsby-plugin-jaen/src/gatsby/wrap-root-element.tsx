@@ -5,7 +5,7 @@ import {
   NotificationsProvider,
   JaenUpdateModalProvider,
   CookieConsentProvider
-} from 'jaen'
+} from '@atsnek/jaen'
 import {GatsbyBrowser} from 'gatsby'
 import {lazy} from 'react'
 
@@ -29,12 +29,12 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
   }
 
   return (
-    <AuthenticationProvider>
-      <ChakraProvider theme={theme} cssVarsRoot="#coco">
-        <Toaster />
+    <ChakraProvider theme={theme} cssVarsRoot="#coco">
+      <Toaster />
 
-        <CookieConsentProvider>
-          <NotificationsProvider>
+      <CookieConsentProvider>
+        <NotificationsProvider>
+          <AuthenticationProvider>
             <JaenUpdateModalProvider>
               <SiteMetadataProvider>
                 <JaenFrameMenuProvider>
@@ -47,9 +47,9 @@ export const wrapRootElement: GatsbyBrowser['wrapRootElement'] = (
                 </JaenFrameMenuProvider>
               </SiteMetadataProvider>
             </JaenUpdateModalProvider>
-          </NotificationsProvider>
-        </CookieConsentProvider>
-      </ChakraProvider>
-    </AuthenticationProvider>
+          </AuthenticationProvider>
+        </NotificationsProvider>
+      </CookieConsentProvider>
+    </ChakraProvider>
   )
 }

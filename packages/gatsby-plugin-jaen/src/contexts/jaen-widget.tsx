@@ -1,4 +1,4 @@
-import {WidgetProvider} from 'jaen'
+import {WidgetProvider} from '@atsnek/jaen'
 import {graphql, useStaticQuery} from 'gatsby'
 import React from 'react'
 

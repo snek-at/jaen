@@ -1,4 +1,4 @@
-import {DuplicateSlugError, JaenTemplate, useAuth} from 'jaen'
+import {DuplicateSlugError, JaenTemplate} from '@atsnek/jaen'
 import {
   Box,
   Button,
@@ -250,8 +250,6 @@ export const PageContentForm: React.FC<PageContentFormProps> = ({
     !!props.values?.image?.src
   )
 
-  const auth = useAuth()
-
   useEffect(() => {
     setIsBlogPostInUse(!!props.values?.blogPost)
   }, [props.values?.blogPost])
@@ -267,17 +265,6 @@ export const PageContentForm: React.FC<PageContentFormProps> = ({
     if (blogPost && isBlogPostInUse) {
       if (!blogPost.date) {
         setValue('blogPost.date', new Date().toISOString().slice(0, 16))
-      }
-
-      if (!blogPost.author) {
-        const defaultAuthor =
-          auth.user?.profile?.nickname ||
-          auth.user?.profile?.name ||
-          auth.user?.profile?.email
-
-        if (defaultAuthor) {
-          setValue('blogPost.author', defaultAuthor)
-        }
       }
     }
   }, [blogPost?.date])

@@ -1,5 +1,5 @@
 import {Box, SimpleGrid} from '@chakra-ui/react'
-import {MediaNode} from 'jaen'
+import {MediaNode} from '@atsnek/jaen'
 import React from 'react'
 
 import {MediaItem} from '../MediaItem/MediaItem'

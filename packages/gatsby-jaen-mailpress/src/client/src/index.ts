@@ -1,6 +1,6 @@
 import {makeSnekQuery} from 'snek-query'
 import {User} from 'oidc-client-ts'
-import 'jaen/dist/types'
+import '@atsnek/jaen/dist/types'
 
 import {Query, Mutation} from './schema.generated'
 

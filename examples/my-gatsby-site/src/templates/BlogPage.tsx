@@ -1,8 +1,8 @@
 import * as React from 'react'
 import {Link, HeadFC, PageProps, navigate, graphql} from 'gatsby'
-import {Field, PageConfig, useField, useJaenPageIndex} from 'jaen'
+import {Field, PageConfig, useField, useJaenPageIndex} from '@atsnek/jaen'
 import {Button} from '@chakra-ui/react'
-import {MdxField} from 'jaen-fields-mdx'
+import {MdxField} from '@atsnek/jaen-fields-mdx'
 
 const BlogPage: React.FC<PageProps> = props => {
   const index = useJaenPageIndex()
@@ -67,4 +67,4 @@ export const query = graphql`
   }
 `
 
-export {Head} from 'jaen'
+export {Head} from '@atsnek/jaen'
