@@ -1,4 +1,4 @@
-import {PageConfig} from '@atsnek/jaen'
+import {PageConfig} from 'jaen'
 import {CreatePageArgs, Node} from 'gatsby'
 
 import {getJaenPageParentId} from '../utils/get-jaen-page-parent-id'
@@ -57,6 +57,7 @@ export const onCreatePage = async ({
     createdAt: createdAt.toISOString(),
     modifiedAt: modifiedAt.toISOString(),
     ...jaenPageNode,
+    createdBy: jaenPageNode?.createdBy || 'gatsby-source-jaen',
     parentPage: getJaenPageParentId({
       parentPage: jaenPageNode?.parentPage
         ? {id: jaenPageNode.parentPage as string}

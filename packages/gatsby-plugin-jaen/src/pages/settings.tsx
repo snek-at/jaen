@@ -1,4 +1,4 @@
-import {AuthUserProvider, PageConfig, useAuthUser} from '@atsnek/jaen'
+import {AuthUserProvider, PageConfig, useAuthUser} from 'jaen'
 import {PageProps} from 'gatsby'
 import React from 'react'
 
@@ -52,4 +52,4 @@ export const pageConfig: PageConfig = {
   }
 }
 
-export {Head} from '@atsnek/jaen'
+export {Head} from 'jaen'

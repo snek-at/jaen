@@ -15,7 +15,7 @@ import {
   Stack,
   Text
 } from '@chakra-ui/react'
-import {MediaNode} from '@atsnek/jaen'
+import {MediaNode} from 'jaen'
 import {
   MouseEventHandler,
   RefObject,

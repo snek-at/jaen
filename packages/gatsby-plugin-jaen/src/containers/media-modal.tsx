@@ -5,7 +5,7 @@ import {
   ModalContent,
   ModalOverlay
 } from '@chakra-ui/react'
-import {JaenPage, MediaNode, PageProvider, useMediaModal} from '@atsnek/jaen'
+import {JaenPage, MediaNode, PageProvider, useMediaModal} from 'jaen'
 import {useEffect, useState} from 'react'
 
 import Media from './media'

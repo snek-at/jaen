@@ -1,4 +1,4 @@
-import {PageConfig, PageProps} from '@atsnek/jaen'
+import {PageConfig, PageProps} from 'jaen'
 
 const Page: React.FC<PageProps> = ({location, pageContext}) => {
   // everything after /user/ is the handle

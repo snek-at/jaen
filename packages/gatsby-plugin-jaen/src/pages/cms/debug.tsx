@@ -1,4 +1,4 @@
-import {PageConfig, useWidgetContext} from '@atsnek/jaen'
+import {PageConfig, useWidgetContext} from 'jaen'
 import {
   Accordion,
   AccordionButton,
@@ -115,7 +115,7 @@ const Page: React.FC<PageProps> = () => {
                   <Tbody>
                     <Tr>
                       <Td>Jaen version:</Td>
-                      <Td>{require('@atsnek/jaen/package.json').version}</Td>
+                      <Td>{require('jaen/package.json').version}</Td>
                     </Tr>
                   </Tbody>
                 </Table>

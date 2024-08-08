@@ -1,4 +1,4 @@
-import {JaenPage, JaenSite, Widget} from '@atsnek/jaen'
+import {JaenPage, JaenSite, Widget} from 'jaen'
 import deepmerge from 'deepmerge'
 import fs from 'fs/promises' // Import the fs module for asynchronous file operations
 import {SourceNodesArgs} from 'gatsby'

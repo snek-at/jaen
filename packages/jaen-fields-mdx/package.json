@@ -1,6 +1,6 @@
 {
-  "name": "@atsnek/jaen-fields-mdx",
-  "version": "1.0.0-rc.19",
+  "name": "jaen-fields-mdx",
+  "version": "1.0.0",
   "description": "Markdown field for Jaen",
   "type": "module",
   "source": "src/index.ts",
@@ -31,6 +31,7 @@
     "@uiw/react-codemirror": "^4.21.12",
     "ahooks": "^3.7.8",
     "deepmerge": "^4.3.1",
+    "hast-util-sanitize": "^5.0.1",
     "mdast-util-directive": "^3.0.0",
     "mdast-util-frontmatter": "^2.0.0",
     "mdast-util-gfm": "^3.0.0",
@@ -56,7 +57,7 @@
     "vfile-statistics": "^3.0.0"
   },
   "peerDependencies": {
-    "@atsnek/jaen": "^1.0.0-rc.4",
+    "jaen": "^1.0.0",
     "gatsby": "^5.12.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

@@ -9,6 +9,9 @@ import {FaAlignRight} from '@react-icons/all-files/fa/FaAlignRight'
 import {FaBold} from '@react-icons/all-files/fa/FaBold'
 import {FaItalic} from '@react-icons/all-files/fa/FaItalic'
 import {FaUnderline} from '@react-icons/all-files/fa/FaUnderline'
+import {FaLink} from '@react-icons/all-files/fa/FaLink'
+import {FaUnlink} from '@react-icons/all-files/fa/FaUnlink'
+import {FaFileUpload} from '@react-icons/all-files/fa/FaFileUpload'
 
 import {useDebouncedCallback} from 'use-debounce'
 
@@ -19,6 +22,7 @@ import {TuneSelectorButton} from '../../components/TuneSelectorButton/TuneSelect
 import {connectField} from '../../connectors'
 import {useNotificationsContext} from '../../contexts/notifications'
 import {HighlightTooltip} from '../components/HighlightTooltip/HighlightTooltip'
+import {uploadFile} from '../../utils/open-storage-gateway'
 
 const cleanRichText = (
   text: string,
@@ -29,7 +33,11 @@ const cleanRichText = (
   const {isRTF} = options
 
   if (isRTF) {
-    return DOMPurify.sanitize(text, {})
+    // allow target="_blank" for links
+    return DOMPurify.sanitize(text, {
+      ADD_TAGS: ['a'],
+      ADD_ATTR: ['href', 'target']
+    })
   }
 
   return DOMPurify.sanitize(text, {
@@ -132,6 +140,46 @@ export const TextField = connectField<string, TextFieldProps>(
         handleTextSave(evt.currentTarget.innerHTML)
       }, [])
 
+    const handleFileChange = async (
+      event: Event & {target: {files: FileList | null}}
+    ) => {
+      const fileInput = document.getElementById(
+        'page-file-upload-input'
+      ) as HTMLInputElement
+
+      const file = event.target.files?.[0]
+      if (file) {
+        const randomId = Math.random().toString(36).substring(7)
+
+        // The 'download' attribute is used to set the filename when downloading the file
+        // This only works on same-origin URLs, hence it doesn't work with the Open Storage Gateway
+        document.execCommand(
+          'insertHTML',
+          false,
+          `<a id="${randomId}" download="${file.name}" href="#" target="_blank">${file.name}</a>`
+        )
+
+        const {fileUrl} = await uploadFile(file)
+
+        const link = document.getElementById(randomId)
+
+        if (link) {
+          link.setAttribute('href', fileUrl)
+          link.removeAttribute('id')
+        } else {
+          throw new Error('Could not find link element')
+        }
+      }
+
+      if (fileInput) {
+        // Optionally reset file input to allow re-uploading the same file
+        fileInput.value = ''
+
+        // Unregister listener
+        fileInput.removeEventListener('change', handleFileChange)
+      }
+    }
+
     const alignmentTune: TuneOption = {
       type: 'groupTune',
       name: 'alignment',
@@ -192,6 +240,44 @@ export const TextField = connectField<string, TextFieldProps>(
           Icon: FaUnderline,
           onTune: () => {
             document.execCommand('underline')
+          }
+        },
+        {
+          name: 'link',
+          Icon: FaLink,
+          onTune: async () => {
+            const url = window.prompt('Enter the URL')
+
+            if (url) {
+              const selection = document.getSelection()
+
+              document.execCommand(
+                'insertHTML',
+                false,
+                `<a href="${url}" target="_blank">${selection}</a>`
+              )
+            }
+          }
+        },
+        {
+          name: 'unlink',
+          Icon: FaUnlink,
+          onTune: () => {
+            document.execCommand('unlink', false)
+          }
+        },
+        {
+          name: 'file',
+          Icon: FaFileUpload,
+          onTune: async () => {
+            const fileInput = document.getElementById('page-file-upload-input')
+
+            if (fileInput) {
+              // Register listener to handle file upload
+              fileInput.addEventListener('change', handleFileChange)
+
+              fileInput.click()
+            }
           }
         }
       ]
@@ -277,6 +363,12 @@ export const TextField = connectField<string, TextFieldProps>(
 
               document.execCommand('insertText', false, text)
             }
+          }
+        }}
+        sx={{
+          a: {
+            color: 'brand.300',
+            textDecoration: 'underline'
           }
         }}
       />

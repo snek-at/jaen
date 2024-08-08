@@ -1,4 +1,4 @@
-import {PageConfig, PageProps, useNotificationsContext} from '@atsnek/jaen'
+import {PageConfig, PageProps, useNotificationsContext} from 'jaen'
 
 import {
   Button,

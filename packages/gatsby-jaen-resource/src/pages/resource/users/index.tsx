@@ -1,4 +1,4 @@
-import {PageConfig} from '@atsnek/jaen'
+import {PageConfig} from 'jaen'
 
 import {FaPlus} from '@react-icons/all-files/fa/FaPlus'
 import {FaCheckCircle} from '@react-icons/all-files/fa/FaCheckCircle'
@@ -400,4 +400,4 @@ export const query = graphql`
   }
 `
 
-export {Head} from '@atsnek/jaen'
+export {Head} from 'jaen'

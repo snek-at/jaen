@@ -1,4 +1,4 @@
-import {LayoutProps, useWidget} from '@atsnek/jaen'
+import {LayoutProps, useWidget} from 'jaen'
 import {Box, Heading, HStack, Button} from '@chakra-ui/react'
 import {useEffect} from 'react'
 

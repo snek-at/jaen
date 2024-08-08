@@ -27,6 +27,11 @@ export const PageProvider: React.FC<
         jaenPage,
         jaenPages
       }}>
+      <input
+        id="page-file-upload-input"
+        type="file"
+        style={{display: 'none'}}
+      />
       {children}
     </PageContext.Provider>
   )

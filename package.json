@@ -3,12 +3,13 @@
   "description": "The Webapps framework for creating scalable and dynamic applications with ease.",
   "private": true,
   "version": "1.0.0",
-  "repository": "https://github.com/atsnek/jaen",
-  "author": "Nico Schett <schett@atsnek.com>",
+  "repository": "https://github.com/jaenjs/jaen",
+  "author": "Nico Schett <nico.schett@cronit.io>",
   "scripts": {
     "lint:fix": "yarn eslint packages/jaen/src/ --fix",
     "prettier:fix": "yarn prettier packages/jaen/src/ --write",
-    "format": "yarn prettier:fix && yarn lint:fix"
+    "format": "yarn prettier:fix && yarn lint:fix",
+    "build": "yarn workspace jaen run build && yarn workspace gatsby-source-jaen run build && yarn workspace gatsby-plugin-jaen run build && yarn workspace gatsby-jaen-mailpress run build && yarn workspace gatsby-jaen-lens run build &&  yarn workspace jaen-fields-mdx run build"
   },
   "workspaces": [
     "packages/jaen",
@@ -25,6 +26,9 @@
     "prettier-plugin-organize-imports": "^3.2.2"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/release-notes-generator": "^14.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^27.0.1",
@@ -32,6 +36,8 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.32.0"
+    "eslint-plugin-react": "^7.32.0",
+    "semantic-release": "^24.0.0",
+    "semantic-release-monorepo": "^8.0.2"
   }
 }

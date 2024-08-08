@@ -1,6 +1,6 @@
 import {Box, Link as ChakraLink, LinkProps} from '@chakra-ui/react'
 import {Link as GatsbyLink} from 'gatsby'
-import {Field} from '@atsnek/jaen'
+import {Field} from 'jaen'
 
 export const Image = ({name, defaultValue, alt, ...rest}: any) => {
   return (

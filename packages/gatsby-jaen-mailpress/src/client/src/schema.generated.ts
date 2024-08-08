@@ -1,4 +1,4 @@
-
+// @ts-nocheck
 import { proxy, arrayProxy, fnProxy, fnArrayProxy, t } from "snek-query";
 
 export enum OAuthProvider {

@@ -18,7 +18,7 @@ import {
   Spinner,
   Text
 } from '@chakra-ui/react'
-import {MediaNode} from '@atsnek/jaen'
+import {MediaNode} from 'jaen'
 import {useEffect} from 'react'
 import FilerobotImageEditor, {TABS} from 'react-filerobot-image-editor'
 
@@ -28,6 +28,7 @@ import {FaClone} from '@react-icons/all-files/fa/FaClone'
 import {FaDownload} from '@react-icons/all-files/fa/FaDownload'
 import {FaSlidersH} from '@react-icons/all-files/fa/FaSlidersH'
 import {FaTrash} from '@react-icons/all-files/fa/FaTrash'
+import {FaCheck} from '@react-icons/all-files/fa/FaCheck'
 
 import {TransformComponent, TransformWrapper} from 'react-zoom-pan-pinch'
 
@@ -37,6 +38,8 @@ export interface MediaPreviewProps {
   selectedMediaNode: MediaNode | null
   onSelectMediaNode: (node: MediaNode | null) => void
   mediaNodes: MediaNode[]
+  isSelector?: boolean
+  onSelect?: (id: string) => void
   isPreview: MediaPreviewState
   onPreview: (state: MediaPreviewState) => void
 
@@ -57,6 +60,8 @@ export const MediaPreview: React.FC<MediaPreviewProps> = ({
   selectedMediaNode,
   onSelectMediaNode,
   mediaNodes,
+  isSelector,
+  onSelect,
   isPreview,
   onPreview,
   onDelete,
@@ -209,6 +214,19 @@ export const MediaPreview: React.FC<MediaPreviewProps> = ({
                 icon={<FaTrash />}
                 onClick={handleDelete}
               />
+
+              {isSelector && (
+                <Button
+                  variant="solid"
+                  leftIcon={<FaCheck />}
+                  onClick={() => {
+                    if (selectedMediaNode && onSelect) {
+                      onSelect(selectedMediaNode.id)
+                    }
+                  }}>
+                  Choose
+                </Button>
+              )}
             </ButtonGroup>
           </HStack>
         </ModalHeader>

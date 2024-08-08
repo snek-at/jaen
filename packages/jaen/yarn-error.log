@@ -28,7 +28,7 @@ Trace:
 
 npm manifest: 
   {
-    "name": "@atsnek/jaen",
+    "name": "jaen",
     "version": "1.0.0-rc.7",
     "description": "The Webapps framework for creating scalable and dynamic applications with ease.",
     "type": "module",

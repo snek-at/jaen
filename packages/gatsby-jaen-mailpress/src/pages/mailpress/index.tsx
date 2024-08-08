@@ -1,4 +1,4 @@
-import {PageConfig, PageProps} from '@atsnek/jaen'
+import {PageConfig, PageProps} from 'jaen'
 import {useEffect} from 'react'
 import {navigate} from 'gatsby'
 

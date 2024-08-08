@@ -1,11 +1,12 @@
 {
   "name": "gatsby-jaen-resource",
+  "private": true,
   "version": "0.0.9",
   "description": "Resource management plugin for Jaen",
   "main": "index.js",
   "keywords": [
     "gatsby",
-    "@atsnek/jaen"
+    "jaen"
   ],
   "dependencies": {
     "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v4.11.0/react-icons-all-files-4.11.0.tgz",

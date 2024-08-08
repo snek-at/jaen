@@ -10,14 +10,14 @@ import {
   useMediaModal,
   usePageContext,
   useSiteMetadataContext
-} from '@atsnek/jaen'
+} from 'jaen'
 import {Link, useJaenFrameMenuContext} from 'gatsby-plugin-jaen'
 
 import {Box, Button, LightMode, Text} from '@chakra-ui/react'
 import {graphql} from 'gatsby'
 import * as React from 'react'
 
-import {UncontrolledMdxField} from '@atsnek/jaen-fields-mdx'
+import {UncontrolledMdxField} from 'jaen-fields-mdx'
 import {FaCogs} from '@react-icons/all-files/fa/FaCogs'
 
 const pageStyles = {
@@ -403,4 +403,4 @@ export const query = graphql`
   }
 `
 
-export {Head} from '@atsnek/jaen'
+export {Head} from 'jaen'

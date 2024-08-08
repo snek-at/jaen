@@ -1,4 +1,4 @@
-import {MediaNode} from '@atsnek/jaen'
+import {MediaNode} from 'jaen'
 import {Flex, Heading, HStack, IconButton, Stack} from '@chakra-ui/react'
 import React, {useEffect, useMemo, useState} from 'react'
 
@@ -190,6 +190,8 @@ export const Media: React.FC<MediaProps> = ({
       <MediaPreview
         mediaNodes={sortedMediaNodes}
         isPreview={isPreview}
+        isSelector={isSelector}
+        onSelect={onSelect}
         selectedMediaNode={selectedMediaNode || defaultSelectedMediaNode}
         onSelectMediaNode={setSelectedMediaNode}
         onPreview={handlePreview}

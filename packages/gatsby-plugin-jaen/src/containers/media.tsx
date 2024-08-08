@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react'
-import {MediaNode, uploadFile, useField, usePageContext} from '@atsnek/jaen'
+import {MediaNode, uploadFile, useField, usePageContext} from 'jaen'
 import {v4 as uuidv4} from 'uuid'
 
 import {Media, MediaProps} from '../components/cms/Media/Media'

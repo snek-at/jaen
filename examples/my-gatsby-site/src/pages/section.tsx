@@ -1,4 +1,4 @@
-import {connectBlock, Field, PageConfig, PageProps} from '@atsnek/jaen'
+import {connectBlock, Field, PageConfig, PageProps} from 'jaen'
 import {VStack} from '@chakra-ui/react'
 
 const Block = connectBlock(

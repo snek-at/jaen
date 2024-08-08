@@ -1,4 +1,4 @@
-import {useWidget} from '@atsnek/jaen'
+import {useWidget} from 'jaen'
 
 export const useNotificationPopupWidget = () => {
   return useWidget<{

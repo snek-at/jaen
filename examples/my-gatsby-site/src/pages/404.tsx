@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {Link, HeadFC, PageProps} from 'gatsby'
-import {PageConfig} from '@atsnek/jaen'
+import {PageConfig} from 'jaen'
 import {LightMode, GlobalStyle} from '@chakra-ui/react'
 
 const pageStyles = {
@@ -55,7 +55,7 @@ const NotFoundPage: React.FC<PageProps> = () => {
 
 export default NotFoundPage
 
-export {Head} from '@atsnek/jaen'
+export {Head} from 'jaen'
 
 export const pageConfig: PageConfig = {
   label: 'Oops! Page not found',

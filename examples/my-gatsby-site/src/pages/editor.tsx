@@ -1,4 +1,4 @@
-import {Field, PageConfig, PageProps} from '@atsnek/jaen'
+import {Field, PageConfig, PageProps} from 'jaen'
 
 const Page: React.FC<PageProps> = ({location, pageContext}) => {
   return <Field.Editor name="editor" />

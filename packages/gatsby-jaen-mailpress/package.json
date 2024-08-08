@@ -13,7 +13,7 @@
     "gatsby-node.js"
   ],
   "scripts": {
-    "build": "tsc gatsby/* --outDir dist/gatsby --esModuleInterop --skipLibCheck --resolveJsonModule"
+    "build": "tsc gatsby/* --outDir dist/gatsby --esModuleInterop --skipLibCheck --resolveJsonModule && tsc"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
@@ -29,7 +29,7 @@
     "@snek-functions/origin": "^0.9.0",
     "gatsby": "^5.12.4",
     "react": "^18.2.0",
-    "@atsnek/jaen": "^1.0.0-rc.55"
+    "jaen": "^1.0.0"
   },
   "devDependencies": {}
 }

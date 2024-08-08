@@ -5,7 +5,7 @@ import {
   PageProps,
   useAuth,
   withAuthSecurity
-} from '@atsnek/jaen'
+} from 'jaen'
 import {Flex} from '@chakra-ui/react'
 import {GatsbyBrowser, Slice} from 'gatsby'
 import React, {useEffect, useMemo} from 'react'

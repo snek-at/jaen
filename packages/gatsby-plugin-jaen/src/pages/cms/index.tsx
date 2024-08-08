@@ -1,4 +1,4 @@
-import {PageConfig, useAuth} from '@atsnek/jaen'
+import {PageConfig, useAuth} from 'jaen'
 import {PageProps, graphql, useStaticQuery} from 'gatsby'
 
 import {Dashboard} from '../../components/cms/Dashboard'
@@ -75,4 +75,4 @@ export const pageConfig: PageConfig = {
   }
 }
 
-export {Head} from '@atsnek/jaen'
+export {Head} from 'jaen'

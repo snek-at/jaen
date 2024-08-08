@@ -1,4 +1,4 @@
-import {snekResourceId, useNotificationsContext} from '@atsnek/jaen'
+import {snekResourceId, useNotificationsContext} from 'jaen'
 import {sq} from '@snek-functions/origin'
 
 import React, {useCallback, useEffect, useState} from 'react'

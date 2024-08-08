@@ -1,8 +1,8 @@
-import {Field, PageConfig, PageProps} from '@atsnek/jaen'
+import {Field, PageConfig, PageProps} from 'jaen'
 import {Box} from '@chakra-ui/react'
-import {MdxField, UncontrolledMdxField} from '@atsnek/jaen-fields-mdx'
+import {MdxField, UncontrolledMdxField} from 'jaen-fields-mdx'
 import {Link} from 'gatsby-plugin-jaen'
-import {usePage} from '@atsnek/jaen'
+import {usePage} from 'jaen'
 import {useState} from 'react'
 
 const QASMPlayground: React.FC<{

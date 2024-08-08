@@ -1,4 +1,4 @@
-import {PageProps, PageProvider, useDynamicPaths, withRedux} from '@atsnek/jaen'
+import {PageProps, PageProvider, useDynamicPaths, withRedux} from 'jaen'
 
 import React, {lazy, useEffect, useMemo} from 'react'
 import {useJaenPagePaths} from './jaen-page-paths'

@@ -6,7 +6,7 @@ import * as t from '@babel/types'
 import ts from 'typescript'
 import generate from '@babel/generator'
 
-import {PageConfig} from '@atsnek/jaen'
+import {PageConfig} from 'jaen'
 
 function readFileContent(filePath: string): string {
   return fs.readFileSync(filePath, 'utf-8')

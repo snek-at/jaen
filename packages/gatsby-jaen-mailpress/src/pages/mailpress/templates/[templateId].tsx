@@ -1,13 +1,8 @@
-import {PageConfig, PageProps, useNotificationsContext} from '@atsnek/jaen'
+import {PageConfig, PageProps, useNotificationsContext} from 'jaen'
 import {useEffect, useMemo} from 'react'
 
 import {CopyIcon, DeleteIcon} from '@chakra-ui/icons'
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Box,
   Button,
   ButtonGroup,
@@ -19,7 +14,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  HStack,
   Heading,
   IconButton,
   Input,
@@ -40,8 +34,7 @@ import {
   Th,
   Thead,
   Tr,
-  UnorderedList,
-  VStack
+  UnorderedList
 } from '@chakra-ui/react'
 import {Editor} from '@monaco-editor/react'
 import {Link as GatsbyLink, navigate} from 'gatsby'
@@ -49,11 +42,6 @@ import {sanitize} from 'isomorphic-dompurify'
 import {Controller, useFieldArray, useForm} from 'react-hook-form'
 import {useQuery} from 'snek-query/react-hooks'
 import {sq} from '../../../client/src'
-import {
-  EmailTemplate,
-  VariableDefinition
-} from '../../../client/src/schema.generated'
-import templates from '.'
 
 const Page: React.FC<PageProps> = ({params}) => {
   const templateId = params.templateId
@@ -233,7 +221,7 @@ const Page: React.FC<PageProps> = ({params}) => {
     })
     if (confirmed) {
       // delete using sq
-      const [data, errors] = await sq.mutate(m =>
+      const [_, errors] = await sq.mutate(m =>
         m.templateDelete({
           id: templateId
         })
@@ -367,7 +355,7 @@ const Page: React.FC<PageProps> = ({params}) => {
                     <CardHeader>To</CardHeader>
                     <CardBody>
                       <Stack>
-                        {envelopeToField.fields.map((field, index) => (
+                        {envelopeToField.fields.map((_, index) => (
                           <FormControl key={index} id={`envelope.to.${index}`}>
                             <InputGroup>
                               <Input
@@ -426,7 +414,7 @@ const Page: React.FC<PageProps> = ({params}) => {
                             height="var(--chakra-sizes-xs)"
                             defaultLanguage="javascript"
                             defaultValue={field.value || undefined}
-                            onChange={(value, event) => field.onChange(value)}
+                            onChange={(value, _) => field.onChange(value)}
                           />
                         )}
                       />
@@ -454,7 +442,7 @@ const Page: React.FC<PageProps> = ({params}) => {
                               height="var(--chakra-sizes-md)"
                               defaultLanguage="html"
                               defaultValue={field.value || undefined}
-                              onChange={(value, event) => field.onChange(value)}
+                              onChange={(value, _) => field.onChange(value)}
                             />
                           )}
                         />
@@ -566,304 +554,6 @@ const Page: React.FC<PageProps> = ({params}) => {
               Cancel
             </Button>
 
-            <Button
-              type="submit"
-              isLoading={isLoading || isSubmitting}
-              isDisabled={isLoading || isSubmitting}>
-              Save
-            </Button>
-          </ButtonGroup>
-        </Stack>
-      </form>
-    </Stack>
-  )
-
-  // Form with chakraui components
-  return (
-    <Stack spacing="4">
-      <Heading size="md">Email Template</Heading>
-
-      {/* Template ID with copy button */}
-      <Skeleton isLoaded={!isLoading}>
-        <InputGroup>
-          <InputLeftAddon>Template ID</InputLeftAddon>
-          <Input type="text" defaultValue={templateId} isDisabled />
-          <InputRightElement
-            as={IconButton}
-            icon={<CopyIcon />}
-            variant="outline"
-            onClick={onCopy}></InputRightElement>
-        </InputGroup>
-      </Skeleton>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing="8">
-          <Stack spacing="4">
-            {/* Description Field */}
-            <Skeleton isLoaded={!isLoading}>
-              <FormControl
-                id="description"
-                isRequired
-                isInvalid={!!errors.description}>
-                <FormLabel>Description</FormLabel>
-                <Input type="text" {...register('description')} />
-                <FormErrorMessage>
-                  {errors.description?.message}
-                </FormErrorMessage>
-              </FormControl>
-            </Skeleton>
-
-            {/* Parent Field */}
-            <Skeleton isLoaded={!isLoading}>
-              <FormControl id="parent">
-                <FormLabel>Parent</FormLabel>
-                <Select {...register('parent.id')}>
-                  {templates.map(t => (
-                    <option key={t.id} value={t.id}>
-                      {t.description} ({t.id})
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-            </Skeleton>
-
-            {/* Linked Field just for display and link to template */}
-            <Skeleton isLoaded={!isLoading}>
-              <FormControl id="linked">
-                <FormLabel>Linked</FormLabel>
-                {template?.linked?.length ? (
-                  <UnorderedList>
-                    {template?.linked?.map(t => (
-                      <ListItem key={t.id}>
-                        <Link as={GatsbyLink} to={`../${t.id}`}>
-                          {t.description} ({t.id})
-                        </Link>
-                      </ListItem>
-                    ))}
-                  </UnorderedList>
-                ) : (
-                  <Text>No linked templates</Text>
-                )}
-              </FormControl>
-            </Skeleton>
-
-            {/* Envelope Card */}
-            <Card>
-              <CardHeader>
-                <Heading size="sm">Envelope</Heading>
-              </CardHeader>
-              <CardBody>
-                <Stack>
-                  {/* Subject Field */}
-                  <Skeleton isLoaded={!isLoading}>
-                    <FormControl id="subject">
-                      <FormLabel>Subject</FormLabel>
-                      <Input type="text" {...register('envelope.subject')} />
-                    </FormControl>
-                  </Skeleton>
-
-                  {/* From Field */}
-                  <Skeleton isLoaded={!isLoading}>
-                    <FormControl id="from">
-                      <FormLabel>From</FormLabel>
-                      <InputGroup>
-                        <Input
-                          type="text"
-                          {...register('envelope.from.value')}
-                        />
-
-                        <Select {...register('envelope.from.type')}>
-                          {Object.keys(EmailAddressType).map(
-                            (key: keyof typeof EmailAddressType) => (
-                              <option key={key} value={key}>
-                                {EmailAddressType[key]}
-                              </option>
-                            )
-                          )}
-                        </Select>
-                      </InputGroup>
-                    </FormControl>
-                  </Skeleton>
-
-                  {/* To Field */}
-                  <Skeleton isLoaded={!isLoading}>
-                    <FormControl id="to">
-                      <FormLabel>To</FormLabel>
-                      <Input type="text" {...register('envelope.to')} />
-                    </FormControl>
-                  </Skeleton>
-
-                  {/* Reply To Field */}
-                  <Skeleton isLoaded={!isLoading}>
-                    <FormControl id="replyTo">
-                      <FormLabel>Reply To</FormLabel>
-                      <InputGroup>
-                        <Input
-                          type="text"
-                          {...register('envelope.replyTo.value')}
-                        />
-
-                        <Select {...register('envelope.replyTo.type')}>
-                          {Object.keys(EmailAddressType).map(
-                            (key: keyof typeof EmailAddressType) => (
-                              <option key={key} value={key}>
-                                {EmailAddressType[key]}
-                              </option>
-                            )
-                          )}
-                        </Select>
-                      </InputGroup>
-                    </FormControl>
-                  </Skeleton>
-                </Stack>
-              </CardBody>
-            </Card>
-
-            {/* Transformer Card */}
-            <Card>
-              <CardHeader>
-                <Heading size="sm">Transformer</Heading>
-              </CardHeader>
-              <CardBody>
-                <Stack>
-                  {/* Transformer Field */}
-                  <Skeleton isLoaded={!isLoading}>
-                    <FormControl id="transformer">
-                      <Controller
-                        control={control}
-                        name="transformer"
-                        render={({field}) => (
-                          <Editor
-                            theme={'vs-dark'}
-                            height="var(--chakra-sizes-xs)"
-                            defaultLanguage="javascript"
-                            defaultValue={field.value || undefined}
-                            onChange={(value, event) => field.onChange(value)}
-                          />
-                        )}
-                      />
-                    </FormControl>
-                  </Skeleton>
-                </Stack>
-              </CardBody>
-            </Card>
-
-            {/* Content Card */}
-            <Card>
-              <CardHeader>
-                <Heading size="sm">Content</Heading>
-              </CardHeader>
-              <CardBody>
-                <Stack>
-                  <Stack>
-                    {/* Content Field */}
-                    <Skeleton isLoaded={!isLoading}>
-                      <FormControl id="content">
-                        <Controller
-                          control={control}
-                          name="content"
-                          render={({field}) => (
-                            <Editor
-                              theme={'vs-dark'}
-                              height="var(--chakra-sizes-md)"
-                              defaultLanguage="html"
-                              defaultValue={field.value || undefined}
-                              onChange={(value, event) => field.onChange(value)}
-                            />
-                          )}
-                        />
-                      </FormControl>
-                    </Skeleton>
-                  </Stack>
-
-                  {/* Preview */}
-                  <Stack>
-                    <Heading size="sm">Preview</Heading>
-                    <Skeleton isLoaded={!isLoading}>
-                      <Box
-                        dangerouslySetInnerHTML={{__html: templateContent}}
-                      />
-                    </Skeleton>
-                  </Stack>
-                </Stack>
-              </CardBody>
-            </Card>
-
-            {/* Variables Card */}
-            <Card>
-              <CardHeader>
-                <Heading size="sm">Variables</Heading>
-              </CardHeader>
-              <CardBody>
-                <Stack>
-                  {/* Variables Field */}
-                  <Skeleton isLoaded={!isLoading}>
-                    <FormControl id="variables">
-                      <Textarea
-                        {...register('variables')}
-                        placeholder="JSON array of variables"
-                      />
-                    </FormControl>
-                  </Skeleton>
-                </Stack>
-              </CardBody>
-            </Card>
-
-            {/* Authorization Card */}
-            <Card>
-              <CardHeader>
-                <Heading size="sm">Authorization</Heading>
-              </CardHeader>
-              <CardBody>
-                <Stack>
-                  {/* User ID Field */}
-                  <Skeleton isLoaded={!isLoading}>
-                    <FormControl id="userId">
-                      <Input
-                        type="text"
-                        {...register('authorizationUser.userId')}
-                      />
-                    </FormControl>
-                  </Skeleton>
-
-                  {/* Authorization Field */}
-                  <Skeleton isLoaded={!isLoading}>
-                    <FormControl id="authorization">
-                      <Textarea
-                        {...register('authorizationUser.authorization')}
-                      />
-                    </FormControl>
-                  </Skeleton>
-                </Stack>
-              </CardBody>
-            </Card>
-          </Stack>
-
-          <ButtonGroup justifyContent="end">
-            {/* Delete Button */}
-            <Button
-              type="button"
-              variant="outline"
-              colorScheme="red"
-              isDisabled={isLoading || isSubmitting}
-              onClick={handleDeleteClick}>
-              Delete
-            </Button>
-
-            {/* Cancel Button */}
-            <Button
-              type="button"
-              variant="outline"
-              isDisabled={isLoading || isSubmitting || !isDirty}
-              onClick={() => {
-                if (template) {
-                  reset(template)
-                }
-              }}>
-              Cancel
-            </Button>
-
-            {/* Submit Button */}
             <Button
               type="submit"
               isLoading={isLoading || isSubmitting}

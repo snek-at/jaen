@@ -57,7 +57,7 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] =
     {actions, loaders, stage, plugins, getConfig},
     pluginOptions: JaenPluginOptions
   ) => {
-    const {version} = await import('@atsnek/jaen/package.json')
+    const {version} = await import('jaen/package.json')
 
     const config = getConfig()
 
